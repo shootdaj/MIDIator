@@ -1,16 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {
 	public static class MIDIManager
 	{
-		public static IEnumerable<dynamic> AvailableDevices
+		public class MIDIDevice : IDisposable
+		{
+			public MIDIDevice(int deviceID)
+			{
+				DeviceID = deviceID;
+				Name = InputDevice.GetDeviceCapabilities(deviceID).name;
+				DriverVersion = InputDevice.GetDeviceCapabilities(deviceID).driverVersion;
+				MID = InputDevice.GetDeviceCapabilities(deviceID).mid;
+				PID = InputDevice.GetDeviceCapabilities(deviceID).pid;
+				Support = InputDevice.GetDeviceCapabilities(deviceID).support;
+				InputDevice = new InputDevice(deviceID);
+			}
+
+			private InputDevice InputDevice { get; }
+			public bool IsRecording { get; set; }
+			public string Name { get; }
+			public int DriverVersion { get; }
+			public short MID { get; }
+			public short PID { get; }
+			public int Support { get; }
+			public int DeviceID { get; }
+
+			public void StartRecording()
+			{
+				InputDevice.StartRecording();
+				IsRecording = true;
+			}
+
+			public void StopRecording()
+			{
+				InputDevice.StopRecording();
+				IsRecording = false;
+			}
+
+			public void AddChannelMessageAction(EventHandler<ChannelMessageEventArgs> action)
+			{
+				var wasRecording = IsRecording;
+				if (IsRecording)
+					StopRecording();
+				InputDevice.ChannelMessageReceived += action;
+
+				if (wasRecording)
+					StartRecording();
+			}
+
+			public void AddSysCommonMessageAction(EventHandler<SysCommonMessageEventArgs> action)
+			{
+				var wasRecording = IsRecording;
+				if (IsRecording)
+					StopRecording();
+				InputDevice.SysCommonMessageReceived += action;
+
+				if (wasRecording)
+					StartRecording();
+			}
+
+			public void AddSysExMessageAction(EventHandler<SysExMessageEventArgs> action)
+			{
+				var wasRecording = IsRecording;
+				if (IsRecording)
+					StopRecording();
+				InputDevice.SysExMessageReceived += action;
+
+				if (wasRecording)
+					StartRecording();
+			}
+
+			public void AddSysRealtimeMessageAction(EventHandler<SysRealtimeMessageEventArgs> action)
+			{
+				var wasRecording = IsRecording;
+				if (IsRecording)
+					StopRecording();
+				InputDevice.SysRealtimeMessageReceived += action;
+
+				if (wasRecording)
+					StartRecording();
+			}
+
+			public void AddErrorAction(EventHandler<ErrorEventArgs> action)
+			{
+				var wasRecording = IsRecording;
+				if (IsRecording)
+					StopRecording();
+				InputDevice.Error += action;
+
+				if (wasRecording)
+					StartRecording();
+			}
+
+			public void Dispose()
+			{
+				InputDevice.Dispose();
+			}
+		}
+
+		public static int DeviceCount => InputDevice.DeviceCount;
+
+		public static IEnumerable<MIDIDevice> FreeDevices
 		{
 			get
 			{
@@ -27,51 +122,14 @@ namespace MIDIator
 				}
 			}
 		}
-		
 
-		public static IList<InputDevice> DevicesInUse { get; } = new List<InputDevice>();
+		public static IList<MIDIDevice> DevicesInUse { get; } = new List<MIDIDevice>();
 
-		public static void AddChannelRecievedAction(int deviceID, EventHandler<ChannelMessageEventArgs> action)
+		public static MIDIDevice CreateDevice(int deviceID)
 		{
-			var device = GetNewOrExistingDevice(deviceID);
-			device.ChannelMessageReceived += action;
-		}
-
-		public static void StartRecording(int deviceID)
-		{
-			if (DeviceExists(deviceID))
-			{
-				DevicesInUse.Single(device => device.DeviceID == deviceID).StartRecording();
-			}
-		}
-
-		public static void StopRecording(int deviceID)
-		{
-			if (DeviceExists(deviceID))
-			{
-				DevicesInUse.Single(device => device.DeviceID == deviceID).StopRecording();
-			}
-		}
-
-		private static InputDevice GetNewOrExistingDevice(int deviceID)
-		{
-			//new device
-			if (!DeviceExists(deviceID))
-			{
-				var device = new InputDevice(deviceID);
-                DevicesInUse.Add(device);
-				return device;
-			}
-			//existing device
-			else
-			{
-				return DevicesInUse.Single(device => device.DeviceID == deviceID);
-			}
-		}
-
-		private static bool DeviceExists(int deviceID)
-		{
-			return DevicesInUse.Select(x => x.DeviceID).Contains(deviceID);
+			var device = new MIDIDevice(deviceID);
+			DevicesInUse.Add(device);
+			return device;
 		}
 	}
 }

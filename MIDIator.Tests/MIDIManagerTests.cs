@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using Xunit;
 
 namespace MIDIator.Tests
@@ -13,19 +8,33 @@ namespace MIDIator.Tests
 		[Fact]
 		public void Devices_ReturnsSomeDevices()
 		{
-			var devices = MIDIManager.AvailableDevices;
+			var devices = MIDIManager.FreeDevices;
 		}
 
 		[Fact]
-		public void AddChannelRecievedAction_Works()
+		public void AddChannelMessageAction_Works()
 		{
-			MIDIManager.AddChannelRecievedAction(3, (sender, args) =>
+			var device = MIDIManager.CreateDevice(3);
+			device.AddChannelMessageAction((sender, args) =>
 			{
 				Assert.True(true);
 			});
-
-			MIDIManager.StartRecording(3);
+			device.StartRecording();
 			Thread.Sleep(15000);
+			device.StopRecording();
 		}
-    }
+
+		[Fact]
+		public void AddChannelMessageAction_Works_AfterStartRecording()
+		{
+			var device = MIDIManager.CreateDevice(3);
+			device.StartRecording();
+			device.AddChannelMessageAction((sender, args) =>
+			{
+				Assert.True(true);
+			});
+			Thread.Sleep(15000);
+			device.StopRecording();
+		}
+	}
 }
