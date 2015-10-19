@@ -99,6 +99,8 @@ namespace MIDIator
 
 			public void Dispose()
 			{
+				InputDevice.Reset();
+				InputDevice.Close();
 				InputDevice.Dispose();
 			}
 		}
@@ -130,6 +132,12 @@ namespace MIDIator
 			var device = new MIDIDevice(deviceID);
 			DevicesInUse.Add(device);
 			return device;
+		}
+
+		public static void RemoveDevice(MIDIDevice device)
+		{
+			DevicesInUse.Remove(device);
+			device.Dispose();
 		}
 	}
 }
