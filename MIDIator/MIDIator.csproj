@@ -60,9 +60,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MIDIDevice.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IMap.cs" />
+    <Compile Include="Map.cs" />
+    <Compile Include="MIDIChannelMessage.cs" />
+    <Compile Include="MIDIMessage.cs" />
+    <Compile Include="MIDIOutputDevice.cs" />
+    <Compile Include="MIDIInputDevice.cs" />
     <Compile Include="MIDIManager.cs" />
+    <Compile Include="MIDIMessageType.cs" />
+    <Compile Include="NoteOn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ITranslation.cs" />
+    <Compile Include="Translation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

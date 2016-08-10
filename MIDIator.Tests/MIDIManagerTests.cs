@@ -1,40 +1,42 @@
 ﻿using System.Threading;
+using NUnit.Framework;
 using Xunit;
+using Assert = Xunit.Assert;
 
 namespace MIDIator.Tests
 {
 	public class MIDIManagerTests
 	{
-		[Fact]
+		[Test]
 		public void Devices_ReturnsSomeDevices()
 		{
 			var devices = MIDIManager.FreeDevices;
 		}
 
-		[Fact]
+		[Test]
 		public void AddChannelMessageAction_Works()
 		{
-			var device = MIDIManager.CreateDevice(3);
+			var device = MIDIManager.CreateInputDevice(3);
 			device.AddChannelMessageAction((sender, args) =>
 			{
 				Assert.True(true);
 			});
-			device.StartRecording();
+			device.Start();
 			Thread.Sleep(15000);
-			device.StopRecording();
+			device.Stop();
 		}
 
-		[Fact]
+		[Test]
 		public void AddChannelMessageAction_Works_AfterStartRecording()
 		{
-			var device = MIDIManager.CreateDevice(3);
-			device.StartRecording();
+			var device = MIDIManager.CreateInputDevice(3);
+			device.Start();
 			device.AddChannelMessageAction((sender, args) =>
 			{
 				Assert.True(true);
 			});
 			Thread.Sleep(15000);
-			device.StopRecording();
+			device.Stop();
 		}
 	}
 }
