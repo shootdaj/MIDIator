@@ -9,4 +9,9 @@ namespace MIDIator
 	{
 		public ShortMessage ShortMessage { get; protected set; }
 	}
+
+	public interface IMIDIMessage
+	{
+		ShortMessage ShortMessage { get; }
+	}
 }

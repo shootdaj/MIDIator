@@ -9,14 +9,18 @@ namespace MIDIator
 {
 	public class Translation : ITranslation
 	{
-		public Translation(ShortMessage inputMessage, ShortMessage outputMessage)
+		public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, Func<ShortMessage, bool> inputMatchFunction, Func<ShortMessage, ShortMessage, ShortMessage> translationFunction)
 		{
-			InputMessage = inputMessage;
-			OutputMessage = outputMessage;
+			InputMessageMatchTarget = inputMessageMatchTarget;
+			OutputMessageTemplate = outputMessageTemplate;
+			InputMatchFunction = inputMatchFunction;
+			TranslationFunction = translationFunction;
 		}
 
-		//public Func<ShortMessage, ShortMessage> TranslationFunction { get; private set; }
-		public ShortMessage InputMessage { get; }
-		public ShortMessage OutputMessage { get; }
+		public ShortMessage InputMessageMatchTarget { get; }
+		public ShortMessage OutputMessageTemplate { get; }
+		public Func<ShortMessage, ShortMessage, ShortMessage> TranslationFunction { get; }
+
+		public Func<ShortMessage, bool> InputMatchFunction { get; private set; }
 	}
 }

@@ -29,7 +29,7 @@ namespace MIDIator
 			}
 		}
 
-		public static IList<MidiDevice> DevicesInUse { get; } = new List<MidiDevice>();
+		public static IList<MIDIInputDevice> DevicesInUse { get; } = new List<MIDIInputDevice>();
 
         public static MIDIInputDevice GetInputDevice(int deviceID, bool failSilently = false)
         {

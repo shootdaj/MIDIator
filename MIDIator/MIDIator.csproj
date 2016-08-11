@@ -60,9 +60,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChannelMessageAction.cs" />
+    <Compile Include="ChannelMessageMatch.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IMap.cs" />
-    <Compile Include="Map.cs" />
+    <Compile Include="ITranslationMap.cs" />
+    <Compile Include="TranslationFunctions.cs" />
+    <Compile Include="TranslationMap.cs" />
     <Compile Include="MIDIChannelMessage.cs" />
     <Compile Include="MIDIMessage.cs" />
     <Compile Include="MIDIOutputDevice.cs" />

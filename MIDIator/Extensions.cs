@@ -9,9 +9,14 @@ namespace MIDIator
 {
 	public static class Extensions
 	{
-		public static ChannelMessage ToSanfordChannelMessage(this IMIDIMessage inputMessage)
+		//public static ChannelMessage ToSanfordChannelMessage(this IMIDIMessage inputMessage)
+		//{
+		//	return new ChannelMessage(inputMessage.ShortMessage);
+		//}
+
+		public static ChannelMessage ToChannelMessage(this ShortMessage shortMessage)
 		{
-			return new ChannelMessage(chan);
+			return (ChannelMessage) shortMessage;
 		}
 	}
 }

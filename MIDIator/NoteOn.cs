@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MIDIator
 {
-	public class NoteOn : IMIDIMessage
+	public class NoteOn : MIDIMessage
 	{
 		public MIDIMessageType MessageType { get; set; }
 		public string Data1 { get; set; }
