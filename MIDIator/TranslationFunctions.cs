@@ -23,16 +23,6 @@ namespace MIDIator
 			return translatedMessage;
 		};
 
-		//public static ChannelMessage TranslateNotePreseveVelocity(ChannelMessage inputMessage, ChannelMessage outputMessage)
-		//{
-		//	if ((outputMessage.Command != ChannelCommand.NoteOff && outputMessage.Command != ChannelCommand.NoteOn) ||
-		//		(inputMessage.Command != ChannelCommand.NoteOff && inputMessage.Command != ChannelCommand.NoteOn))
-		//		throw new Exception("inputMessage and outputMessage must be a NoteOff or NoteOn message.");
-
-		//	var returnValue = new ChannelMessage(outputMessage.Command, outputMessage.MidiChannel, outputMessage.Data1, inputMessage.Data2);
-		//	return returnValue;
-		//}
-
 		//public static ChannelMessage NoteToPC(ChannelMessage inputMessage, ChannelMessage outputMessage)
 		//{
 		//	if (outputMessage.Command != ChannelCommand.ProgramChange ||

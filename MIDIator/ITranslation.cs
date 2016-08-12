@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator

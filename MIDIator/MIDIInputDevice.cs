@@ -13,6 +13,22 @@ namespace MIDIator
 			TranslationMap = translationMap;
 			ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
 		}
+		
+		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
+		
+		public ITranslationMap TranslationMap { get; private set; }
+
+		public bool IsRecording { get; protected set; }
+
+		public string Name => GetDeviceCapabilities(DeviceID).name;
+
+		public int DriverVersion => GetDeviceCapabilities(DeviceID).driverVersion;
+
+		public short MID => GetDeviceCapabilities(DeviceID).mid;
+
+		public short PID => GetDeviceCapabilities(DeviceID).pid;
+
+		public int Support => GetDeviceCapabilities(DeviceID).support;
 
 		private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
 		{
@@ -49,40 +65,6 @@ namespace MIDIator
 			}
 		}
 
-		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
-
-		//   /// <summary>
-		///// Sets up the Translation Map events
-		///// </summary>
-		//private void SetupTranslationMap()
-		//   {
-		//    TranslationMap.Translations.ForEach(t => AddChannelMessageAction((sender, args) =>
-		//    {
-		//	    if (t.InputMatchFunction(args.Message))
-		//	    {
-
-		//	    }
-		//    }));
-		//   }
-
-		private void GetMessageType(ShortMessage shortMessage)
-		{
-
-		}
-
-		public ITranslationMap TranslationMap { get; private set; }
-
-		public bool IsRecording { get; protected set; }
-
-		public string Name => GetDeviceCapabilities(DeviceID).name;
-
-		public int DriverVersion => GetDeviceCapabilities(DeviceID).driverVersion;
-
-		public short MID => GetDeviceCapabilities(DeviceID).mid;
-
-		public short PID => GetDeviceCapabilities(DeviceID).pid;
-
-		public int Support => GetDeviceCapabilities(DeviceID).support;
 
 		public void Start()
 		{

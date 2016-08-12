@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using NUnit.Framework;
-using Xunit;
-using Assert = Xunit.Assert;
+﻿using NUnit.Framework;
 
 namespace MIDIator.Tests
 {
