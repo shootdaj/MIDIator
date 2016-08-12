@@ -9,14 +9,14 @@ namespace MIDIator
 {
 	public class ChannelMessageAction
 	{
-		public ChannelMessageAction(ChannelMessageMatch match, Action<ChannelMessage> action)
+		public ChannelMessageAction(Func<ChannelMessage, bool> matchFunction, Action<ChannelMessage> action)
 		{
-			Match = match;
+			MatchFunction = matchFunction;
 			Action = action;
 		}
 
-		public ChannelMessageMatch Match { get; private set; }
-			
+		public Func<ChannelMessage, bool> MatchFunction { get; private set; }
+
 		public Action<ChannelMessage> Action { get; private set; }
 	}
 }

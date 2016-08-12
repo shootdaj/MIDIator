@@ -22,25 +22,25 @@ namespace MIDIator
 		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
 		{
 			var incomingMessage = channelMessageEventArgs.Message;
-			var translations = TranslationMap?.Translations.Where(t => t.InputMatchFunction(incomingMessage)).ToList();
+			var translations = TranslationMap?.Translations.Where(t => t.InputMatchFunction(incomingMessage, t.InputMessageMatchTarget)).ToList();
 			if (translations != null && translations.Any())
 			{
-				TranslationMap?.Translations.Where(t => t.InputMatchFunction(incomingMessage))
+				translations
 					.ToList()
 					.ForEach(translation =>
 					{
-						ChannelMessageActions.Where(channelMessageAction => channelMessageAction.Match.MatchFunction(incomingMessage))
+						var translatedMessage = translation.TranslationFunction(incomingMessage, translation.OutputMessageTemplate);
+						ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(translatedMessage.ToChannelMessage()))
 							.ToList()
 							.ForEach(c =>
 							{
-								var translatedMessage = translation.TranslationFunction(incomingMessage, translation.OutputMessageTemplate);
 								c.Action(translatedMessage.ToChannelMessage());
 							});
 					});
 			}
 			else
 			{
-				ChannelMessageActions.Where(channelMessageAction => channelMessageAction.Match.MatchFunction(incomingMessage))
+				ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(incomingMessage))
 					.ToList()
 					.ForEach(c =>
 					{

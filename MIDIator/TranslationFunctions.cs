@@ -1,28 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {
 	public static class TranslationFunctions
 	{
-		public static Func<ChannelMessage, C DirectTranslation(ChannelMessage inputMessage, ChannelMessage outputMessage)
-		{
-			return outputMessage;
-		}
+		/// <summary>
+		/// Outputs the output message template without any modifications or data from the incoming message.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> DirectTranslation =
+			(incomingMessage, outputMessageTemplate) => outputMessageTemplate;
 
-		public static ChannelMessage TranslateNotePreseveVelocity(ChannelMessage inputMessage, ChannelMessage outputMessage)
+		/// <summary>
+		/// Takes the incoming message, changes the note to the one contained in the output message template, and outputs it.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> ChangeNote = (incomingMessage, outputMessageTemplate) =>
 		{
-			if ((outputMessage.Command != ChannelCommand.NoteOff && outputMessage.Command != ChannelCommand.NoteOn) ||
-				(inputMessage.Command != ChannelCommand.NoteOff && inputMessage.Command != ChannelCommand.NoteOn))
-				throw new Exception("inputMessage and outputMessage must be a NoteOff or NoteOn message.");
+			var translatedMessage = new ChannelMessage(incomingMessage.ToChannelMessage().Command,
+				incomingMessage.ToChannelMessage().MidiChannel, outputMessageTemplate.ToChannelMessage().Data1,
+				incomingMessage.ToChannelMessage().Data2);
 
-			var returnValue = new ChannelMessage(outputMessage.Command, outputMessage.MidiChannel, outputMessage.Data1, inputMessage.Data2);
-			return returnValue;
-		}
+			return translatedMessage;
+		};
+
+		//public static ChannelMessage TranslateNotePreseveVelocity(ChannelMessage inputMessage, ChannelMessage outputMessage)
+		//{
+		//	if ((outputMessage.Command != ChannelCommand.NoteOff && outputMessage.Command != ChannelCommand.NoteOn) ||
+		//		(inputMessage.Command != ChannelCommand.NoteOff && inputMessage.Command != ChannelCommand.NoteOn))
+		//		throw new Exception("inputMessage and outputMessage must be a NoteOff or NoteOn message.");
+
+		//	var returnValue = new ChannelMessage(outputMessage.Command, outputMessage.MidiChannel, outputMessage.Data1, inputMessage.Data2);
+		//	return returnValue;
+		//}
 
 		//public static ChannelMessage NoteToPC(ChannelMessage inputMessage, ChannelMessage outputMessage)
 		//{

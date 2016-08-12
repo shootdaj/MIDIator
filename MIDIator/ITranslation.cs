@@ -29,6 +29,12 @@ namespace MIDIator
 		/// <summary>
 		/// Used to match an incoming message to a Translation.
 		/// </summary>
-		Func<ShortMessage, bool> InputMatchFunction { get; }
+		Func<ShortMessage, ShortMessage, bool> InputMatchFunction { get; }
+
+		///// <summary>
+		///// This contains the data needed by InputMatchFunction to determine if the incoming signal is a match to any of
+		///// the translations.
+		///// </summary>
+		//MatchArgs InputMatchArgs { get; }
 	}
 }

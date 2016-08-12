@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator
@@ -31,7 +30,7 @@ namespace MIDIator
 
 		public static IList<MIDIInputDevice> DevicesInUse { get; } = new List<MIDIInputDevice>();
 
-        public static MIDIInputDevice GetInputDevice(int deviceID, bool failSilently = false)
+        public static MIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
         {
 	        if (DevicesInUse != null && DevicesInUse.Any(device => device.DeviceID == deviceID))
 		        return DevicesInUse.First(device => device.DeviceID == deviceID);
@@ -39,7 +38,7 @@ namespace MIDIator
 	        {
 				if (FreeDevices.Any(d => d.DeviceID == deviceID))
 				{
-					return CreateInputDevice(deviceID);
+					return CreateInputDevice(deviceID, translationMap);
 				}
 				else
 				{
@@ -52,16 +51,17 @@ namespace MIDIator
 			}
 		}
 
-	    public static MIDIInputDevice GetInputDevice(string name, bool failSilently = false)
+	    public static MIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
 	    {
-		    if (DevicesInUse != null && DevicesInUse.Any(d => d.Name == name))
-			    return DevicesInUse.First(d => d.Name == name);
+		    Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+		    if (DevicesInUse != null && DevicesInUse.Any(nameMatch))
+			    return DevicesInUse.First(nameMatch);
 		    else
 		    {
-			    if (FreeDevices.Any(d => d.Name == name))
+			    if (FreeDevices.Any(nameMatch))
 			    {
 					var deviceID = FreeDevices.Single(d => d.Name == name).DeviceID;
-				    return CreateInputDevice(deviceID);
+				    return CreateInputDevice(deviceID, translationMap);
 			    }
 			    else
 			    {
@@ -73,9 +73,9 @@ namespace MIDIator
 		    }
 	    }
 
-	    public static MIDIInputDevice CreateInputDevice(int deviceID)
+	    public static MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
-			var device = new MIDIInputDevice(deviceID);
+			var device = new MIDIInputDevice(deviceID, translationMap);
 			DevicesInUse.Add(device);
 			return device;
 		}
@@ -85,7 +85,5 @@ namespace MIDIator
 			DevicesInUse.Remove(inputDevice);
 			inputDevice.Dispose();
 		}
-
-		
 	}
 }

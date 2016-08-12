@@ -64,6 +64,8 @@
     <Compile Include="ChannelMessageMatch.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ITranslationMap.cs" />
+    <Compile Include="MatchArgs.cs" />
+    <Compile Include="NoteMatchArgs.cs" />
     <Compile Include="TranslationFunctions.cs" />
     <Compile Include="TranslationMap.cs" />
     <Compile Include="MIDIChannelMessage.cs" />
