@@ -23,6 +23,21 @@ namespace MIDIator
 			return translatedMessage;
 		};
 
+		public static Func<ShortMessage, ShortMessage, ShortMessage> PCToNote = (incomingMessage, outputMessageTemplate) =>
+		{
+			if (incomingMessage.ToChannelMessage().Command != ChannelCommand.ProgramChange)
+			{
+				throw new Exception("inputMessage must be a ProgramChang.");
+			}
+
+			var translatedMessage = new ChannelMessage(outputMessageTemplate.ToChannelMessage().Command,
+				incomingMessage.ToChannelMessage().MidiChannel, outputMessageTemplate.ToChannelMessage().Data1,
+				incomingMessage.ToChannelMessage().Data2);
+
+			return translatedMessage;
+		};
+
+
 		//public static ChannelMessage NoteToPC(ChannelMessage inputMessage, ChannelMessage outputMessage)
 		//{
 		//	if (outputMessage.Command != ChannelCommand.ProgramChange ||
