@@ -1,7 +1,7 @@
 ﻿using System;
 using Sanford.Multimedia.Midi;
 
-namespace MIDIator.Tests
+namespace MIDIator
 {
 	public static class InputMatchFunctions
 	{
@@ -12,5 +12,7 @@ namespace MIDIator.Tests
 		public static Func<ShortMessage, ShortMessage, bool> NoteMatch =
 			(incomingMessage, inputMessageMatchTarget) =>
 				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1);
+
+
 	}
 }

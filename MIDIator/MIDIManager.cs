@@ -73,7 +73,7 @@ namespace MIDIator
 		    }
 	    }
 
-	    public static MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
+	    private static MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
 			var device = new MIDIInputDevice(deviceID, translationMap);
 			DevicesInUse.Add(device);
