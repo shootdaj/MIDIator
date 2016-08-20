@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {
+	[Serializable]
+	[JsonConverter(typeof(TranslationConverter))]
 	public class Translation : ITranslation
 	{
 		public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, Func<ShortMessage, ShortMessage, bool> inputMatchFunction, Func<ShortMessage, ShortMessage, ShortMessage> translationFunction)

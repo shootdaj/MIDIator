@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MIDIator
 {
+	[Serializable]
+	[JsonConverter(typeof(TranslationMapConverter))]
 	public class TranslationMap : ITranslationMap
 	{
-		public TranslationMap(List<ITranslation> translations)
+		public TranslationMap(List<ITranslation> translations = null)
 		{
-			Translations = translations;
+			Translations = translations ?? new List<ITranslation>();
 		}
-	//	public MIDIInputDevice InputDevice { get; set; }
-	//	public MIDIOutputDevice OutputDevice { get; set; }
+
 		public List<ITranslation> Translations { get; set; }
 	}
 }

@@ -9,10 +9,10 @@ namespace MIDIator
 			(incomingMessage, inputMessageMatchTarget) =>
 				true;
 
-		public static Func<ShortMessage, ShortMessage, bool> NoteMatch =
+		public static Func<ShortMessage, ShortMessage, bool> NoteMatch => Data1Match;
+
+		public static Func<ShortMessage, ShortMessage, bool> Data1Match =
 			(incomingMessage, inputMessageMatchTarget) =>
 				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1);
-
-
 	}
 }

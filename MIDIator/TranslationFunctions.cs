@@ -27,7 +27,12 @@ namespace MIDIator
 		{
 			if (incomingMessage.ToChannelMessage().Command != ChannelCommand.ProgramChange)
 			{
-				throw new Exception("inputMessage must be a ProgramChang.");
+				throw new Exception("inputMessage must be a ProgramChange.");
+			}
+
+			if (outputMessageTemplate.ToChannelMessage().Command != ChannelCommand.NoteOff && outputMessageTemplate.ToChannelMessage().Command != ChannelCommand.NoteOn)
+			{
+				throw new Exception("outputMessageTemplate must be a NoteOn or NoteOff.");
 			}
 
 			var translatedMessage = new ChannelMessage(outputMessageTemplate.ToChannelMessage().Command,
