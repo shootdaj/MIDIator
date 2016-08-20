@@ -72,7 +72,7 @@ namespace ConsoleApp
 				message =>
 				{
 					Debug.WriteLine($"Data1:{message.Data1} | Command:{message.Command.ToString()}");
-					OrbitReader.sendCommand(BitConverter.GetBytes(message.GetMsg()));
+					OrbitReader.sendCommand(BitConverter.GetBytes(message.Message));
 				}));
 
 			Orbit.StartRecording();

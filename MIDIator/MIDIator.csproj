@@ -31,21 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Sanford.Collections">
-      <HintPath>..\..\..\..\Temp\Sanford.Multimedia.Midi\bin\Debug\Sanford.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Sanford.Multimedia">
-      <HintPath>..\..\..\..\Temp\Sanford.Multimedia.Midi\bin\Debug\Sanford.Multimedia.dll</HintPath>
-    </Reference>
-    <Reference Include="Sanford.Multimedia.Timers">
-      <HintPath>..\..\..\..\Temp\Sanford.Multimedia.Midi\bin\Debug\Sanford.Multimedia.Timers.dll</HintPath>
-    </Reference>
-    <Reference Include="Sanford.Threading">
-      <HintPath>..\..\..\..\Temp\Sanford.Multimedia.Midi\bin\Debug\Sanford.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,6 +53,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="InputMatchFunctions.cs" />
     <Compile Include="ITranslationMap.cs" />
+    <Compile Include="TranslationConverter.cs" />
     <Compile Include="VirtualMIDI\teVirtualMIDI.cs" />
     <Compile Include="TranslationFunctions.cs" />
     <Compile Include="TranslationMap.cs" />
@@ -79,7 +72,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Temp\Sanford.Multimedia.Midi\Sanford.Multimedia.Midi.csproj">
+    <ProjectReference Include="..\Sanford.Multimedia.Midi\Source\Sanford.Multimedia.Midi.csproj">
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>
       <Name>Sanford.Multimedia.Midi</Name>
     </ProjectReference>
