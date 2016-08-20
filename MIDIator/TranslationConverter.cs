@@ -26,7 +26,7 @@ namespace MIDIator
 				reader.Read();
 
 				var value = propertyName == "" ? Convert.ToInt32(reader.Value) : serializer.Deserialize(reader);
-				result.Add(propertyName, value);
+				//result.Add(propertyName, value);
 				reader.Read();
 			}
 
