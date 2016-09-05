@@ -68,13 +68,9 @@
     <Compile Include="VirtualMIDI\teVirtualMIDI.cs" />
     <Compile Include="TranslationFunctions.cs" />
     <Compile Include="TranslationMap.cs" />
-    <Compile Include="Obsolete\MIDIChannelMessage.cs" />
-    <Compile Include="Obsolete\MIDIMessage.cs" />
     <Compile Include="MIDIOutputDevice.cs" />
     <Compile Include="MIDIInputDevice.cs" />
     <Compile Include="MIDIManager.cs" />
-    <Compile Include="Obsolete\MIDIMessageType.cs" />
-    <Compile Include="Obsolete\NoteOn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITranslation.cs" />
     <Compile Include="Translation.cs" />
