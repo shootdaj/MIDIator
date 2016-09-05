@@ -47,8 +47,7 @@ namespace Sanford.Multimedia.Midi
     /// and system exclusive messages. This includes channel messages, system
     /// realtime messages, and system common messages.
     /// </remarks>
-    [DataContract]
-	public abstract class ShortMessage : IMidiMessage
+    public abstract class ShortMessage : IMidiMessage
 	{
         #region ShortMessage Members
 
@@ -70,7 +69,6 @@ namespace Sanford.Multimedia.Midi
 
         #endregion
 
-        [DataMember]
         protected int msg = 0;
 
         #region Methods

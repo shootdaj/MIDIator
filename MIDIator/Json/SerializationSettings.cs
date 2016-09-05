@@ -1,22 +1,15 @@
 ﻿using Newtonsoft.Json;
 
-namespace MIDIator.JsonConverters
+namespace MIDIator.Json
 {
 	public static class SerializerSettings
 	{
 		public static JsonSerializerSettings DefaultSettings => new JsonSerializerSettings()
 		{
-			TypeNameHandling = TypeNameHandling.All
+			TypeNameHandling = TypeNameHandling.None,
+			Binder = new DisplayNameSerializationBinder(),
+			Formatting = Formatting.Indented,
+			
 		};
-
-		public static JsonSerializerSettings Indented
-		{
-			get
-			{
-				var settings = DefaultSettings;
-				settings.Formatting = Formatting.Indented;
-				return settings;
-			}
-		}
 	}
 }

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using MIDIator.JsonConverters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Sanford.Multimedia.Midi;
@@ -9,7 +7,7 @@ using Sanford.Multimedia.Midi;
 namespace MIDIator
 {
     [DataContract]
-    //[JsonConverter(typeof(TranslationConverter))]
+	[DisplayName(nameof(Translation))]
 	public class Translation : ITranslation
 	{
 	    public Translation()
@@ -33,10 +31,12 @@ namespace MIDIator
         }
 
         [DataMember]
+		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]
         public ShortMessage InputMessageMatchTarget { get; set; }
 
         [DataMember]
-        public ShortMessage OutputMessageTemplate { get; set; }
+		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]
+		public ShortMessage OutputMessageTemplate { get; set; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -45,9 +45,5 @@ namespace MIDIator
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public InputMatchFunction InputMatchFunction { get; set; }
-
-		//[DataMember]
-		//[JsonConverter(typeof(BinaryConverter))]
-  //      public string dsdfg { get; set; }
 	}
 }

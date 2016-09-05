@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Anshul.Utilities, Version=1.0.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Anshul.Utilities.1.0.15\lib\net45\Anshul.Utilities.dll</HintPath>
+      <HintPath>..\packages\Anshul.Utilities.1.0.19.0\lib\net45\Anshul.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -62,18 +62,19 @@
     <Compile Include="InputMatchFunction.cs" />
     <Compile Include="InputMatchFunctions.cs" />
     <Compile Include="ITranslationMap.cs" />
+    <Compile Include="Json\DisplayNameSerializationBinder.cs" />
     <Compile Include="Json\SerializationSettings.cs" />
     <Compile Include="TranslationFunction.cs" />
     <Compile Include="VirtualMIDI\teVirtualMIDI.cs" />
     <Compile Include="TranslationFunctions.cs" />
     <Compile Include="TranslationMap.cs" />
-    <Compile Include="MIDIChannelMessage.cs" />
-    <Compile Include="MIDIMessage.cs" />
+    <Compile Include="Obsolete\MIDIChannelMessage.cs" />
+    <Compile Include="Obsolete\MIDIMessage.cs" />
     <Compile Include="MIDIOutputDevice.cs" />
     <Compile Include="MIDIInputDevice.cs" />
     <Compile Include="MIDIManager.cs" />
-    <Compile Include="MIDIMessageType.cs" />
-    <Compile Include="NoteOn.cs" />
+    <Compile Include="Obsolete\MIDIMessageType.cs" />
+    <Compile Include="Obsolete\NoteOn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITranslation.cs" />
     <Compile Include="Translation.cs" />

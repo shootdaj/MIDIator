@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Anshul.Utilities, Version=1.0.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Anshul.Utilities.1.0.15\lib\net45\Anshul.Utilities.dll</HintPath>
+      <HintPath>..\packages\Anshul.Utilities.1.0.19.0\lib\net45\Anshul.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">

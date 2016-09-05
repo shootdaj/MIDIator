@@ -35,6 +35,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Sanford.Multimedia.Midi
@@ -433,7 +434,9 @@ namespace Sanford.Multimedia.Midi
 	/// <summary>
 	/// Represents MIDI channel messages.
 	/// </summary>
+	[DataContract]
 	[ImmutableObject(true)]
+	[DisplayName(nameof(ChannelMessage))]
 	public sealed class ChannelMessage : ShortMessage
 	{
         #region ChannelEventArgs Members
@@ -510,6 +513,7 @@ namespace Sanford.Multimedia.Midi
         /// If midiChannel is less than zero or greater than 15. Or if 
         /// data1 or data 2 is less than zero or greater than 127. 
         /// </exception>
+        [JsonConstructor]
         public ChannelMessage(ChannelCommand command, int midiChannel, 
             int data1, int data2)
         {
@@ -530,7 +534,6 @@ namespace Sanford.Multimedia.Midi
             #endregion
         }
 
-		[JsonConstructor]
         public ChannelMessage(int message)
         {
             this.msg = message;            
@@ -689,6 +692,7 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Gets the channel command value.
         /// </summary>
+        [DataMember]
         public ChannelCommand Command
         {
             get
@@ -696,11 +700,12 @@ namespace Sanford.Multimedia.Midi
                 return UnpackCommand(msg);
             }
         }
-        
-        /// <summary>
-        /// Gets the MIDI channel.
-        /// </summary>
-        public int MidiChannel
+
+		/// <summary>
+		/// Gets the MIDI channel.
+		/// </summary>
+		[DataMember]
+		public int MidiChannel
         {
             get
             {
@@ -708,9 +713,10 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        /// <summary>
+		/// <summary>
         /// Gets the first data value.
         /// </summary>
+        [DataMember]
         public int Data1
         {
             get
@@ -718,11 +724,12 @@ namespace Sanford.Multimedia.Midi
                 return UnpackData1(msg);
             }                
         }
-        
-        /// <summary>
-        /// Gets the second data value.
-        /// </summary>
-        public int Data2
+
+		/// <summary>
+		/// Gets the second data value.
+		/// </summary>
+		[DataMember]
+		public int Data2
         {
             get
             {

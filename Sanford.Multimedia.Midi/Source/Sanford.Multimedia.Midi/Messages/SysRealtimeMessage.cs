@@ -35,6 +35,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace Sanford.Multimedia.Midi
 {
@@ -91,6 +92,8 @@ namespace Sanford.Multimedia.Midi
 	/// with controlling and synchronizing MIDI devices. 
 	/// </remarks>
 	[ImmutableObject(true)]
+	[DataContract]
+	[DisplayName(nameof(SysRealtimeMessage))]
 	public sealed class SysRealtimeMessage : ShortMessage
 	{
         #region SysRealtimeMessage Members
@@ -201,6 +204,7 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Gets the SysRealtimeType.
         /// </summary>
+        [DataMember]
         public SysRealtimeType SysRealtimeType
         {
             get

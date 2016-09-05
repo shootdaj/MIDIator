@@ -35,6 +35,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace Sanford.Multimedia.Midi
 {
@@ -72,6 +73,8 @@ namespace Sanford.Multimedia.Midi
 	/// Represents MIDI system common messages.
 	/// </summary>
 	[ImmutableObject(true)]
+	[DataContract]
+	[DisplayName(nameof(SysCommonMessage))]
 	public sealed class SysCommonMessage : ShortMessage
 	{
         #region SysCommonMessage Members
@@ -209,6 +212,7 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Gets the SysCommonType.
         /// </summary>
+        [DataMember]
         public SysCommonType SysCommonType
         {
             get
@@ -220,6 +224,7 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Gets the first data value.
         /// </summary>
+        [DataMember]
         public int Data1
         {
             get
@@ -228,10 +233,11 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        /// <summary>
-        /// Gets the second data value.
-        /// </summary>
-        public int Data2
+		/// <summary>
+		/// Gets the second data value.
+		/// </summary>
+		[DataMember]
+		public int Data2
         {
             get
             {
