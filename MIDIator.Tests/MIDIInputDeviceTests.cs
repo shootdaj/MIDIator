@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using NUnit.Framework;
 using Sanford.Multimedia.Midi;
@@ -7,17 +7,22 @@ using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Tests
 {
+	[Ignore("Manual Test with Numark Orbit -- need to be changed to a virtualized MIDI device using VirtualMIDI.")]
 	public class MIDIInputDeviceTests
 	{
+		private static int Timeout => 10000;
+
 		[Test]
-		public void MIDIInputDevice_Constructor_Works()
+		public void MIDIInputDevice_Constructor_And_Dispose_Work()
 		{
 			var midiInputDevice = new MIDIInputDevice(0, new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 1, 1),
-					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunctions.NoteMatch,
-					TranslationFunctions.DirectTranslation)
+					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.NoteMatch,
+					TranslationFunction.DirectTranslation)
 			}));
+
+			midiInputDevice.Dispose();
 		}
 
 		[Test]
@@ -26,16 +31,19 @@ namespace MIDIator.Tests
 			var midiInputDevice = MIDIManager.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
-					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunctions.NoteMatch,
-					TranslationFunctions.DirectTranslation)
+					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.NoteMatch,
+					TranslationFunction.DirectTranslation)
 			}));
 
 			midiInputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true,
-				message => Debug.WriteLine($"Data1:{message.Data1} | Command:{message.Command.ToString()}")));
+				message => Console.WriteLine($"Data1:{message.Data1} | Command:{message.Command.ToString()}")));
 
-			midiInputDevice.StartRecording();
+			midiInputDevice.Start();
 
-			Thread.Sleep(300000);
+			Thread.Sleep(Timeout);
+
+			midiInputDevice.Stop	();
+			MIDIManager.RemoveDevice(midiInputDevice);
 		}
 
 
@@ -48,16 +56,19 @@ namespace MIDIator.Tests
 			var midiInputDevice = MIDIManager.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
-					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunctions.CatchAll,
-					TranslationFunctions.ChangeNote)
+					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.CatchAll,
+					TranslationFunction.ChangeNote)
 			}));
 
 			midiInputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true,
-				message => Debug.WriteLine($"Data1:{message.Data1} | Command:{message.Command.ToString()}")));
+				message => Console.WriteLine($"Data1:{message.Data1} | Command:{message.Command.ToString()}")));
 
-			midiInputDevice.StartRecording();
+			midiInputDevice.Start();
 
-			Thread.Sleep(300000);
+			Thread.Sleep(Timeout);
+
+			midiInputDevice.Stop();
+			MIDIManager.RemoveDevice(midiInputDevice);
 		}
 	}
 }

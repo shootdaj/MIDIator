@@ -3,7 +3,7 @@ using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {
-    public class MIDIOutputDevice : IDisposable
+    public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice
     {
         public MIDIOutputDevice(int deviceID)
         {

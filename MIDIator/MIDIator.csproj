@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Anshul.Utilities, Version=1.0.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Anshul.Utilities.1.0.15\lib\net45\Anshul.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -41,6 +45,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,9 +57,13 @@
   <ItemGroup>
     <Compile Include="ChannelMessageAction.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="IMIDIInputDevice.cs" />
+    <Compile Include="IMIDIOutputDevice.cs" />
+    <Compile Include="InputMatchFunction.cs" />
     <Compile Include="InputMatchFunctions.cs" />
     <Compile Include="ITranslationMap.cs" />
-    <Compile Include="TranslationConverter.cs" />
+    <Compile Include="Json\SerializationSettings.cs" />
+    <Compile Include="TranslationFunction.cs" />
     <Compile Include="VirtualMIDI\teVirtualMIDI.cs" />
     <Compile Include="TranslationFunctions.cs" />
     <Compile Include="TranslationMap.cs" />
@@ -69,6 +79,7 @@
     <Compile Include="Translation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

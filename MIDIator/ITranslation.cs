@@ -25,12 +25,12 @@ namespace MIDIator
 		/// may or may not adhere to using the InputMessageMatchTarget and/or OutputMessageTemplate. But the suggestion
 		/// is to use them to extract and build the output message from the input message.
 		/// </summary>
-		Func<ShortMessage, ShortMessage, ShortMessage> TranslationFunction { get; }
+		TranslationFunction TranslationFunction { get; }
 
 		/// <summary>
 		/// Used to match an incoming message to a Translation.
 		/// </summary>
-		Func<ShortMessage, ShortMessage, bool> InputMatchFunction { get; }
+		InputMatchFunction InputMatchFunction { get; }
 
 		///// <summary>
 		///// This contains the data needed by InputMatchFunction to determine if the incoming signal is a match to any of

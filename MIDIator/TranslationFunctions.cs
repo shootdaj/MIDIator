@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator
@@ -8,13 +10,13 @@ namespace MIDIator
 		/// <summary>
 		/// Outputs the output message template without any modifications or data from the incoming message.
 		/// </summary>
-		public static Func<ShortMessage, ShortMessage, ShortMessage> DirectTranslation =
+		public static Func<ShortMessage, ShortMessage, ShortMessage> DirectTranslation =>
 			(incomingMessage, outputMessageTemplate) => outputMessageTemplate;
 
 		/// <summary>
 		/// Takes the incoming message, changes the note to the one contained in the output message template, and outputs it.
 		/// </summary>
-		public static Func<ShortMessage, ShortMessage, ShortMessage> ChangeNote = (incomingMessage, outputMessageTemplate) =>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> ChangeNote => (incomingMessage, outputMessageTemplate) =>
 		{
 			var translatedMessage = new ChannelMessage(incomingMessage.ToChannelMessage().Command,
 				incomingMessage.ToChannelMessage().MidiChannel, outputMessageTemplate.ToChannelMessage().Data1,
@@ -23,7 +25,7 @@ namespace MIDIator
 			return translatedMessage;
 		};
 
-		public static Func<ShortMessage, ShortMessage, ShortMessage> PCToNote = (incomingMessage, outputMessageTemplate) =>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> PCToNote => (incomingMessage, outputMessageTemplate) =>
 		{
 			if (incomingMessage.ToChannelMessage().Command != ChannelCommand.ProgramChange)
 			{
@@ -51,5 +53,31 @@ namespace MIDIator
 
 		//	var returnValue = new ChannelMessage(outputMessage.);
 		//}
-	}
+	    public static object Parse(string functionName)
+	    {
+            //TODO: possible place for bug
+	        return
+	            typeof(TranslationFunctions).GetProperties(BindingFlags.Public | BindingFlags.Static)
+	                .First(p => p.Name == functionName);
+	    }
+
+		public static Func<ShortMessage, ShortMessage, ShortMessage> Get(TranslationFunction func)
+		{
+			//TODO: possible place for bug
+			return
+				(Func<ShortMessage, ShortMessage, ShortMessage>)typeof(TranslationFunctions).GetProperties(BindingFlags.Public | BindingFlags.Static)
+					.First(p => p.Name == Enum.GetName(typeof(TranslationFunction), func)).GetValue(null);
+		}
+
+		/// <summary>
+		/// TODO: Finish him
+		/// </summary>
+		/// <param name="message"></param>
+		/// <returns></returns>
+		public static Func<ShortMessage, ShortMessage, bool> GetReasonableFunction(ShortMessage message)
+        {
+            throw new NotImplementedException("This function should determine the most reasonable " +
+                                              "translation function for the given message type and return it.");
+        }
+    }
 }

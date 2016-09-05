@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace MIDIator
 {
-	[Serializable]
+    [DataContract]
 	public class TranslationMap : ITranslationMap
 	{
 		public TranslationMap(List<ITranslation> translations = null)
@@ -12,6 +11,7 @@ namespace MIDIator
 			Translations = translations ?? new List<ITranslation>();
 		}
 
+		[DataMember]
 		public List<ITranslation> Translations { get; set; }
 	}
 }

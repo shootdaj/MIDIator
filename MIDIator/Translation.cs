@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using MIDIator.JsonConverters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {
-	[Serializable]
-	[JsonConverter(typeof(TranslationConverter))]
+    [DataContract]
+    //[JsonConverter(typeof(TranslationConverter))]
 	public class Translation : ITranslation
 	{
-		public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, Func<ShortMessage, ShortMessage, bool> inputMatchFunction, Func<ShortMessage, ShortMessage, ShortMessage> translationFunction)
+	    public Translation()
+	    {
+	    }
+
+	    public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction)
 		{
 			InputMessageMatchTarget = inputMessageMatchTarget;
 			OutputMessageTemplate = outputMessageTemplate;
@@ -17,12 +24,30 @@ namespace MIDIator
 			TranslationFunction = translationFunction;
 		}
 
-		public ShortMessage InputMessageMatchTarget { get; }
+        public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate)
+        {
+            InputMessageMatchTarget = inputMessageMatchTarget;
+            OutputMessageTemplate = outputMessageTemplate;
+            InputMatchFunction = InputMatchFunction.Data1Match; //TODO: Replace this with InputMatchFunctions.GetReasonableFunction();
+            TranslationFunction = TranslationFunction.DirectTranslation; //TODO: Replace this with TranslationFunctions.GetReasonableFunction();
+        }
 
-		public ShortMessage OutputMessageTemplate { get; }
+        [DataMember]
+        public ShortMessage InputMessageMatchTarget { get; set; }
 
-		public Func<ShortMessage, ShortMessage, ShortMessage> TranslationFunction { get; }
+        [DataMember]
+        public ShortMessage OutputMessageTemplate { get; set; }
 
-		public Func<ShortMessage, ShortMessage, bool> InputMatchFunction { get; }
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public TranslationFunction TranslationFunction { get; set; }
+
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public InputMatchFunction InputMatchFunction { get; set; }
+
+		//[DataMember]
+		//[JsonConverter(typeof(BinaryConverter))]
+  //      public string dsdfg { get; set; }
 	}
 }

@@ -35,6 +35,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Sanford.Multimedia.Midi
 {
@@ -487,8 +488,8 @@ namespace Sanford.Multimedia.Midi
             Debug.Assert(Data1 == data1);
 
             #endregion
-        }        
-
+        }
+		
         /// <summary>
         /// Initializes a new instance of the ChannelEventArgs class with the 
         /// specified command, MIDI channel, data 1, and data 2 values.
@@ -529,7 +530,8 @@ namespace Sanford.Multimedia.Midi
             #endregion
         }
 
-        internal ChannelMessage(int message)
+		[JsonConstructor]
+        public ChannelMessage(int message)
         {
             this.msg = message;            
         }

@@ -6,13 +6,18 @@ using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {
-	public class MIDIInputDevice : InputDevice
+	public class MIDIInputDevice : IDisposable, IMIDIInputDevice
 	{
-		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null) : base(deviceID)
+		private InputDevice InputDevice { get; }
+
+		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
+			InputDevice = new InputDevice(deviceID);
 			TranslationMap = translationMap;
-			ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
+			InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
 		}
+
+		public int DeviceID => InputDevice.DeviceID;
 		
 		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
 		
@@ -20,15 +25,15 @@ namespace MIDIator
 
 		public bool IsRecording { get; protected set; }
 
-		public string Name => GetDeviceCapabilities(DeviceID).name;
+		public string Name => InputDevice.GetDeviceCapabilities(DeviceID).name;
 
-		public int DriverVersion => GetDeviceCapabilities(DeviceID).driverVersion;
+		public int DriverVersion => InputDevice.GetDeviceCapabilities(DeviceID).driverVersion;
 
-		public short MID => GetDeviceCapabilities(DeviceID).mid;
+		public short MID => InputDevice.GetDeviceCapabilities(DeviceID).mid;
 
-		public short PID => GetDeviceCapabilities(DeviceID).pid;
+		public short PID => InputDevice.GetDeviceCapabilities(DeviceID).pid;
 
-		public int Support => GetDeviceCapabilities(DeviceID).support;
+		public int Support => InputDevice.GetDeviceCapabilities(DeviceID).support;
 
 		private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
 		{
@@ -38,14 +43,14 @@ namespace MIDIator
 		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
 		{
 			var incomingMessage = channelMessageEventArgs.Message;
-			var translations = TranslationMap?.Translations.Where(t => t.InputMatchFunction(incomingMessage, t.InputMessageMatchTarget)).ToList();
+			var translations = TranslationMap?.Translations.Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
 			if (translations != null && translations.Any())
 			{
 				translations
 					.ToList()
 					.ForEach(translation =>
 					{
-						var translatedMessage = translation.TranslationFunction(incomingMessage, translation.OutputMessageTemplate);
+						var translatedMessage = TranslationFunctions.Get(translation.TranslationFunction)(incomingMessage, translation.OutputMessageTemplate);
 						ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(translatedMessage.ToChannelMessage()))
 							.ToList()
 							.ForEach(c =>
@@ -65,16 +70,15 @@ namespace MIDIator
 			}
 		}
 
-
 		public void Start()
 		{
-			StartRecording();
+			InputDevice.StartRecording();
 			IsRecording = true;
 		}
 
 		public void Stop()
 		{
-			StopRecording();
+			InputDevice.StopRecording();
 			IsRecording = false;
 		}
 
@@ -88,7 +92,7 @@ namespace MIDIator
 			var wasRecording = IsRecording;
 			if (IsRecording)
 				Stop();
-			SysCommonMessageReceived += action;
+			InputDevice.SysCommonMessageReceived += action;
 
 			if (wasRecording)
 				Start();
@@ -99,7 +103,7 @@ namespace MIDIator
 			var wasRecording = IsRecording;
 			if (IsRecording)
 				Stop();
-			SysExMessageReceived += action;
+			InputDevice.SysExMessageReceived += action;
 
 			if (wasRecording)
 				Start();
@@ -110,7 +114,7 @@ namespace MIDIator
 			var wasRecording = IsRecording;
 			if (IsRecording)
 				Stop();
-			SysRealtimeMessageReceived += action;
+			InputDevice.SysRealtimeMessageReceived += action;
 
 			if (wasRecording)
 				Start();
@@ -121,16 +125,15 @@ namespace MIDIator
 			var wasRecording = IsRecording;
 			if (IsRecording)
 				Stop();
-			Error += action;
+			InputDevice.Error += action;
 
 			if (wasRecording)
 				Start();
 		}
-
-		public new void Dispose()
+		
+		public void Dispose()
 		{
-			Reset();
-			base.Dispose();
+			InputDevice.Dispose();
 		}
 	}
 }

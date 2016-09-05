@@ -28,9 +28,9 @@ namespace MIDIator
 			}
 		}
 
-		public static IList<MIDIInputDevice> DevicesInUse { get; } = new List<MIDIInputDevice>();
+		public static IList<IMIDIInputDevice> DevicesInUse { get; } = new List<IMIDIInputDevice>();
 
-        public static MIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
+        public static IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
         {
 	        if (DevicesInUse != null && DevicesInUse.Any(device => device.DeviceID == deviceID))
 		        return DevicesInUse.First(device => device.DeviceID == deviceID);
@@ -51,7 +51,7 @@ namespace MIDIator
 			}
 		}
 
-	    public static MIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
+	    public static IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
 	    {
 		    Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 		    if (DevicesInUse != null && DevicesInUse.Any(nameMatch))
@@ -80,10 +80,10 @@ namespace MIDIator
 			return device;
 		}
 
-		public static void RemoveDevice(MIDIInputDevice inputDevice)
+		public static void RemoveDevice(IMIDIInputDevice inputDevice)
 		{
 			DevicesInUse.Remove(inputDevice);
-			inputDevice.Dispose();
+			((IDisposable)inputDevice).Dispose();
 		}
 	}
 }
