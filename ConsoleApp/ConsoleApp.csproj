@@ -52,9 +52,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MIDIator\MIDIator.csproj">
+    <ProjectReference Include="..\MIDIator.Core\MIDIator.Core.csproj">
       <Project>{02553dc6-8d06-4bb4-87b3-baa9c0e4756f}</Project>
-      <Name>MIDIator</Name>
+      <Name>MIDIator.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sanford.Multimedia.Midi\Source\Sanford.Multimedia.Midi.csproj">
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>

@@ -89,9 +89,9 @@
     <Compile Include="TranslationTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MIDIator\MIDIator.csproj">
+    <ProjectReference Include="..\MIDIator.Core\MIDIator.Core.csproj">
       <Project>{02553DC6-8D06-4BB4-87B3-BAA9C0E4756F}</Project>
-      <Name>MIDIator</Name>
+      <Name>MIDIator.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sanford.Multimedia.Midi\Source\Sanford.Multimedia.Midi.csproj">
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>
@@ -101,6 +101,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

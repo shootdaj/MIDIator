@@ -16,10 +16,8 @@ using TobiasErichsen.teVirtualMIDI;
 
 namespace ConsoleApp
 {
-
 	class MIDIShits
 	{
-
 		public static TeVirtualMIDI port;
 
 		public static void WorkThreadFunction()

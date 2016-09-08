@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using MIDIator;
 using Sanford.Multimedia.Midi;
 using TobiasErichsen.teVirtualMIDI;
@@ -14,7 +11,7 @@ namespace ConsoleApp
 	class Program
 	{
 		static void Main(string[] args)
-		{
+		{ 
 			GuitarWingMap();
 		}
 

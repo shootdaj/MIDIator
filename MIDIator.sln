@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator", "MIDIator\MIDIator.csproj", "{02553DC6-8D06-4BB4-87B3-BAA9C0E4756F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator.Core", "MIDIator.Core\MIDIator.Core.csproj", "{02553DC6-8D06-4BB4-87B3-BAA9C0E4756F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator.Tests", "MIDIator.Tests\MIDIator.Tests.csproj", "{B62030ED-5B69-41D6-99EA-FE26B3C5B530}"
 EndProject
