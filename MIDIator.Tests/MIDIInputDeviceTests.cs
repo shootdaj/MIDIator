@@ -43,7 +43,7 @@ namespace MIDIator.Tests
 			Thread.Sleep(Timeout);
 
 			midiInputDevice.Stop	();
-			MIDIManager.RemoveDevice(midiInputDevice);
+			MIDIManager.RemoveInputDevice(midiInputDevice);
 		}
 
 
@@ -68,7 +68,7 @@ namespace MIDIator.Tests
 			Thread.Sleep(Timeout);
 
 			midiInputDevice.Stop();
-			MIDIManager.RemoveDevice(midiInputDevice);
+			MIDIManager.RemoveInputDevice(midiInputDevice);
 		}
 	}
 }

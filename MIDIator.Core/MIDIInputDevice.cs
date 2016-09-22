@@ -21,7 +21,7 @@ namespace MIDIator
 		
 		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
 		
-		public ITranslationMap TranslationMap { get; private set; }
+		public ITranslationMap TranslationMap { get; set; }
 
 		public bool IsRecording { get; protected set; }
 
@@ -85,6 +85,15 @@ namespace MIDIator
 		public void AddChannelMessageAction(ChannelMessageAction channelMessageAction)
 		{
 			ChannelMessageActions.Add(channelMessageAction);
+		}
+
+		/// <summary>
+		/// Removes all channel message actions that have the given name.
+		/// </summary>
+		/// <param name="name"></param>
+		public void RemoveChannelMessageAction(string name)
+		{
+			ChannelMessageActions.RemoveAll(action => action.Name == name);
 		}
 
 		public void AddSysCommonMessageAction(EventHandler<SysCommonMessageEventArgs> action)

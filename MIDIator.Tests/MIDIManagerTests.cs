@@ -7,7 +7,7 @@ namespace MIDIator.Tests
 		[Test]
 		public void Devices_ReturnsSomeDevices()
 		{
-			var devices = MIDIManager.FreeDevices;
+			var devices = MIDIManager.AvailableInputDevices;
 		}
 
 		//[Test]

@@ -43,6 +43,10 @@
       <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Refigure, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refigure.1.0.10.0\lib\net45\Refigure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -64,7 +68,11 @@
     <Compile Include="ITranslationMap.cs" />
     <Compile Include="Json\DisplayNameSerializationBinder.cs" />
     <Compile Include="Json\SerializationSettings.cs" />
+    <Compile Include="Transformation.cs" />
+    <Compile Include="Profile.cs" />
     <Compile Include="TranslationFunction.cs" />
+    <Compile Include="VirtualOutputDevice.cs" />
+    <Compile Include="VirtualMIDIManager.cs" />
     <Compile Include="VirtualMIDI\teVirtualMIDI.cs" />
     <Compile Include="TranslationFunctions.cs" />
     <Compile Include="TranslationMap.cs" />
@@ -85,6 +93,14 @@
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>
       <Name>Sanford.Multimedia.Midi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tevirtualMIDI.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="teVirtualMIDI32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

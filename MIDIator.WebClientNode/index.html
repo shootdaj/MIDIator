@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <base href=".">
+    <title>Acme Product Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="node_modules/bootstrap/dist/css/darkly.min.css" rel="stylesheet" />
+	<link href="app/app.component.css" rel="stylesheet"/>
+	<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
+	<link rel="stylesheet" href="app/js/loading-bar.css"/>
+
+	<!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+	<script type='text/javascript' src='app/js/loading-bar.js'></script>
+
+    <!-- Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function(err){ console.error(err);  });
+    </script>
+</head>
+
+<body>
+    <app>Loading App...</app>
+</body>
+
+</html>

@@ -34,5 +34,5 @@ namespace MIDIator
             OutputDevice.Reset();
             OutputDevice.Dispose();
         }
-    }
+	}
 }

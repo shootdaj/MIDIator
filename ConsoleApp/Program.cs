@@ -34,8 +34,8 @@ namespace ConsoleApp
 
 			TeVirtualMIDI.logging(TeVirtualMIDI.TE_VM_LOGGING_MISC | TeVirtualMIDI.TE_VM_LOGGING_RX | TeVirtualMIDI.TE_VM_LOGGING_TX);
 
-			var manufacturer = new Guid("aa4e075f-3504-4aab-9b06-9a4104a91cf0");
-			var product = new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
+			var manufacturer = Guid.NewGuid();// new Guid("aa4e075f-3504-4aab-9b06-9a4104a91cf0");
+			var product = Guid.NewGuid();//new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
 
 			var guitarWingReader = new TeVirtualMIDI("MIDIator - GuitarWingReader", 65535, TeVirtualMIDI.TE_VM_FLAGS_PARSE_RX, ref manufacturer, ref product);
 
@@ -50,7 +50,7 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			MIDIManager.RemoveDevice(guitarWing);
+			MIDIManager.RemoveInputDevice(guitarWing);
 		}
 
 		static void OrbitMap()
@@ -68,7 +68,7 @@ namespace ConsoleApp
 			var product = new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
 
 			var orbitReader = new TeVirtualMIDI("MIDIator - OrbitReader", 65535, TeVirtualMIDI.TE_VM_FLAGS_PARSE_RX, ref manufacturer, ref product);
-
+			
 			orbit.AddChannelMessageAction(new ChannelMessageAction(message => true,
 				message =>
 				{
@@ -80,7 +80,7 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			MIDIManager.RemoveDevice(orbit);
+			MIDIManager.RemoveInputDevice(orbit);
 		}
 	}
 }

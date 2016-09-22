@@ -7,7 +7,7 @@ namespace MIDIator
 	public interface IMIDIInputDevice
 	{
 		int DeviceID { get; }
-		ITranslationMap TranslationMap { get; }
+		ITranslationMap TranslationMap { get; set; }
 		bool IsRecording { get; }
 		string Name { get; }
 		int DriverVersion { get; }
