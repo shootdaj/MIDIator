@@ -1,12 +1,30 @@
-This is an updated version of the finished sample code from my Pluralsight course: Angular 2: Getting Started located here: https://app.pluralsight.com/library/courses/angular-2-getting-started.
+# angular2-quickstart
 
-To use this code:
+This tiny repo is done according to angular2 quickstart guide
+just to show how simple it is to use angular2 with 3rd party ng2-* modules
+like this one: https://github.com/valor-software/ng2-bootstrap
 
-1) Open a command prompt in the project's root directory (APM)
+# Quick start
 
-2) Type: `npm install`
-    This installs the dependencies as defined in the package.json file.
-    
-3) Type: `npm start`
-    This launches the TypeScript compiler (tsc) to compile the application and wait for changes. 
-    It also starts the lite-server and launches the browser to run the application.
+Clone this repo
+`npm i` and `npm start` and you are ready!
+
+## Couple of things you should pay attention
+1. Install and add `map` for `moment.js` in system.js config
+  ```js
+  'moment': 'node_modules/moment/moment.js'
+  ```
+
+2. Import `ng2-bootstrap` in `index.html` before starting application
+  ```html
+  <script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
+  ```
+
+3. Use new forms
+  ```js
+  import {provideForms, disableDeprecatedForms} from '@angular/forms';
+  
+  bootstrap(AppComponent, [disableDeprecatedForms(), provideForms()]);
+  ```
+
+Good luck with angular2 hacking!

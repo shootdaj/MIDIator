@@ -11,10 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var AppComponent = (function () {
     function AppComponent() {
+        this.dt = new Date();
+        this.minDate = null;
+        this.formats = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY', 'shortDate'];
+        this.format = this.formats[0];
+        this.dateOptions = {
+            formatYear: 'YY',
+            startingDay: 1
+        };
+        this.opened = false;
     }
+    AppComponent.prototype.getDate = function () {
+        return this.dt && this.dt.getTime() || new Date().getTime();
+    };
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'app',
+            selector: 'my-app',
             templateUrl: 'app/app.component.html'
         }), 
         __metadata('design:paramtypes', [])
