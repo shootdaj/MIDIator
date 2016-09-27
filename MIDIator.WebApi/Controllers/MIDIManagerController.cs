@@ -5,11 +5,7 @@ namespace MIDIator.Web.Controllers
 {
 	public class MIDIManagerController : ApiController
 	{
-		[HttpGet]
-		public IEnumerable<dynamic> AvailableDevices()
-		{
-			return MIDIManager.AvailableInputDevices;
-		}
+		#region Profile
 
 		[HttpGet]
 		public Profile GetProfile(string name)
@@ -17,18 +13,78 @@ namespace MIDIator.Web.Controllers
 			return MIDIManager.CurrentProfile;
 		}
 
+		#endregion
+
+		#region Transformations
+
 		[HttpPost]
-		public Profile CreateTransformation(string name, string inputDeviceName, string outputDeviceName, TranslationMap translationMap, bool startDevices)
+		public Transformation CreateTransformation(string name, string inputDeviceName, string outputDeviceName, TranslationMap translationMap, bool startDevices)
 		{
-			MIDIManager.CreateTransformation(name, MIDIManager.GetInputDevice(inputDeviceName),
-				MIDIManager.GetOutputDevice(outputDeviceName), translationMap);
-
-			return MIDIManager.CurrentProfile;
+			return MIDIManager.CreateTransformation(name, inputDeviceName, outputDeviceName, translationMap);
 		}
 
-		public bool ReadTranslationMap(TranslationMap map)
+		[HttpPost]
+		public static void RemoveTransformation(string name)
 		{
-			return true;
+			MIDIManager.RemoveTransformation(name);
 		}
+
+		#endregion
+
+		#region Input Devices
+
+		[HttpGet]
+		public static IEnumerable<dynamic> AvailableInputDevices()
+		{
+			return MIDIManager.AvailableInputDevices;
+		}
+
+		[HttpPost]
+		public static IMIDIInputDevice GetInputDevice(string name)
+		{
+			return MIDIManager.GetInputDevice(name);
+		}
+
+		[HttpPost]
+		public static void RemoveInputDevice(string name)
+		{
+			MIDIManager.RemoveInputDevice(name);
+		}
+
+		[HttpPost]
+		public static void SetTranslationMap(string inputDevice, TranslationMap map)
+		{
+			MIDIManager.SetTranslationMap(inputDevice, map);
+		}
+
+		#endregion
+
+		#region Output Devices
+
+		[HttpGet]
+		public static IEnumerable<dynamic> AvailableOutputDevices()
+		{
+			return MIDIManager.AvailableOutputDevices;
+		}
+
+		[HttpPost]
+		public static IMIDIOutputDevice GetOutputDevice(string name)
+		{
+			return MIDIManager.GetOutputDevice(name);
+		}
+
+		[HttpPost]
+		public static void RemoveOutputDevice(string name)
+		{
+			MIDIManager.RemoveOutputDevice(name);
+		}
+
+
+		#endregion
+
+		//public bool ReadTranslationMap(TranslationMap map)
+		//{
+		//	return true;
+		//}
 	}
 }

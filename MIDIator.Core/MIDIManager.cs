@@ -13,7 +13,35 @@ namespace MIDIator
 			CurrentProfile = new Profile { Name = "DefaultProfile", }; //later load this from somewhere
 		}
 
+		#region Internals
+
+		public static IList<IMIDIInputDevice> InputDevicesInUse { get; } = new List<IMIDIInputDevice>();
+
+		public static IList<IMIDIOutputDevice> OutputDevicesInUse { get; } = new List<IMIDIOutputDevice>();
+
+		private static MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
+		{
+			var device = new MIDIInputDevice(deviceID, translationMap);
+			InputDevicesInUse.Add(device);
+			return device;
+		}
+
+		private static MIDIOutputDevice CreateOutputDevice(int deviceID)
+		{
+			var device = new MIDIOutputDevice(deviceID);
+			OutputDevicesInUse.Add(device);
+			return device;
+		}
+
+		#endregion
+
+		#region Profile
+
 		public static Profile CurrentProfile { get; }
+
+		#endregion
+
+		#region Transformations
 
 		public static Transformation CreateTransformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, TranslationMap translationMap)
 		{
@@ -22,11 +50,21 @@ namespace MIDIator
 			return transformation;
 		}
 
+		public static Transformation CreateTransformation(string name, string inputDeviceName, string outputDeviceName,
+			TranslationMap translationMap)
+		{
+			return CreateTransformation(name, GetInputDevice(inputDeviceName), GetOutputDevice(outputDeviceName), translationMap);
+		}
+
 		public static void RemoveTransformation(string name)
 		{
 			CurrentProfile.Transformations.Where(t => t.Name == name).ToList().ForEach(t => t.Dispose());
 			CurrentProfile.Transformations.RemoveAll(t => t.Name == name);
 		}
+
+		#endregion
+
+		#region Input Devices
 
 		public static int InputDeviceCount => InputDevice.DeviceCount;
 
@@ -48,33 +86,7 @@ namespace MIDIator
 			}
 		}
 
-		public static IEnumerable<dynamic> AvailableOutputDevices
-		{
-			get
-			{
-				for (int i = 0; i < OutputDeviceBase.DeviceCount; i++)
-				{
-					dynamic returnValue = new ExpandoObject();
-					returnValue.Name = OutputDeviceBase.GetDeviceCapabilities(i).name;
-					returnValue.DriverVersion = OutputDeviceBase.GetDeviceCapabilities(i).driverVersion;
-					returnValue.MID = OutputDeviceBase.GetDeviceCapabilities(i).mid;
-					returnValue.PID = OutputDeviceBase.GetDeviceCapabilities(i).pid;
-					returnValue.Support = OutputDeviceBase.GetDeviceCapabilities(i).support;
-					returnValue.DeviceID = i;
-					returnValue.Technology = OutputDeviceBase.GetDeviceCapabilities(i).technology;
-					returnValue.Voices = OutputDeviceBase.GetDeviceCapabilities(i).voices;
-					returnValue.Notes = OutputDeviceBase.GetDeviceCapabilities(i).notes;
-					returnValue.ChannelMask = OutputDeviceBase.GetDeviceCapabilities(i).channelMask;
-					yield return returnValue;
-				}
-			}
-		}
-
-		public static IList<IMIDIInputDevice> InputDevicesInUse { get; } = new List<IMIDIInputDevice>();
-
-		public static IList<IMIDIOutputDevice> OutputDevicesInUse { get; } = new List<IMIDIOutputDevice>();
-
-        public static IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
+		public static IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
 		{
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(device => device.DeviceID == deviceID))
 				return InputDevicesInUse.First(device => device.DeviceID == deviceID);
@@ -117,6 +129,53 @@ namespace MIDIator
 			}
 		}
 
+		public static void RemoveInputDevice(string name)
+		{
+			RemoveInputDevice(GetInputDevice(name));
+		}
+
+		public static void RemoveInputDevice(IMIDIInputDevice inputDevice)
+		{
+			InputDevicesInUse.Remove(inputDevice);
+			((IDisposable)inputDevice).Dispose();
+		}
+
+		public static void SetTranslationMap(IMIDIInputDevice inputDevice, ITranslationMap map)
+		{
+			inputDevice.TranslationMap = map;
+		}
+
+		public static void SetTranslationMap(string inputDevice, ITranslationMap map)
+		{
+			GetInputDevice(inputDevice).TranslationMap = map;
+		}
+
+		#endregion
+
+		#region Output Devices
+
+		public static IEnumerable<dynamic> AvailableOutputDevices
+		{
+			get
+			{
+				for (int i = 0; i < OutputDeviceBase.DeviceCount; i++)
+				{
+					dynamic returnValue = new ExpandoObject();
+					returnValue.Name = OutputDeviceBase.GetDeviceCapabilities(i).name;
+					returnValue.DriverVersion = OutputDeviceBase.GetDeviceCapabilities(i).driverVersion;
+					returnValue.MID = OutputDeviceBase.GetDeviceCapabilities(i).mid;
+					returnValue.PID = OutputDeviceBase.GetDeviceCapabilities(i).pid;
+					returnValue.Support = OutputDeviceBase.GetDeviceCapabilities(i).support;
+					returnValue.DeviceID = i;
+					returnValue.Technology = OutputDeviceBase.GetDeviceCapabilities(i).technology;
+					returnValue.Voices = OutputDeviceBase.GetDeviceCapabilities(i).voices;
+					returnValue.Notes = OutputDeviceBase.GetDeviceCapabilities(i).notes;
+					returnValue.ChannelMask = OutputDeviceBase.GetDeviceCapabilities(i).channelMask;
+					yield return returnValue;
+				}
+			}
+		}
+
 		public static IMIDIOutputDevice GetOutputDevice(string name, bool failSilently = false)
 		{
 			Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
@@ -139,30 +198,17 @@ namespace MIDIator
 			}
 		}
 
-		private static MIDIOutputDevice CreateOutputDevice(int deviceID, ITranslationMap translationMap = null)
-		{
-			var device = new MIDIOutputDevice(deviceID);
-			OutputDevicesInUse.Add(device);
-			return device;
-		}
-
 		public static void RemoveOutputDevice(IMIDIOutputDevice device)
 		{
 			OutputDevicesInUse.Remove(device);
 			((IDisposable)device).Dispose();
 		}
-
-		private static MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
+		
+		public static void RemoveOutputDevice(string name)
 		{
-			var device = new MIDIInputDevice(deviceID, translationMap);
-			InputDevicesInUse.Add(device);
-			return device;
+			RemoveOutputDevice(GetOutputDevice(name));
 		}
 
-		public static void RemoveInputDevice(IMIDIInputDevice inputDevice)
-		{
-			InputDevicesInUse.Remove(inputDevice);
-			((IDisposable)inputDevice).Dispose();
-		}
+		#endregion
 	}
 }
