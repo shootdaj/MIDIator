@@ -1,0 +1,35 @@
+<mdl-layout class="mdl-layout--no-drawer-button">
+    <mdl-layout-header>
+        <mdl-layout-header-row>
+            <mdl-layout-title>MIDIator</mdl-layout-title>
+            <mdl-layout-spacer></mdl-layout-spacer>
+            <!-- Navigation. We hide it in small screens. -->
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link">Link</a>
+            </nav>
+        </mdl-layout-header-row>
+    </mdl-layout-header>
+    <mdl-layout-content class="app-content">
+        <form>
+            <div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                    <input class="mdl-textfield__input" value="TouchOSC" type="text" id="inputDevice" readonly tabIndex="-1" data-val="TouchOSC" />
+                    <label class="mdl-textfield__label" for="inputDevice">Input Device</label>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="inputDevice">
+                        <li class="mdl-menu__item" *ngFor="let device of availableInputDevices" attr.data-val="{{device.Name}}">{{device.Name}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <mdl-textfield type="text"
+                               label="Text..."
+                               placeholder="type a text"
+                               autofocus></mdl-textfield>
+            </div>
+            <div>
+                <mdl-checkbox [mdl-ripple]="true"> Checkbox </mdl-checkbox>
+            </div>
+
+        </form>
+    </mdl-layout-content>
+</mdl-layout>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>327a7804-f7ac-42b1-8f83-115b55a6bc1d</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ngMIDIator</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory).editorconfig" />
+    <None Include="$(MSBuildThisFileDirectory).gitignore" />
+    <None Include="$(MSBuildThisFileDirectory)karma.conf.js" />
+    <None Include="$(MSBuildThisFileDirectory)npm-debug.log.1211365364" />
+    <None Include="$(MSBuildThisFileDirectory)protractor.conf.js" />
+    <None Include="$(MSBuildThisFileDirectory)README.md" />
+	<Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\**\*.*" />
+	<Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\e2e\**\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)angular-cli.json" />
+    <Content Include="$(MSBuildThisFileDirectory)package.json" />
+    <Content Include="$(MSBuildThisFileDirectory)tslint.json" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,16 @@
+@import "../node_modules/angular2-mdl/src/scss-mdl/color-definitions";
+
+$color-primary: $palette-deep-orange-500;
+$color-primary-dark: $palette-light-blue-A400;
+$color-accent: $palette-light-green-300;
+$color-primary-contrast: $color-dark-contrast;
+$color-accent-contrast: $color-dark-contrast;
+
+/* ==========  Typography  ========== */
+
+$text-color-primary: unquote("rgba(#{$color-white}, 0.9)"); 
+$field-outline-color: unquote("rgba(#{$color-primary}, 0.5)"); 
+$checkbox-off-color: $field-outline-color;
+$input-text-bottom-border-color: $field-outline-color;
+
+@import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";

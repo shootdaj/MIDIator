@@ -1,0 +1,11 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css";
+
+body {
+    background-color: #343333;
+    /*color: #DDDDDD;*/
+}  
+
+.app-content {
+    padding: 20px;
+}
