@@ -3,7 +3,8 @@ using System.Web.Http;
 
 namespace MIDIator.Web.Controllers
 {
-	public class MIDIManagerController : ApiController
+	[RoutePrefix("midi")]
+	public class MIDIController : ApiController
 	{
 		#region Profile
 
@@ -24,7 +25,7 @@ namespace MIDIator.Web.Controllers
 		}
 
 		[HttpPost]
-		public static void RemoveTransformation(string name)
+		public void RemoveTransformation(string name)
 		{
 			MIDIManager.RemoveTransformation(name);
 		}
@@ -34,25 +35,25 @@ namespace MIDIator.Web.Controllers
 		#region Input Devices
 
 		[HttpGet]
-		public static IEnumerable<dynamic> AvailableInputDevices()
+		public IEnumerable<dynamic> AvailableInputDevices()
 		{
 			return MIDIManager.AvailableInputDevices;
 		}
 
 		[HttpPost]
-		public static IMIDIInputDevice GetInputDevice(string name)
+		public IMIDIInputDevice GetInputDevice(string name)
 		{
 			return MIDIManager.GetInputDevice(name);
 		}
 
 		[HttpPost]
-		public static void RemoveInputDevice(string name)
+		public void RemoveInputDevice(string name)
 		{
 			MIDIManager.RemoveInputDevice(name);
 		}
 
 		[HttpPost]
-		public static void SetTranslationMap(string inputDevice, TranslationMap map)
+		public void SetTranslationMap(string inputDevice, TranslationMap map)
 		{
 			MIDIManager.SetTranslationMap(inputDevice, map);
 		}
@@ -74,7 +75,7 @@ namespace MIDIator.Web.Controllers
 		}
 
 		[HttpPost]
-		public static void RemoveOutputDevice(string name)
+		public void RemoveOutputDevice(string name)
 		{
 			MIDIManager.RemoveOutputDevice(name);
 		}

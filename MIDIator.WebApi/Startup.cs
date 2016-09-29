@@ -9,6 +9,7 @@ namespace MIDIator.Web
 		public void Configuration(IAppBuilder app)
 		{
 			HttpConfiguration config = new HttpConfiguration();
+			config.MapHttpAttributeRoutes();
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
 				routeTemplate: "{controller}/{action}",
