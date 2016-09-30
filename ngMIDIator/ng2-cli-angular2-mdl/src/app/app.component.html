@@ -20,13 +20,14 @@
 						<div class="mdl-grid transformation-card-body">
 							<div class="mdl-cell--4-col">
 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-									<input class="mdl-textfield__input" value="Select..." type="text" id="inputDevice" readonly tabIndex="-1" data-val="Select..." />
+									<input class="mdl-textfield__input" value="Select..." type="text" id="inputDevice" readonly tabIndex="-1" data-val="Select..."/>
 									<label class="mdl-textfield__label" for="inputDevice">Input Device</label>
 									<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="inputDevice">
 										<li class="mdl-menu__item" *ngFor="let device of availableInputDevices" attr.data-val="{{device.Name}}">{{device.Name}}</li>
 									</ul>
 								</div>
 							</div>
+							<div class="mdl-cell--1-col"></div>
 							<div class="mdl-cell--4-col">
 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
 									<input class="mdl-textfield__input" value="Select..." type="text" id="outputDevice" readonly tabIndex="-1" data-val="Select..." />
