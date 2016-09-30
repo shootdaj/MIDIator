@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Microsoft.Owin.Cors;
 using MIDIator.Json;
 using Owin;
 
@@ -20,6 +21,7 @@ namespace MIDIator.Web
 			config.Routes.IgnoreRoute("Glimpse", "{resource}.axd/{*pathInfo}");
 			config.Formatters.JsonFormatter.SerializerSettings = SerializerSettings.DefaultSettings;
 
+			app.UseCors(CorsOptions.AllowAll);
 			app.UseWebApi(config);
 		}
 	}

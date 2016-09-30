@@ -63,13 +63,13 @@ namespace MIDIator.Web.Controllers
 		#region Output Devices
 
 		[HttpGet]
-		public static IEnumerable<dynamic> AvailableOutputDevices()
+		public IEnumerable<dynamic> AvailableOutputDevices()
 		{
 			return MIDIManager.AvailableOutputDevices;
 		}
 
 		[HttpPost]
-		public static IMIDIOutputDevice GetOutputDevice(string name)
+		public IMIDIOutputDevice GetOutputDevice(string name)
 		{
 			return MIDIManager.GetOutputDevice(name);
 		}
