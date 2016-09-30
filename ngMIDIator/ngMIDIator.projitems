@@ -20,5 +20,6 @@
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\karma.conf.js" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\protractor.conf.js" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\README.md" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\rxjs-operators.ts" />
   </ItemGroup>
 </Project>

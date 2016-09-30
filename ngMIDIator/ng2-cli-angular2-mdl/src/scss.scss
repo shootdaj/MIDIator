@@ -6,11 +6,37 @@ $color-accent: $palette-light-green-300;
 $color-primary-contrast: $color-dark-contrast;
 $color-accent-contrast: $color-dark-contrast;
 
+/* ==========  Custom Colors  ========== */
+
+
 /* ==========  Typography  ========== */
 
 $text-color-primary: unquote("rgba(#{$color-white}, 0.9)"); 
 $field-outline-color: unquote("rgba(#{$color-primary}, 0.5)"); 
 $checkbox-off-color: $field-outline-color;
 $input-text-bottom-border-color: $field-outline-color;
+
+/* ==========  Card  ========== */
+
+$card-background-color: rgba(79, 78, 124, 0.51);
+/*
+	Possible card background colors:
+		rgba(93, 78, 124, 0.73)
+		#574e7c
+		#4e4f7c
+		#4f4e7c
+		#5d4e7c
+*/
+
+$card-text-color: $text-color-primary;
+//$card-image-placeholder-color: unquote("rgb(#{$color-accent})") !default;
+$card-supporting-text-text-color: $text-color-primary;
+//$card-border-color: rgba(0,0,0,0.1) !default;
+//$card-subtitle-color: unquote("rgba(#{$color-black}, 0.54)") !default;
+
+/* ==========  Standard Buttons  ========== */
+
+$button-primary-color: unquote("rgba(#{$palette-grey-200}, 0.50)") !default;
+$button-secondary-color: unquote("rgb(#{$color-white})") !default;
 
 @import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";

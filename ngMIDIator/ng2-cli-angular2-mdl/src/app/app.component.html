@@ -1,35 +1,73 @@
 <mdl-layout class="mdl-layout--no-drawer-button">
-    <mdl-layout-header>
-        <mdl-layout-header-row>
-            <mdl-layout-title>MIDIator</mdl-layout-title>
-            <mdl-layout-spacer></mdl-layout-spacer>
-            <!-- Navigation. We hide it in small screens. -->
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link">Link</a>
-            </nav>
-        </mdl-layout-header-row>
-    </mdl-layout-header>
-    <mdl-layout-content class="app-content">
-        <form>
-            <div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                    <input class="mdl-textfield__input" value="TouchOSC" type="text" id="inputDevice" readonly tabIndex="-1" data-val="TouchOSC" />
-                    <label class="mdl-textfield__label" for="inputDevice">Input Device</label>
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="inputDevice">
-                        <li class="mdl-menu__item" *ngFor="let device of availableInputDevices" attr.data-val="{{device.Name}}">{{device.Name}}</li>
-                    </ul>
-                </div>
-            </div>
-            <div>
-                <mdl-textfield type="text"
-                               label="Text..."
-                               placeholder="type a text"
-                               autofocus></mdl-textfield>
-            </div>
-            <div>
-                <mdl-checkbox [mdl-ripple]="true"> Checkbox </mdl-checkbox>
-            </div>
+	<mdl-layout-header>
+		<mdl-layout-header-row>
+			<mdl-layout-title>MIDIator</mdl-layout-title>
+			<mdl-layout-spacer></mdl-layout-spacer>
+			<!-- Navigation. We hide it in small screens. -->
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link">Link</a>
+			</nav>
+		</mdl-layout-header-row>
+	</mdl-layout-header>
+	<mdl-layout-content class="app-content">
+		<form>
+			<div class="mdl-grid transformation-card">
+				<mdl-card mdl-shadow="4" class="mdl-cell mdl-cell--12-col">
+					<mdl-card-title>
+						<h2 mdl-card-title-text style="display: flex; align-items: center;"><span class="zmdi zmdi-caret-up-circle zmdi-hc-2x" style="vertical-align: middle;"></span>&nbsp;<span style="vertical-align: middle;">Touch OSC Transformation</span></h2>
+					</mdl-card-title>
+					<mdl-card-supporting-text>
+						<div class="mdl-grid transformation-card-body">
+							<div class="mdl-cell--4-col">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+									<input class="mdl-textfield__input" value="Select..." type="text" id="inputDevice" readonly tabIndex="-1" data-val="Select..." />
+									<label class="mdl-textfield__label" for="inputDevice">Input Device</label>
+									<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="inputDevice">
+										<li class="mdl-menu__item" *ngFor="let device of availableInputDevices" attr.data-val="{{device.Name}}">{{device.Name}}</li>
+									</ul>
+								</div>
+							</div>
+							<div class="mdl-cell--4-col">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+									<input class="mdl-textfield__input" value="Select..." type="text" id="outputDevice" readonly tabIndex="-1" data-val="Select..." />
+									<label class="mdl-textfield__label" for="outputDevice">Output Device</label>
+									<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="outputDevice">
+										<li class="mdl-menu__item" *ngFor="let outputDevice of availableOutputDevices" attr.data-val="{{outputDevice.Name}}">{{outputDevice.Name}}</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</mdl-card-supporting-text>
+					<!--<mdl-card-menu>
 
-        </form>
-    </mdl-layout-content>
+					</mdl-card-menu>-->
+					<mdl-card-actions mdl-card-border>
+						
+							<button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>
+								Save
+							</button>
+							<button mdl-button mdl-button-type="raised" mdl-ripple>
+								Cancel
+							</button>
+						
+					</mdl-card-actions>
+				</mdl-card>
+			</div>
+
+
+			<!--<div>
+
+			</div>
+			<div>
+				<mdl-textfield type="text"
+							   label="Text..."
+							   placeholder="type a text"
+							   autofocus></mdl-textfield>
+			</div>
+			<div>
+				<mdl-checkbox [mdl-ripple]="true"> Checkbox </mdl-checkbox>
+			</div>-->
+
+		</form>
+	</mdl-layout-content>
 </mdl-layout>

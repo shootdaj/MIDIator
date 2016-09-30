@@ -1,11 +1,31 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css";
 @import "https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css";
+
+
+#loader-container {
+    background: -webkit-radial-gradient(black, #222222); /* Safari 5.1 to 6.0 */
+    text-align: center;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    height: 100%;
+}
 
 body {
     background-color: #343333;
-    /*color: #DDDDDD;*/
+	height: 100%;
 }  
 
 .app-content {
     padding: 20px;
 }
+
+.transformation-card {
+	max-width: 100%;
+}
+
+.transformation-card-body {
+padding-bottom: 20px;
+}
+
