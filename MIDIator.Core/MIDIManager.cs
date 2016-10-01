@@ -210,5 +210,19 @@ namespace MIDIator
 		}
 
 		#endregion
+
+		#region Translations
+
+		public static IEnumerable<string> ChannelCommands()
+		{
+			return Enum.GetNames(typeof(ChannelCommand));
+		}
+
+		public static IEnumerable<int> MIDIChannels()
+		{
+			return Enumerable.Range(1, 16).ToArray();
+		}
+
+		#endregion
 	}
 }

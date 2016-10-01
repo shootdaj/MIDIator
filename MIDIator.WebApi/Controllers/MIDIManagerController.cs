@@ -83,9 +83,20 @@ namespace MIDIator.Web.Controllers
 
 		#endregion
 
-		//public bool ReadTranslationMap(TranslationMap map)
-		//{
-		//	return true;
-		//}
+		#region Translation
+
+		[HttpGet]
+		public IEnumerable<string> ChannelCommands()
+		{
+			return MIDIManager.ChannelCommands();
+		}
+
+		[HttpGet]
+		public IEnumerable<int> MIDIChannels()
+		{
+			return MIDIManager.MIDIChannels();
+		}
+
+		#endregion
 	}
 }
