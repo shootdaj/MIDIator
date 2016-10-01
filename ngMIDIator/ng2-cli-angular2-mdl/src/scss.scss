@@ -11,8 +11,8 @@ $color-accent-contrast: $color-dark-contrast;
 
 /* ==========  Typography  ========== */
 
-$text-color-primary: unquote("rgba(#{$color-white}, 0.9)"); 
-$field-outline-color: unquote("rgba(#{$color-primary}, 0.5)"); 
+$text-color-primary: unquote("rgba(#{$color-white}, 0.9)");
+$field-outline-color: unquote("rgba(#{$color-primary}, 0.5)");
 $checkbox-off-color: $field-outline-color;
 $input-text-bottom-border-color: $field-outline-color;
 
@@ -31,7 +31,7 @@ $card-background-color: rgba(79, 78, 124, 0.51);
 $card-text-color: $text-color-primary;
 //$card-image-placeholder-color: unquote("rgb(#{$color-accent})") !default;
 $card-supporting-text-text-color: $text-color-primary;
-//$card-border-color: rgba(0,0,0,0.1) !default;
+$card-border-color: unquote("rgba(#{$text-color-primary}, 0.3)");
 //$card-subtitle-color: unquote("rgba(#{$color-black}, 0.54)") !default;
 
 /* ==========  Standard Buttons  ========== */

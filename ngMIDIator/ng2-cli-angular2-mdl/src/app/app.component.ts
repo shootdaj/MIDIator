@@ -22,12 +22,16 @@ export class AppComponent {
     constructor(private http: Http) {
         this.getAvailableInputDevices();
 		this.getAvailableOutputDevices();
+		this.getChannelCommands();
+		this.getMIDIChannels();
     }
 
     public inputDevice = new FormControl('');
 
 	public availableInputDevices: Observable<Array<any>>;
 	public availableOutputDevices: Observable<Array<any>>;
+	public channelCommands: Observable<Array<any>>;
+	public midiChannels: Observable<Array<any>>;
 	
     public getAvailableInputDevices() {
 	    this.http.get('http://localhost:9000/midi/AvailableInputDevices')
@@ -42,6 +46,19 @@ export class AppComponent {
 			.subscribe(data => this.availableOutputDevices = data,
 				err => console.log(err));
 	}
-    
+
+	public getChannelCommands() {
+		this.http.get('http://localhost:9000/midi/ChannelCommands')
+			.map(response => response.json())
+			.subscribe(data => this.channelCommands = data,
+			err => console.log(err));
+	}
+
+	public getMIDIChannels() {
+		this.http.get('http://localhost:9000/midi/MIDIChannels')
+			.map(response => response.json())
+			.subscribe(data => this.midiChannels = data,
+			err => console.log(err));
+	}
 }
 

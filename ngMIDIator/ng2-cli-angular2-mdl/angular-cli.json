@@ -16,7 +16,8 @@
       "mobile": false,
       "styles": [
         "scss.scss",
-        "styles.css"
+        "styles.css",
+        "assets/mdl-selectfield/mdl-selectfield.css"
       ],
       "scripts": [],
       "environments": {
