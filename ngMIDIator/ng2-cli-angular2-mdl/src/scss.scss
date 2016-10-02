@@ -8,6 +8,9 @@ $color-accent-contrast: $color-dark-contrast;
 
 /* ==========  Custom Colors  ========== */
 
+$custom-bright-grey: unquote("rgba(#{$palette-grey-200}, 0.50)");
+$custom-medium-grey: unquote("rgba(#{$palette-grey-600}, 0.5)");
+$custom-almost-black: unquote("rgba(#{$palette-grey-800}, 0.5)");
 
 /* ==========  Typography  ========== */
 
@@ -27,7 +30,6 @@ $card-background-color: rgba(79, 78, 124, 0.51);
 		#4f4e7c
 		#5d4e7c
 */
-
 $card-text-color: $text-color-primary;
 //$card-image-placeholder-color: unquote("rgb(#{$color-accent})") !default;
 $card-supporting-text-text-color: $text-color-primary;
@@ -36,7 +38,13 @@ $card-border-color: unquote("rgba(#{$text-color-primary}, 0.3)");
 
 /* ==========  Standard Buttons  ========== */
 
-$button-primary-color: unquote("rgba(#{$palette-grey-200}, 0.50)") !default;
-$button-secondary-color: unquote("rgb(#{$color-white})") !default;
+$button-primary-color: $custom-bright-grey;
+$button-secondary-color: unquote("rgb(#{$color-white})");
+
+/* ==========  Custom Classes  ========== */
+.dark-option{
+    color: unquote("rgb(#{$color-black})")
+}
 
 @import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";
+@import "../src/assets/mdl-selectfield/mdl-selectfield-anshul.scss";

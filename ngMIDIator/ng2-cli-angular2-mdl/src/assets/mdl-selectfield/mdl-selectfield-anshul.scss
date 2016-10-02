@@ -194,7 +194,7 @@
   text-align: left;
   color: inherit;
   border: none;
-  border-bottom: 1px solid rgba(0,0,0, 0.12);
+  border-bottom: 1px solid $field-outline-color;
   border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -206,12 +206,12 @@
     box-shadow: none; }
   fieldset[disabled] .mdl-selectfield .mdl-selectfield__select, .mdl-selectfield.is-disabled .mdl-selectfield__select {
     background-color: transparent;
-    border-bottom: 1px dotted unquote("rgba(#{$color-primary}, 0.5)");
+    border-bottom: 1px dotted rgba(0,0,0, 0.12);
     color: rgba(0,0,0, 0.26); }
 
 .mdl-selectfield__label {
   bottom: 0;
-  color: rgba(0,0,0, 0.26);
+  color: unquote("rgb(#{$color-primary})");
   font-size: 16px;
   left: 0;
   right: 0;
@@ -233,7 +233,7 @@
     color: rgba(0,0,0, 0.26); }
   .mdl-selectfield--floating-label.is-focused .mdl-selectfield__label,
   .mdl-selectfield--floating-label.is-dirty .mdl-selectfield__label {
-    color: rgb(63,81,181);
+    color:  unquote("rgb(#{$color-primary})");
     font-size: 12px;
     top: 4px;
     visibility: visible; }
@@ -241,7 +241,7 @@
     color: rgb(222, 50, 38);
     font-size: 12px; }
   .mdl-selectfield__label:after {
-    background-color: rgb(63,81,181);
+    background-color: unquote("rgb(#{$color-primary})");
     bottom: 20px;
     content: '';
     height: 2px;

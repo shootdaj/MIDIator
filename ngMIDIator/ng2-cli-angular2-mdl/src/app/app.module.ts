@@ -5,10 +5,12 @@ import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
 //import { Observable } from 'rxjs/Observable';
 import { AppComponent } from './app.component';
+import { DropdownComponent } from './mdl-dropdown.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        DropdownComponent
     ],
     imports: [
         BrowserModule,

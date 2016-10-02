@@ -10,6 +10,7 @@ import {Injectable} from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import './rxjs-operators';
+import { DropdownOption, DropdownComponent } from './mdl-dropdown.component'
 
 
 @Component({
@@ -28,36 +29,40 @@ export class AppComponent {
 
     public inputDevice = new FormControl('');
 
-	public availableInputDevices: Observable<Array<any>>;
-	public availableOutputDevices: Observable<Array<any>>;
-	public channelCommands: Observable<Array<any>>;
-	public midiChannels: Observable<Array<any>>;
+	public availableInputDevices: Observable<Array<DropdownOption>>;
+	public availableOutputDevices: Observable<Array<DropdownOption>>;
+	public channelCommands: Observable<Array<DropdownOption>>;
+	public midiChannels: Observable<Array<DropdownOption>>;
 	
     public getAvailableInputDevices() {
 	    this.http.get('http://localhost:9000/midi/AvailableInputDevices')
 		    .map(response => response.json())
-		    .subscribe(data => this.availableInputDevices = data,
+		    .subscribe(data => this.availableInputDevices = 
+			data.map(device => { return new DropdownOption(device.Name, device.Name); }),
 			    err => console.log(err));
     }
 
 	public getAvailableOutputDevices() {
 		this.http.get('http://localhost:9000/midi/AvailableOutputDevices')
 			.map(response => response.json())
-			.subscribe(data => this.availableOutputDevices = data,
+			.subscribe(data => this.availableOutputDevices = 
+			data.map(device => { return new DropdownOption(device.Name, device.Name); }),
 				err => console.log(err));
 	}
 
 	public getChannelCommands() {
 		this.http.get('http://localhost:9000/midi/ChannelCommands')
 			.map(response => response.json())
-			.subscribe(data => this.channelCommands = data,
+			.subscribe(data => this.channelCommands = 
+			data.map(channelCommand => { return new DropdownOption(channelCommand, channelCommand); }),
 			err => console.log(err));
 	}
 
 	public getMIDIChannels() {
 		this.http.get('http://localhost:9000/midi/MIDIChannels')
 			.map(response => response.json())
-			.subscribe(data => this.midiChannels = data,
+			.subscribe(data => this.midiChannels = 
+			data.map(channel => { return new DropdownOption(channel, channel); }),
 			err => console.log(err));
 	}
 }
