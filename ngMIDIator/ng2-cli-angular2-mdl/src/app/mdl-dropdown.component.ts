@@ -1,26 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-
-// @Component({
-//     selector: 'mdl-dropdown',
-//     templateUrl: './mdl-dropdown.component.html'
-// })
-
-// export class MdlDropdownComponent {
-
-// }
-
-
-
-export class DropdownOption {
-    value: string;
-    label: string;
-
-    constructor(value: string, label: string) {
-        this.value = value;
-        this.label = label;
-    }
-}
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'mdl-dropdown',
@@ -31,13 +9,25 @@ export class DropdownComponent {
     @Input() dropdownLabel: string;
     @Input() placeholder: string;
     @Input() id: string;
-    @Output() select: EventEmitter<any>;
+    @Output() select: EventEmitter<any>; //this can be fed by parent to do something when dropdown changes
+    @Input() selectedOption: DropdownOption;
 
     constructor() {
         this.select = new EventEmitter();
     }
 
-    selectItem(value) {
+    onOptionSelected(value) {
+        this.selectedOption = value;
         this.select.emit(value);
+    }
+}
+
+export class DropdownOption {
+    value: string;
+    label: string;
+
+    constructor(value: string, label: string) {
+        this.value = value;
+        this.label = label;
     }
 }

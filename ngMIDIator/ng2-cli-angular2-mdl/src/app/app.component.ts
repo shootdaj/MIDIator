@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     FormGroup,
@@ -19,12 +19,14 @@ import { DropdownOption, DropdownComponent } from './mdl-dropdown.component'
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+    // @ViewChild('select') selectObjects;
 
     constructor(private http: Http) {
         this.getAvailableInputDevices();
 		this.getAvailableOutputDevices();
 		this.getChannelCommands();
 		this.getMIDIChannels();
+		this.selectedInputDevice = null;
     }
 
     public inputDevice = new FormControl('');
@@ -33,13 +35,21 @@ export class AppComponent {
 	public availableOutputDevices: Observable<Array<DropdownOption>>;
 	public channelCommands: Observable<Array<DropdownOption>>;
 	public midiChannels: Observable<Array<DropdownOption>>;
+
+	public selectedInputDevice : DropdownOption;
+	public selectedOutputDevice: DropdownOption;
 	
+	public onInputDeviceSelected(device) {
+		this.selectedInputDevice = device;
+		console.log(device);
+	}
+
     public getAvailableInputDevices() {
 	    this.http.get('http://localhost:9000/midi/AvailableInputDevices')
 		    .map(response => response.json())
 		    .subscribe(data => this.availableInputDevices = 
 			data.map(device => { return new DropdownOption(device.Name, device.Name); }),
-			    err => console.log(err));
+			    err => console.log(err));	
     }
 
 	public getAvailableOutputDevices() {

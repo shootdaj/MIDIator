@@ -17,6 +17,10 @@ $custom-almost-black: unquote("rgba(#{$palette-grey-800}, 0.5)");
 $text-color-primary: unquote("rgba(#{$color-white}, 0.9)");
 $field-outline-color: unquote("rgba(#{$color-primary}, 0.5)");
 $checkbox-off-color: $field-outline-color;
+
+/* ==========  Text fields  ========== */
+
+$input-text-label-color: unquote("rgba(#{$color-primary}, 1.0)");
 $input-text-bottom-border-color: $field-outline-color;
 
 /* ==========  Card  ========== */
