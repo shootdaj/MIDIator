@@ -14,6 +14,8 @@ namespace MIDIator.Tests
 
 			Assert.That(VirtualMIDIManager.VirtualDevices.Contains(testDevice));
 			Assert.That(MIDIManager.AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName));
+
+			testDevice.Dispose();
 		}
 
 		[Test]
