@@ -10,15 +10,51 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\angular-cli.json" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\index.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\package.json" />
-    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\**\*.*" />
-    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\e2e\**\*.*" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\app.component.css" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\app.component.html" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\translation.ts" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\dropdownOption.ts" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\inputDevice.component.html" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\mdl-dropdown.component.html" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\index.html" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\styles.css" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\tsconfig.json" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\tslint.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\.editorconfig" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\assets\.npmignore" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\inline.js" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\inline.map" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\main.bundle.js" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\main.map" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\styles.bundle.js" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\dist\styles.map" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\karma.conf.js" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\protractor.conf.js" />
-    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\README.md" />    
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\README.md" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\app.component.spec.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\app.component.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\app.module.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\midiService.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\base.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\index.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\inputDevice.component.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\mdl-dropdown.component.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\rxjs-operators.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\shared\index.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\.gitkeep" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\.npmignore" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield-anshul.scss" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield.js" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\environments\environment.prod.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\environments\environment.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\main.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\polyfills.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\scss.scss" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\test.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\typings.d.ts" />
   </ItemGroup>
 </Project>

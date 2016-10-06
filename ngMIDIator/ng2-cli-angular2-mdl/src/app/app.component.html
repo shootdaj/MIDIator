@@ -11,77 +11,62 @@
 	</mdl-layout-header>
 	<mdl-layout-content class="app-content">
 		<!--<form>-->
-			<div class="mdl-grid transformation-card">
-				<mdl-card mdl-shadow="4" class="mdl-cell mdl-cell--12-col">
-					<mdl-card-title>
-						<h2 mdl-card-title-text style="display: flex; align-items: center;">
-							<span class="zmdi zmdi-caret-up-circle zmdi-hc-2x" style="vertical-align: middle;"></span>
-							<!-- <button mdl-button mdl-button-type="fab" mdl-shadow="4">
-								<span class="zmdi zmdi-caret-up zmdi-hc-2x"></span>
-							</button> -->
-							&nbsp;<span style="vertical-align: middle;">Touch OSC Transformation</span>
-						</h2>
-					</mdl-card-title>
-					<mdl-card-supporting-text>
-						<div class="mdl-grid transformation-card-body">
-							<div class="mdl-cell--12-col">
-								<div class="mdl-grid">
-									<div class="mdl-cell--12-col">
-										<mdl-dropdown [id]="'inputDevice'" [options]="availableInputDevices" [dropdownLabel]="'Input Device'" [placeholder]="'Select...'" [selectedOption]="selectedInputDevice" (select)="onInputDeviceSelected($event)"></mdl-dropdown>  <!---->
-									</div>
+		<div class="mdl-grid transformation-card">
+			<mdl-card mdl-shadow="4" class="mdl-cell mdl-cell--12-col">
+				<mdl-card-title>
+					<h2 mdl-card-title-text style="display: flex; align-items: center;">
+						<!--<span class="zmdi zmdi-caret-up-circle zmdi-hc-2x" style="vertical-align: middle;" mdl-colored="accent"></span>-->
+						<button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple>
+							<span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+							<!--<mdl-icon>dash</mdl-icon>-->
+						</button> &nbsp;
+						<span style="vertical-align: middle;">Touch OSC Transformation</span>
+					</h2>
+				</mdl-card-title>
+				<mdl-card-supporting-text>
+					<div class="mdl-grid transformation-card-body">
+						<div class="mdl-cell--12-col">
+							<div class="mdl-grid">
+								<div class="mdl-cell--12-col">
+									<mdl-dropdown [id]="'inputDevice'" [options]="availableInputDevices" [dropdownLabel]="'Input Device'" [placeholder]="'Select...'"
+												  [selectedOption]="selectedInputDevice" (select)="onInputDeviceSelected($event)"></mdl-dropdown>
 								</div>
-								<div class="mdl-grid">
-									<div class="mdl-cell--12-col">
-										<mdl-dropdown [id]="'outputDevice'" [options]="availableOutputDevices" [dropdownLabel]="'Output Device'" [placeholder]="'Select...'"></mdl-dropdown>
-									</div>
+							</div>
+							<div class="mdl-grid">
+								<div class="mdl-cell--12-col">
+									<mdl-dropdown [id]="'outputDevice'" [options]="availableOutputDevices" [dropdownLabel]="'Output Device'" [placeholder]="'Select...'"
+												  [selectedOption]="selectedOutputDevice" (select)="onOutputDeviceSelected($event)"></mdl-dropdown>
 								</div>
-								<div class="mdl-grid">
-									<div class="mdl-cell--12-col">
-										<h5>Translations</h5>
-										<div class="mdl-grid">
-											<div class="mdl-cell--3-col">
-												<div style="width: 90%">
-													<mdl-dropdown [id]="'t1ChannelCommand'" [options]="channelCommands" [dropdownLabel]="'Channel Command'" [placeholder]="'Select...'" [selectedOption]=""></mdl-dropdown> 
-
-
-													<!--<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-														<select id="t1ChannelCommandOld" class="mdl-selectfield__select" [ngModel]="selectedInputDevice" (ngModelChange)="inputDeviceSelected($event)">
-															<option [ngValue]="channelCommand" [value]="channelCommand.value" *ngFor="let channelCommand of channelCommands" class="dark-option">{{channelCommand.label}}</option>
-														</select>
-														<label class="mdl-selectfield__label" for="t1ChannelCommandOld">Channel Command</label>
-														<span class="mdl-selectfield__error">Select...</span>
-													</div>													-->
+							</div>
+							<div class="mdl-grid">
+								<div class="mdl-cell--12-col">
+									<h4>
+										<button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple>
+											<span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+										</button>&nbsp; <span style="vertical-align: middle;">Translations</span>
+									</h4>
+									<div class="mdl-grid">
+										<div class="mdl-cell--12-col">
+											<div class="mdl-grid">
+												<div class="mdl-cell--3-col">
+													<div style="width: 90%">
+														<mdl-dropdown [id]="'t1ChannelCommand'" [options]="channelCommands" [dropdownLabel]="'Channel Command'"></mdl-dropdown>
+													</div>
 												</div>
-											</div>
-											<div class="mdl-cell--3-col">
-												<div style="width: 90%">
-													<mdl-dropdown [id]="'t1MIDIChannel'" [options]="midiChannels" [dropdownLabel]="'MIDI Channel'" [placeholder]="'Select...'"></mdl-dropdown>
-													
-													<!--<div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-														<select id="rtrt" class="mdl-selectfield__select">
-															<option value="{{midiChannel.value}}" *ngFor="let midiChannel of midiChannels" class="dark-option">{{midiChannel.label}}</option>
-														</select>
-														<label class="mdl-selectfield__label" for="rtrt">MIDI Channel</label>
-														<span class="mdl-selectfield__error">Select...</span>
-													</div>-->
-
-													<!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-														<input class="mdl-textfield__input" value="Select..." type="text" id="translation1MIDIChannel" readonly tabIndex="-1" data-val="Select..." />
-														<label class="mdl-textfield__label" for="translation1MIDIChannel">MIDI Channel</label>
-														<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="translation1MIDIChannel">
-															<li class="mdl-menu__item" *ngFor="let midiChannel of midiChannels" attr.data-val="{{midiChannel}}">{{midiChannel}}</li>
-														</ul>
-													</div>-->
+												<div class="mdl-cell--3-col">
+													<div style="width: 90%">
+														<mdl-dropdown [id]="'t1MIDIChannel'" [options]="midiChannels" [dropdownLabel]="'MIDI Channel'"></mdl-dropdown>
+													</div>
 												</div>
-											</div>
-											<div class="mdl-cell--3-col">
-												<div style="width: 90%">
-													<mdl-textfield type="text" label="Data1" floating-label></mdl-textfield> 
+												<div class="mdl-cell--3-col">
+													<div style="width: 90%">
+														<mdl-textfield type="text" label="Data1" floating-label></mdl-textfield>
+													</div>
 												</div>
-											</div>
-											<div class="mdl-cell--3-col">
-												<div style="width: 90%">
-													<mdl-textfield type="text" label="Data2" floating-label></mdl-textfield> 
+												<div class="mdl-cell--3-col">
+													<div style="width: 90%">
+														<mdl-textfield type="text" label="Data2" floating-label></mdl-textfield>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -89,25 +74,26 @@
 								</div>
 							</div>
 						</div>
-					</mdl-card-supporting-text>
-					<!--<mdl-card-menu>
+					</div>
+				</mdl-card-supporting-text>
+				<!--<mdl-card-menu>
 
 					</mdl-card-menu>-->
-					<mdl-card-actions mdl-card-border>
+				<mdl-card-actions mdl-card-border>
 
-						<button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>
-							Save
-						</button>
-						<button mdl-button mdl-button-type="raised" mdl-ripple>
-							Cancel
-						</button>
+					<button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>
+						Save
+					</button>
+					<button mdl-button mdl-button-type="raised" mdl-ripple>
+						Cancel
+					</button>
 
-					</mdl-card-actions>
-				</mdl-card>
-			</div>
+				</mdl-card-actions>
+			</mdl-card>
+		</div>
 
 
-			<!--<div>
+		<!--<div>
 
 			</div>
 			<div>
@@ -119,7 +105,6 @@
 			<div>
 				<mdl-checkbox [mdl-ripple]="true"> Checkbox </mdl-checkbox>
 			</div>-->
-
 		<!--</form>-->
 	</mdl-layout-content>
 </mdl-layout>
