@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
+using TypeLite;
 
 namespace MIDIator
 {
+	[TsClass]
 	public class MIDIInputDevice : IDisposable, IMIDIInputDevice
 	{
 		private InputDevice InputDevice { get; }

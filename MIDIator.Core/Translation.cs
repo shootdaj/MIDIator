@@ -3,10 +3,12 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Sanford.Multimedia.Midi;
+using TypeLite;
 
 namespace MIDIator
 {
-    [DataContract]
+	[TsClass]
+	[DataContract]
 	[DisplayName(nameof(Translation))]
 	public class Translation : ITranslation
 	{

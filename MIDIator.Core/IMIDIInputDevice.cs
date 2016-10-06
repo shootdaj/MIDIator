@@ -21,5 +21,11 @@ namespace MIDIator
 		void AddSysExMessageAction(EventHandler<SysExMessageEventArgs> action);
 		void AddSysRealtimeMessageAction(EventHandler<SysRealtimeMessageEventArgs> action);
 		void AddErrorAction(EventHandler<ErrorEventArgs> action);
+
+		/// <summary>
+		/// Removes all channel message actions that have the given name.
+		/// </summary>
+		/// <param name="name"></param>
+		void RemoveChannelMessageAction(string name);
 	}
 }

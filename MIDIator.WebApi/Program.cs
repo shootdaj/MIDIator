@@ -11,6 +11,7 @@ namespace MIDIator.Web
 
 			using (WebApp.Start<Startup>(baseAddress))
 			{
+				Console.WriteLine(MIDIManager.One);
 				Console.WriteLine($"Server running at {baseAddress}. Hit any key to exit.");
 				Console.ReadLine();
 			}

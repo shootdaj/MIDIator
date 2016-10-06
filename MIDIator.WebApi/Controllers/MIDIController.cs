@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using Anshul.Utilities;
+using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Web.Controllers
 {
@@ -9,9 +11,22 @@ namespace MIDIator.Web.Controllers
 		#region Profile
 
 		[HttpGet]
-		public Profile GetProfile(string name)
+		public Profile Profile()
 		{
-			return MIDIManager.CurrentProfile;
+			return new Profile()
+			{
+				Name = "DefaultProfile",
+				Transformations = new List<Transformation>()
+				{
+					new Transformation("TouchOSCXForm",
+						MIDIManager.GetInputDevice("Livid Guitar Wing"),
+						MIDIManager.GetOutputDevice("Livid Guitar Wing"),
+						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
+							new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
+							InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()
+							))
+				}
+			};
 		}
 
 		#endregion

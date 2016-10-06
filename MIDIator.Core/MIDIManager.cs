@@ -8,9 +8,11 @@ namespace MIDIator
 {
 	public static class MIDIManager
 	{
+		public const int One = 1;
+
 		static MIDIManager()
 		{
-			CurrentProfile = new Profile { Name = "DefaultProfile", }; //later load this from somewhere
+			Console.WriteLine("WTF");
 		}
 
 		#region Internals
@@ -203,7 +205,7 @@ namespace MIDIator
 			OutputDevicesInUse.Remove(device);
 			((IDisposable)device).Dispose();
 		}
-		
+
 		public static void RemoveOutputDevice(string name)
 		{
 			RemoveOutputDevice(GetOutputDevice(name));

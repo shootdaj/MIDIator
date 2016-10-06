@@ -1,13 +1,12 @@
-﻿using System;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using Sanford.Multimedia.Midi;
+﻿using Sanford.Multimedia.Midi;
+using TypeLite;
 
 namespace MIDIator
 {
 	/// <summary>
 	/// Abstracts out the information needed to translate one MIDI signal into another.
 	/// </summary>
+	[TsInterface]
 	public interface ITranslation
 	{
 		/// <summary>

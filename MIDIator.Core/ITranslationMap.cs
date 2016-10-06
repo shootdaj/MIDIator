@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using TypeLite;
 
 namespace MIDIator
 {
+	[TsInterface]
 	public interface ITranslationMap
 	{
 		//MIDIInputDevice InputDevice { get; set; }

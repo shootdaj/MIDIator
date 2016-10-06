@@ -37,6 +37,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using TypeLite;
 
 namespace Sanford.Multimedia.Midi
 {
@@ -434,6 +435,7 @@ namespace Sanford.Multimedia.Midi
 	/// <summary>
 	/// Represents MIDI channel messages.
 	/// </summary>
+	[TsClass]
 	[DataContract]
 	[ImmutableObject(true)]
 	[DisplayName(nameof(ChannelMessage))]

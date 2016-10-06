@@ -1,9 +1,11 @@
 using System;
 using Sanford.Multimedia.Midi;
+using TypeLite;
 
 namespace MIDIator
 {
-    public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice
+	[TsClass]
+	public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice
     {
         public MIDIOutputDevice(int deviceID)
         {
@@ -19,7 +21,7 @@ namespace MIDIator
 	    public short MID => OutputDeviceBase.GetDeviceCapabilities(DeviceID).mid;
 
 	    public short PID => OutputDeviceBase.GetDeviceCapabilities(DeviceID).pid;
-
+		
 		public int Support => InputDevice.GetDeviceCapabilities(DeviceID).support;
 
 		public int DeviceID => OutputDevice.DeviceID;

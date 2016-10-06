@@ -1,21 +1,25 @@
-﻿using System;		
+﻿using System;
+using TypeLite;
 
 namespace MIDIator
 {
+	[TsClass]
 	public class Transformation : IDisposable
 	{
 		public string Name { get; set; }
 		private string ForwardActionName { get; } = "Forward";
-		public MIDIInputDevice InputDevice { get; set; }
-		public MIDIOutputDevice OutputDevice { get; set; }
+		public IMIDIInputDevice InputDevice { get; set; }
+		public IMIDIOutputDevice OutputDevice { get; set; }
 
 		public ITranslationMap TranslationMap => InputDevice.TranslationMap;
 
 		public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap)
 		{
 			Name = name;
-			inputDevice.TranslationMap = translationMap;
-			inputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, outputDevice.Send, ForwardActionName));
+			InputDevice = inputDevice;
+			OutputDevice = outputDevice;
+			InputDevice.TranslationMap = translationMap;
+			InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
 		}
 
 		public void Dispose()

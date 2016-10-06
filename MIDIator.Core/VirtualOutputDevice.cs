@@ -3,7 +3,7 @@ using Refigure;
 using TobiasErichsen.teVirtualMIDI;
 
 namespace MIDIator
-{
+{	
 	public class VirtualOutputDevice : IDisposable
 	{
 		public VirtualOutputDevice(string name, ref Guid manufacturerID, ref Guid productID, bool prefixName = true)
