@@ -9,10 +9,9 @@ import {
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { EnumValues } from 'enum-values';
 import './rxjs-operators';
-import { DropdownOption, DropdownComponent } from './mdl-dropdown.component';
-import { ITranslation } from './base';
-import { ITranslationMap } from './base';
+import { IDropdownOption, DropdownComponent } from './mdl-dropdown.component';
 import { MIDIInputDevice } from './base';
 import { MIDIOutputDevice } from './base';
 import { Translation } from './base';
@@ -23,6 +22,7 @@ import { MessageType } from './base';
 import { Profile } from './base';
 import { Transformation } from './base';
 import { MIDIService } from './midiService'
+import { ProfileComponent } from './profile.component'
 
 @Component({
 	selector: 'app-root',
@@ -51,13 +51,13 @@ export class AppComponent {
 		//this.selectedInputDevice = null;
 	}
 
-	public availableInputDevices: Observable<Array<DropdownOption>>;
-	public availableOutputDevices: Observable<Array<DropdownOption>>;
-	public channelCommands: Observable<Array<DropdownOption>>;
-	public midiChannels: Observable<Array<DropdownOption>>;
+	public availableInputDevices: Observable<Array<IDropdownOption>>;
+	public availableOutputDevices: Observable<Array<IDropdownOption>>;
+	public channelCommands: Observable<Array<IDropdownOption>>;
+	public midiChannels: Observable<Array<IDropdownOption>>;
 
-	public selectedInputDevice: DropdownOption;
-	public selectedOutputDevice: DropdownOption;
+	public selectedInputDevice: IDropdownOption;
+	public selectedOutputDevice: IDropdownOption;
 
 	public onInputDeviceSelected(device) {
 		this.selectedInputDevice = device;

@@ -1,33 +1,35 @@
-import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, DoCheck } from '@angular/core';
 
 @Component({
     selector: 'mdl-dropdown',
     templateUrl: './mdl-dropdown.component.html'
 })
-export class DropdownComponent {
-    @Input() options: DropdownOption[];
+export class DropdownComponent implements DoCheck {
+    @Input() options: IDropdownOption[];
     @Input() dropdownLabel: string;
     @Input() placeholder: string;
     @Input() id: string;
-    @Output() select: EventEmitter<any>; //this can be fed by parent to do something when dropdown changes
-    @Input() selectedOption: DropdownOption;
+    @Output() selectedOptionChange: EventEmitter<any>; //this can be fed by parent to do something when dropdown changes
+    @Input() selectedOption: IDropdownOption;
 
     constructor() {
-        this.select = new EventEmitter();
     }
 
-    onOptionSelected(value) {
-        this.selectedOption = value;
-        this.select.emit(value);
-    }
+    //onOptionSelected(value) {
+    //    this.selectedOption = value;
+    //    this.selectedOptionChange.emit(value);
+    //}
+
+	ngDoCheck(): void {
+		this.selectedOptionChange.next(this.selectedOption);
+	}
+}
+
+export interface IDropdownOption {
+    value: string;
+    label: string;
 }
 
 export class DropdownOption {
-    value: string;
-    label: string;
-
-    constructor(value: string, label: string) {
-        this.value = value;
-        this.label = label;
-    }
+	constructor(public value: string, public label: string) {}
 }

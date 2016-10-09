@@ -1,0 +1,22 @@
+<div class="mdl-grid">
+	<div class="mdl-cell--12-col">
+		<div class="mdl-grid">
+			<div class="mdl-cell--12-col">
+				<mdl-dropdown [options]="availableInputMatchFunctions" [dropdownLabel]="'Input Match Function'" [placeholder]="'Select...'"
+					  [selectedOption]="inputMatchFunction" (select)="onInputDeviceSelected($event)"></mdl-dropdown>
+			</div>
+		</div>
+		<div class="mdl-grid">
+			<div class="mdl-cell--12-col">
+				Input Message (Match Target):
+				<channel-message [(channelMessage)]="translation.inputMessageMatchTarget"></channel-message>
+			</div>
+		</div>
+		<div class="mdl-grid">
+			<div class="mdl-cell--12-col">
+				Input Message (Match Target):
+				<channel-message [(channelMessage)]="translation.inputMessageMatchTarget"></channel-message>
+			</div>
+		</div>
+	</div>
+</div>

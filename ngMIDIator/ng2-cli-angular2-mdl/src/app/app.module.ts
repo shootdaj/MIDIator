@@ -5,8 +5,6 @@ import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
 import { AppComponent } from './app.component';
 import { DropdownComponent } from './mdl-dropdown.component';
-import { ITranslation } from './base';
-import { ITranslationMap } from './base';
 import { MIDIInputDevice } from './base';
 import { MIDIOutputDevice } from './base';
 import { Transformation } from './base';
@@ -16,10 +14,13 @@ import { InputMatchFunction } from './base';
 import { TranslationFunction } from './base';
 import { MessageType } from './base';
 
+import { ProfileComponent } from './profile.component'
+
 @NgModule({
     declarations: [
         AppComponent,
-        DropdownComponent
+        DropdownComponent,
+		ProfileComponent
     ],
     imports: [
         BrowserModule,

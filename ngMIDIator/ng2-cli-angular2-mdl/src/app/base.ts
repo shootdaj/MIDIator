@@ -1,15 +1,10 @@
-﻿export interface ITranslation {
-	inputMatchFunction: InputMatchFunction;
-	inputMessageMatchTarget: ShortMessage;
-	outputMessageTemplate: ShortMessage;
-	translationFunction: TranslationFunction;
+﻿import { IDropdownOption } from './mdl-dropdown.component'
+
+export interface TranslationMap {
+	translations: Translation[];
 }
 
-export interface ITranslationMap {
-	translations: ITranslation[];
-}
-
-export interface MIDIInputDevice {
+export abstract class MIDIInputDevice implements IDropdownOption {
 	deviceId: number;
 	driverVersion: number;
 	isRecording: boolean;
@@ -17,26 +12,38 @@ export interface MIDIInputDevice {
 	name: string;
 	pid: number;
 	support: number;
-	translationMap: ITranslationMap;
+	translationMap: TranslationMap;
+	get value(): string {
+        return this.deviceId.toString();
+    }
+	get label(): string {
+        return this.name.toString();
+    }
 }
 
-export interface MIDIOutputDevice {
+export abstract class MIDIOutputDevice implements IDropdownOption {
 	deviceId: number;
 	driverVersion: number;
 	mid: number;
 	name: string;
 	pid: number;
 	support: number;
+	get value(): string {
+        return this.deviceId.toString();
+    }
+	get label(): string {
+        return this.name.toString();
+    }
 }
 
 export interface Transformation {
 	inputDevice: MIDIInputDevice;
 	name: string;
 	outputDevice: MIDIOutputDevice;
-	translationMap: ITranslationMap;
+	translationMap: TranslationMap;
 }
 
-export interface Translation extends ITranslation {
+export interface Translation {
 	inputMatchFunction: InputMatchFunction;
 	inputMessageMatchTarget: ShortMessage;
 	outputMessageTemplate: ShortMessage;
@@ -65,6 +72,16 @@ export const enum InputMatchFunction {
 	CatchAll = 2
 }
 
+export const enum ChannelCommand {
+	NoteOff = 128,
+	NoteOn = 144,
+	PolyPressure = 160,
+	Controller = 176,
+	ProgramChange = 192,
+	ChannelPressure = 208,
+	PitchWheel = 224
+}
+
 export const enum TranslationFunction {
 	DirectTranslation = 0,
 	ChangeNote = 1,
@@ -77,4 +94,16 @@ export const enum MessageType {
 	SystemCommon = 2,
 	SystemRealtime = 3,
 	Meta = 4
+}
+
+export abstract class ChannelMessage implements ShortMessage {
+	channelCommand: ChannelCommand;
+	data1: number;
+	data2: number;
+	get messageType(): MessageType {
+		return MessageType.Channel;
+	}
+	midiChannel: number;
+	message: number;
+	status: number;
 }
