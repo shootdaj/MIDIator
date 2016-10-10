@@ -1,12 +1,31 @@
 ﻿
  
  
+ 
 
  
 
 /// <reference path="Enums.ts" />
 
 declare module MIDIator {
+	interface IMIDIInputDevice {
+		DeviceID: number;
+		DriverVersion: number;
+		IsRecording: boolean;
+		MID: number;
+		Name: string;
+		PID: number;
+		Support: number;
+		TranslationMap: MIDIator.ITranslationMap;
+	}
+	interface IMIDIOutputDevice {
+		DeviceID: number;
+		DriverVersion: number;
+		MID: number;
+		Name: string;
+		PID: number;
+		Support: number;
+	}
 	interface ITranslation {
 		InputMatchFunction: MIDIator.InputMatchFunction;
 		InputMessageMatchTarget: Sanford.Multimedia.Midi.ShortMessage;
@@ -40,9 +59,9 @@ declare module MIDIator {
 		VirtualOutputDevices: MIDIator.VirtualOutputDevice[];
 	}
 	interface Transformation {
-		InputDevice: MIDIator.MIDIInputDevice;
+		InputDevice: MIDIator.IMIDIInputDevice;
 		Name: string;
-		OutputDevice: MIDIator.MIDIOutputDevice;
+		OutputDevice: MIDIator.IMIDIOutputDevice;
 		TranslationMap: MIDIator.ITranslationMap;
 	}
 	interface Translation extends MIDIator.ITranslation {
@@ -56,6 +75,13 @@ declare module MIDIator {
 	}
 }
 declare module Sanford.Multimedia.Midi {
+	interface ChannelMessage extends Sanford.Multimedia.Midi.ShortMessage {
+		Command: Sanford.Multimedia.Midi.ChannelCommand;
+		Data1: number;
+		Data2: number;
+		MessageType: Sanford.Multimedia.Midi.MessageType;
+		MidiChannel: number;
+	}
 	interface ShortMessage {
 		Message: number;
 		MessageType: Sanford.Multimedia.Midi.MessageType;

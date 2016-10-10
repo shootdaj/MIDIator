@@ -1,10 +1,12 @@
 ﻿<#@ template debug="false" hostspecific="True" language="C#" #>
 <#@ assembly name="$(TargetDir)TypeLite.dll" #>
 <#@ assembly name="$(TargetDir)TypeLite.Net4.dll" #>
+<#@ assembly name="$(TargetDir)Sanford.Multimedia.Midi.dll" #>
 <#@ assembly name="$(TargetDir)$(TargetFileName)" #>
 
 <#@ import namespace="TypeLite" #> 
 <#@ import namespace="TypeLite.Net4" #> 
+<#@ import namespace="Sanford.Multimedia.Midi" #> 
 <#@output extension=".d.ts"#>
 
  <#@include file="Manager.ttinclude"#>
@@ -12,6 +14,9 @@
 
 <# var ts = TypeScript.Definitions()
 		.WithReference("Enums.ts")
+		.For<ChannelMessage>()
+		.For<ChannelCommand>()
+		.For<MessageType>()
 		.ForLoadedAssemblies();
 #>
 

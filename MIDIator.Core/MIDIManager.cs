@@ -11,9 +11,7 @@ namespace MIDIator
 		public const int One = 1;
 
 		static MIDIManager()
-		{
-			Console.WriteLine("WTF");
-		}
+		{}
 
 		#region Internals
 
