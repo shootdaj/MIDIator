@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Profile } from './base';
+import { Observable } from 'rxjs/Observable';
+import { Profile, MIDIInputDevice, MIDIOutputDevice,
+	ChannelCommand, InputMatchFunction, TranslationFunction } from './base';
 
 @Component({
 	selector: 'profile',
@@ -8,4 +10,11 @@ import { Profile } from './base';
 
 export class ProfileComponent {
 	@Input() profile: Profile;
+
+	@Input() availableInputDevices: MIDIInputDevice[];
+	@Input() availableOutputDevices: MIDIOutputDevice[];
+	@Input() availableChannelCommands: ChannelCommand[];
+	@Input() availableMIDIChannels: number[];
+	@Input() availableInputMatchFunctions: InputMatchFunction[];
+	@Input() availableTranslationFunctions: TranslationFunction[];
 }

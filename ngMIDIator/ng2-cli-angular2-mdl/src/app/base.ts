@@ -66,13 +66,13 @@ export interface ShortMessage {
 	status: number;
 }
 
-export const enum InputMatchFunction {
+export enum InputMatchFunction {
 	Data1Match = 0,
 	NoteMatch = 1,
 	CatchAll = 2
 }
 
-export const enum ChannelCommand {
+export enum ChannelCommand {
 	NoteOff = 128,
 	NoteOn = 144,
 	PolyPressure = 160,
@@ -82,7 +82,7 @@ export const enum ChannelCommand {
 	PitchWheel = 224
 }
 
-export const enum TranslationFunction {
+export enum TranslationFunction {
 	DirectTranslation = 0,
 	ChangeNote = 1,
 	PCToNote = 2

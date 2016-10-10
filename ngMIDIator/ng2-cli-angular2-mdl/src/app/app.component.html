@@ -10,6 +10,11 @@
 		</mdl-layout-header-row>
 	</mdl-layout-header>
 	<mdl-layout-content class="app-content">
-		<profile [profile]="currentProfile"></profile>
+		<profile [profile]="currentProfile"
+				 [availableInputDevices]="availableInputDevices"
+				 [availableOutputDevices]="availableOutputDevices"
+				 [availableChannelCommands]="availableChannelCommands"
+				 [availableMIDIChannels]="availableMIDIChannels">
+		</profile>
 	</mdl-layout-content>
 </mdl-layout>

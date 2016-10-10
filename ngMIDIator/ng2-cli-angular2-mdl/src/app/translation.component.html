@@ -2,19 +2,36 @@
 	<div class="mdl-cell--12-col">
 		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				<mdl-dropdown [options]="availableInputMatchFunctions" [dropdownLabel]="'Input Match Function'" [placeholder]="'Select...'"
-					  [selectedOption]="inputMatchFunction" (select)="onInputDeviceSelected($event)"></mdl-dropdown>
+				<mdl-dropdown [options]="availableInputMatchFunctionDropdownOptions"
+							  [dropdownLabel]="'Input Match Function'"
+							  [placeholder]="'Select...'"
+							  [(selectedOption)]="inputMatchFunction">
+				</mdl-dropdown>
 			</div>
 		</div>
 		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				Input Message (Match Target):
-				<channel-message [(channelMessage)]="translation.inputMessageMatchTarget"></channel-message>
+				Input Message Match Target:
+				<channel-message [(channelMessage)]="translation.inputMessageMatchTarget">
+					[availableInputDevices]="availableInputDevices"
+					[availableOutputDevices]="availableOutputDevices"
+					[availableChannelCommands]="availableChannelCommands"
+					[availableMIDIChannels]="availableMIDIChannels">
+				</channel-message>
 			</div>
 		</div>
 		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				Input Message (Match Target):
+				<mdl-dropdown [options]="availableTranslationFunctions"
+							  [dropdownLabel]="'Translation Function'"
+							  [placeholder]="'Select...'"
+							  [(selectedOption)]="translationFunction">
+				</mdl-dropdown>
+			</div>
+		</div>
+		<div class="mdl-grid">
+			<div class="mdl-cell--12-col">
+				Output Message Template:
 				<channel-message [(channelMessage)]="translation.inputMessageMatchTarget"></channel-message>
 			</div>
 		</div>

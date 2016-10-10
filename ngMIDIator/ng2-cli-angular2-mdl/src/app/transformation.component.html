@@ -17,6 +17,11 @@
 				<span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
 			</button>&nbsp; <span style="vertical-align: middle;">Translations</span>
 		</h4>
-		
+		<translation ngFor="let translation of transformation.translationMap.translations" 
+					 [translation]="translation"
+					 [availableInputDevices]="availableInputDevices"
+					 [availableOutputDevices]="availableOutputDevices"
+					 [availableChannelCommands]="availableChannelCommands"
+					 [availableMIDIChannels]="availableMIDIChannels"></translation>
 	</div>
 </div>
