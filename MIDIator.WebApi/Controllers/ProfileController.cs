@@ -8,6 +8,6 @@ namespace MIDIator.Web.Controllers
 {
 	public class ProfileController
 	{
-
+		
 	}
 }

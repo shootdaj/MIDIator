@@ -21,6 +21,7 @@ namespace MIDIator.Web
 			config.Routes.IgnoreRoute("Glimpse", "{resource}.axd/{*pathInfo}");
 			config.Formatters.JsonFormatter.SerializerSettings = SerializerSettings.DefaultSettings;
 
+			app.MapSignalR();
 			app.UseCors(CorsOptions.AllowAll);
 			app.UseWebApi(config);
 		}
