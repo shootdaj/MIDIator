@@ -2,6 +2,7 @@ import { Component, Input, Output, DoCheck, EventEmitter } from '@angular/core';
 import { Translation, MIDIInputDevice, MIDIOutputDevice,
 	ChannelCommand, InputMatchFunction, TranslationFunction} from './base';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { IDropdownOption, DropdownOption, DropdownComponent } from './mdl-dropdown.component';
 import { MIDIService } from './midiService'
 
@@ -12,14 +13,26 @@ import { MIDIService } from './midiService'
 })
 
 export class TranslationComponent implements DoCheck{
+
+	availableInputDevices: MIDIInputDevice[];
+	availableInputDevicesSubscription: Subscription;
+
 	@Input() translation: Translation;
-	@Input() availableInputDevices: MIDIInputDevice[];
+	//@Input() availableInputDevices: MIDIInputDevice[];
 	@Input() availableOutputDevices: MIDIOutputDevice[];
 	@Input() availableChannelCommands: ChannelCommand[];
 	@Input() availableMIDIChannels: number[];
 	@Input() availableInputMatchFunctions: InputMatchFunction[];
 	@Input() availableTranslationFunctions: TranslationFunction[];
 
+	constructor(private midiService: MIDIService) {
+		this.availableInputDevicesSubscription = this.midiService.availableInputDevicesSubject
+			.subscribe(data => this.availableInputDevices = data);
+	}
+
+	ngOnDestroy() {
+		this.availableInputDevicesSubscription.unsubscribe();
+	}
 
 	@Input() inputMatchFunction: DropdownOption;
 	@Output() inputMatchFunctionChange: EventEmitter<InputMatchFunction> = new EventEmitter<InputMatchFunction>();

@@ -10,6 +10,8 @@ import { DropdownOption } from './mdl-dropdown.component';
 import {Injectable} from '@angular/core';
 import { Http } from '@angular/http';
 
+import { Subject } from 'rxjs/Subject';
+
 @Injectable()
 export class MIDIService {
 
@@ -19,22 +21,23 @@ export class MIDIService {
 
 	}
 
-	getProfile(name: string, callback: (data: Profile) => void) {
-		this.http.get(this.profileUrl)
+	availableInputDevicesSubject: Subject<MIDIInputDevice[]> = new Subject<MIDIInputDevice[]>();
+
+	getAvailableInputDevices() {
+		this.http.get('http://localhost:9000/midi/AvailableInputDevices')
 			.map(response => response.json())
-			.subscribe(data => {
-				callback(<Profile>data);
-				console.log(data);
-			},
+			.subscribe(data => this.availableInputDevicesSubject.next(data),
 			err => console.log(err));
 	}
 
-	getAvailableInputDevices(callback: (data: MIDIInputDevice[]) => void) {
-		this.http.get('http://localhost:9000/midi/AvailableInputDevices')
-			.map(response => response.json())
-			.subscribe(data => callback(<MIDIInputDevice[]>data),
-			err => console.log(err));
-	}
+	//getAvailableInputDevices(callback: (data: MIDIInputDevice[]) => void) {
+	//	this.http.get('http://localhost:9000/midi/AvailableInputDevices')
+	//		.map(response => response.json())
+	//		.subscribe(data => callback(<MIDIInputDevice[]>data),
+	//		err => console.log(err));
+	//}
+
+
 
 	getAvailableOutputDevices(callback: (data: MIDIOutputDevice[]) => void) {
 		this.http.get('http://localhost:9000/midi/AvailableOutputDevices')
