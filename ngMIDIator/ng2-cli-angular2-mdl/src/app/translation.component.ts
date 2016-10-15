@@ -1,6 +1,6 @@
 import { Component, Input, Output, DoCheck, EventEmitter } from '@angular/core';
 import { Translation, MIDIInputDevice, MIDIOutputDevice,
-	ChannelCommand, InputMatchFunction, TranslationFunction} from './base';
+	ChannelCommand, InputMatchFunction, TranslationFunction, ChannelMessage } from './base';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { IDropdownOption, DropdownOption, DropdownComponent } from './mdl-dropdown.component';
@@ -9,44 +9,42 @@ import { MIDIService } from './midiService'
 @Component({
 	selector: 'translation',
 	templateUrl: './translation.component.html',
-	providers: [ MIDIService ]
+	providers: [MIDIService]
 })
 
-export class TranslationComponent implements DoCheck{
+export class TranslationComponent implements DoCheck {
 
-	availableInputDevices: MIDIInputDevice[];
-	availableInputDevicesSubscription: Subscription;
-
+	private subscriptions: Subscription[];
+	private availableInputDevices: MIDIInputDevice[];
+	private availableOutputDevices: MIDIOutputDevice[];
+	private availableInputMatchFunctions: InputMatchFunction[];
+	private availableTranslationFunctions: TranslationFunction[];
+	
 	@Input() translation: Translation;
-	//@Input() availableInputDevices: MIDIInputDevice[];
-	@Input() availableOutputDevices: MIDIOutputDevice[];
-	@Input() availableChannelCommands: ChannelCommand[];
-	@Input() availableMIDIChannels: number[];
-	@Input() availableInputMatchFunctions: InputMatchFunction[];
-	@Input() availableTranslationFunctions: TranslationFunction[];
+	@Output() translationChange: EventEmitter<Translation> = new EventEmitter<Translation>();
 
 	constructor(private midiService: MIDIService) {
-		this.availableInputDevicesSubscription = this.midiService.availableInputDevicesSubject
-			.subscribe(data => this.availableInputDevices = data);
+		this.subscriptions.push(this.midiService.availableInputDevicesSubject
+			.subscribe(data => this.availableInputDevices = data));
+
+		this.subscriptions.push(this.midiService.availableOutputDevicesSubject
+			.subscribe(data => this.availableOutputDevices = data));
+
+		this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
+			.subscribe(data => this.availableInputMatchFunctions = data));
+
+		this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
+			.subscribe(data => this.availableTranslationFunctions = data));
 	}
 
 	ngOnDestroy() {
-		this.availableInputDevicesSubscription.unsubscribe();
+		this.subscriptions.forEach(s => s.unsubscribe());
 	}
-
-	@Input() inputMatchFunction: DropdownOption;
-	@Output() inputMatchFunctionChange: EventEmitter<InputMatchFunction> = new EventEmitter<InputMatchFunction>();
-
-	@Input() translationFunction: DropdownOption;
-	@Output() translationFunctionChange: EventEmitter<TranslationFunction> = new EventEmitter<TranslationFunction>();
-
-	@Input() data1: number;
-	@Output() data1Change: EventEmitter<any> = new EventEmitter();
 
 	ngDoCheck(): void {
-		this.inputMatchFunctionChange.next(InputMatchFunction[this.inputMatchFunction.value]);
-		this.translationFunctionChange.next(TranslationFunction[this.translationFunction.value]);
+		this.translationChange.next(this.translation);
 	}
+
 
 	get availableInputMatchFunctionDropdownOptions(): IDropdownOption[] {
 		return this.availableInputMatchFunctions.map(
@@ -58,15 +56,17 @@ export class TranslationComponent implements DoCheck{
 			fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
 	}
 
-	get availableChannelCommandDropdownOptions(): IDropdownOption[] {
-		return this.availableChannelCommands.map(
-			fx => new DropdownOption((<number>fx).toString(), ChannelCommand[fx]));
+	get inputMatchFunctionDropdownOption(): IDropdownOption {
+		return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
+	}
+	set inputMatchFunctionDropdownOption(value: IDropdownOption) {
+		this.translation.inputMatchFunction = parseInt(value.value);
 	}
 
-	get availableMIDIChannelDropdownOptions(): IDropdownOption[] {
-		return this.availableMIDIChannels.map(
-			fx => new DropdownOption(fx.toString(), fx.toString()));
+	get translationFunctionDropdownOption(): IDropdownOption {
+		return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
 	}
-
-	
+	set translationFunctionDropdownOption(value: IDropdownOption) {
+		this.translation.translationFunction = parseInt(value.value);
+	}
 }

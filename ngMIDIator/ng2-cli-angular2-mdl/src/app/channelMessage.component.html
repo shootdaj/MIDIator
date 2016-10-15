@@ -1,24 +1,28 @@
 <div class="mdl-grid">
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-dropdown [options]="availableChannelCommands" [dropdownLabel]="'Channel Command'" [(selectedOption)]="channelCommand"></mdl-dropdown>
+			<mdl-dropdown [options]="availableChannelCommandDropdownOptions"
+						  [dropdownLabel]="'Channel Command'"
+						  [(selectedOption)]="channelCommandDropdownOption">
+			</mdl-dropdown>
 		</div>
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-dropdown [options]="availableMIDIChannels" 
-			              [dropdownLabel]="'MIDI Channel'" 
-						  [(selectedOption)="midiChannel"]></mdl-dropdown>
+			<mdl-dropdown [options]="availableMIDIChannelDropdownOptions"
+						  [dropdownLabel]="'MIDI Channel'"
+						  [(selectedOption)]="midiChannelDropdownOption">
+			</mdl-dropdown>
 		</div>
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-textfield type="text" label="Data1" floating-label [(ngModel)="data1"]></mdl-textfield>
+			<mdl-textfield type="text" label="Data1" floating-label [(ngModel)]="channelMessage.data1"></mdl-textfield>
 		</div>
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-textfield type="text" label="Data2" floating-label [(ngModel)="data2"]></mdl-textfield>
+			<mdl-textfield type="text" label="Data2" floating-label [(ngModel)]="channelMessage.data2"></mdl-textfield>
 		</div>
 	</div>
 </div>

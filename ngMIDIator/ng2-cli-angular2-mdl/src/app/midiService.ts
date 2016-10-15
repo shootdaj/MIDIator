@@ -22,6 +22,11 @@ export class MIDIService {
 	}
 
 	availableInputDevicesSubject: Subject<MIDIInputDevice[]> = new Subject<MIDIInputDevice[]>();
+	availableOutputDevicesSubject: Subject<MIDIOutputDevice[]> = new Subject<MIDIOutputDevice[]>();
+	availableChannelCommandsSubject: Subject<ChannelCommand[]> = new Subject<ChannelCommand[]>();
+	availableMIDIChannelsSubject: Subject<number[]> = new Subject<number[]>();
+	availableInputMatchFunctionsSubject: Subject<InputMatchFunction[]> = new Subject<InputMatchFunction[]>();
+	availableTranslationFunctionsSubject: Subject<TranslationFunction[]> = new Subject<TranslationFunction[]>();
 
 	getAvailableInputDevices() {
 		this.http.get('http://localhost:9000/midi/AvailableInputDevices')
@@ -30,45 +35,38 @@ export class MIDIService {
 			err => console.log(err));
 	}
 
-	//getAvailableInputDevices(callback: (data: MIDIInputDevice[]) => void) {
-	//	this.http.get('http://localhost:9000/midi/AvailableInputDevices')
-	//		.map(response => response.json())
-	//		.subscribe(data => callback(<MIDIInputDevice[]>data),
-	//		err => console.log(err));
-	//}
-
-
-
-	getAvailableOutputDevices(callback: (data: MIDIOutputDevice[]) => void) {
+	getAvailableOutputDevices() {
 		this.http.get('http://localhost:9000/midi/AvailableOutputDevices')
 			.map(response => response.json())
-			.subscribe(data => callback(<MIDIOutputDevice[]>data),
+			.subscribe(data => this.availableOutputDevicesSubject.next(data),
 			err => console.log(err));
 	}
 
-	getAvailableChannelCommands(callback: (data: ChannelCommand[]) => void) {
-		this.http.get('http://localhost:9000/midi/ChannelCommands')
+	getAvailableChannelCommands() {
+		this.http.get('http://localhost:9000/midi/AvailableChannelCommands')
 			.map(response => response.json())
-			.subscribe(data => callback(<ChannelCommand[]>data),
+			.subscribe(data => this.availableChannelCommandsSubject.next(data),
 			err => console.log(err));
 	}
 
-	getAvailableMIDIChannels(callback: (data: number[]) => void) {
-		this.http.get('http://localhost:9000/midi/MIDIChannels')
+	getAvailableMIDIChannels() {
+		this.http.get('http://localhost:9000/midi/AvailableMIDIChannels')
 			.map(response => response.json())
-			.subscribe(data => callback(<number[]>data),
+			.subscribe(data => this.availableMIDIChannelsSubject.next(data),
 			err => console.log(err));
 	}
 
-	//getAvailableChannelCommands(): DropdownOption[] {
-	//	return Object.keys(ChannelCommand).map(key => new DropdownOption(key, ChannelCommand[key]));
-	//}
+	getAvailableInputMatchFunctions() {
+		this.http.get('http://localhost:9000/midi/AvailableInputMatchFunctions')
+			.map(response => response.json())
+			.subscribe(data => this.availableInputMatchFunctionsSubject.next(data),
+			err => console.log(err));
+	}
 
-	//getAvailableInputMatchFunctions(): DropdownOption[] {
-	//	return Object.keys(InputMatchFunction).map(key => new DropdownOption(key, InputMatchFunction[key]));
-	//}
-
-	//getAvailableTranslationFunctions(): DropdownOption[] {
-	//	return Object.keys(TranslationFunction).map(key => new DropdownOption(key, TranslationFunction[key]));
-	//}
+	getAvailableTranslationFunctions() {
+		this.http.get('http://localhost:9000/midi/AvailableTranslationFunctions')
+			.map(response => response.json())
+			.subscribe(data => this.availableTranslationFunctionsSubject.next(data),
+			err => console.log(err));
+	}
 }

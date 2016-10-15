@@ -15,12 +15,12 @@ export class TransformationComponent {
 	//@Input() availableOutputDevices: Observable<Array<MIDIOutputDevice>>;
 	//@Input() availableChannelCommands: Observable<Array<ChannelCommand>>;
 	//@Input() availableMIDIChannels: Observable<Array<number>>;
-	@Input() availableInputDevices: MIDIInputDevice[];
-	@Input() availableOutputDevices: MIDIOutputDevice[];
-	@Input() availableChannelCommands: ChannelCommand[];
-	@Input() availableMIDIChannels: number[];
-	@Input() availableInputMatchFunctions: InputMatchFunction[];
-	@Input() availableTranslationFunctions: TranslationFunction[];
+	//@Input() availableInputDevices: MIDIInputDevice[];
+	//@Input() availableOutputDevices: MIDIOutputDevice[];
+	//@Input() availableChannelCommands: ChannelCommand[];
+	//@Input() availableMIDIChannels: number[];
+	//@Input() availableInputMatchFunctions: InputMatchFunction[];
+	//@Input() availableTranslationFunctions: TranslationFunction[];
 
 	@Input() inputDevice: MIDIInputDevice;
 	@Input() outputDevice: MIDIOutputDevice;

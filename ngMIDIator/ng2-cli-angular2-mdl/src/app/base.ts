@@ -61,9 +61,7 @@ export interface Profile {
 }
 
 export interface ShortMessage {
-	message: number;
 	messageType: MessageType;
-	status: number;
 }
 
 export enum InputMatchFunction {
@@ -104,6 +102,4 @@ export abstract class ChannelMessage implements ShortMessage {
 		return MessageType.Channel;
 	}
 	midiChannel: number;
-	message: number;
-	status: number;
 }
