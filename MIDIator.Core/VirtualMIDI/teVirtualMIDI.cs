@@ -15,12 +15,11 @@
  * This class encapsualtes the native C-type interface which is integrated
  * in the teVirtualMIDI32.dll and the teVirtualMIDI64.dll.
  */
- 
+
 using System;
 using System.Runtime.InteropServices;
 
-
-namespace TobiasErichsen.teVirtualMIDI {
+namespace MIDIator.VirtualMIDI {
 
 	[Serializable()]
 	public class TeVirtualMIDIException : System.Exception {

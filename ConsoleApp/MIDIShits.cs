@@ -12,7 +12,7 @@
 
 using System;
 using System.Threading;
-using TobiasErichsen.teVirtualMIDI;
+using MIDIator.VirtualMIDI;
 
 namespace ConsoleApp
 {

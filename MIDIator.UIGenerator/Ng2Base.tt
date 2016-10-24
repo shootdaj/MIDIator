@@ -1,0 +1,18 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="MIDIator.UIGenerator.Consumables" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="TypeLite" #> 
+<#@ import namespace="TypeLite.Net4" #> 
+<#@output extension=".ts"#>
+<#@ parameter type="System.Type" name="BaseType" #>
+<#
+var ts = TypeScript.Definitions()
+		.ForLoadedAssemblies()
+		.WithVisibility((tsClass, name) => true)
+		.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
+#>
+<#= ts.Generate(TsGeneratorOutput.Properties) #>

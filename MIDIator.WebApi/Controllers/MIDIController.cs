@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using Anshul.Utilities;
+using MIDIator.Engine;
+using MIDIator.Interfaces;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Web.Controllers
@@ -8,19 +10,28 @@ namespace MIDIator.Web.Controllers
 	[RoutePrefix("midi")]
 	public class MIDIController : ApiController
 	{
+		public IMIDIManager MIDIManager { get; set; }
+
+		public MIDIController(/*IMIDIManager midiManager*/)
+		{
+			MIDIManager = new MIDIManager(); //needs to be injected
+		}
+
 		#region Profile
 
 		[HttpGet]
 		public Profile Profile()
 		{
+			var midiDeviceName = "Numark ORBIT";
+
 			return new Profile()
 			{
 				Name = "DefaultProfile",
 				Transformations = new List<Transformation>()
 				{
 					new Transformation("TouchOSCXForm",
-						MIDIManager.GetInputDevice("Livid Guitar Wing"),
-						MIDIManager.GetOutputDevice("Livid Guitar Wing"),
+						MIDIManager.GetInputDevice(midiDeviceName),
+						MIDIManager.GetOutputDevice(midiDeviceName),
 						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
 							new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
 							InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()

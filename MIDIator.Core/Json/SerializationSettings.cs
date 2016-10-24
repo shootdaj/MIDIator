@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MIDIator.Json
 {
@@ -9,7 +10,7 @@ namespace MIDIator.Json
 			TypeNameHandling = TypeNameHandling.None,
 			Binder = new DisplayNameSerializationBinder(),
 			Formatting = Formatting.Indented,
-			
+			ContractResolver = new CamelCasePropertyNamesContractResolver()
 		};
 	}
 }

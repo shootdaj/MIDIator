@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MIDIator.Engine;
 using NUnit.Framework;
 
 namespace MIDIator.Tests

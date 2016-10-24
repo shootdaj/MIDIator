@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Anshul.Utilities;
+using MIDIator.Engine;
+using MIDIator.Interfaces;
 using MIDIator.Json;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -13,7 +15,7 @@ namespace MIDIator.Tests
 		public void TranslationMap_Serialize()
 		{
 			var expectedSerialization =
-				"{\r\n  \"Translations\": [\r\n    {\r\n      \"InputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"Command\": 192,\r\n        \"MidiChannel\": 1,\r\n        \"Data1\": 0,\r\n        \"Data2\": 0\r\n      },\r\n      \"OutputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"Command\": 144,\r\n        \"MidiChannel\": 1,\r\n        \"Data1\": 1,\r\n        \"Data2\": 0\r\n      },\r\n      \"TranslationFunction\": \"PCToNote\",\r\n      \"InputMatchFunction\": \"Data1Match\"\r\n    }\r\n  ]\r\n}";
+				"{\r\n  \"translations\": [\r\n    {\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": 192,\r\n        \"midiChannel\": 1,\r\n        \"data1\": 0,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": 144,\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"PCToNote\",\r\n      \"inputMatchFunction\": \"Data1Match\"\r\n    }\r\n  ]\r\n}";
 
 			var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.ProgramChange, 1, 0),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 1), InputMatchFunction.Data1Match,
@@ -28,7 +30,7 @@ namespace MIDIator.Tests
 		public void TranslationMap_Deserialize()
 		{
 			var serializedMap =
-				"{\r\n  \"Translations\": [\r\n    {\r\n      \"InputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"Command\": 192,\r\n        \"MidiChannel\": 1,\r\n        \"Data1\": 0,\r\n        \"Data2\": 0\r\n      },\r\n      \"OutputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"Command\": 144,\r\n        \"MidiChannel\": 1,\r\n        \"Data1\": 1,\r\n        \"Data2\": 0\r\n      },\r\n      \"TranslationFunction\": \"PCToNote\",\r\n      \"InputMatchFunction\": \"Data1Match\"\r\n    }\r\n  ]\r\n}";
+				"{\r\n  \"translations\": [\r\n    {\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": 192,\r\n        \"midiChannel\": 1,\r\n        \"data1\": 0,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": 144,\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"PCToNote\",\r\n      \"inputMatchFunction\": \"Data1Match\"\r\n    }\r\n  ]\r\n}";
 
 			//left here for reference - this is the object used to create serializedTranslation by serializing map
 			//var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.ProgramChange, 1, 0),

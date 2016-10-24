@@ -38,15 +38,17 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using TypeLite;
+// ReSharper disable CheckNamespace
 
 namespace Sanford.Multimedia.Midi
 {
-    #region Channel Command Types
+	#region Channel Command Types
 
-    /// <summary>
-    /// Defines constants for ChannelMessage types.
-    /// </summary>
-    public enum ChannelCommand 
+	/// <summary>
+	/// Defines constants for ChannelMessage types.
+	/// </summary>
+	[TsEnum(Module = "MIDIator.UI")]
+	public enum ChannelCommand 
     {
         /// <summary>
         /// Represents the note-off command type.
@@ -430,12 +432,12 @@ namespace Sanford.Multimedia.Midi
         PolyOperation
     }
 
-    #endregion
+	#endregion
 
 	/// <summary>
 	/// Represents MIDI channel messages.
 	/// </summary>
-	[TsClass]
+	[TsClass(Module = "MIDIator.UI")]
 	[DataContract]
 	[ImmutableObject(true)]
 	[DisplayName(nameof(ChannelMessage))]

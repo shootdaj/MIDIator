@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using MIDIator;
+using MIDIator.Engine;
+using MIDIator.Interfaces;
+using MIDIator.VirtualMIDI;
 using Sanford.Multimedia.Midi;
-using TobiasErichsen.teVirtualMIDI;
 
 namespace ConsoleApp
 {
 	class Program
 	{
+		//private static MIDIManager MIDIManager { get; set; }
+
 		static void Main(string[] args)
 		{ 
-			GuitarWingMap();
+			GuitarWingMap(new MIDIManager());
 		}
 
 		static void CreateTranslationAndSaveIt()
@@ -21,11 +25,11 @@ namespace ConsoleApp
 		}
 
 
-		static void GuitarWingMap()
+		static void GuitarWingMap(MIDIManager midiManager)
 		{
 			var channel = 1;
 
-			var guitarWing = MIDIManager.GetInputDevice("Livid Guitar Wing", new TranslationMap(new List<ITranslation>()
+			var guitarWing = midiManager.GetInputDevice("Livid Guitar Wing", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.ProgramChange, channel, 0),
 					new ChannelMessage(ChannelCommand.NoteOn, channel, 1), InputMatchFunction.Data1Match,
@@ -50,12 +54,12 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			MIDIManager.RemoveInputDevice(guitarWing);
+			midiManager.RemoveInputDevice(guitarWing);
 		}
 
-		static void OrbitMap()
+		static void OrbitMap(MIDIManager midiManager)
 		{
-			var orbit = MIDIManager.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
+			var orbit = midiManager.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.NoteMatch,
@@ -80,7 +84,7 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			MIDIManager.RemoveInputDevice(orbit);
+			midiManager.RemoveInputDevice(orbit);
 		}
 	}
 }

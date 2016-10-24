@@ -108,14 +108,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="TypeLite, Version=1.8.0.0, Culture=neutral, PublicKeyToken=8cd4b9c9ac23d744, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\TypeLite.1.8.1\lib\net4\TypeLite.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="TypeLite.Net4, Version=1.8.1.0, Culture=neutral, PublicKeyToken=8cd4b9c9ac23d744, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\TypeLite.1.8.1\lib\net4\TypeLite.Net4.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -372,23 +364,23 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Sanford.Multimedia.Midi.nuspec" />
-    <None Include="Scripts\Manager.ttinclude" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\TypeLite.Net4.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TypeLite.Net4.d.ts</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\TypeLite.Net4.d.ts">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TypeLite.Net4.tt</DependentUpon>
-    </TypeScriptCompile>
+    <ProjectReference Include="..\..\MIDIator.UIGenerator.Consumables\MIDIator.UIGenerator.Consumables.csproj">
+      <Project>{6f7c5bf5-d975-475a-8966-1fe4836c8fd4}</Project>
+      <Name>MIDIator.UIGenerator.Consumables</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TypeLite\TypeLite.Net4\TypeLite.Net4.csproj">
+      <Project>{0ad860b2-2aaa-47cc-acba-f2d97be19d66}</Project>
+      <Name>TypeLite.Net4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TypeLite\TypeLite\TypeLite.csproj">
+      <Project>{43dcb624-f929-4572-97a3-6b14ac6ad158}</Project>
+      <Name>TypeLite</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

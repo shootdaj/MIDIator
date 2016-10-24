@@ -1,4 +1,6 @@
-﻿using Sanford.Multimedia.Midi;
+﻿using System;
+using System.Text.RegularExpressions;
+using Sanford.Multimedia.Midi;
 
 namespace MIDIator
 {

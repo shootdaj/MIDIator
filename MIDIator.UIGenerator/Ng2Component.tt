@@ -1,0 +1,17 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ import namespace="Consumables" #> 
+
+<#@ parameter type="System.Type" name="BaseType" #>
+
+@Component({
+	selector: '<#=BaseType.Name.ToCamelCase()#>',
+	templateUrl: './<#=BaseType.Name.ToCamelCase()#>.component.html'
+})
+
+export class <#=BaseType.Name#>Component {
+	@Input() <#=BaseType.Name.ToCamelCase()#>: Observable<<#=BaseType.Name#>>;
+}
