@@ -1,11 +1,11 @@
 ﻿<#@ template language="C#" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-
 <#@ import namespace="Consumables" #> 
-
-<#@ parameter type="System.Type" name="BaseType" #>
+<#@ import namespace="MIDIator.UIGeneration" #> 
+<#@ import namespace="System.Linq" #> 
+<#@ parameter type="TypeLite.TsModels.TsClass" name="BaseType" #>
+<#@ parameter type="System.Collections.Generic.List<ImportDirective>" name="ImportDirectives" #>
+<# ImportDirectives.ForEach(directive =>{#>import<#if (directive.Classes.Any()){#> { <#=string.Join(", ", directive.Classes)#> } from<#}#> '<#=directive.Module#>';
+<#}); #>
 
 @Component({
 	selector: '<#=BaseType.Name.ToCamelCase()#>',
@@ -13,5 +13,15 @@
 })
 
 export class <#=BaseType.Name#>Component {
-	@Input() <#=BaseType.Name.ToCamelCase()#>: Observable<<#=BaseType.Name#>>;
+	private current<#=BaseType.Name#>: <#=BaseType.Name#>;
+	
+	@Input() set <#=BaseType.Name.ToCamelCase()#>(in<#=BaseType.Name#>: <#=BaseType.Name#>){
+		this.current<#=BaseType.Name#> = in<#=BaseType.Name#>;
+		this.<#=BaseType.Name.ToCamelCase()#>Change.emit(in<#=BaseType.Name#>); 
+	}
+	get <#=BaseType.Name.ToCamelCase()#>() : <#=BaseType.Name#> {
+		return this.current<#=BaseType.Name.ToCamelCase()#>; 
+	}
+	
+	@Output() <#=BaseType.Name.ToCamelCase()#>Change: EventEmitter<<#=BaseType.Name#>> = new EventEmitter<<#=BaseType.Name#>>();	
 }

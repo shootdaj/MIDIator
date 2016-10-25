@@ -2,9 +2,9 @@
 
 namespace MIDIator.UIGenerator.Consumables
 {
-	public class GenerateUIAttribute : Attribute
+	public class Ng2ComponentAttribute : Attribute
 	{
-		public GenerateUIAttribute(Type viewTemplate = null)
+		public Ng2ComponentAttribute(Type viewTemplate = null)
 		{
 			ViewTemplate = viewTemplate;
 		}

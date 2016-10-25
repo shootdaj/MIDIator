@@ -13,7 +13,9 @@ namespace MIDIator.UIGenerator
     using System.Text;
     using System.Collections.Generic;
     using MIDIator.UIGenerator.Consumables;
+    using Sanford.Multimedia.Midi;
     using System.Reflection;
+    using MIDIator.Engine;
     using TypeLite;
     using TypeLite.Net4;
     using System;
@@ -22,9 +24,9 @@ namespace MIDIator.UIGenerator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Base.tt"
+    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class Ng2Base : Ng2BaseBase
+    public partial class Ng2DomainModel : Ng2DomainModelBase
     {
 #line hidden
         /// <summary>
@@ -35,10 +37,10 @@ namespace MIDIator.UIGenerator
             this.Write(" \r\n");
             this.Write(" \r\n");
             
-            #line 12 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Base.tt"
+            #line 14 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
 
 var ts = TypeScript.Definitions()
-		.ForLoadedAssemblies()
+		.ForAssemblies(Assemblies)
 		.WithVisibility((tsClass, name) => true)
 		.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
 
@@ -46,26 +48,26 @@ var ts = TypeScript.Definitions()
             #line default
             #line hidden
             
-            #line 18 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Base.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ts.Generate(TsGeneratorOutput.Properties)));
+            #line 20 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ts.Generate()));
             
             #line default
             #line hidden
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Base.tt"
+        #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
 
-private global::System.Type _BaseTypeField;
+private global::System.Collections.Generic.List<Assembly> _AssembliesField;
 
 /// <summary>
-/// Access the BaseType parameter of the template.
+/// Access the Assemblies parameter of the template.
 /// </summary>
-private global::System.Type BaseType
+private global::System.Collections.Generic.List<Assembly> Assemblies
 {
     get
     {
-        return this._BaseTypeField;
+        return this._AssembliesField;
     }
 }
 
@@ -77,18 +79,18 @@ public virtual void Initialize()
 {
     if ((this.Errors.HasErrors == false))
     {
-bool BaseTypeValueAcquired = false;
-if (this.Session.ContainsKey("BaseType"))
+bool AssembliesValueAcquired = false;
+if (this.Session.ContainsKey("Assemblies"))
 {
-    this._BaseTypeField = ((global::System.Type)(this.Session["BaseType"]));
-    BaseTypeValueAcquired = true;
+    this._AssembliesField = ((global::System.Collections.Generic.List<Assembly>)(this.Session["Assemblies"]));
+    AssembliesValueAcquired = true;
 }
-if ((BaseTypeValueAcquired == false))
+if ((AssembliesValueAcquired == false))
 {
-    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("BaseType");
+    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Assemblies");
     if ((data != null))
     {
-        this._BaseTypeField = ((global::System.Type)(data));
+        this._AssembliesField = ((global::System.Collections.Generic.List<Assembly>)(data));
     }
 }
 
@@ -109,7 +111,7 @@ if ((BaseTypeValueAcquired == false))
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class Ng2BaseBase
+    public class Ng2DomainModelBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

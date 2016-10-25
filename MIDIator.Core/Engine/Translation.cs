@@ -12,7 +12,7 @@ namespace MIDIator.Engine
 	[TsClass(Module = "MIDIator.UI")]
 	[DataContract]
 	[DisplayName(nameof(Translation))]
-	[GenerateUI]
+	[Ng2Component]
 	public class Translation : ITranslation
 	{
 	    public Translation()

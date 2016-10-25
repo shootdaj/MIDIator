@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -74,6 +75,12 @@ namespace TypeLite.Net4
 		public static TypeScriptFluent ForAssembly(this TypeScriptFluent ts, Assembly assembly)
 		{
 			ts.ModelBuilder.Add(assembly);
+			return ts;
+		}
+
+		public static TypeScriptFluent ForAssemblies(this TypeScriptFluent ts, List<Assembly> assemblies)
+		{
+			assemblies.ForEach(ass => ts.ForAssembly(ass));
 			return ts;
 		}
 

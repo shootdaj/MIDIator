@@ -4,15 +4,17 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="MIDIator.UIGenerator.Consumables" #>
+<#@ import namespace="Sanford.Multimedia.Midi" #>
 <#@ import namespace="System.Reflection" #>
+<#@ import namespace="MIDIator.Engine" #>
 <#@ import namespace="TypeLite" #> 
 <#@ import namespace="TypeLite.Net4" #> 
 <#@output extension=".ts"#>
-<#@ parameter type="System.Type" name="BaseType" #>
+<#@ parameter type="System.Collections.Generic.List<Assembly>" name="Assemblies" #>
 <#
 var ts = TypeScript.Definitions()
-		.ForLoadedAssemblies()
+		.ForAssemblies(Assemblies)
 		.WithVisibility((tsClass, name) => true)
 		.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
 #>
-<#= ts.Generate(TsGeneratorOutput.Properties) #>
+<#= ts.Generate() #>

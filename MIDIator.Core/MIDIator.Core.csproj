@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Engine\ChannelMessageAction.cs" />
     <Compile Include="Engine\IDropdownOption.cs" />
+    <Compile Include="Engine\IProfile.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\IMIDIInputDevice.cs" />
     <Compile Include="Interfaces\IMIDIManager.cs" />

@@ -6,7 +6,7 @@ using TypeLite;
 namespace MIDIator.Engine
 {
 	[TsClass(Module = "MIDIator.UI")]
-	[GenerateUI]
+	[Ng2Component]
 	public class Transformation : IDisposable
 	{
 		public string Name { get; set; }

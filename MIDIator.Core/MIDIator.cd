@@ -39,6 +39,7 @@
       <Property Name="Transformations" />
       <Property Name="VirtualOutputDevices" />
     </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MIDIator.Engine.Transformation" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4.25" Y="3" Width="2" />

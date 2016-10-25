@@ -290,15 +290,16 @@ namespace TypeLite {
             string visibility = this.GetTypeVisibility(classModel, typeName) ? "export " : "";
             _docAppender.AppendClassDoc(sb, classModel, typeName);
 
-            var construct = "interface";
+	        var construct = classModel.Type.IsInterface ? "interface" : "class";
             var uiDropdownAttributes = classModel.Type.GetCustomAttributes(typeof(UIDropdownOption), false);
             var inheritFromIDropdownOption = uiDropdownAttributes.Any();
             string dropdownLabelTSPropertyName = "", dropdownValueTSPropertyName = "";
 
             if (inheritFromIDropdownOption)
             {
-                //class must be an abstract class to do auto hook up of name and value properties
-                construct = "abstract class";
+                //class to do auto hook up of name and value properties
+                construct = "class";
+
 	            dropdownLabelTSPropertyName =
 		            _memberFormatter(classModel.Properties.First(
 			            x => x.MemberInfo.Name == ((UIDropdownOption) uiDropdownAttributes.First()).LabelProperty));

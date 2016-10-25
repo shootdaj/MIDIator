@@ -25,6 +25,7 @@ namespace MIDIator.Engine
 		public void Dispose()
 		{
 			TeVirtualMIDIDevice.shutdown();
+			TeVirtualMIDIDevice = null;
 		}
 	}
 

@@ -11,8 +11,8 @@ namespace MIDIator.Engine
 	/// Defines a profile that can be loaded from a persistent store.
 	/// </summary>
 	[TsClass(Module = "MIDIator.UI")]
-	[GenerateUI(typeof(ProfileView))]
-	public class Profile
+	[Ng2Component(typeof(ProfileView))]
+	public class Profile : IProfile
 	{
 		public string Name { get; set; }
 

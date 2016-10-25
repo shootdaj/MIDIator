@@ -17,23 +17,26 @@ namespace MIDIator.UIGenerator
     {
         static void Main(string[] args)
         {
-			var ts = TypeScript.Definitions()
-				//.For(typeof(MIDIInputDevice))
-				.ForAssembly(typeof(Profile).Assembly)
-				.ForAssembly(typeof(ShortMessage).Assembly)
-				.WithVisibility((tsClass, name) => true)
-				.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
+			//var ts = TypeScript.Definitions()
+			//	//.For(typeof(MIDIInputDevice))
+			//	.ForAssembly(typeof(Profile).Assembly)
+			//	.ForAssembly(typeof(ShortMessage).Assembly)
+			//	.WithVisibility((tsClass, name) => true)
+			//	.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
 
-			var genCode = ts.Generate();
+			//      TsModel model;
+			//      var genCode = ts.GenerateOutModel(out model);
 
-			var filename = Config.Get("OutputDirectory").MergePath("base.ts");
-			Directory.CreateDirectory(Path.GetDirectoryName(filename));
-			File.WriteAllText(filename, genCode);
 
-			//var codeGen = new CodeGenerator(typeof(Profile));
-			//codeGen.Run();
 
-			Console.ReadLine();
+			//      var filename = Config.Get("OutputDirectory").MergePath(Config.Get("DomainModelFileName"));
+			//Directory.CreateDirectory(Path.GetDirectoryName(filename));
+			//File.WriteAllText(filename, genCode);
+
+			var codeGen = new CodeGenerator();
+			codeGen.Run();
+
+			//Console.ReadLine();
         }
     }
 }

@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Anshul.Utilities, Version=1.0.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Anshul.Utilities.1.0.19.0\lib\net45\Anshul.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -47,6 +51,14 @@
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.11.0.50727\lib\net45\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Refigure, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
@@ -65,8 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
-    <Compile Include="Ng2Base.cs">
-      <DependentUpon>Ng2Base.tt</DependentUpon>
+    <Compile Include="Ng2DomainModel.cs">
+      <DependentUpon>Ng2DomainModel.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -75,7 +87,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Ng2ComponentCustom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,9 +121,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ng2Base.tt">
+    <Content Include="Ng2DomainModel.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>Ng2Base.cs</LastGenOutput>
+      <LastGenOutput>Ng2DomainModel.cs</LastGenOutput>
     </Content>
     <Content Include="Ng2Component.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

@@ -24,5 +24,12 @@ namespace MIDIator.UIGenerator.Consumables.Tests
 		{
 			Assert.That(input.ToCamelCase(), Is.EqualTo(expectedValue));
 		}
+
+		[TestCase("profile", "Profile")]
+		[TestCase("profileComponent", "ProfileComponent")]
+		public void ToPascalCase_Works(string input, string expectedValue)
+		{
+			Assert.That(input.ToPascalCase(), Is.EqualTo(expectedValue));
+		}
 	}
 }
