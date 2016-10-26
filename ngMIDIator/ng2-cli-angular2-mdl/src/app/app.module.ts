@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
 import { AppComponent } from './app.component';
 import { DropdownComponent } from './mdl-dropdown.component';
+import { TransformationComponent } from './transformation.component'
 import { MIDIInputDevice } from './base';
 import { MIDIOutputDevice } from './base';
 import { Transformation } from './base';
@@ -20,7 +21,8 @@ import { ProfileComponent } from './profile.component'
     declarations: [
         AppComponent,
         DropdownComponent,
-		ProfileComponent
+		ProfileComponent,
+		TransformationComponent
     ],
     imports: [
         BrowserModule,

@@ -10,11 +10,9 @@
 		</mdl-layout-header-row>
 	</mdl-layout-header>
 	<mdl-layout-content class="app-content">
-		<profile [profile]="currentProfile"
-				 [availableInputDevices]="availableInputDevices"
-				 [availableOutputDevices]="availableOutputDevices"
-				 [availableChannelCommands]="availableChannelCommands"
-				 [availableMIDIChannels]="availableMIDIChannels">
+		<profile [profile]="currentProfile">
 		</profile>
+		
+		<mdl-textfield type="text" label="Name" floating-label [(ngModel)]="currentProfile.Name"></mdl-textfield>
 	</mdl-layout-content>
 </mdl-layout>

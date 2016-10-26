@@ -1,5 +1,5 @@
 import { Component, Input, Output, DoCheck, EventEmitter } from '@angular/core';
-import { Transformation, MIDIInputDevice, MIDIOutputDevice,
+import { MIDIInputDevice, MIDIOutputDevice, Transformation, 
 	ChannelCommand, InputMatchFunction, TranslationFunction } from './base';
 import { Observable } from 'rxjs/Observable';
 import { IDropdownOption, DropdownComponent } from './mdl-dropdown.component';
@@ -22,8 +22,8 @@ export class TransformationComponent {
 	//@Input() availableInputMatchFunctions: InputMatchFunction[];
 	//@Input() availableTranslationFunctions: TranslationFunction[];
 
-	@Input() inputDevice: MIDIInputDevice;
-	@Input() outputDevice: MIDIOutputDevice;
+	//@Input() inputDevice: MIDIInputDevice;
+	//@Input() outputDevice: MIDIOutputDevice;
 	//@Input() channelCommand: ChannelCommand;
 	//@Output() data1Change: EventEmitter<any> = new EventEmitter();
 }

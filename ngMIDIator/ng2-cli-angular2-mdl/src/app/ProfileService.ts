@@ -4,6 +4,7 @@ import { Translation } from './base';
 import { ShortMessage } from './base';
 import { MessageType } from './base';
 import { Profile } from './base';
+import { Observable } from 'rxjs/Observable';
 import { Transformation, ChannelCommand, TranslationFunction, InputMatchFunction } from './base';
 import { DropdownOption } from './mdl-dropdown.component';
 
@@ -21,11 +22,11 @@ export class ProfileService {
 
 	}
 
-	getProfile(name: string, callback: (data: Profile) => void) {
+	getProfile(name: string, callback: (data: Observable<Profile>) => void) {
 		this.http.get(this.profileUrl)
 			.map(response => response.json())
 			.subscribe(data => {
-				callback(<Profile>data);
+				callback(<Observable<Profile>>data);
 				console.log(data);
 			},
 			err => console.log(err));

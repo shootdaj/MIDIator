@@ -12,15 +12,11 @@
 		<mdl-card-supporting-text>
 			<div class="mdl-grid profile-card-body">
 				<div class="mdl-cell--12-col">
-					<transformation ngFor="let transformation of profile.transformations"
-									[translations]="tranformation.translations"
-									[availableInputDevices]="availableInputDevices"
-									[availableOutputDevices]="availableOutputDevices"
-									[availableChannelCommands]="availableChannelCommands"
-					                [availableMIDIChannels]="availableMIDIChannels"
-					                [availableInputMatchFunctions]="availableInputMatchFunctions"
-									[availableTranslationFunctions]="availableTranslationFunctions">
+					<mdl-textfield type="text" label="Name" floating-label [(ngModel)]="profile.name"></mdl-textfield>
+					<transformation *ngFor="let transformation of profile.transformations"
+					                [transformation]="transformation">
 					</transformation>
+
 				</div>
 			</div>
 		</mdl-card-supporting-text>

@@ -11,34 +11,43 @@ import { MIDIInputDevice, MIDIOutputDevice, Translation, ShortMessage,
 	Transformation, ChannelCommand } from './base';
 
 import { MIDIService } from './midiService'
+import { ProfileService } from './profileService'
 import { ProfileComponent } from './profile.component'
 import { IDropdownOption, DropdownComponent } from './mdl-dropdown.component';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	providers: [MIDIService]
+	providers: [MIDIService, ProfileService]
 })
 export class AppComponent {
 
-	public currentProfile: Profile;
+	public currentProfile: Observable<Profile> = new Observable<Profile>();
 
-	public get transformations(): Transformation[] {
-        return this.currentProfile.transformations;
-    }
+	//public get transformations(): Transformation[] {
+ //       return this.currentProfile.transformations;
+ //   }
 
-	constructor(private midiService: MIDIService, private http: Http) {
-		midiService.getProfile("" /* put some profile name here later */,
+	constructor(private midiService: MIDIService, private profileService: ProfileService, private http: Http) {
+		profileService.getProfile("" /* put some profile name here later */,
 			(data) => {
 				this.currentProfile = data;
 				console.log(this.currentProfile);
 			});
+		//this.getProfile();
 
-		this.midiService.getAvailableInputDevices(data => this.availableInputDevices = data);
-		this.midiService.getAvailableOutputDevices(data => this.availableOutputDevices = data);
-		this.midiService.getAvailableChannelCommands(data => this.availableChannelCommands = data);
-		this.midiService.getAvailableMIDIChannels(data => this.availableMIDIChannels = data);
+		//this.midiService.getAvailableInputDevices(data => this.availableInputDevices = data);
+		//this.midiService.getAvailableOutputDevices(data => this.availableOutputDevices = data);
+		//this.midiService.getAvailableChannelCommands(data => this.availableChannelCommands = data);
+		//this.midiService.getAvailableMIDIChannels(data => this.availableMIDIChannels = data);
 	}
+	
+	public getProfile() {
+		this.http.get('http://localhost:9000/midi/Profile')
+			.map(response => response.json())
+			.subscribe(data => this.currentProfile = data,
+			err => console.log(err));
+    }
 
 	//public availableInputDevices: Observable<Array<IDropdownOption>>;
 	//public availableOutputDevices: Observable<Array<IDropdownOption>>;
@@ -50,10 +59,10 @@ export class AppComponent {
 	//availableChannelCommands: Observable<Array<ChannelCommand>>;
 	//availableMIDIChannels: Observable<Array<number>>;
 
-	availableInputDevices: MIDIInputDevice[];
-	availableOutputDevices: MIDIOutputDevice[];
-	availableChannelCommands: ChannelCommand[];
-	availableMIDIChannels: number[];
+	//availableInputDevices: MIDIInputDevice[];
+	//availableOutputDevices: MIDIOutputDevice[];
+	//availableChannelCommands: ChannelCommand[];
+	//availableMIDIChannels: number[];
 	
 	//public onInputDeviceSelected(device) {
 	//	this.selectedInputDevice = device;
