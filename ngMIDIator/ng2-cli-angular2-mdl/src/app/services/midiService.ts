@@ -1,14 +1,15 @@
-﻿import { MIDIInputDevice } from './base';
-import { MIDIOutputDevice } from './base';
-import { Translation } from './base';
-import { ShortMessage } from './base';
-import { MessageType } from './base';
-import { Profile } from './base';
-import { Transformation, ChannelCommand, TranslationFunction, InputMatchFunction } from './base';
-import { DropdownOption } from './mdl-dropdown.component';
-
-import {Injectable} from '@angular/core';
+﻿import { Component, ViewChild, Injectable, Input, Output, EventEmitter } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import './rxjs-operators';
+import { EnumValues } from 'enum-values';
+import { ProfileService } from './profileService';
+import { Subscription } from 'rxjs/Subscription';
+import { IDropdownOption, DropdownComponent } from './mdl-dropdown.component';
+import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from './domainModel';
+import { ProfileComponent } from './profile.component';
+import { TranslationComponent } from './translation.component';
 
 import { Subject } from 'rxjs/Subject';
 

@@ -3,19 +3,19 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
-import { AppComponent } from './app.component';
-import { DropdownComponent } from './mdl-dropdown.component';
-import { TransformationComponent } from './transformation.component'
-import { MIDIInputDevice } from './base';
-import { MIDIOutputDevice } from './base';
-import { Transformation } from './base';
-import { Translation } from './base';
-import { ShortMessage } from './base';
-import { InputMatchFunction } from './base';
-import { TranslationFunction } from './base';
-import { MessageType } from './base';
 
-import { ProfileComponent } from './profile.component'
+//domain model
+import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from './models/domainModel';
+
+//services
+import { MIDIService } from './services/midiService';
+import { ProfileService } from './services/profileService';
+
+//components
+import { AppComponent } from './components/app/app.component';
+import { IDropdownOption, DropdownComponent } from './components/mdl-dropdown/mdl-dropdown.component';
+import { TransformationComponent } from './components/transformation/transformation.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
     declarations: [

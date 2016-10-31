@@ -14,7 +14,7 @@
 				<div class="mdl-cell--12-col">
 					<mdl-textfield type="text" label="Name" floating-label [(ngModel)]="profile.name"></mdl-textfield>
 					<transformation *ngFor="let transformation of profile.transformations"
-					                [transformation]="transformation">
+					                [(transformation)]="transformation">
 					</transformation>
 
 				</div>
