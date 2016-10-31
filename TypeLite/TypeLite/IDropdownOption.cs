@@ -1,8 +1,6 @@
-﻿using TypeLite;
-
-namespace MIDIator.Engine
+﻿namespace TypeLite
 {
-	[TsInterface(Module = "MIDIator.UI")]
+	[TsInterface(Module = "")]
 	public interface IDropdownOption
 	{
 		string Value { get; }

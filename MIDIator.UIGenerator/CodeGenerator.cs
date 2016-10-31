@@ -61,25 +61,44 @@ namespace MIDIator.UIGenerator
 		{
 			var domainModelDirective = new ImportDirective("./" + Config.Get("DomainModelFileName").Replace(".ts", string.Empty));
 			TsModel.Classes.ToList().ForEach(@class => domainModelDirective.Classes.Add(@class.Name));
+			TsModel.Enums.ToList().ForEach(@enum => domainModelDirective.Classes.Add(@enum.Name));
 
 			var importDirectives =
 				UIGenerationSettings.GlobalImportDirectives.Union(domainModelDirective.Listify()).ToList();
 
+			//add components to directive list
 			TsModel.Classes.Where(tsClass => tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).Any())
 				.ToList()
 				.ForEach(tsClass =>
 				{
-					var template = new Ng2Component();
-					template.Session = new Dictionary<string, object>
+					importDirectives.Add(new ImportDirective($"./{tsClass.Name.ToCamelCase()}.component",
+						(tsClass.Name + "Component").Listify()));
+				});			
+
+			//generate component code
+			TsModel.Classes.Where(tsClass => tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).Any())
+				.ToList()
+				.ForEach(tsClass =>
+				{
+                    var template = new Ng2DomainComponent();
+				    var attribute = (Ng2ComponentAttribute)tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).First();
+                    template.Session = new Dictionary<string, object>
 					{
 						{"BaseType", tsClass},
-						{"ImportDirectives", importDirectives}
+						{
+							"ImportDirectives",
+							importDirectives.Except(importDirectives.Where(x => x.Classes.Contains(tsClass.Name + "Component"))).ToList()
+						},
+					    {
+					        "ComponentCodeTemplate",
+                            attribute.ComponentCodeTemplate
+					    }
 					};
 					template.Initialize();
 
 					var genCode = template.TransformText().Trim();
 
-					var filename = Config.Get("OutputDirectory").MergePath("Components").MergePath($"{tsClass.Name.ToPascalCase()}.component.ts");
+					var filename = Config.Get("OutputDirectory").MergePath(attribute.FilePath ?? $"components/{tsClass.Name.ToCamelCase()}").MergePath($"{tsClass.Name.ToCamelCase()}.component.ts");
 					Directory.CreateDirectory(Path.GetDirectoryName(filename));
 					File.WriteAllText(filename, genCode);
 				});

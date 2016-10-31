@@ -7,7 +7,7 @@ namespace MIDIator.Interfaces
 	/// <summary>
 	/// Abstracts out the information needed to translate one MIDI signal into another.
 	/// </summary>
-	[TsInterface(Module = "MIDIator.UI")]
+	[TsInterface(Module = "")]
 	public interface ITranslation
 	{
 		/// <summary>

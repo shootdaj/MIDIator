@@ -2,7 +2,7 @@
 
 namespace MIDIator.Engine
 {
-	[TsEnum(Module = "MIDIator.UI")]
+	[TsEnum(Module = "")]
 	public enum TranslationFunction
 	{
 		DirectTranslation,

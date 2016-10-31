@@ -41,7 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
-    <Compile Include="GenerateUIAttribute.cs" />
+    <Compile Include="Ng2ComponentAttribute.cs" />
+    <Compile Include="ImportDirective.cs" />
     <Compile Include="UIIgnoreAttribute.cs" />
     <Compile Include="UIReadOnlyAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,15 +12,17 @@ namespace MIDIator.UIGenerator
     using Consumables;
     using MIDIator.UIGeneration;
     using System.Linq;
+    using System.Reflection;
+    using System.Collections.Generic;
     using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class Ng2Component : Ng2ComponentBase
+    public partial class Ng2DomainComponent : Ng2DomainComponentBase
     {
 #line hidden
         /// <summary>
@@ -31,178 +33,213 @@ namespace MIDIator.UIGenerator
             this.Write(" \r\n");
             this.Write(" \r\n");
             this.Write(" \r\n");
+            this.Write(" \r\n");
+            this.Write(" \r\n");
             
-            #line 7 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 10 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
  ImportDirectives.ForEach(directive =>{
             
             #line default
             #line hidden
             this.Write("import");
             
-            #line 7 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 10 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
 if (directive.Classes.Any()){
             
             #line default
             #line hidden
             this.Write(" { ");
             
-            #line 7 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 10 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", directive.Classes)));
             
             #line default
             #line hidden
             this.Write(" } from");
             
-            #line 7 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 10 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
 }
             
             #line default
             #line hidden
             this.Write(" \'");
             
-            #line 7 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 10 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(directive.Module));
             
             #line default
             #line hidden
             this.Write("\';\r\n");
             
-            #line 8 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 11 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
 }); 
             
             #line default
             #line hidden
             this.Write("\r\n@Component({\r\n\tselector: \'");
             
-            #line 11 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 14 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("\',\r\n\ttemplateUrl: \'./");
             
-            #line 12 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 15 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write(".component.html\'\r\n})\r\n\r\nexport class ");
             
-            #line 15 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 18 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
-            this.Write("Component {\r\n\tprivate current");
+            this.Write("Component {\r\n\tprivate subscriptions: Subscription[];\r\n\tprivate current");
             
-            #line 16 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 20 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write(": ");
             
-            #line 16 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 20 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n\t\r\n\t@Input() set ");
             
-            #line 18 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 22 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("(in");
             
-            #line 18 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 22 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write(": ");
             
-            #line 18 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 22 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write("){\r\n\t\tthis.current");
             
-            #line 19 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 23 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write(" = in");
             
-            #line 19 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 23 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n\t\tthis.");
             
-            #line 20 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 24 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("Change.emit(in");
             
-            #line 20 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 24 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write("); \r\n\t}\r\n\tget ");
             
-            #line 22 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 26 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("() : ");
             
-            #line 22 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 26 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write(" {\r\n\t\treturn this.current");
             
-            #line 23 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
+            #line 27 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToPascalCase()));
             
             #line default
             #line hidden
             this.Write("; \r\n\t}\r\n\t\r\n\t@Output() ");
             
-            #line 26 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 30 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name.ToCamelCase()));
             
             #line default
             #line hidden
             this.Write("Change: EventEmitter<");
             
-            #line 26 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 30 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
             this.Write("> = new EventEmitter<");
             
-            #line 26 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+            #line 30 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BaseType.Name));
             
             #line default
             #line hidden
-            this.Write(">();\t\r\n}");
+            this.Write(">();\t\r\n\r\n\t");
+            
+            #line 32 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
+
+
+	if (ComponentCodeTemplate != null)
+    {
+		var componentCodeTemplate = Activator.CreateInstance(ComponentCodeTemplate);
+        componentCodeTemplate.GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .First(x => x.Name == "Session")
+            .SetValue(componentCodeTemplate, new Dictionary<string, object>());
+        var componentCode = componentCodeTemplate.GetType()
+            .GetMethod("TransformText")
+            .Invoke(componentCodeTemplate, null);
+        
+            
+            #line default
+            #line hidden
+            this.Write("\t");
+            
+            #line 45 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(componentCode));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 46 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
+ } 
+            
+            #line default
+            #line hidden
+            this.Write("}");
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2Component.tt"
+        #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainComponent.tt"
 
 private global::TypeLite.TsModels.TsClass _BaseTypeField;
 
@@ -227,6 +264,19 @@ private global::System.Collections.Generic.List<ImportDirective> ImportDirective
     get
     {
         return this._ImportDirectivesField;
+    }
+}
+
+private global::System.Type _ComponentCodeTemplateField;
+
+/// <summary>
+/// Access the ComponentCodeTemplate parameter of the template.
+/// </summary>
+private global::System.Type ComponentCodeTemplate
+{
+    get
+    {
+        return this._ComponentCodeTemplateField;
     }
 }
 
@@ -266,6 +316,20 @@ if ((ImportDirectivesValueAcquired == false))
         this._ImportDirectivesField = ((global::System.Collections.Generic.List<ImportDirective>)(data));
     }
 }
+bool ComponentCodeTemplateValueAcquired = false;
+if (this.Session.ContainsKey("ComponentCodeTemplate"))
+{
+    this._ComponentCodeTemplateField = ((global::System.Type)(this.Session["ComponentCodeTemplate"]));
+    ComponentCodeTemplateValueAcquired = true;
+}
+if ((ComponentCodeTemplateValueAcquired == false))
+{
+    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("ComponentCodeTemplate");
+    if ((data != null))
+    {
+        this._ComponentCodeTemplateField = ((global::System.Type)(data));
+    }
+}
 
 
     }
@@ -284,7 +348,7 @@ if ((ImportDirectivesValueAcquired == false))
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class Ng2ComponentBase
+    public class Ng2DomainComponentBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

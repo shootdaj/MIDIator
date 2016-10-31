@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using MIDIator.UIGeneration;
@@ -10,8 +11,8 @@ namespace MIDIator.Engine
 	/// <summary>
 	/// Defines a profile that can be loaded from a persistent store.
 	/// </summary>
-	[TsClass(Module = "MIDIator.UI")]
-	[Ng2Component(typeof(ProfileView))]
+	[TsClass(Module = "")]
+	[Ng2Component(typeof(ProfileView), componentCodeTemplate: typeof(ProfileComponentCode))]//, new[] {typeof(Transformation), typeof(VirtualOutputDevice)})]
 	public class Profile : IProfile
 	{
 		public string Name { get; set; }

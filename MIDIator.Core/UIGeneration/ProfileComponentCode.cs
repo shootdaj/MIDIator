@@ -7,26 +7,20 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace MIDIator.UIGenerator
+namespace MIDIator.UIGeneration
 {
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    using MIDIator.UIGenerator.Consumables;
-    using Sanford.Multimedia.Midi;
-    using System.Reflection;
-    using MIDIator.Engine;
-    using TypeLite;
-    using TypeLite.Net4;
     using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
+    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.Core\UIGeneration\ProfileComponentCode.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class Ng2DomainModel : Ng2DomainModelBase
+    public partial class ProfileComponentCode : ProfileComponentCodeBase
     {
 #line hidden
         /// <summary>
@@ -34,74 +28,11 @@ namespace MIDIator.UIGenerator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(" \r\n");
-            this.Write(" \r\n");
-            
-            #line 14 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
-
-var ts = TypeScript.Definitions()
-		.ForAssemblies(Assemblies)
-		.WithVisibility((tsClass, name) => true)
-		.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
-
-            
-            #line default
-            #line hidden
-            
-            #line 20 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(ts.Generate()));
-            
-            #line default
-            #line hidden
+            this.Write("\r\n\tprivate form: FormGroup;\r\n\tconstructor(fb: FormBuilder) {\r\n        this.form =" +
+                    " fb.group({\r\n            \"name\": this.currentProfile.name,\r\n            \"transfo" +
+                    "rmations\": this.currentProfile.transformations\r\n        });\r\n    }");
             return this.GenerationEnvironment.ToString();
         }
-        
-        #line 1 "C:\Anshul\Code\MIDIator\MIDIator.UIGenerator\Ng2DomainModel.tt"
-
-private global::System.Collections.Generic.List<Assembly> _AssembliesField;
-
-/// <summary>
-/// Access the Assemblies parameter of the template.
-/// </summary>
-private global::System.Collections.Generic.List<Assembly> Assemblies
-{
-    get
-    {
-        return this._AssembliesField;
-    }
-}
-
-
-/// <summary>
-/// Initialize the template
-/// </summary>
-public virtual void Initialize()
-{
-    if ((this.Errors.HasErrors == false))
-    {
-bool AssembliesValueAcquired = false;
-if (this.Session.ContainsKey("Assemblies"))
-{
-    this._AssembliesField = ((global::System.Collections.Generic.List<Assembly>)(this.Session["Assemblies"]));
-    AssembliesValueAcquired = true;
-}
-if ((AssembliesValueAcquired == false))
-{
-    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Assemblies");
-    if ((data != null))
-    {
-        this._AssembliesField = ((global::System.Collections.Generic.List<Assembly>)(data));
-    }
-}
-
-
-    }
-}
-
-
-        
-        #line default
-        #line hidden
     }
     
     #line default
@@ -111,7 +42,7 @@ if ((AssembliesValueAcquired == false))
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class Ng2DomainModelBase
+    public class ProfileComponentCodeBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

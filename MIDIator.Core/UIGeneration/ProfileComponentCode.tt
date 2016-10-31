@@ -1,0 +1,13 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+	private form: FormGroup;
+	constructor(fb: FormBuilder) {
+        this.form = fb.group({
+            "name": this.currentProfile.name,
+            "transformations": this.currentProfile.transformations
+        });
+    }

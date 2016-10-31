@@ -77,13 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
-    <Compile Include="Ng2DomainModel.cs">
-      <DependentUpon>Ng2DomainModel.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Ng2Component.cs">
-      <DependentUpon>Ng2Component.tt</DependentUpon>
+    <Compile Include="Ng2DomainComponent.cs">
+      <DependentUpon>Ng2DomainComponent.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -121,13 +116,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ng2DomainModel.tt">
+    <Content Include="Ng2DomainComponent.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>Ng2DomainModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Ng2Component.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>Ng2Component.cs</LastGenOutput>
+      <LastGenOutput>Ng2DomainComponent.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

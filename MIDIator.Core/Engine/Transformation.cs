@@ -1,12 +1,13 @@
 ﻿using System;
 using MIDIator.Interfaces;
+using MIDIator.UIGeneration;
 using MIDIator.UIGenerator.Consumables;
 using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "MIDIator.UI")]
-	[Ng2Component]
+	[TsClass(Module = "")]
+	[Ng2Component(componentCodeTemplate: typeof(TransformationComponentCode))]
 	public class Transformation : IDisposable
 	{
 		public string Name { get; set; }

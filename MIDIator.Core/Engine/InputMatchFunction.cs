@@ -2,7 +2,7 @@
 
 namespace MIDIator.Engine
 {
-	[TsEnum(Module = "MIDIator.UI")]
+	[TsEnum(Module = "")]
 	public enum InputMatchFunction
 	{
 		Data1Match,

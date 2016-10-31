@@ -48,7 +48,7 @@ namespace Sanford.Multimedia.Midi
 	/// and system exclusive messages. This includes channel messages, system
 	/// realtime messages, and system common messages.
 	/// </remarks>
-	[TsClass(Module = "MIDIator.UI")]
+	[TsClass(Module = "")]
 	public abstract class ShortMessage : IMidiMessage
 	{
         #region ShortMessage Members

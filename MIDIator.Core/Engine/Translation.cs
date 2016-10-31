@@ -9,10 +9,10 @@ using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "MIDIator.UI")]
+	[TsClass(Module = "")]
 	[DataContract]
 	[DisplayName(nameof(Translation))]
-	[Ng2Component]
+	[Ng2Component()]
 	public class Translation : ITranslation
 	{
 	    public Translation()

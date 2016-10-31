@@ -3,7 +3,7 @@ using TypeLite;
 
 namespace MIDIator.Interfaces
 {
-	[TsInterface(Module = "MIDIator.UI")]
+	[TsInterface(Module = "")]
 	public interface ITranslationMap
 	{
 		//MIDIInputDevice InputDevice { get; set; }

@@ -249,7 +249,10 @@ namespace TypeLite {
                 sb.AppendLine(string.Format("module {0} {{", moduleName));
             }
 
-            using (sb.IncreaseIndentation()) {
+	        IndentationLevelScope moduleIndentationScope = null;
+	        if (generateModuleHeader)
+		        moduleIndentationScope = sb.IncreaseIndentation();
+	        
                 if ((generatorOutput & TsGeneratorOutput.Enums) == TsGeneratorOutput.Enums) {
                     foreach (var enumModel in enums) {
                         this.AppendEnumDefinition(enumModel, sb, generatorOutput);
@@ -273,8 +276,9 @@ namespace TypeLite {
                         this.AppendConstantModule(classModel, sb);
                     }
                 }
-            }
-            if (generateModuleHeader) {
+			if (generateModuleHeader)
+				sb.DecreaseIndentation(moduleIndentationScope);
+			if (generateModuleHeader) {
                 sb.AppendLine("}");
             }
         }
@@ -297,7 +301,6 @@ namespace TypeLite {
 
             if (inheritFromIDropdownOption)
             {
-                //class to do auto hook up of name and value properties
                 construct = "class";
 
 	            dropdownLabelTSPropertyName =
@@ -307,6 +310,8 @@ namespace TypeLite {
 	            dropdownValueTSPropertyName =
 		            _memberFormatter(classModel.Properties.First(
 			            x => x.MemberInfo.Name == ((UIDropdownOption) uiDropdownAttributes.First()).ValueProperty));
+
+				//classModel.Interfaces.Add(new TsType(typeof(IDropdownOption)));
             }
             
             sb.AppendFormatIndented("{0}{2} {1}", visibility, typeName, construct);
@@ -319,7 +324,7 @@ namespace TypeLite {
 
                 var prefixFormat = classModel.Type.IsInterface ? " extends {0}"
                     : classModel.BaseType != null ? " , {0}"
-                    : " extends {0}";
+                    : " implements {0}";
 
                 sb.AppendFormat(prefixFormat, string.Join(" ,", implementations));
             }

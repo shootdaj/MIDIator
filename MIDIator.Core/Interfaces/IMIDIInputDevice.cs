@@ -6,7 +6,7 @@ using TypeLite;
 
 namespace MIDIator.Interfaces
 {
-	[TsInterface(Module = "MIDIator.UI")]
+	[TsInterface(Module = "")]
 	public interface IMIDIInputDevice
 	{
 		int DeviceID { get; }

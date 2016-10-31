@@ -40,7 +40,7 @@ namespace Sanford.Multimedia.Midi
 	/// <summary>
 	/// Defines constants representing MIDI message types.
 	/// </summary>
-	[TsEnum(Module = "MIDIator.UI")]
+	[TsEnum(Module = "")]
 	public enum MessageType
     {
         Channel,

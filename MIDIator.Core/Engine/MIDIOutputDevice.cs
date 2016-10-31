@@ -5,9 +5,9 @@ using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "MIDIator.UI")]
+	[TsClass(Module = "")]
 	[UIDropdownOption("DeviceID")]
-	public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice, IDropdownOption
+	public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice
     {
         public MIDIOutputDevice(int deviceID)
         {
@@ -38,8 +38,5 @@ namespace MIDIator.Engine
             OutputDevice.Reset();
             OutputDevice.Dispose();
         }
-
-	    public string Value { get; }
-	    public string Label { get; }
     }
 }

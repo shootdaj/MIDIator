@@ -5,7 +5,7 @@ using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "MIDIator.UI")]
+	[TsClass(Module = "")]
 	public class VirtualDevice : IDisposable
 	{
 		protected VirtualDevice(string name, ref Guid manufacturerID, ref Guid productID, VirtualDeviceType virtualDeviceType, bool prefixName = true)

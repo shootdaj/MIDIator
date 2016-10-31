@@ -47,7 +47,7 @@ namespace Sanford.Multimedia.Midi
 	/// <summary>
 	/// Defines constants for ChannelMessage types.
 	/// </summary>
-	[TsEnum(Module = "MIDIator.UI")]
+	[TsEnum(Module = "")]
 	public enum ChannelCommand 
     {
         /// <summary>
@@ -437,7 +437,7 @@ namespace Sanford.Multimedia.Midi
 	/// <summary>
 	/// Represents MIDI channel messages.
 	/// </summary>
-	[TsClass(Module = "MIDIator.UI")]
+	[TsClass(Module = "")]
 	[DataContract]
 	[ImmutableObject(true)]
 	[DisplayName(nameof(ChannelMessage))]

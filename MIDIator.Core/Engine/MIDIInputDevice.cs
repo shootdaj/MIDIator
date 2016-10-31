@@ -9,9 +9,9 @@ using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "MIDIator.UI")]
+	[TsClass(Module = "")]
 	[UIDropdownOption("DeviceID")]
-	public class MIDIInputDevice : IDisposable, IMIDIInputDevice, IDropdownOption
+	public class MIDIInputDevice : IDisposable, IMIDIInputDevice
 	{
 		private InputDevice InputDevice { get; }
 
@@ -149,9 +149,5 @@ namespace MIDIator.Engine
 		{
 			InputDevice.Dispose();
 		}
-
-		public string Value => DeviceID.ToString();
-
-		public string Label => Name.ToString();
 	}
 }

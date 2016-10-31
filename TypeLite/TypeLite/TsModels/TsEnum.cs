@@ -38,7 +38,7 @@ namespace TypeLite.TsModels {
 					this.Name = attribute.Name;
 				}
 
-				if (!string.IsNullOrEmpty(attribute.Module)) {
+				if (attribute.Module != null) {
 					this.Module.Name = attribute.Module;
 				}
 			}
