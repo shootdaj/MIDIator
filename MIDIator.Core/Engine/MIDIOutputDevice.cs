@@ -7,8 +7,8 @@ namespace MIDIator.Engine
 {
 	[TsClass(Module = "")]
 	[UIDropdownOption("DeviceID")]
-	public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice
-    {
+	public class MIDIOutputDevice : IDisposable, IMIDIOutputDevice, IDropdownOption
+	{
         public MIDIOutputDevice(int deviceID)
         {
 			OutputDevice = new OutputDevice(deviceID);
@@ -38,5 +38,10 @@ namespace MIDIator.Engine
             OutputDevice.Reset();
             OutputDevice.Dispose();
         }
-    }
+
+		[TsIgnore]
+		public string Value { get; }
+		[TsIgnore]
+		public string Label { get; }
+	}
 }

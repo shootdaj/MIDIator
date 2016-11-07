@@ -15,5 +15,7 @@ namespace MIDIator.Web
 				Console.ReadLine();
 			}
 		}
+
+		public static int Iteration { get; set; } = 2;
 	}
 }

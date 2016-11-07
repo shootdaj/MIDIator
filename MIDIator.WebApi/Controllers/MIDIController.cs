@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Web.Http;
 using Anshul.Utilities;
 using MIDIator.Engine;
@@ -14,7 +15,7 @@ namespace MIDIator.Web.Controllers
 
 		public MIDIController(/*IMIDIManager midiManager*/)
 		{
-			MIDIManager = new MIDIManager(); //needs to be injected
+			MIDIManager = Engine.MIDIManager.Instance; //needs to be injected
 		}
 
 		#region Profile
@@ -22,7 +23,7 @@ namespace MIDIator.Web.Controllers
 		[HttpGet]
 		public Profile Profile()
 		{
-			var midiDeviceName = "Numark ORBIT";
+			var midiDeviceName = "TouchOSC Bridge";
 
 			return new Profile()
 			{
@@ -63,7 +64,23 @@ namespace MIDIator.Web.Controllers
 		[HttpGet]
 		public IEnumerable<dynamic> AvailableInputDevices()
 		{
+			//var inputDevices = new List<dynamic>();
+			//for (int i = 0; i < Program.Iteration; i++)
+			//{
+			//	dynamic returnValue = new ExpandoObject();
+			//	returnValue.Name = i;
+			//	//returnValue.DriverVersion = InputDevice.GetDeviceCapabilities(i).driverVersion;
+			//	//returnValue.MID = InputDevice.GetDeviceCapabilities(i).mid;
+			//	//returnValue.PID = InputDevice.GetDeviceCapabilities(i).pid;
+			//	//returnValue.Support = InputDevice.GetDeviceCapabilities(i).support;
+			//	returnValue.DeviceID = i;
+			//	inputDevices.Add(returnValue);
+			//}
+
+			//Program.Iteration++;
+
 			return MIDIManager.AvailableInputDevices;
+			//return inputDevices;
 		}
 
 		[HttpPost]

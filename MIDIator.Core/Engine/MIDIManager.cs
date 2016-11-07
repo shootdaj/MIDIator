@@ -10,6 +10,14 @@ namespace MIDIator.Engine
 {
 	public class MIDIManager : IMIDIManager
 	{
+		#region Singleton
+
+		private static MIDIManager _instance;
+
+		public static MIDIManager Instance => _instance ?? (_instance = new MIDIManager());
+
+		#endregion
+
 		#region Internals
 
 		public IList<IMIDIInputDevice> InputDevicesInUse { get; } = new List<IMIDIInputDevice>();

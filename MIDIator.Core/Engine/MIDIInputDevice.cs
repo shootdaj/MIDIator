@@ -11,7 +11,7 @@ namespace MIDIator.Engine
 {
 	[TsClass(Module = "")]
 	[UIDropdownOption("DeviceID")]
-	public class MIDIInputDevice : IDisposable, IMIDIInputDevice
+	public class MIDIInputDevice : IDisposable, IMIDIInputDevice, IDropdownOption
 	{
 		private InputDevice InputDevice { get; }
 
@@ -149,5 +149,10 @@ namespace MIDIator.Engine
 		{
 			InputDevice.Dispose();
 		}
+
+		[TsIgnore]
+		public string Value { get; }
+		[TsIgnore]
+		public string Label { get; }
 	}
 }

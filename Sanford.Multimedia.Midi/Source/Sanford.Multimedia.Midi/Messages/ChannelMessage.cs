@@ -36,6 +36,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
 using TypeLite;
 // ReSharper disable CheckNamespace
@@ -441,6 +442,7 @@ namespace Sanford.Multimedia.Midi
 	[DataContract]
 	[ImmutableObject(true)]
 	[DisplayName(nameof(ChannelMessage))]
+	[Ng2Component()]
 	public sealed class ChannelMessage : ShortMessage
 	{
         #region ChannelEventArgs Members

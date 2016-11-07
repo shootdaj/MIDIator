@@ -33,72 +33,64 @@ namespace MIDIator.UIGenerator
 
 		private void GenerateDomainModel()
 		{
-			//var template = new Ng2DomainModel();
-			//template.Session = new Dictionary<string, object>
-			//{
-			//	{"Assemblies", new List<Assembly> {typeof(Profile).Assembly, typeof(ShortMessage).Assembly}}
-			//};
-			//template.Initialize();
-
-			//var genCode = template.TransformText();
-
 			var ts = TypeScript.Definitions()
 				.ForAssembly(typeof(Profile).Assembly)
 				.ForAssembly(typeof(ShortMessage).Assembly)
 				.WithVisibility((tsClass, name) => true)
-				.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
+				.WithMemberFormatter(identifier => identifier.Name.ToCamelCase())
+				.AsConstEnums(false);
 
 			TsModel model;
 			var genCode = ts.GenerateOutModel(out model).Trim();
 			TsModel = model;
 
-			var filename = Config.Get("OutputDirectory").MergePath(Config.Get("DomainModelFileName"));
+			var filename = Config.Get("OutputDirectory").MergePath("models/domainModel.ts");
 			Directory.CreateDirectory(Path.GetDirectoryName(filename));
 			File.WriteAllText(filename, genCode);
 		}
 
 		private void GenerateComponents()
 		{
-			var domainModelDirective = new ImportDirective("./" + Config.Get("DomainModelFileName").Replace(".ts", string.Empty));
+			var domainModelDirective = new ImportDirective("../../models/domainModel");
 			TsModel.Classes.ToList().ForEach(@class => domainModelDirective.Classes.Add(@class.Name));
 			TsModel.Enums.ToList().ForEach(@enum => domainModelDirective.Classes.Add(@enum.Name));
 
 			var importDirectives =
 				UIGenerationSettings.GlobalImportDirectives.Union(domainModelDirective.Listify()).ToList();
 
-			//add components to directive list
+			//add domain components to directive list
 			TsModel.Classes.Where(tsClass => tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).Any())
 				.ToList()
 				.ForEach(tsClass =>
 				{
-					importDirectives.Add(new ImportDirective($"./{tsClass.Name.ToCamelCase()}.component",
+					importDirectives.Add(new ImportDirective($"../../components/{tsClass.Name.ToCamelCase()}/{tsClass.Name.ToCamelCase()}.component",
 						(tsClass.Name + "Component").Listify()));
-				});			
+				});
 
 			//generate component code
 			TsModel.Classes.Where(tsClass => tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).Any())
 				.ToList()
 				.ForEach(tsClass =>
 				{
-                    var template = new Ng2DomainComponent();
-				    var attribute = (Ng2ComponentAttribute)tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).First();
-                    template.Session = new Dictionary<string, object>
+					var template = new Ng2DomainComponent();
+					var attribute = (Ng2ComponentAttribute)tsClass.Type.GetCustomAttributes(typeof(Ng2ComponentAttribute)).First();
+					template.Session = new Dictionary<string, object>
 					{
 						{"BaseType", tsClass},
 						{
 							"ImportDirectives",
 							importDirectives.Except(importDirectives.Where(x => x.Classes.Contains(tsClass.Name + "Component"))).ToList()
 						},
-					    {
-					        "ComponentCodeTemplate",
-                            attribute.ComponentCodeTemplate
-					    }
+						{
+							"ComponentCodeTemplate",
+							attribute.ComponentCodeTemplate
+						}
 					};
 					template.Initialize();
 
 					var genCode = template.TransformText().Trim();
 
-					var filename = Config.Get("OutputDirectory").MergePath(attribute.FilePath ?? $"components/{tsClass.Name.ToCamelCase()}").MergePath($"{tsClass.Name.ToCamelCase()}.component.ts");
+					var filename = Config.Get("OutputDirectory").MergePath($"components/{tsClass.Name.ToCamelCase()}").MergePath($"{tsClass.Name.ToCamelCase()}.component.ts");
 					Directory.CreateDirectory(Path.GetDirectoryName(filename));
 					File.WriteAllText(filename, genCode);
 				});

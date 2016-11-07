@@ -18,9 +18,9 @@ namespace MIDIator.UIGeneration
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.Core\UIGeneration\ProfileView.tt"
+    #line 1 "C:\Anshul\Code\MIDIator\MIDIator.Core\UIGeneration\TranslationComponentCode.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class ProfileView : ProfileViewBase
+    public partial class TranslationComponentCode : TranslationComponentCodeBase
     {
 #line hidden
         /// <summary>
@@ -28,13 +28,34 @@ namespace MIDIator.UIGeneration
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n\r\n");
-            
-            #line 8 "C:\Anshul\Code\MIDIator\MIDIator.Core\UIGeneration\ProfileView.tt"
- //this is still an unfinished feature because it hasn't been necessary so far 
-            
-            #line default
-            #line hidden
+            this.Write(@"
+	ngOnDestroy() {
+		this.subscriptions.forEach(s => s.unsubscribe());
+	}
+
+	get availableInputMatchFunctionDropdownOptions(): IDropdownOption[] {
+		return this.availableInputMatchFunctions.map(
+			fx => new DropdownOption((<number>fx).toString(), InputMatchFunction[fx]));
+	}
+
+	get availableTranslationFunctionDropdownOptions(): IDropdownOption[] {
+		return this.availableTranslationFunctions.map(
+			fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
+	}
+
+	get inputMatchFunctionDropdownOption(): IDropdownOption {
+		return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
+	}
+	set inputMatchFunctionDropdownOption(value: IDropdownOption) {
+		this.translation.inputMatchFunction = parseInt(value.value);
+	}
+
+	get translationFunctionDropdownOption(): IDropdownOption {
+		return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
+	}
+	set translationFunctionDropdownOption(value: IDropdownOption) {
+		this.translation.translationFunction = parseInt(value.value);
+	}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -46,7 +67,7 @@ namespace MIDIator.UIGeneration
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class ProfileViewBase
+    public class TranslationComponentCodeBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

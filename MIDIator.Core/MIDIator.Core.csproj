@@ -77,6 +77,11 @@
     <Compile Include="Engine\VirtualDevice.cs" />
     <Compile Include="Engine\VirtualOutputDevice.cs" />
     <Compile Include="Engine\VirtualMIDIManager.cs" />
+    <Compile Include="UIGeneration\TranslationComponentCode.cs">
+      <DependentUpon>TranslationComponentCode.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="UIGeneration\TransformationComponentCode.cs">
       <DependentUpon>TransformationComponentCode.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -139,6 +144,10 @@
     </Content>
     <Content Include="teVirtualMIDI32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UIGeneration\TranslationComponentCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TranslationComponentCode.cs</LastGenOutput>
     </Content>
     <Content Include="UIGeneration\TransformationComponentCode.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

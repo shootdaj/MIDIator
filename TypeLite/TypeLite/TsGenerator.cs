@@ -326,7 +326,7 @@ namespace TypeLite {
                     : classModel.BaseType != null ? " , {0}"
                     : " implements {0}";
 
-                sb.AppendFormat(prefixFormat, string.Join(" ,", implementations));
+                sb.AppendFormat(prefixFormat, string.Join(", ", implementations));
             }
 
             sb.AppendLine(" {");

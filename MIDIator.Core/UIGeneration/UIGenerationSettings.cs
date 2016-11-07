@@ -12,16 +12,17 @@ namespace MIDIator.UIGeneration
 	{
 		public static IList<ImportDirective> GlobalImportDirectives { get; set; } = new List<ImportDirective>
 			{
-				new ImportDirective("@angular/core", new List<string>() {"Component", "ViewChild", "Injectable", "Input", "Output", "EventEmitter"}),
-				new ImportDirective("@angular/forms", new List<string>() {"FormsModule", "ReactiveFormsModule", "FormGroup", "FormControl", "Validators", "FormBuilder"}),
-				new ImportDirective("@angular/http", new List<string>() {"Http"}),
-				new ImportDirective("rxjs/Observable", new List<string>() {"Observable"}),
-				new ImportDirective("rxjs/Subscription", new List<string>() {"Subscription"}),
-				new ImportDirective("./rxjs-operators"),
-				new ImportDirective("enum-values", new List<string>() {"EnumValues"}),
-				new ImportDirective("./midiService", new List<string>() {"MIDIService"}),
-				new ImportDirective("./profileService", new List<string>() {"ProfileService"}),
-				new ImportDirective("./mdl-dropdown.component", new List<string>() {"IDropdownOption", "DropdownComponent"}),
+				new ImportDirective("@angular/core", new[] {"Component", "ViewChild", "Injectable", "Input", "Output", "EventEmitter", "DoCheck"}),
+				new ImportDirective("@angular/forms", new[] { "FormsModule", "ReactiveFormsModule", "FormGroup", "FormControl", "Validators", "FormBuilder"}),
+				new ImportDirective("@angular/http", "Http".Listify()),
+				new ImportDirective("rxjs/Observable", "Observable".Listify()),
+				new ImportDirective("rxjs/Subscription", "Subscription".Listify()),
+                new ImportDirective("rxjs/Subject", "Subject".Listify()),
+                new ImportDirective("./rxjs-operators"),
+				new ImportDirective("enum-values", "EnumValues".Listify()),
+				new ImportDirective("../../services/midiService", "MIDIService".Listify()),
+				new ImportDirective("../../services/profileService", "ProfileService".Listify()),
+				new ImportDirective("../../components/mdl-dropdown/mdl-dropdown.component", new[] {"DropdownOption", "DropdownComponent"}),
 			};
 	}
 }
