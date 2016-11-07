@@ -13,10 +13,14 @@ import { MIDIService } from './services/midiService';
 //components
 import { AppComponent } from './components/app/app.component';
 import { DropdownComponent } from './components/mdl-dropdown/mdl-dropdown.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { TransformationComponent } from './components/transformation/transformation.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+		ProfileComponent,
+		TransformationComponent,
         DropdownComponent
 	],
     imports: [

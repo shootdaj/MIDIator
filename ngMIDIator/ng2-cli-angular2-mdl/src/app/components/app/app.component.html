@@ -9,14 +9,15 @@
 		</mdl-layout-header-row>
 	</mdl-layout-header>
 	<mdl-layout-content class="app-content">
-        <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="save(form.value, form.valid)">
-            <mdl-textfield type="text" label="Name" floating-label formControlName="name"></mdl-textfield><br/>
-            <mdl-dropdown [options]="inputDevices"
-                          [dropdownLabel]="'Input Device'"
-                          [control]="form.controls.name"
-                          [id]="inputDevice">
-            </mdl-dropdown>
-            <button type="submit" mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Submit</button>
-        </form>
+	    <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="save(form.value, form.valid)">
+	        <profile [form]="form"></profile>
+	        <!--<mdl-textfield type="text" label="Name" floating-label formControlName="name"></mdl-textfield><br/>
+	        <mdl-dropdown [options]="inputDevices"
+	                      [dropdownLabel]="'Input Device'"
+	                      [control]="form.controls.name"
+	                      [id]="inputDevice">
+	        </mdl-dropdown>-->
+	        <!--<button type="submit" mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Submit</button>-->
+	    </form>
 	</mdl-layout-content>
 </mdl-layout>

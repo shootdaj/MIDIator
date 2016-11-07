@@ -20,7 +20,7 @@ export class MIDIService {
 	}
 
 	availableInputDevicesChanges: Subject<MIDIInputDevice[]> = new Subject<MIDIInputDevice[]>();
-	//availableOutputDevicesSubject: Subject<MIDIOutputDevice[]> = new Subject<MIDIOutputDevice[]>();
+	availableOutputDevicesChanges: Subject<MIDIOutputDevice[]> = new Subject<MIDIOutputDevice[]>();
 	//availableChannelCommandsSubject: Subject<ChannelCommand[]> = new Subject<ChannelCommand[]>();
 	//availableMIDIChannelsSubject: Subject<number[]> = new Subject<number[]>();
 	//availableInputMatchFunctionsSubject: Subject<InputMatchFunction[]> = new Subject<InputMatchFunction[]>();
@@ -33,12 +33,12 @@ export class MIDIService {
 			err => console.log(err));
 	}
 
-	//getAvailableOutputDevices() {
-	//	this.http.get('http://localhost:9000/midi/AvailableOutputDevices')
-	//		.map(response => response.json())
-	//		.subscribe(data => this.availableOutputDevicesSubject.next(data),
-	//		err => console.log(err));
-	//}
+	getAvailableOutputDevices() {
+		this.http.get('http://localhost:9000/midi/AvailableOutputDevices')
+			.map(response => response.json())
+			.subscribe(data => this.availableOutputDevicesChanges.next(data),
+			err => console.log(err));
+	}
 
 	//getAvailableChannelCommands() {
 	//	this.http.get('http://localhost:9000/midi/AvailableChannelCommands')

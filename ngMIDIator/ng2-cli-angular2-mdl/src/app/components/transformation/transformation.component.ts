@@ -1,12 +1,13 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import './rxjs-operators';
+import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
+import { HelperService } from '../../services/helperService';
 import { ProfileService } from '../../services/profileService';
 import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
@@ -15,32 +16,42 @@ import { TranslationComponent } from '../../components/translation/translation.c
 
 @Component({
     selector: 'transformation',
-    templateUrl: './transformation.component.html'
+    templateUrl: './transformation.component.html',
+	providers: [MIDIService, HelperService]
 })
 
-export class TransformationComponent {
-    private subscriptions: Subscription[];
-    private currentTransformation: Transformation;
+export class TransformationComponent implements OnInit, OnDestroy {
 
-    @Input() set transformation(inTransformation: Transformation) {
-        this.currentTransformation = inTransformation;
-        this.transformationChange.emit(inTransformation);
-    }
-    get transformation(): Transformation {
-        return this.currentTransformation;
-    }
+	private subscriptions: Subscription[];
+	private inputDevices: MIDIInputDevice[];
+	private outputDevices: MIDIOutputDevice[];
 
-    @Output() transformationChange: EventEmitter<Transformation> = new EventEmitter<Transformation>();
+	@Input() form: FormGroup;
 
+	constructor(private midiService: MIDIService, private helperService: HelperService) {
+		console.log("constructer transformation component");
+		console.log(this.form);
+	}
 
-    private availableInputDevices: MIDIInputDevice[];
-    private availableOutputDevices: MIDIOutputDevice[];
+	ngOnInit(): void {
+		this.subscriptions = new Array<Subscription>();
+		this.subscriptions.push(this.midiService.availableInputDevicesChanges
+			.subscribe(data => {
+				this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
+			}));
+		this.subscriptions.push(this.midiService.availableOutputDevicesChanges
+			.subscribe(data => {
+				this.outputDevices = data.map(device => this.helperService.maskCast(device, MIDIOutputDevice));
+			}));
 
-    constructor(private midiService: MIDIService) {
-        this.subscriptions.push(this.midiService.availableInputDevicesChanges
-            .subscribe(data => this.availableInputDevices = data));
+		
+		console.log("onInit transformation component");
+		console.log(this.form);
+		console.log("inputDevices:");
+		console.log(this.inputDevices);
+	}
 
-        this.subscriptions.push(this.midiService.availableOutputDevicesSubject
-            .subscribe(data => this.availableOutputDevices = data));
-    }
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(s => s.unsubscribe());
+	}
 }

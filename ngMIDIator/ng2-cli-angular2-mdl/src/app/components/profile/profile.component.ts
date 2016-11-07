@@ -1,10 +1,10 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import './rxjs-operators';
+import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { ProfileService } from '../../services/profileService';
@@ -18,20 +18,30 @@ import { TranslationComponent } from '../../components/translation/translation.c
     templateUrl: './profile.component.html'
 })
 
-export class ProfileComponent {
-    private subscriptions: Subscription[];
+export class ProfileComponent implements OnInit, OnDestroy {
+
+	@Input() form: FormGroup;
+
+	constructor() {
+		console.log("constructer profile component");
+		console.log(this.form);
+
+		//this.form.controls
+	}
+
+    //private subscriptions: Subscription[];
     //private currentProfile: Profile;
 
-    private currentForm: FormGroup;
-    @Output() currentFormChange: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+    //private currentForm: FormGroup;
+    //@Output() currentFormChange: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-    @Input() set form(form: FormGroup) {
-        this.currentForm = form;
-        this.currentFormChange.emit(form);
-    }
-    get form() {
-        return this.currentForm;
-    }
+    //@Input() set form(form: FormGroup) {
+    //    this.currentForm = form;
+    //    this.currentFormChange.emit(form);
+    //}
+    //get form() {
+    //    return this.currentForm;
+    //}
 
     //@Input() set profile(inProfile: Profile) {
     //    this.currentProfile = inProfile;
@@ -51,4 +61,10 @@ export class ProfileComponent {
     //        "transformations": this.currentProfile.transformations
     //    });
     //}
+	ngOnInit(): void {
+		console.log("onInit profile component");
+		console.log(this.form);
+	}
+
+	ngOnDestroy(): void {}
 }

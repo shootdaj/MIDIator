@@ -47,65 +47,65 @@ export class TranslationComponent {
 
 
 
-	private subscriptions: Subscription[];
-	private availableInputDevices: MIDIInputDevice[];
-	private availableOutputDevices: MIDIOutputDevice[];
-	private availableInputMatchFunctions: InputMatchFunction[];
-	private availableTranslationFunctions: TranslationFunction[];
+	//private subscriptions: Subscription[];
+	//private availableInputDevices: MIDIInputDevice[];
+	//private availableOutputDevices: MIDIOutputDevice[];
+	//private availableInputMatchFunctions: InputMatchFunction[];
+	//private availableTranslationFunctions: TranslationFunction[];
 	
-	//@Input() translation: Translation;
-	//@Output() translationChange: EventEmitter<Translation> = new EventEmitter<Translation>();
+	////@Input() translation: Translation;
+	////@Output() translationChange: EventEmitter<Translation> = new EventEmitter<Translation>();
 
-    constructor(private midiService: MIDIService, private fb: FormBuilder) {
+ //   constructor(private midiService: MIDIService, private fb: FormBuilder) {
 
-        //this.form = this.fb.group({
+ //       //this.form = this.fb.group({
             
-        //    addresses: this.fb.array([
-        //        this.initAddress(),
-        //    ])
-        //});
+ //       //    addresses: this.fb.array([
+ //       //        this.initAddress(),
+ //       //    ])
+ //       //});
 
-		this.subscriptions.push(this.midiService.availableInputDevicesChanges
-			.subscribe(data => this.availableInputDevices = data));
+	//	this.subscriptions.push(this.midiService.availableInputDevicesChanges
+	//		.subscribe(data => this.availableInputDevices = data));
 
-		this.subscriptions.push(this.midiService.availableOutputDevicesSubject
-			.subscribe(data => this.availableOutputDevices = data));
+	//	this.subscriptions.push(this.midiService.availableOutputDevicesSubject
+	//		.subscribe(data => this.availableOutputDevices = data));
 
-		this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
-			.subscribe(data => this.availableInputMatchFunctions = data));
+	//	this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
+	//		.subscribe(data => this.availableInputMatchFunctions = data));
 
-		this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
-            .subscribe(data => this.availableTranslationFunctions = data));
+	//	this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
+ //           .subscribe(data => this.availableTranslationFunctions = data));
 
-	    this.form.valueChanges.subscribe(data => this.formChanges.emit(data));
+	//    this.form.valueChanges.subscribe(data => this.formChanges.emit(data));
 
-	}
+	//}
 
-	ngOnDestroy() {
-		this.subscriptions.forEach(s => s.unsubscribe());
-	}
+	//ngOnDestroy() {
+	//	this.subscriptions.forEach(s => s.unsubscribe());
+	//}
 
-	get availableInputMatchFunctionDropdownOptions(): IDropdownOption[] {
-		return this.availableInputMatchFunctions.map(
-			fx => new DropdownOption((<number>fx).toString(), InputMatchFunction[fx]));
-	}
+	//get availableInputMatchFunctionDropdownOptions(): IDropdownOption[] {
+	//	return this.availableInputMatchFunctions.map(
+	//		fx => new DropdownOption((<number>fx).toString(), InputMatchFunction[fx]));
+	//}
 
-	get availableTranslationFunctionDropdownOptions(): IDropdownOption[] {
-		return this.availableTranslationFunctions.map(
-			fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
-	}
+	//get availableTranslationFunctionDropdownOptions(): IDropdownOption[] {
+	//	return this.availableTranslationFunctions.map(
+	//		fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
+	//}
 
-	get inputMatchFunctionDropdownOption(): IDropdownOption {
-		return new DropdownOption((<number>this.form.value.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
-	}
-	set inputMatchFunctionDropdownOption(value: IDropdownOption) {
-		this.translation.inputMatchFunction = parseInt(value.value);
-	}
+	//get inputMatchFunctionDropdownOption(): IDropdownOption {
+	//	return new DropdownOption((<number>this.form.value.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
+	//}
+	//set inputMatchFunctionDropdownOption(value: IDropdownOption) {
+	//	this.translation.inputMatchFunction = parseInt(value.value);
+	//}
 
-	get translationFunctionDropdownOption(): IDropdownOption {
-		return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
-	}
-	set translationFunctionDropdownOption(value: IDropdownOption) {
-		this.translation.translationFunction = parseInt(value.value);
-	}
+	//get translationFunctionDropdownOption(): IDropdownOption {
+	//	return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
+	//}
+	//set translationFunctionDropdownOption(value: IDropdownOption) {
+	//	this.translation.translationFunction = parseInt(value.value);
+	//}
 }

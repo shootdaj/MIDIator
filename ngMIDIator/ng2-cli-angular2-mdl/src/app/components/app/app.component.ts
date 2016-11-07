@@ -37,6 +37,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		private midiService: MIDIService,
 		private helperService: HelperService,
 		private profileService: ProfileService) {
+		console.log("constructer app component");
+		console.log(this.form);
 	}
 
 	ngOnInit() {
@@ -49,20 +51,22 @@ export class AppComponent implements OnInit, OnDestroy {
 				this.subscriptions.push(this.form.valueChanges.subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
 			}));
 
-		this.subscriptions.push(this.midiService.availableInputDevicesChanges
-			.subscribe(data => {
-				this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
-			}));
+		//this.subscriptions.push(this.midiService.availableInputDevicesChanges
+		//	.subscribe(data => {
+		//		this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
+		//	}));
 
 		this.midiService.getAvailableInputDevices();
-
 		this.profileService.getProfile();
+
+		console.log("onInit app component");
+		console.log(this.form);
 	}
 
 	private getProfileFormGroup(profile: Profile): FormGroup {
 		return this.fb.group({
 			name: [profile.name, [<any>Validators.required]],
-			transformations: this.fb.array([this.getTransformationsFormGroups(profile.transformations)])
+			transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations))
 		});
 	}
 
