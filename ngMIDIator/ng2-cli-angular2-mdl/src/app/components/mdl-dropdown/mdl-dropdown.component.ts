@@ -1,35 +1,28 @@
 import { Component, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
 
 @Component({
     selector: 'mdl-dropdown',
     templateUrl: './mdl-dropdown.component.html'
 })
-export class DropdownComponent implements DoCheck {
+export class DropdownComponent {
+
     @Input() options: IDropdownOption[];
+
     @Input() dropdownLabel: string;
     @Input() placeholder: string;
     @Input() id: string;
-    @Output() selectedOptionChange: EventEmitter<any>; //this can be fed by parent to do something when dropdown changes
-    @Input() selectedOption: IDropdownOption;
+
+    //@Input() form: FormGroup;
+    @Input() control: FormControl;
+	//@Input() formControlName: string;
 
     constructor() {
     }
-
-    //onOptionSelected(value) {
-    //    this.selectedOption = value;
-    //    this.selectedOptionChange.emit(value);
-    //}
-
-	ngDoCheck(): void {
-		this.selectedOptionChange.next(this.selectedOption);
-	}
 }
 
-export interface IDropdownOption {
-    value: string;
-    label: string;
-}
-
-export class DropdownOption {
+export class DropdownOption implements IDropdownOption {
 	constructor(public value: string, public label: string) {}
 }

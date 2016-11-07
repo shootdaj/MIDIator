@@ -1,15 +1,3 @@
-//domain model
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
-
-//services
-import { MIDIService } from '../../services/midiService';
-import { ProfileService } from '../../services/profileService';
-
-//components
-import { IDropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
-import { TransformationComponent } from '../../components/transformation/transformation.component';
-
-//ng2
 import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -17,9 +5,13 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import './rxjs-operators';
-
-//libs
 import { EnumValues } from 'enum-values';
+import { MIDIService } from '../../services/midiService';
+import { ProfileService } from '../../services/profileService';
+import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
+import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { TransformationComponent } from '../../components/transformation/transformation.component';
+import { TranslationComponent } from '../../components/translation/translation.component';
 
 @Component({
     selector: 'profile',
@@ -27,23 +19,36 @@ import { EnumValues } from 'enum-values';
 })
 
 export class ProfileComponent {
-    private currentProfile: Profile;
-    private form: FormGroup;
+    private subscriptions: Subscription[];
+    //private currentProfile: Profile;
 
-    @Input() set profile(inProfile: Profile) {
-        this.currentProfile = inProfile;
-        this.profileChange.emit(inProfile);
+    private currentForm: FormGroup;
+    @Output() currentFormChange: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+
+    @Input() set form(form: FormGroup) {
+        this.currentForm = form;
+        this.currentFormChange.emit(form);
     }
-    get profile(): Profile {
-        return this.currentProfile;
+    get form() {
+        return this.currentForm;
     }
 
-    @Output() profileChange: EventEmitter<Profile> = new EventEmitter<Profile>();
+    //@Input() set profile(inProfile: Profile) {
+    //    this.currentProfile = inProfile;
+    //    this.profileChange.emit(inProfile);
+    //}
+    //get profile(): Profile {
+    //    return this.currentProfile;
+    //}
 
-    constructor(fb: FormBuilder) {
-        this.form = fb.group({
-            "name": this.currentProfile.name,
-            "transformations": this.currentProfile.transformations
-        });
-    }
+    //@Output() profileChange: EventEmitter<Profile> = new EventEmitter<Profile>();
+
+
+    //private form: FormGroup;
+    //constructor(fb: FormBuilder) {
+    //    this.form = fb.group({
+    //        "name": this.currentProfile.name,
+    //        "transformations": this.currentProfile.transformations
+    //    });
+    //}
 }

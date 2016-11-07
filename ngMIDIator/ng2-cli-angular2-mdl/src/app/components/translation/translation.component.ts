@@ -1,12 +1,12 @@
 //domain model
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
 
 //services
 import { MIDIService } from '../../services/midiService';
 import { ProfileService } from '../../services/profileService';
 
 //components
-import { IDropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
+import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { TransformationComponent } from '../../components/transformation/transformation.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
 
@@ -30,17 +30,42 @@ import { EnumValues } from 'enum-values';
 
 export class TranslationComponent {
 
+    //private currentForm: FormGroup;
+    //@Output() formChanges: EventEmitter<Translation> = new EventEmitter<Translation>();
+
+    //@Input() set form(form: FormGroup) {
+    //    this.currentForm = form;
+    //    this.currentFormChange.emit(form);
+    //}
+    //get form() {
+    //    return this.currentForm;
+    //}
+
+    @Input() public form: FormGroup;
+   
+
+
+
+
 	private subscriptions: Subscription[];
 	private availableInputDevices: MIDIInputDevice[];
 	private availableOutputDevices: MIDIOutputDevice[];
 	private availableInputMatchFunctions: InputMatchFunction[];
 	private availableTranslationFunctions: TranslationFunction[];
 	
-	@Input() translation: Translation;
-	@Output() translationChange: EventEmitter<Translation> = new EventEmitter<Translation>();
+	//@Input() translation: Translation;
+	//@Output() translationChange: EventEmitter<Translation> = new EventEmitter<Translation>();
 
-	constructor(private midiService: MIDIService) {
-		this.subscriptions.push(this.midiService.availableInputDevicesSubject
+    constructor(private midiService: MIDIService, private fb: FormBuilder) {
+
+        //this.form = this.fb.group({
+            
+        //    addresses: this.fb.array([
+        //        this.initAddress(),
+        //    ])
+        //});
+
+		this.subscriptions.push(this.midiService.availableInputDevicesChanges
 			.subscribe(data => this.availableInputDevices = data));
 
 		this.subscriptions.push(this.midiService.availableOutputDevicesSubject
@@ -50,7 +75,10 @@ export class TranslationComponent {
 			.subscribe(data => this.availableInputMatchFunctions = data));
 
 		this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
-			.subscribe(data => this.availableTranslationFunctions = data));
+            .subscribe(data => this.availableTranslationFunctions = data));
+
+	    this.form.valueChanges.subscribe(data => this.formChanges.emit(data));
+
 	}
 
 	ngOnDestroy() {
@@ -68,7 +96,7 @@ export class TranslationComponent {
 	}
 
 	get inputMatchFunctionDropdownOption(): IDropdownOption {
-		return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
+		return new DropdownOption((<number>this.form.value.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
 	}
 	set inputMatchFunctionDropdownOption(value: IDropdownOption) {
 		this.translation.inputMatchFunction = parseInt(value.value);

@@ -3,16 +3,20 @@
 		<mdl-layout-header-row>
 			<mdl-layout-title>MIDIator</mdl-layout-title>
 			<mdl-layout-spacer></mdl-layout-spacer>
-			<!-- Navigation. We hide it in small screens. -->
 			<nav class="mdl-navigation">
 				<a class="mdl-navigation__link">Link</a>
 			</nav>
 		</mdl-layout-header-row>
 	</mdl-layout-header>
 	<mdl-layout-content class="app-content">
-		<profile [profile]="currentProfile">
-		</profile>
-		
-		<mdl-textfield type="text" label="Name" floating-label [(ngModel)]="currentProfile.Name"></mdl-textfield>
+        <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="save(form.value, form.valid)">
+            <mdl-textfield type="text" label="Name" floating-label formControlName="name"></mdl-textfield><br/>
+            <mdl-dropdown [options]="inputDevices"
+                          [dropdownLabel]="'Input Device'"
+                          [control]="form.controls.name"
+                          [id]="inputDevice">
+            </mdl-dropdown>
+            <button type="submit" mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Submit</button>
+        </form>
 	</mdl-layout-content>
 </mdl-layout>

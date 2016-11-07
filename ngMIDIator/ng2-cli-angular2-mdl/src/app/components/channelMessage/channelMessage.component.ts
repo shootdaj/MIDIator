@@ -1,10 +1,19 @@
-import { Component, Input, Output, DoCheck, EventEmitter } from '@angular/core';
-import { ChannelMessage, MIDIInputDevice, MIDIOutputDevice, ChannelCommand } from './base';
-import { Observable} from 'rxjs/Observable';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { IDropdownOption, DropdownComponent, DropdownOption } from './mdl-dropdown.component';
-import { InputMatchFunction, TranslationFunction } from './base';
-import {MIDIService} from './midiService'
+import { Subject } from 'rxjs/Subject';
+import './rxjs-operators';
+import { EnumValues } from 'enum-values';
+import { MIDIService } from '../../services/midiService';
+import { ProfileService } from '../../services/profileService';
+import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
+import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { TransformationComponent } from '../../components/transformation/transformation.component';
+import { ProfileComponent } from '../../components/profile/profile.component';
+import { TranslationComponent } from '../../components/translation/translation.component';
+
 
 @Component({
 	selector: 'channel-message',
@@ -12,7 +21,7 @@ import {MIDIService} from './midiService'
 	providers: [MIDIService]
 })
 
-export class ChannelMessageComponent /* implements DoCheck {*/ {
+export class ChannelMessageComponent {
 
 	private subscriptions: Subscription[];
 	private availableChannelCommands: ChannelCommand[];

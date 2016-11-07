@@ -1,4 +1,9 @@
-﻿export const enum ChannelCommand {
+﻿export class ShortMessage {
+    message: number;
+    messageType: MessageType;
+    status: number;
+}
+export enum ChannelCommand {
     NoteOff = 128,
     NoteOn = 144,
     PolyPressure = 160,
@@ -7,19 +12,19 @@
     ChannelPressure = 208,
     PitchWheel = 224
 }
-export const enum InputMatchFunction {
+export enum InputMatchFunction {
     Data1Match = 0,
     NoteMatch = 1,
     CatchAll = 2
 }
-export const enum MessageType {
+export enum MessageType {
     Channel = 0,
     SystemExclusive = 1,
     SystemCommon = 2,
     SystemRealtime = 3,
     Meta = 4
 }
-export const enum TranslationFunction {
+export enum TranslationFunction {
     DirectTranslation = 0,
     ChangeNote = 1,
     PCToNote = 2
@@ -30,6 +35,10 @@ export class ChannelMessage extends ShortMessage {
     data2: number;
     messageType: MessageType;
     midiChannel: number;
+}
+export interface IDropdownOption {
+    label: string;
+    value: string;
 }
 export interface IMIDIInputDevice {
     deviceID: number;
@@ -58,7 +67,7 @@ export interface ITranslation {
 export interface ITranslationMap {
     translations: ITranslation[];
 }
-export class MIDIInputDevice implements IMIDIInputDevice {
+export class MIDIInputDevice implements IMIDIInputDevice, IDropdownOption {
     deviceID: number;
     driverVersion: number;
     isRecording: boolean;
@@ -74,7 +83,7 @@ export class MIDIInputDevice implements IMIDIInputDevice {
         return this.name.toString();
     }
 }
-export class MIDIOutputDevice implements IMIDIOutputDevice {
+export class MIDIOutputDevice implements IMIDIOutputDevice, IDropdownOption {
     deviceID: number;
     driverVersion: number;
     mid: number;
@@ -92,11 +101,6 @@ export class Profile {
     name: string;
     transformations: Transformation[];
     virtualOutputDevices: VirtualOutputDevice[];
-}
-export class ShortMessage {
-    message: number;
-    messageType: MessageType;
-    status: number;
 }
 export class Transformation {
     inputDevice: IMIDIInputDevice;
