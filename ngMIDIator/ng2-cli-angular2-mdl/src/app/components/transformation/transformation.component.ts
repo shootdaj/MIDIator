@@ -10,7 +10,7 @@ import { MIDIService } from '../../services/midiService';
 import { HelperService } from '../../services/helperService';
 import { ProfileService } from '../../services/profileService';
 import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { TranslationComponent } from '../../components/translation/translation.component';
 
@@ -44,7 +44,8 @@ export class TransformationComponent implements OnInit, OnDestroy {
 				this.outputDevices = data.map(device => this.helperService.maskCast(device, MIDIOutputDevice));
 			}));
 
-		
+		this.midiService.getAvailableInputDevices();
+		this.midiService.getAvailableOutputDevices();
 		console.log("onInit transformation component");
 		console.log(this.form);
 		console.log("inputDevices:");

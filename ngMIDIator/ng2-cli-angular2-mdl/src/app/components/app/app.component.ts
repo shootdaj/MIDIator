@@ -1,5 +1,5 @@
 //domain model
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from '../../models/domainModel';
+import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption, TranslationMap } from '../../models/domainModel';
 
 //services
 import { MIDIService } from '../../services/midiService';
@@ -37,16 +37,36 @@ export class AppComponent implements OnInit, OnDestroy {
 		private midiService: MIDIService,
 		private helperService: HelperService,
 		private profileService: ProfileService) {
-		console.log("constructer app component");
-		console.log(this.form);
 	}
 
 	ngOnInit() {
 		this.subscriptions = new Array<Subscription>();
 		this.subscriptions.push(this.profileService.profileChanges
 			.subscribe(data => {
-				this.profile = this.helperService.maskCast(data, Profile);
-				var profile = this.profile;
+
+				//Object.assign()
+
+				//this.profile = //Object.assign(new Profile(), data);
+					//this.helperService.deepMap(data, (a, b) => { return a; }, Profile);
+					//this.helperService.maskCast(data, Profile);
+					//JSON.parse(data);
+					//this.helperService.createInstanceFromJson(Profile, data);
+					//var t = window["Profile"];
+					//<Profile>this.helperService.maskCopy(data, Profile);
+					//data.map(device => this.helperService.deepMap(device, (val, key) => val, Profile));
+
+				//this.profile.__proto__ = 
+				var profile = JSON.parse(JSON.stringify(data));
+				profile.__proto__ = Profile.prototype;
+
+				this.profile = profile;
+				var device = JSON.parse(JSON.stringify(this.profile.transformations[0].inputDevice));
+
+				//MIDIInputDevice.prototype.label = f
+
+				device.__proto__ = MIDIInputDevice.prototype.constructor;
+				//this.profile.transformations[0].inputDevice.constructor.prototype = MIDIInputDevice.prototype;
+
 				this.form = this.getProfileFormGroup(profile);
 				this.subscriptions.push(this.form.valueChanges.subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
 			}));
@@ -56,11 +76,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		//		this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
 		//	}));
 
-		this.midiService.getAvailableInputDevices();
+		//this.midiService.getAvailableInputDevices();
 		this.profileService.getProfile();
-
-		console.log("onInit app component");
-		console.log(this.form);
 	}
 
 	private getProfileFormGroup(profile: Profile): FormGroup {
@@ -70,25 +87,45 @@ export class AppComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	private getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
+	private  getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
 
 		var returnValue = Array<FormGroup>();
 
 		transformations.forEach(transformation =>
 			returnValue.push(this.fb.group({
 				name: [transformation.name, [<any>Validators.required]],
-				inputDevice: [transformation.inputDevice, [<any>Validators.required]],
-				outputDevice: [transformation.outputDevice, [<any>Validators.required]],
-				translationMap: [this.getTranslationMapFormGroup(transformation.translationMap)]
+				//inputDevice: [transformation.inputDevice, [<any>Validators.required]],
+				inputDevice: this.fb.group({
+					deviceID: [transformation.inputDevice.deviceID],
+					driverVersion: [transformation.inputDevice.driverVersion],
+					mid: [transformation.inputDevice.mid],
+					name: [transformation.inputDevice.name],
+					pid: [transformation.inputDevice.pid],
+					support: [transformation.inputDevice.support],
+					label: [transformation.inputDevice.label],
+					value: [transformation.inputDevice.value]
+				}),
+				//outputDevice: [this.getOutputDeviceFormGroup(transformation.outputDevice)],
+				outputDevice: this.fb.group({
+					deviceID: [transformation.outputDevice.deviceID],
+					driverVersion: [transformation.outputDevice.driverVersion],
+					mid: [transformation.outputDevice.mid],
+					name: [transformation.outputDevice.name],
+					pid: [transformation.outputDevice.pid],
+					support: [transformation.outputDevice.support],
+					label: [transformation.inputDevice.label],
+					value: [transformation.inputDevice.value]
+				}),
+				translationMap: this.getTranslationMapFormGroup(transformation.translationMap)
 			}))
 		);
 
 		return returnValue;
 	}
 
-	private getTranslationMapFormGroup(translationMap: ITranslationMap): FormGroup {
+	private getTranslationMapFormGroup(translationMap: TranslationMap): FormGroup {
 		return this.fb.group({
-			translations: this.fb.array([this.getTranslationsFormGroups(translationMap.translations)])
+			translations: this.fb.array(this.getTranslationsFormGroups(translationMap.translations))
 		});
 	}
 
@@ -107,11 +144,33 @@ export class AppComponent implements OnInit, OnDestroy {
 		return returnValue;
 	}
 
+    private getInputDeviceFormGroup(inputDevice: IMIDIInputDevice): FormGroup {
+	    return this.fb.group({
+		    deviceID: [inputDevice.deviceID],
+		    driverVersion: [inputDevice.driverVersion],
+		    mid: [inputDevice.mid],
+		    name: [inputDevice.name],
+		    pid: [inputDevice.pid],
+		    support: [inputDevice.support]
+	    });
+    }
+
+	private getOutputDeviceFormGroup(outputDevice: IMIDIOutputDevice): FormGroup {
+		return this.fb.group({
+			deviceID: [outputDevice.deviceID],
+			driverVersion: [outputDevice.driverVersion],
+			mid: [outputDevice.mid],
+			name: [outputDevice.name],
+			pid: [outputDevice.pid],
+			support: [outputDevice.support]
+		});
+    }
+	
 	ngOnDestroy() {
 		this.subscriptions.forEach(s => s.unsubscribe());
 	}
 
-	save(model: any, isValid: boolean) {
+	save(model: Profile, isValid: boolean) {
 		console.log(model, isValid);
 		this.refresh();
 	}
@@ -120,4 +179,5 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.midiService.getAvailableInputDevices();
 	}
 }
+
 

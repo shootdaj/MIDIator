@@ -8,7 +8,7 @@ import '../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { ProfileService } from '../services/profileService';
 import { DropdownOption, DropdownComponent } from '../components/mdl-dropdown/mdl-dropdown.component';
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
+import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
 
 @Injectable()
 export class MIDIService {
@@ -28,14 +28,14 @@ export class MIDIService {
 
 	getAvailableInputDevices() {
 		this.http.get('http://localhost:9000/midi/AvailableInputDevices')
-			.map(response => response.json())
+            .map(response => <MIDIInputDevice[]>response.json())
 			.subscribe(data => this.availableInputDevicesChanges.next(data),
 			err => console.log(err));
 	}
 
 	getAvailableOutputDevices() {
 		this.http.get('http://localhost:9000/midi/AvailableOutputDevices')
-			.map(response => response.json())
+			.map(response => <MIDIOutputDevice[]>response.json())
 			.subscribe(data => this.availableOutputDevicesChanges.next(data),
 			err => console.log(err));
 	}

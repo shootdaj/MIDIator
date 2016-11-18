@@ -9,7 +9,7 @@ import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { ProfileService } from '../../services/profileService';
 import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
 import { TransformationComponent } from '../../components/transformation/transformation.component';
 import { TranslationComponent } from '../../components/translation/translation.component';
 
@@ -23,10 +23,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 	@Input() form: FormGroup;
 
 	constructor() {
-		console.log("constructer profile component");
-		console.log(this.form);
-
-		//this.form.controls
 	}
 
     //private subscriptions: Subscription[];
@@ -62,8 +58,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     //    });
     //}
 	ngOnInit(): void {
-		console.log("onInit profile component");
-		console.log(this.form);
 	}
 
 	ngOnDestroy(): void {}

@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
 
 //domain model
-import { IMIDIInputDevice, ITranslationMap, ITranslation, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from './models/domainModel';
+import { IMIDIInputDevice, TranslationMap, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from './models/domainModel';
 
 //services
 import { MIDIService } from './services/midiService';

@@ -1,4 +1,8 @@
 ﻿export class ShortMessage {
+	constructor() {
+		
+	}
+
     message: number;
     messageType: MessageType;
     status: number;
@@ -43,12 +47,11 @@ export interface IDropdownOption {
 export interface IMIDIInputDevice {
     deviceID: number;
     driverVersion: number;
-    isRecording: boolean;
     mid: number;
     name: string;
     pid: number;
     support: number;
-    translationMap: ITranslationMap;
+    translationMap: TranslationMap;
 }
 export interface IMIDIOutputDevice {
     deviceID: number;
@@ -58,32 +61,45 @@ export interface IMIDIOutputDevice {
     pid: number;
     support: number;
 }
-export interface ITranslation {
-    inputMatchFunction: InputMatchFunction;
-    inputMessageMatchTarget: ShortMessage;
-    outputMessageTemplate: ShortMessage;
-    translationFunction: TranslationFunction;
-}
-export interface ITranslationMap {
-    translations: ITranslation[];
+//export interface ITranslation {
+//    inputMatchFunction: InputMatchFunction;
+//    inputMessageMatchTarget: ShortMessage;
+//    outputMessageTemplate: ShortMessage;
+//    translationFunction: TranslationFunction;
+//}
+export class TranslationMap {
+	constructor() {
+		this.translations = <Translation[]>[];
+	}
+    translations: Translation[];
 }
 export class MIDIInputDevice implements IMIDIInputDevice, IDropdownOption {
+	//constructor() {
+	//	this.value = this.name;
+	//	this.label = this.name;
+	//}
+
     deviceID: number;
     driverVersion: number;
-    isRecording: boolean;
     mid: number;
     name: string;
     pid: number;
     support: number;
-    translationMap: ITranslationMap;
+    translationMap: TranslationMap;
     get value(): string {
-        return this.deviceID.toString();
+        return this.name.toString();
     }
     get label(): string {
         return this.name.toString();
     }
 }
 export class MIDIOutputDevice implements IMIDIOutputDevice, IDropdownOption {
+
+	//constructor() {
+	//	this.value = this.name;
+	//	this.label = this.name;
+	//}
+
     deviceID: number;
     driverVersion: number;
     mid: number;
@@ -91,24 +107,44 @@ export class MIDIOutputDevice implements IMIDIOutputDevice, IDropdownOption {
     pid: number;
     support: number;
     get value(): string {
-        return this.deviceID.toString();
+        return this.name.toString();
     }
     get label(): string {
         return this.name.toString();
     }
+	//value: string;
+	//label:string;
+
 }
 export class Profile {
+	constructor() {
+		this.name = "";
+		this.transformations = <Transformation[]>[];
+	}
     name: string;
-    transformations: Transformation[];
+	transformations: Transformation[];
     virtualOutputDevices: VirtualOutputDevice[];
+	get label() {
+		return this.name;
+	}
 }
 export class Transformation {
-    inputDevice: IMIDIInputDevice;
+	constructor() {
+		this.inputDevice = new MIDIInputDevice();
+		this.outputDevice = new MIDIOutputDevice();
+		this.translationMap = new TranslationMap();
+	}
+    inputDevice: MIDIInputDevice;
     name: string;
-    outputDevice: IMIDIOutputDevice;
-    translationMap: ITranslationMap;
+    outputDevice: MIDIOutputDevice;
+    translationMap: TranslationMap;
 }
-export class Translation implements ITranslation {
+export class Translation {
+	constructor() {
+		this.inputMessageMatchTarget = new ShortMessage();
+		this.outputMessageTemplate = new ShortMessage();
+	}
+
     inputMatchFunction: InputMatchFunction;
     inputMessageMatchTarget: ShortMessage;
     outputMessageTemplate: ShortMessage;
