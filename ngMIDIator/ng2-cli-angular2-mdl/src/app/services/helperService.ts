@@ -9,6 +9,7 @@ import { EnumValues } from 'enum-values';
 import { ProfileService } from '../services/profileService';
 import { DropdownOption, DropdownComponent } from '../components/mdl-dropdown/mdl-dropdown.component';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
+import * as $ from 'jquery';
 
 @Injectable()
 export class HelperService {
@@ -48,31 +49,46 @@ export class HelperService {
 	//	return newObj;
 	//}
 
+	deepRemove(obj, name) {
+		//if (obj[name]) {
+			delete obj[name];
+		//}
 
-	//maskCastProfile(rawProfile) {
-	//	var profile = new Profile();
-	//	profile.name = rawProfile.name;
+		Object.keys(obj).forEach(key => {
+			if (obj[key] instanceof Object)
+				this.deepRemove(obj[key], name);
+		});
 
-	//	rawProfile.transformations.forEach(rawXForm => {
-	//		var xform = new Transformation();
+		//for (var property in obj) {
+		//	if (obj[property] instanceof Object)
+		//		this.deepRemove(property, name);
+		//}
+	};
 
 
+	maskCastProfile(rawProfile): Profile {
+		var profile = new Profile();
 
-	//		profile.transformations.push(new Transformation
-	//		{
+		this.deepRemove(rawProfile, "label");
+		this.deepRemove(rawProfile, "value");
 
-	//			})
-	//	});
+		profile.name = rawProfile.name;
+		rawProfile.transformations.forEach(rawXForm => {
+			var xform = new Transformation();
+			xform.inputDevice = new MIDIInputDevice();
 
-	//	//for (var i = 0; i < rawProfile.transformations.count; i++) {
-	//	//	var rawXForm = rawProfile.transformations[i];
-	//	//	profile
-	//	//}
+			$.extend(xform.inputDevice, rawXForm.inputDevice);
+			xform.outputDevice = new MIDIOutputDevice();
+			
+			profile.transformations.push(xform);
+		});
 
-	//	profile.transformations.forEach(xform => {
+		
 
-	//	});
-	//}
+		//profile = this.deepMap(rawProfile, (a, b) => { return a; }, Profile);
+
+		return profile;
+	}
 
 	//maskCopy(rawObj, constructor): any {
 	//	var obj = new constructor();//Object.create(objectTypeTemplate.prototype);
@@ -125,16 +141,17 @@ export class HelperService {
 
 
 	//deepMap(obj, f, ctx) {
+	//	var self = this;
 	//	if (Array.isArray(obj)) {
 	//		return obj.map(function (val, key) {
-	//			return (typeof val === 'object') ? this.deepMap(val, f, ctx) : f.call(ctx, val, key);
+	//			return (typeof val === 'object') ? self.deepMap(val, f, ctx) : f.call(ctx, val, key);
 	//		});
 	//	} else if (typeof obj === 'object') {
 	//		var res = {};
 	//		for (var key in obj) {
 	//			var val = obj[key];
 	//			if (typeof val === 'object') {
-	//				res[key] = this.deepMap(val, f, ctx);
+	//				res[key] = self.deepMap(val, f, ctx);
 	//			} else {
 	//				res[key] = f.call(ctx, val, key);
 	//			}

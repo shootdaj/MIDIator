@@ -1,6 +1,8 @@
 //domain model
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption, TranslationMap } from '../../models/domainModel';
 
+import * as $ from 'jquery';
+
 //services
 import { MIDIService } from '../../services/midiService';
 import { HelperService } from '../../services/helperService';
@@ -20,6 +22,8 @@ import '../../rxjs-operators';
 
 //libs
 import { EnumValues } from 'enum-values';
+
+//declare var $: JQueryStatic;
 
 @Component({
 	selector: 'app-root',
@@ -44,6 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(this.profileService.profileChanges
 			.subscribe(data => {
 
+				this.profile = this.helperService.maskCastProfile(data);
+
 				//Object.assign()
 
 				//this.profile = //Object.assign(new Profile(), data);
@@ -56,18 +62,21 @@ export class AppComponent implements OnInit, OnDestroy {
 					//data.map(device => this.helperService.deepMap(device, (val, key) => val, Profile));
 
 				//this.profile.__proto__ = 
-				var profile = JSON.parse(JSON.stringify(data));
-				profile.__proto__ = Profile.prototype;
+				//var profile = JSON.parse(JSON.stringify(data));
+				//profile.__proto__ = Profile.prototype;
 
-				this.profile = profile;
-				var device = JSON.parse(JSON.stringify(this.profile.transformations[0].inputDevice));
+				//this.profile = profile;
+				//var device = JSON.parse(JSON.stringify(this.profile.transformations[0].inputDevice));
 
+				//this.profile = new Profile();
+
+				//$.extend(true, this.profile, data);
 				//MIDIInputDevice.prototype.label = f
 
-				device.__proto__ = MIDIInputDevice.prototype.constructor;
+				//device.__proto__ = MIDIInputDevice.prototype.constructor;
 				//this.profile.transformations[0].inputDevice.constructor.prototype = MIDIInputDevice.prototype;
 
-				this.form = this.getProfileFormGroup(profile);
+				this.form = this.getProfileFormGroup(this.profile);
 				this.subscriptions.push(this.form.valueChanges.subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
 			}));
 
