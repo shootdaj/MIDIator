@@ -174,10 +174,10 @@ namespace MIDIator.Engine
 					returnValue.PID = OutputDeviceBase.GetDeviceCapabilities(i).pid;
 					returnValue.Support = OutputDeviceBase.GetDeviceCapabilities(i).support;
 					returnValue.DeviceID = i;
-					returnValue.Technology = OutputDeviceBase.GetDeviceCapabilities(i).technology;
-					returnValue.Voices = OutputDeviceBase.GetDeviceCapabilities(i).voices;
-					returnValue.Notes = OutputDeviceBase.GetDeviceCapabilities(i).notes;
-					returnValue.ChannelMask = OutputDeviceBase.GetDeviceCapabilities(i).channelMask;
+					//returnValue.Technology = OutputDeviceBase.GetDeviceCapabilities(i).technology;
+					//returnValue.Voices = OutputDeviceBase.GetDeviceCapabilities(i).voices;
+					//returnValue.Notes = OutputDeviceBase.GetDeviceCapabilities(i).notes;
+					//returnValue.ChannelMask = OutputDeviceBase.GetDeviceCapabilities(i).channelMask;
 					yield return returnValue;
 				}
 			}
