@@ -1,26 +1,18 @@
-//domain model
-import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
-
-//services
-import { MIDIService } from '../../services/midiService';
-import { ProfileService } from '../../services/profileService';
-
-//components
-import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
-import { TransformationComponent } from '../../components/transformation/transformation.component';
-import { ProfileComponent } from '../../components/profile/profile.component';
-
-//ng2
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import './rxjs-operators';
-
-//libs
+import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
+import { MIDIService } from '../../services/midiService';
+import { HelperService } from '../../services/helperService';
+import { ProfileService } from '../../services/profileService';
+import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
+import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
+import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { ProfileComponent } from '../../components/profile/profile.component';
 
 @Component({
 	selector: 'translation',
@@ -28,84 +20,45 @@ import { EnumValues } from 'enum-values';
 	providers: [MIDIService]
 })
 
-export class TranslationComponent {
+export class TranslationComponent implements OnInit, OnDestroy {
 
-    //private currentForm: FormGroup;
-    //@Output() formChanges: EventEmitter<Translation> = new EventEmitter<Translation>();
+	private subscriptions: Subscription[];
+	private inputMatchFunctions: InputMatchFunction[];
+	private translationFunctions: TranslationFunction[];
 
-    //@Input() set form(form: FormGroup) {
-    //    this.currentForm = form;
-    //    this.currentFormChange.emit(form);
-    //}
-    //get form() {
-    //    return this.currentForm;
-    //}
+	@Input() form: FormGroup;
 
-    @Input() public form: FormGroup;
-   
+	constructor(private midiService: MIDIService) {
+	}
 
+	ngOnInit(): void {
+		this.subscriptions = new Array<Subscription>();
+		this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
+			.subscribe(data => this.inputMatchFunctions = data));
 
+		this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
+            .subscribe(data => this.translationFunctions = data));
+	}
 
+	get inputMatchFunctionsDropdownOptions(): IDropdownOption[] {
+		if (this.inputMatchFunctions != null && this.inputMatchFunctions.length > 0) {
+			return this.inputMatchFunctions.map(
+				fx => new DropdownOption((<number>fx).toString(), InputMatchFunction[fx]));
+		} else {
+			return null;
+		}
+	}
 
-	//private subscriptions: Subscription[];
-	//private availableInputDevices: MIDIInputDevice[];
-	//private availableOutputDevices: MIDIOutputDevice[];
-	//private availableInputMatchFunctions: InputMatchFunction[];
-	//private availableTranslationFunctions: TranslationFunction[];
-	
-	////@Input() translation: Translation;
-	////@Output() translationChange: EventEmitter<Translation> = new EventEmitter<Translation>();
+	get translationFunctionsDropdownOptions(): IDropdownOption[] {
+		if (this.translationFunctions != null && this.translationFunctions.length > 0) {
+			return this.translationFunctions.map(
+				fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
+		} else {
+			return null;
+		}
+	}
 
- //   constructor(private midiService: MIDIService, private fb: FormBuilder) {
-
- //       //this.form = this.fb.group({
-            
- //       //    addresses: this.fb.array([
- //       //        this.initAddress(),
- //       //    ])
- //       //});
-
-	//	this.subscriptions.push(this.midiService.availableInputDevicesChanges
-	//		.subscribe(data => this.availableInputDevices = data));
-
-	//	this.subscriptions.push(this.midiService.availableOutputDevicesSubject
-	//		.subscribe(data => this.availableOutputDevices = data));
-
-	//	this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
-	//		.subscribe(data => this.availableInputMatchFunctions = data));
-
-	//	this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
- //           .subscribe(data => this.availableTranslationFunctions = data));
-
-	//    this.form.valueChanges.subscribe(data => this.formChanges.emit(data));
-
-	//}
-
-	//ngOnDestroy() {
-	//	this.subscriptions.forEach(s => s.unsubscribe());
-	//}
-
-	//get availableInputMatchFunctionDropdownOptions(): IDropdownOption[] {
-	//	return this.availableInputMatchFunctions.map(
-	//		fx => new DropdownOption((<number>fx).toString(), InputMatchFunction[fx]));
-	//}
-
-	//get availableTranslationFunctionDropdownOptions(): IDropdownOption[] {
-	//	return this.availableTranslationFunctions.map(
-	//		fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
-	//}
-
-	//get inputMatchFunctionDropdownOption(): IDropdownOption {
-	//	return new DropdownOption((<number>this.form.value.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
-	//}
-	//set inputMatchFunctionDropdownOption(value: IDropdownOption) {
-	//	this.translation.inputMatchFunction = parseInt(value.value);
-	//}
-
-	//get translationFunctionDropdownOption(): IDropdownOption {
-	//	return new DropdownOption((<number>this.translation.inputMatchFunction).toString(), InputMatchFunction[this.translation.inputMatchFunction]);
-	//}
-	//set translationFunctionDropdownOption(value: IDropdownOption) {
-	//	this.translation.translationFunction = parseInt(value.value);
-	//}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(s => s.unsubscribe());
+	}
 }

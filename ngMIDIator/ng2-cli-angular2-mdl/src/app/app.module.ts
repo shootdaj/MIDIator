@@ -15,13 +15,15 @@ import { AppComponent } from './components/app/app.component';
 import { DropdownComponent } from './components/mdl-dropdown/mdl-dropdown.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransformationComponent } from './components/transformation/transformation.component';
+import { TranslationComponent } from './components/translation/translation.component';
 
 @NgModule({
     declarations: [
         AppComponent,
 		ProfileComponent,
 		TransformationComponent,
-        DropdownComponent
+        DropdownComponent,
+		TranslationComponent
 	],
     imports: [
         BrowserModule,

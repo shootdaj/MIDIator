@@ -2,12 +2,16 @@ import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@
 import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
+import { HelperService } from '../../services/helperService'
+import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 
 @Component({
     selector: 'mdl-dropdown',
-    templateUrl: './mdl-dropdown.component.html'
+    templateUrl: './mdl-dropdown.component.html',
+	providers: [HelperService]
 })
-export class DropdownComponent implements OnInit, AfterViewInit {
+
+export class DropdownComponent {
 
     @Input() options: IDropdownOption[];
 
@@ -17,41 +21,30 @@ export class DropdownComponent implements OnInit, AfterViewInit {
 
     @Input() control: FormControl;
 
+	constructor(private helperService: HelperService) {
+		
+	}
+
 	set selectedValue(inValue: string) {
-
-		console.log("setting control value to:");
-		console.log(inValue);
-
 		if (this.options == null || inValue == null)
 			return;
 
-		//this.control.setValue(inValue);
-		this.control.setValue(this.options.filter(x => x.value === inValue)[0]);
+		this.control.setValue(this.options.filter(x => this.getDropdownValue(x.value) === inValue)[0]);
 	}
 
-	get selectedValue() : string {
+	get selectedValue(): string {
 		if (this.control != null) {
-			var returnValue = this.control.value.label;
+			var returnValue = this.getDropdownValue(this.control.value);
 			return returnValue;
 		} else
 			return null;
 	}
 
-
-    constructor() {
-    }
-
-	ngOnInit(): void {
-		console.log("options:");
-		console.log(this.options);
+	getDropdownLabel(input: any): string {
+		return this.helperService.getDropdownOption(input).label;
 	}
 
-	ngAfterViewInit(): void {
-		console.log("ngAfterViewInit options:");
-		console.log(this.options);
+	getDropdownValue(input: any): string {
+		return this.helperService.getDropdownOption(input).value;
 	}
-}
-
-export class DropdownOption implements IDropdownOption {
-	constructor(public value: string, public label: string) {}
 }

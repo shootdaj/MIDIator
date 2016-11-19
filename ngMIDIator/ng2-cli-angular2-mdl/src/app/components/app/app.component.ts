@@ -9,7 +9,8 @@ import { HelperService } from '../../services/helperService';
 import { ProfileService } from '../../services/profileService';
 
 //components
-import { DropdownOption, DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
+import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
+import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 
 //ng2
 import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy } from '@angular/core';
@@ -48,7 +49,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(this.profileService.profileChanges
 			.subscribe(data => {
 
-				this.profile = this.helperService.maskCastProfile(data);
+				this.profile = data;
+				//this.helperService.maskCastProfile(data);
 
 				//Object.assign()
 
@@ -122,8 +124,8 @@ export class AppComponent implements OnInit, OnDestroy {
 					name: [transformation.outputDevice.name],
 					pid: [transformation.outputDevice.pid],
 					support: [transformation.outputDevice.support],
-					label: [transformation.inputDevice.label],
-					value: [transformation.inputDevice.value]
+					label: [transformation.outputDevice.label],
+					value: [transformation.outputDevice.value]
 				}),
 				translationMap: this.getTranslationMapFormGroup(transformation.translationMap)
 			}))

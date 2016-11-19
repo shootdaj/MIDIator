@@ -45,6 +45,7 @@
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\dynamic-form.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\channelMessage\channelMessage.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\inputDevice\inputDevice.component.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\dropdownOption.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\mdl-dropdown.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\mdl-dropdown.component_OLD.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-enum-dropdown\mdl-enum-dropdown.component.ts" />
@@ -65,7 +66,7 @@
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\shared\index.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\.gitkeep" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\.npmignore" />
-    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield-anshul.scss" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield-midiator.scss" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield.js" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\environments\environment.prod.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\environments\environment.ts" />

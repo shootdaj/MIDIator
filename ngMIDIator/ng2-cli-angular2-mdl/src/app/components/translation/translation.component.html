@@ -2,39 +2,41 @@
 	<div class="mdl-cell--12-col">
 		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				<mdl-dropdown [options]="availableInputMatchFunctionDropdownOptions"
+				<mdl-dropdown [options]="inputMatchFunctionsDropdownOptions"
 							  [dropdownLabel]="'Input Match Function'"
 							  [placeholder]="'Select...'"
-							  [(selectedOption)]="translation.inputMatchFunctionDropdownOption">
+							  [control]="form.controls['inputMatchFunction']"
+							  [id]="'inputMatchFunction'">
 				</mdl-dropdown>
 			</div>
 		</div>
-		<div class="mdl-grid">
+		<!--<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
 				Input Message Match Target:
-				<channel-message [(channelMessage)]="translation.inputMessageMatchTarget">
-					<!--[availableInputDevices]="availableInputDevices"
-					[availableOutputDevices]="availableOutputDevices"
-					[availableChannelCommands]="availableChannelCommands"
-					[availableMIDIChannels]="availableMIDIChannels"-->
-				</channel-message>
 			</div>
-		</div>
+		</div>-->
 		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				<mdl-dropdown [options]="availableTranslationFunctions"
+				<mdl-dropdown [options]="translationFunctionsDropdownOptions"
 							  [dropdownLabel]="'Translation Function'"
 							  [placeholder]="'Select...'"
-							  [(selectedOption)]="translation.translationFunctionDropdownOption">
+							  [control]="form.controls['translationFunction']"
+							  [id]="'translationFunction'">
 				</mdl-dropdown>
 			</div>
 		</div>
-		<div class="mdl-grid">
+		<!--<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
 				Output Message Template:
 				<channel-message [(channelMessage)]="translation.outputMessageTemplate">
 				</channel-message>
 			</div>
-		</div>
+		</div>-->
 	</div>
 </div>
+
+<!--<channel-message [(channelMessage)]="translation.inputMessageMatchTarget"></channel-message>-->
+<!--[availableInputDevices]="availableInputDevices"
+[availableOutputDevices]="availableOutputDevices"
+[availableChannelCommands]="availableChannelCommands"
+[availableMIDIChannels]="availableMIDIChannels"-->

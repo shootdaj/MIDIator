@@ -5,7 +5,7 @@
 
 
 #loader-container {
-    background: -webkit-radial-gradient(black, #222222); /* Safari 5.1 to 6.0 */
+	background: rgb(15, 15, 15); /*-webkit-radial-gradient(black, #222222);*/ /* Safari 5.1 to 6.0 */
     text-align: center;
     display: flex;
     justify-content: center; /* align horizontal */
