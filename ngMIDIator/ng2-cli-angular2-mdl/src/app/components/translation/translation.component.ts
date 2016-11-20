@@ -17,7 +17,7 @@ import { ProfileComponent } from '../../components/profile/profile.component';
 @Component({
 	selector: 'translation',
 	templateUrl: './translation.component.html',
-	providers: [MIDIService]
+	providers: [MIDIService, HelperService ]
 })
 
 export class TranslationComponent implements OnInit, OnDestroy {
@@ -28,7 +28,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
 	@Input() form: FormGroup;
 
-	constructor(private midiService: MIDIService) {
+	constructor(private midiService: MIDIService, private helperService: HelperService) {
 	}
 
 	ngOnInit(): void {
@@ -38,12 +38,18 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
 		this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
             .subscribe(data => this.translationFunctions = data));
+
+		this.midiService.getAvailableInputMatchFunctions();
+		this.midiService.getAvailableTranslationFunctions();
 	}
 
 	get inputMatchFunctionsDropdownOptions(): IDropdownOption[] {
 		if (this.inputMatchFunctions != null && this.inputMatchFunctions.length > 0) {
 			return this.inputMatchFunctions.map(
-				fx => new DropdownOption((<number>fx).toString(), InputMatchFunction[fx]));
+				fx => {
+					let dropdownOption = new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString());
+					return dropdownOption;
+				});
 		} else {
 			return null;
 		}
@@ -52,12 +58,13 @@ export class TranslationComponent implements OnInit, OnDestroy {
 	get translationFunctionsDropdownOptions(): IDropdownOption[] {
 		if (this.translationFunctions != null && this.translationFunctions.length > 0) {
 			return this.translationFunctions.map(
-				fx => new DropdownOption((<number>fx).toString(), TranslationFunction[fx]));
+				fx => new DropdownOption(TranslationFunction[fx].toString(), TranslationFunction[fx].toString()));
 		} else {
 			return null;
 		}
 	}
 
+	
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(s => s.unsubscribe());
 	}

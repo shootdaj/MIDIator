@@ -6,7 +6,9 @@
 							  [dropdownLabel]="'Input Match Function'"
 							  [placeholder]="'Select...'"
 							  [control]="form.controls['inputMatchFunction']"
-							  [id]="'inputMatchFunction'">
+				              [id]="'inputMatchFunction'"
+							  [valueSetFunction]="helperService.imfValueSetFunction"
+							  [valueGetFunction]="helperService.imfValueGetFunction">
 				</mdl-dropdown>
 			</div>
 		</div>
@@ -21,7 +23,9 @@
 							  [dropdownLabel]="'Translation Function'"
 							  [placeholder]="'Select...'"
 							  [control]="form.controls['translationFunction']"
-							  [id]="'translationFunction'">
+							  [id]="'translationFunction'"
+							  [valueSetFunction]="helperService.tfValueSetFunction"
+							  [valueGetFunction]="helperService.tfValueGetFunction">
 				</mdl-dropdown>
 			</div>
 		</div>

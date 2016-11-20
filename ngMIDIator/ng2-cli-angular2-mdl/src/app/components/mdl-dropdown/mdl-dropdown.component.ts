@@ -2,15 +2,11 @@ import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@
 import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
-import { HelperService } from '../../services/helperService'
-import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 
 @Component({
     selector: 'mdl-dropdown',
-    templateUrl: './mdl-dropdown.component.html',
-	providers: [HelperService]
+    templateUrl: './mdl-dropdown.component.html'
 })
-
 export class DropdownComponent {
 
     @Input() options: IDropdownOption[];
@@ -20,31 +16,30 @@ export class DropdownComponent {
     @Input() id: string;
 
     @Input() control: FormControl;
+	@Input() valueSetFunction: Function;
+	@Input() valueGetFunction: Function;
 
-	constructor(private helperService: HelperService) {
-		
-	}
-
-	set selectedValue(inValue: string) {
+	set selectedValue(inValue: any) {
+	
 		if (this.options == null || inValue == null)
 			return;
-
-		this.control.setValue(this.options.filter(x => this.getDropdownValue(x.value) === inValue)[0]);
+			
+		this.valueSetFunction(inValue, this.options, this.control);
 	}
 
-	get selectedValue(): string {
+	get selectedValue() : any {
 		if (this.control != null) {
-			var returnValue = this.getDropdownValue(this.control.value);
+			var returnValue = this.valueGetFunction(this.control, this.options);
 			return returnValue;
 		} else
 			return null;
 	}
 
-	getDropdownLabel(input: any): string {
-		return this.helperService.getDropdownOption(input).label;
-	}
 
-	getDropdownValue(input: any): string {
-		return this.helperService.getDropdownOption(input).value;
-	}
+    constructor() {
+    }
+}
+
+export class DropdownOption implements IDropdownOption {
+	constructor(public value: string, public label: string) {}
 }

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import '../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { ProfileService } from '../services/profileService';
-import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
+import { IDropdownOption, IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
 import { DropdownOption } from '../components/mdl-dropdown/dropdownOption';
 import * as $ from 'jquery';
 
@@ -47,7 +47,7 @@ export class HelperService {
 
 			xform.outputDevice = new MIDIOutputDevice();
 			$.extend(xform.outputDevice, rawXForm.outputDevice);
-			
+
 			profile.transformations.push(xform);
 		});
 
@@ -55,6 +55,30 @@ export class HelperService {
 	}
 
 	getDropdownOption(input: any): DropdownOption {
-		return new DropdownOption(input.name.toString(), input.name.toString());
+		return new DropdownOption(input.name, input.name);
+	}
+
+	dropdownOptionValueSetFunction(inValue: any, options: IDropdownOption[], control: FormGroup): any {
+		control.setValue(options.filter(x => x.value === inValue)[0]);
+	}
+
+	dropdownOptionValueGetFunction(control: FormGroup): any {
+		return control.value.value;
+	}
+
+	imfValueSetFunction(inValue: any, options: IDropdownOption[], control: FormGroup): any {
+		control.setValue(inValue);
+	}
+
+	imfValueGetFunction(control: FormGroup, options: IDropdownOption[]): any {
+		return control.value;
+	}
+
+	tfValueSetFunction(inValue: any, options: IDropdownOption[], control: FormGroup): any {
+		control.setValue(inValue);
+	}
+
+	tfValueGetFunction(control: FormGroup, options: IDropdownOption[]): any {
+		return control.value;
 	}
 }
