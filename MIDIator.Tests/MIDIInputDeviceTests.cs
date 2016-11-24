@@ -9,7 +9,7 @@ using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Tests
 {
-	//[Ignore("Manual Test with Numark Orbit -- need to be changed to a virtualized MIDI device using VirtualMIDI.")]
+	[Category("LocalOnly")]
 	public class MIDIInputDeviceTests
 	{
 		//private MIDIManager MIDIManager { get; set; }
