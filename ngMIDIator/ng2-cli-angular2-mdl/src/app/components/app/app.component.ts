@@ -79,7 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				//this.profile.transformations[0].inputDevice.constructor.prototype = MIDIInputDevice.prototype;
 
 				this.form = this.getProfileFormGroup(this.profile);
-				this.subscriptions.push(this.form.valueChanges.subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
+				this.subscriptions.push(this.form.valueChanges.debounceTime(400).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
 			}));
 
 		//this.subscriptions.push(this.midiService.availableInputDevicesChanges
@@ -157,6 +157,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	private getChannelMessageFormGroup(channelMessage: ChannelMessage): FormGroup {
 		return this.fb.group({
+			$type: [channelMessage["$type"]],
 			command: [channelMessage.command, [<any>Validators.required]],
 			data1: [channelMessage.data1, [<any>Validators.required]],
 			data2: [channelMessage.data2, [<any>Validators.required]],
@@ -192,7 +193,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	save(model: Profile, isValid: boolean) {
 		console.log(model, isValid);
-		this.profileService.postProfile(model);
+
+		if (isValid)
+			this.profileService.postProfile(model);
 		//this.refresh();
 	}
 

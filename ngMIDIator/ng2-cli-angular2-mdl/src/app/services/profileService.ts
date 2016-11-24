@@ -22,4 +22,11 @@ export class ProfileService {
             .subscribe(data => this.profileChanges.next(data),
             err => console.log(err));
     }
+
+	postProfile(profile: Profile) {
+		this.http.post("http://localhost:9000/midi/profile", profile)
+			.map(response => <Profile>response.json())
+			.subscribe(data => this.profileChanges.next(data),
+				err => console.log(err));
+	}
 }

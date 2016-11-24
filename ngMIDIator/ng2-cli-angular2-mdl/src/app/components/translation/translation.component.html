@@ -6,41 +6,31 @@
 							  [dropdownLabel]="'Input Match Function'"
 							  [placeholder]="'Select...'"
 							  [control]="form.controls['inputMatchFunction']"
-				              [id]="'inputMatchFunction'"
-							  [valueSetFunction]="helperService.imfValueSetFunction"
-							  [valueGetFunction]="helperService.imfValueGetFunction">
+				              [id]="'inputMatchFunction'">
 				</mdl-dropdown>
 			</div>
 		</div>
-		<!--<div class="mdl-grid">
+		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				Input Message Match Target:
+				<channel-message [form]="form.controls.inputMessageMatchTarget">
+				</channel-message>
 			</div>
-		</div>-->
+		</div>
 		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
 				<mdl-dropdown [options]="translationFunctionsDropdownOptions"
 							  [dropdownLabel]="'Translation Function'"
 							  [placeholder]="'Select...'"
 							  [control]="form.controls['translationFunction']"
-							  [id]="'translationFunction'"
-							  [valueSetFunction]="helperService.tfValueSetFunction"
-							  [valueGetFunction]="helperService.tfValueGetFunction">
+							  [id]="'translationFunction'">
 				</mdl-dropdown>
 			</div>
 		</div>
-		<!--<div class="mdl-grid">
+		<div class="mdl-grid">
 			<div class="mdl-cell--12-col">
-				Output Message Template:
-				<channel-message [(channelMessage)]="translation.outputMessageTemplate">
+				<channel-message [form]="form.controls.outputMessageTemplate">
 				</channel-message>
 			</div>
-		</div>-->
+		</div>
 	</div>
 </div>
-
-<!--<channel-message [(channelMessage)]="translation.inputMessageMatchTarget"></channel-message>-->
-<!--[availableInputDevices]="availableInputDevices"
-[availableOutputDevices]="availableOutputDevices"
-[availableChannelCommands]="availableChannelCommands"
-[availableMIDIChannels]="availableMIDIChannels"-->

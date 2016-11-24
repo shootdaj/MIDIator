@@ -38,7 +38,7 @@ export class MIDIService {
 
 	getAvailableChannelCommands() {
 		this.http.get('http://localhost:9000/midi/AvailableChannelCommands')
-			.map(response => <number[]>response.json())
+			.map(response => <ChannelCommand[]>response.json())
 			.subscribe(data => this.availableChannelCommandsSubject.next(data),
 			err => console.log(err));
 	}

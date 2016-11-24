@@ -20,26 +20,36 @@ export class DropdownComponent {
 	@Input() valueGetFunction: Function;
 
 	set selectedValue(inValue: any) {
-	
+
 		if (this.options == null || inValue == null)
 			return;
-			
-		this.valueSetFunction(inValue, this.options, this.control);
+
+		if (this.valueSetFunction != null)
+			this.valueSetFunction(inValue, this.options, this.control);
+		else {
+			this.control.setValue(inValue);
+		}
 	}
 
-	get selectedValue() : any {
-		if (this.control != null) {
-			var returnValue = this.valueGetFunction(this.control, this.options);
-			return returnValue;
-		} else
+	get selectedValue(): any {
+		if (this.control == null)
 			return null;
+		else {
+			let returnValue;
+			if (this.valueGetFunction != null) {
+				returnValue = this.valueGetFunction(this.control, this.options);
+			} else {
+				returnValue = this.control.value;
+			}
+			return returnValue;
+		}
 	}
 
 
-    constructor() {
+	constructor() {
     }
 }
 
 export class DropdownOption implements IDropdownOption {
-	constructor(public value: string, public label: string) {}
+	constructor(public value: string, public label: string) { }
 }

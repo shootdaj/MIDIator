@@ -1,28 +1,32 @@
 <div class="mdl-grid">
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-dropdown [options]="availableChannelCommandDropdownOptions"
-						  [dropdownLabel]="'Channel Command'"
-						  [(selectedOption)]="channelCommandDropdownOption">
+			<mdl-dropdown [options]="channelCommandDropdownOptions"
+			              [dropdownLabel]="'Channel Command'"
+			              [placeholder]="'Select...'"
+			              [control]="form.controls['command']"
+			              [id]="'command'">
 			</mdl-dropdown>
 		</div>
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-dropdown [options]="availableMIDIChannelDropdownOptions"
+			<mdl-dropdown [options]="midiChannelDropdownOptions"
 						  [dropdownLabel]="'MIDI Channel'"
-						  [(selectedOption)]="midiChannelDropdownOption">
+						  [placeholder]="'Select...'"
+						  [control]="form.controls['midiChannel']"
+						  [id]="'midiChannel'">
 			</mdl-dropdown>
 		</div>
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-textfield type="text" label="Data1" floating-label [(ngModel)]="channelMessage.data1"></mdl-textfield>
+			<mdl-textfield type="text" label="Data1" floating-label [formControl]="form.controls['data1']"></mdl-textfield>
 		</div>
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-textfield type="text" label="Data2" floating-label [(ngModel)]="channelMessage.data2"></mdl-textfield>
+			<mdl-textfield type="text" label="Data2" floating-label [formControl]="form.controls['data2']"></mdl-textfield>
 		</div>
 	</div>
 </div>

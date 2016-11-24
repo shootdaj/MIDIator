@@ -59,26 +59,11 @@ export class HelperService {
 	}
 
 	dropdownOptionValueSetFunction(inValue: any, options: IDropdownOption[], control: FormGroup): any {
-		control.setValue(options.filter(x => x.value === inValue)[0]);
+		let value = options.filter(x => x.value === inValue)[0];
+		control.setValue(value);
 	}
 
 	dropdownOptionValueGetFunction(control: FormGroup): any {
 		return control.value.value;
-	}
-
-	imfValueSetFunction(inValue: any, options: IDropdownOption[], control: FormGroup): any {
-		control.setValue(inValue);
-	}
-
-	imfValueGetFunction(control: FormGroup, options: IDropdownOption[]): any {
-		return control.value;
-	}
-
-	tfValueSetFunction(inValue: any, options: IDropdownOption[], control: FormGroup): any {
-		control.setValue(inValue);
-	}
-
-	tfValueGetFunction(control: FormGroup, options: IDropdownOption[]): any {
-		return control.value;
 	}
 }

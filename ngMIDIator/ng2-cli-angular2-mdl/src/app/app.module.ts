@@ -16,6 +16,7 @@ import { DropdownComponent } from './components/mdl-dropdown/mdl-dropdown.compon
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransformationComponent } from './components/transformation/transformation.component';
 import { TranslationComponent } from './components/translation/translation.component';
+import { ChannelMessageComponent } from './components/channelMessage/channelMessage.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { TranslationComponent } from './components/translation/translation.compo
 		ProfileComponent,
 		TransformationComponent,
         DropdownComponent,
-		TranslationComponent
+		TranslationComponent,
+		ChannelMessageComponent
 	],
     imports: [
         BrowserModule,
