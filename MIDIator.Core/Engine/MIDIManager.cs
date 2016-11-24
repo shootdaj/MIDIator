@@ -101,6 +101,17 @@ namespace MIDIator.Engine
 			return Enum.GetValues(typeof(TranslationFunction)).Cast<int>();
 		}
 
+		public IEnumerable<int> AvailableChannelCommands()
+		{
+			return Enum.GetValues(typeof(ChannelCommand)).Cast<int>();
+		}
+
+		public IEnumerable<int> AvailableMIDIChannels()
+		{
+			return Enumerable.Range(1, 16);
+		}
+
+
 		#endregion
 	}
 }

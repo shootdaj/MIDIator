@@ -130,6 +130,18 @@ namespace MIDIator.Web.Controllers
 			return MIDIManager.AvailableTranslationFunctions();
 		}
 
+		[HttpGet]
+		public IEnumerable<int> AvailableChannelCommands()
+		{
+			return MIDIManager.AvailableChannelCommands();
+		}
+
+		[HttpGet]
+		public IEnumerable<int> AvailableMIDIChannels()
+		{
+			return MIDIManager.AvailableMIDIChannels();
+		}
+
 		#endregion
 	}
 }

@@ -19,5 +19,7 @@ namespace MIDIator.Interfaces
 		IEnumerable<int> AvailableInputMatchFunctions();
 		IEnumerable<int> AvailableTranslationFunctions();
 		void UpdateProfile(ExpandoObject profile);
+		IEnumerable<int> AvailableChannelCommands();
+		IEnumerable<int> AvailableMIDIChannels();
 	}
 }
