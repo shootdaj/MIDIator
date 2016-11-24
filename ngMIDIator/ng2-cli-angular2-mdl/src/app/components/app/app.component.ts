@@ -146,13 +146,22 @@ export class AppComponent implements OnInit, OnDestroy {
 		translations.forEach(translation =>
 			returnValue.push(this.fb.group({
 				inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
-				inputMessageMatchTarget: [translation.inputMessageMatchTarget, [<any>Validators.required]],
-				outputMessageTemplate: [translation.outputMessageTemplate, [<any>Validators.required]],
+				inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
+				outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
 				translationFunction: [translation.translationFunction, [<any>Validators.required]]
 			}))
 		);
 
 		return returnValue;
+	}
+
+	private getChannelMessageFormGroup(channelMessage: ChannelMessage): FormGroup {
+		return this.fb.group({
+			command: [channelMessage.command, [<any>Validators.required]],
+			data1: [channelMessage.data1, [<any>Validators.required]],
+			data2: [channelMessage.data2, [<any>Validators.required]],
+			midiChannel: [channelMessage.midiChannel, [<any>Validators.required]],
+		});
 	}
 
     private getInputDeviceFormGroup(inputDevice: IMIDIInputDevice): FormGroup {
@@ -183,7 +192,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	save(model: Profile, isValid: boolean) {
 		console.log(model, isValid);
-		this.refresh();
+		this.profileService.postProfile(model);
+		//this.refresh();
 	}
 
 	refresh() {
