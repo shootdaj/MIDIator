@@ -31,8 +31,9 @@ namespace MIDIator.Tests
 		[Test]
 		public void MIDIInputDevice_Constructor_And_Dispose_Work()
 		{
-			//var testDeviceName = "TestMIDIatorDevice";
-			//VirtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
+			var testDeviceName = "TestMIDIatorDevice";
+			var virtualMIDIManager = new VirtualMIDIManager();
+			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 
 			var midiInputDevice = new MIDIInputDevice(0, new TranslationMap(new List<ITranslation>()
 			{
@@ -43,7 +44,8 @@ namespace MIDIator.Tests
 
 			//cleanup
 			midiInputDevice.Dispose();
-			//VirtualMIDIManager.RemoveVirtualDevice(testDeviceName);
+			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
+			virtualMIDIManager.Dispose();
 
 			//midiInputDevice = null;
 
