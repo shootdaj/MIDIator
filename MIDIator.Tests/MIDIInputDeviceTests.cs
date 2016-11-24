@@ -12,20 +12,6 @@ namespace MIDIator.Tests
 	[Category("LocalOnly")]
 	public class MIDIInputDeviceTests
 	{
-		//private MIDIManager MIDIManager { get; set; }
-
-		//[SetUp]
-		//public void Setup()
-		//{
-		//	MIDIManager = new MIDIManager(new MIDIDeviceService());
-		//}
-
-		//[TearDown]
-		//public void TearDown()
-		//{
-		//	MIDIManager = null;
-		//}
-
 		private static int Timeout => 1000;
 
 		[Test]

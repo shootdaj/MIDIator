@@ -6,23 +6,9 @@ using NUnit.Framework;
 
 namespace MIDIator.Tests
 {
-	//[Category("LocalOnly")]
+	[Category("LocalOnly")]
 	public class VirtualMIDIManagerTests
 	{
-		//private MIDIManager MIDIManager { get; set; }
-
-		//[SetUp]
-		//public void Setup()
-		//{
-		//	MIDIManager = new MIDIManager(new MIDIDeviceService());
-		//}
-
-		//[TearDown]
-		//public void TearDown()
-		//{
-		//	MIDIManager = null;
-		//}
-
 		[Test, RunInApplicationDomain]
 		public void CreateVirtualDevice_CanBeSeenByMIDIManager()
 		{
