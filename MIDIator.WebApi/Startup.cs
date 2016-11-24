@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Anshul.Utilities;
 using Microsoft.Owin.Cors;
@@ -25,13 +26,18 @@ namespace MIDIator.Web
 			);
 
 			config.Routes.IgnoreRoute("Glimpse", "{resource}.axd/{*pathInfo}");
+
+			//always return json
+			config.Formatters.Clear();
+			config.Formatters.Add(new JsonMediaTypeFormatter());
+
+			//set default serialization settings
 			config.Formatters.JsonFormatter.SerializerSettings = SerializerSettings.DefaultSettings;
+			JsonConvert.DefaultSettings = () => SerializerSettings.DefaultSettings;
 
 			app.MapSignalR();
 			app.UseCors(CorsOptions.AllowAll);
 			app.UseWebApi(config);
-
-			JsonConvert.DefaultSettings = () => SerializerSettings.DefaultSettings;
 
 			//initialize midi manager
 			var inputDeviceName = "TouchOSC Bridge";
@@ -54,8 +60,6 @@ namespace MIDIator.Web
 						))
 				}
 			});
-
-			//MIDIManager.Instance.CurrentProfile.Update();
 		}
 	}
 }

@@ -38,6 +38,7 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using TypeLite;
 // ReSharper disable CheckNamespace
 
@@ -699,7 +700,8 @@ namespace Sanford.Multimedia.Midi
         /// Gets the channel command value.
         /// </summary>
         [DataMember]
-        public ChannelCommand Command
+		[JsonConverter(typeof(StringEnumConverter))]
+		public ChannelCommand Command
         {
             get
             {
