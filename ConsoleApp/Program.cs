@@ -16,7 +16,7 @@ namespace ConsoleApp
 
 		static void Main(string[] args)
 		{ 
-			GuitarWingMap(new MIDIManager());
+			GuitarWingMap(new MIDIManager(new MIDIDeviceService()));
 		}
 
 		static void CreateTranslationAndSaveIt()
@@ -29,7 +29,7 @@ namespace ConsoleApp
 		{
 			var channel = 1;
 
-			var guitarWing = midiManager.GetInputDevice("Livid Guitar Wing", new TranslationMap(new List<ITranslation>()
+			var guitarWing = midiManager.MIDIDeviceService.GetInputDevice("Livid Guitar Wing", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.ProgramChange, channel, 0),
 					new ChannelMessage(ChannelCommand.NoteOn, channel, 1), InputMatchFunction.Data1Match,
@@ -54,12 +54,12 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			midiManager.RemoveInputDevice(guitarWing);
+			midiManager.MIDIDeviceService.RemoveInputDevice(guitarWing);
 		}
 
 		static void OrbitMap(MIDIManager midiManager)
 		{
-			var orbit = midiManager.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
+			var orbit = midiManager.MIDIDeviceService.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.NoteMatch,
@@ -84,7 +84,7 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			midiManager.RemoveInputDevice(orbit);
+			midiManager.MIDIDeviceService.RemoveInputDevice(orbit);
 		}
 	}
 }

@@ -10,19 +10,13 @@ namespace MIDIator.Tests
 		[SetUp]
 		public void Setup()
 		{
-			MIDIManager = new MIDIManager();
+			MIDIManager = new MIDIManager(new MIDIDeviceService());
 		}
 
 		[TearDown]
 		public void TearDown()
 		{
 			MIDIManager = null;
-		}
-
-		[Test]
-		public void Devices_ReturnsSomeDevices()
-		{
-			var devices = MIDIManager.AvailableInputDevices;
 		}
 
 		//[Test]

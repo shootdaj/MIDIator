@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using MIDIator.Engine;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
@@ -11,12 +12,13 @@ namespace MIDIator.Interfaces
 	{
 		int DeviceID { get; }
 		ITranslationMap TranslationMap { get; set; }
-		bool IsRecording { get; }
 		string Name { get; }
+		bool IsRecording { get; }
 		int DriverVersion { get; }
 		short MID { get; }
 		short PID { get; }
 		int Support { get; }
+		int ChannelMessageActionCount { get; }
 		void Start();
 		void Stop();
 		void AddChannelMessageAction(ChannelMessageAction channelMessageAction);

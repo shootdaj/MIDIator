@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Web.Http;
-using Anshul.Utilities;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
-using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Web.Controllers
 {
@@ -23,22 +21,14 @@ namespace MIDIator.Web.Controllers
 		[HttpGet]
 		public Profile Profile()
 		{
-			var midiDeviceName = "TouchOSC Bridge";
+			return MIDIManager.CurrentProfile;
+		}
 
-			return new Profile()
-			{
-				Name = "DefaultProfile",
-				Transformations = new List<Transformation>()
-				{
-					new Transformation("TouchOSCXForm",
-						MIDIManager.GetInputDevice(midiDeviceName),
-						MIDIManager.GetOutputDevice(midiDeviceName),
-						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
-							new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
-							InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()
-							))
-				}
-			};
+		[HttpPost]
+		public dynamic Profile(ExpandoObject inProfile)
+		{
+			MIDIManager.UpdateProfile(inProfile);
+			return MIDIManager.CurrentProfile;
 		}
 
 		#endregion
@@ -64,41 +54,25 @@ namespace MIDIator.Web.Controllers
 		[HttpGet]
 		public IEnumerable<dynamic> AvailableInputDevices()
 		{
-			//var inputDevices = new List<dynamic>();
-			//for (int i = 0; i < Program.Iteration; i++)
-			//{
-			//	dynamic returnValue = new ExpandoObject();
-			//	returnValue.Name = i;
-			//	//returnValue.DriverVersion = InputDevice.GetDeviceCapabilities(i).driverVersion;
-			//	//returnValue.MID = InputDevice.GetDeviceCapabilities(i).mid;
-			//	//returnValue.PID = InputDevice.GetDeviceCapabilities(i).pid;
-			//	//returnValue.Support = InputDevice.GetDeviceCapabilities(i).support;
-			//	returnValue.DeviceID = i;
-			//	inputDevices.Add(returnValue);
-			//}
-
-			//Program.Iteration++;
-
-			return MIDIManager.AvailableInputDevices;
-			//return inputDevices;
+			return MIDIManager.MIDIDeviceService.AvailableInputDevices;
 		}
 
 		[HttpPost]
 		public IMIDIInputDevice GetInputDevice(string name)
 		{
-			return MIDIManager.GetInputDevice(name);
+			return MIDIManager.MIDIDeviceService.GetInputDevice(name);
 		}
 
 		[HttpPost]
 		public void RemoveInputDevice(string name)
 		{
-			MIDIManager.RemoveInputDevice(name);
+			MIDIManager.MIDIDeviceService.RemoveInputDevice(name);
 		}
 
 		[HttpPost]
 		public void SetTranslationMap(string inputDevice, TranslationMap map)
 		{
-			MIDIManager.SetTranslationMap(inputDevice, map);
+			MIDIManager.MIDIDeviceService.SetTranslationMap(inputDevice, map);
 		}
 
 		#endregion
@@ -108,19 +82,19 @@ namespace MIDIator.Web.Controllers
 		[HttpGet]
 		public IEnumerable<dynamic> AvailableOutputDevices()
 		{
-			return MIDIManager.AvailableOutputDevices;
+			return MIDIManager.MIDIDeviceService.AvailableOutputDevices;
 		}
 
 		[HttpPost]
 		public IMIDIOutputDevice GetOutputDevice(string name)
 		{
-			return MIDIManager.GetOutputDevice(name);
+			return MIDIManager.MIDIDeviceService.GetOutputDevice(name);
 		}
 
 		[HttpPost]
 		public void RemoveOutputDevice(string name)
 		{
-			MIDIManager.RemoveOutputDevice(name);
+			MIDIManager.MIDIDeviceService.RemoveOutputDevice(name);
 		}
 
 
@@ -138,6 +112,22 @@ namespace MIDIator.Web.Controllers
 		public IEnumerable<int> MIDIChannels()
 		{
 			return MIDIManager.MIDIChannels();
+		}
+
+		#endregion
+
+		#region Enums
+
+		[HttpGet]
+		public IEnumerable<int> AvailableInputMatchFunctions()
+		{
+			return MIDIManager.AvailableInputMatchFunctions();
+		}
+
+		[HttpGet]
+		public IEnumerable<int> AvailableTranslationFunctions()
+		{
+			return MIDIManager.AvailableTranslationFunctions();
 		}
 
 		#endregion

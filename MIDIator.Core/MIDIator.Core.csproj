@@ -59,8 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ProfileDTO.cs" />
+    <Compile Include="DTO\TransformationDTO.cs" />
+    <Compile Include="DTO\MIDIOutputDeviceDTO.cs" />
+    <Compile Include="DTO\MIDIInputDeviceDTO.cs" />
+    <Compile Include="DTO\TranslationDTO.cs" />
+    <Compile Include="DTO\TranslationMapDTO.cs" />
     <Compile Include="Engine\ChannelMessageAction.cs" />
     <Compile Include="Engine\IProfile.cs" />
+    <Compile Include="Engine\MIDIDeviceService.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\IMIDIInputDevice.cs" />
     <Compile Include="Interfaces\IMIDIManager.cs" />
@@ -68,6 +75,8 @@
     <Compile Include="Engine\InputMatchFunction.cs" />
     <Compile Include="Engine\InputMatchFunctions.cs" />
     <Compile Include="Interfaces\ITranslationMap.cs" />
+    <Compile Include="Json\ProfileConverter.cs" />
+    <Compile Include="Json\CamelCaseToPascalCaseExpandoObjectConverter.cs" />
     <Compile Include="Json\DisplayNameSerializationBinder.cs" />
     <Compile Include="Json\SerializationSettings.cs" />
     <Compile Include="Engine\Transformation.cs" />
@@ -175,6 +184,7 @@
       <DependentUpon>TypeLite.Net4.tt</DependentUpon>
     </TypeScriptCompile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

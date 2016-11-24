@@ -40,8 +40,9 @@ namespace MIDIator.Engine
         }
 
 		[TsIgnore]
-		public string Value { get; }
+		public string Value => Name;
+
 		[TsIgnore]
-		public string Label { get; }
+		public string Label => Name;
 	}
 }

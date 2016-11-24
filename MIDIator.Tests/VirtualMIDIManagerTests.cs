@@ -8,21 +8,21 @@ namespace MIDIator.Tests
 {
 	public class VirtualMIDIManagerTests
 	{
-		private MIDIManager MIDIManager { get; set; }
+		//private MIDIManager MIDIManager { get; set; }
 
-		[SetUp]
-		public void Setup()
-		{
-			MIDIManager = new MIDIManager();
-		}
+		//[SetUp]
+		//public void Setup()
+		//{
+		//	MIDIManager = new MIDIManager(new MIDIDeviceService());
+		//}
 
-		[TearDown]
-		public void TearDown()
-		{
-			MIDIManager = null;
-		}
+		//[TearDown]
+		//public void TearDown()
+		//{
+		//	MIDIManager = null;
+		//}
 
-		[Test]
+		[Test, RunInApplicationDomain]
 		public void CreateVirtualDevice_CanBeSeenByMIDIManager()
 		{
 			var virtualMIDIManager = new VirtualMIDIManager();
@@ -30,33 +30,28 @@ namespace MIDIator.Tests
 			var testDeviceName = "TestMIDIatorDevice";
 			var testDevice = virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 
-			Thread.Sleep(1000);
-
 			Assert.That(virtualMIDIManager.VirtualDevices.Contains(testDevice));
-			Assert.That(MIDIManager.AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName));
+			Assert.That(new MIDIDeviceService().AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName));
 
 			//cleanup
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
 			virtualMIDIManager.Dispose();
-
-			Thread.Sleep(1000);
 		}
 
-		[Test]
+		[Test, RunInApplicationDomain]
 		public void RemoveVirtualMIDIDevice_CannotBeSeenByMIDIManager()
 		{
 			var virtualMIDIManager = new VirtualMIDIManager();
+			var midiDeviceService = new MIDIDeviceService();
 
 			var testDeviceName = "TestMIDIatorDevice";
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
-
-			Thread.Sleep(1000);
+			Assert.That(midiDeviceService.AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName));
 
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
-			
-			Assert.That(!MIDIManager.AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName));
+			Assert.That(midiDeviceService.AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName), Is.False);
 
-			Thread.Sleep(1000);
+			virtualMIDIManager.Dispose();
 		}
 	}
 }

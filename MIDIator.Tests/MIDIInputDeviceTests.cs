@@ -12,19 +12,19 @@ namespace MIDIator.Tests
 	//[Ignore("Manual Test with Numark Orbit -- need to be changed to a virtualized MIDI device using VirtualMIDI.")]
 	public class MIDIInputDeviceTests
 	{
-		private MIDIManager MIDIManager { get; set; }
+		//private MIDIManager MIDIManager { get; set; }
 
-		[SetUp]
-		public void Setup()
-		{
-			MIDIManager = new MIDIManager();
-		}
+		//[SetUp]
+		//public void Setup()
+		//{
+		//	MIDIManager = new MIDIManager(new MIDIDeviceService());
+		//}
 
-		[TearDown]
-		public void TearDown()
-		{
-			MIDIManager = null;
-		}
+		//[TearDown]
+		//public void TearDown()
+		//{
+		//	MIDIManager = null;
+		//}
 
 		private static int Timeout => 1000;
 
@@ -45,24 +45,23 @@ namespace MIDIator.Tests
 			midiInputDevice.Dispose();
 			//VirtualMIDIManager.RemoveVirtualDevice(testDeviceName);
 
-			midiInputDevice = null;
+			//midiInputDevice = null;
 
-			Thread.Sleep(1000);
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
+			//Thread.Sleep(1000);
+			//GC.Collect();
+			//GC.WaitForPendingFinalizers();
 		}
 
-		[Test]
+		[Test, RunInApplicationDomain]
 		public void MIDIInputDevice_DirectTranslation_Works()
 		{
 			var virtualMIDIManager = new VirtualMIDIManager();
+			var midiDeviceService = new MIDIDeviceService();
 
 			var testDeviceName = "TestMIDIatorDevice";
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
-
-			Thread.Sleep(1000);
-
-			var midiInputDevice = MIDIManager.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
+			
+			var midiInputDevice = midiDeviceService.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.NoteMatch,
@@ -77,38 +76,38 @@ namespace MIDIator.Tests
 			midiInputDevice.Stop();
 
 			//cleanup
-			MIDIManager.RemoveInputDevice(midiInputDevice);
+			midiDeviceService.RemoveInputDevice(midiInputDevice);
+			//midiInputDevice = null;
 
-			midiInputDevice = null;
-
-			Thread.Sleep(1000);
+			//Thread.Sleep(1000);
 
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
 			virtualMIDIManager.Dispose();
 
-			virtualMIDIManager = null;
+			//virtualMIDIManager = null;
 
-			Thread.Sleep(1000);
+			//Thread.Sleep(1000);
 
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
+			//GC.Collect();
+			//GC.WaitForPendingFinalizers();
 
-			Thread.Sleep(1000);
+			//Thread.Sleep(1000);
 		}
 
 
 		/// <summary>
 		/// Need virtualMidi C# library to create virtual MIDI inputs and send commands to it
 		/// </summary>
-		[Test]
+		[Test, RunInApplicationDomain]
 		public void MIDIInputDevice_ChangeNote_Works()
 		{
 			var virtualMIDIManager = new VirtualMIDIManager();
+			var midiDeviceService = new MIDIDeviceService();
 
 			var testDeviceName = "TestMIDIatorDevice";
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 
-			var midiInputDevice = MIDIManager.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
+			var midiInputDevice = midiDeviceService.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.CatchAll,
@@ -123,13 +122,16 @@ namespace MIDIator.Tests
 			midiInputDevice.Stop();
 
 			//cleanup
-			MIDIManager.RemoveInputDevice(midiInputDevice);
+			midiDeviceService.RemoveInputDevice(midiInputDevice);
 
 			midiInputDevice = null;
 
 			Thread.Sleep(1000);
 
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
+			virtualMIDIManager.Dispose();
+
+			virtualMIDIManager = null;
 
 			Thread.Sleep(1000);
 

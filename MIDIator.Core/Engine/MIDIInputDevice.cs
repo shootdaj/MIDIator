@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using MIDIator.Interfaces;
 using MIDIator.UIGenerator.Consumables;
+using Newtonsoft.Json;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
 using TypeLite;
@@ -21,11 +23,13 @@ namespace MIDIator.Engine
 			TranslationMap = translationMap;
 			InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
 		}
-
+		
 		public int DeviceID => InputDevice.DeviceID;
 		
 		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
-		
+
+		public int ChannelMessageActionCount => ChannelMessageActions.Count;
+
 		public ITranslationMap TranslationMap { get; set; }
 
 		public bool IsRecording { get; protected set; }
@@ -151,8 +155,11 @@ namespace MIDIator.Engine
 		}
 
 		[TsIgnore]
-		public string Value { get; }
+		//[DataMember]
+		public string Value => Name;
+
 		[TsIgnore]
-		public string Label { get; }
+		//[DataMember]
+		public string Label => Name;
 	}
 }

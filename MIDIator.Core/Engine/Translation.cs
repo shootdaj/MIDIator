@@ -37,7 +37,7 @@ namespace MIDIator.Engine
 
         [DataMember]
 		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]
-        public ShortMessage InputMessageMatchTarget { get; set; }
+		public ShortMessage InputMessageMatchTarget { get; set; }
 
         [DataMember]
 		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]

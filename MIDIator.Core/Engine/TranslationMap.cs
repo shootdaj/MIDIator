@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.Serialization;
 using MIDIator.Interfaces;
@@ -6,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace MIDIator.Engine
 {
-    [DataContract]
 	public class TranslationMap : ITranslationMap
 	{
 		public TranslationMap(List<ITranslation> translations = null)
@@ -20,7 +20,10 @@ namespace MIDIator.Engine
 			Translations = translations?.Cast<ITranslation>().ToList() ?? new List<Translation>().Cast<ITranslation>().ToList();
 		}
 
-		[DataMember]
 		public List<ITranslation> Translations { get; set; }
+		public void Update(dynamic translationMap)
+		{
+			//Translations = translationMap.Translations;
+		}
 	}
 }

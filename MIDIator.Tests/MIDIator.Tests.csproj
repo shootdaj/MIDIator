@@ -40,6 +40,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NUnit.ApplicationDomain, Version=10.0.0.0, Culture=neutral, PublicKeyToken=afbd8211e0c40e2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.ApplicationDomain.10.0.00\lib\net40\NUnit.ApplicationDomain.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -56,6 +60,7 @@
   <ItemGroup>
     <Compile Include="InputMatchFunctionsTests.cs" />
     <Compile Include="MIDIInputDeviceTests.cs" />
+    <Compile Include="MIDIDeviceServiceTests.cs" />
     <Compile Include="MIDIManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TranslationMapTests.cs" />
@@ -70,6 +75,10 @@
     <ProjectReference Include="..\Sanford.Multimedia.Midi\Source\Sanford.Multimedia.Midi.csproj">
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>
       <Name>Sanford.Multimedia.Midi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypeLite\TypeLite\TypeLite.csproj">
+      <Project>{43DCB624-F929-4572-97A3-6B14AC6AD158}</Project>
+      <Name>TypeLite</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

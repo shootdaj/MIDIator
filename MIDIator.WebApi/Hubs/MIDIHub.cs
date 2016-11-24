@@ -14,7 +14,7 @@ namespace MIDIator.Web.Hubs
 		
 		public IEnumerable<dynamic> AvailableInputDevices()
 		{
-			return MIDIManager.AvailableInputDevices;
+			return MIDIManager.MIDIDeviceService.AvailableInputDevices;
 		}
 	}
 }
