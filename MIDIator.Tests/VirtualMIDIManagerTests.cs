@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace MIDIator.Tests
 {
-	[Category("LocalOnly")]
+	//[Category("LocalOnly")]
 	public class VirtualMIDIManagerTests
 	{
 		//private MIDIManager MIDIManager { get; set; }

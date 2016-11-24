@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace MIDIator.UIGenerator.Consumables.Tests
 {
-	class ExtensionsTests
+	public class ExtensionsTests
 	{
 		[TestCase("DriverVersion", "driverVersion")]
 		[TestCase("MID", "mid")]
