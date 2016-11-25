@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
 using MIDIator.UIGeneration;
 using MIDIator.UIGenerator.Consumables;
 using TypeLite;

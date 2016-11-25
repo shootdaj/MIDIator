@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using MIDIator.Interfaces;
-using MIDIator.UIGenerator.Consumables;
-using Newtonsoft.Json;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
 using TypeLite;

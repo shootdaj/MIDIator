@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
-using Anshul.Utilities;
 using MIDIator.Interfaces;
-using Newtonsoft.Json;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine

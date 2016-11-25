@@ -59,12 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\ProfileDTO.cs" />
-    <Compile Include="DTO\TransformationDTO.cs" />
-    <Compile Include="DTO\MIDIOutputDeviceDTO.cs" />
-    <Compile Include="DTO\MIDIInputDeviceDTO.cs" />
-    <Compile Include="DTO\TranslationDTO.cs" />
-    <Compile Include="DTO\TranslationMapDTO.cs" />
     <Compile Include="Engine\ChannelMessageAction.cs" />
     <Compile Include="Engine\IProfile.cs" />
     <Compile Include="Engine\MIDIDeviceService.cs" />

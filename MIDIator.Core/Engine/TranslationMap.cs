@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
 using MIDIator.Interfaces;
 using Newtonsoft.Json;
 
