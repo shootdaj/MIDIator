@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using Anshul.Utilities;
@@ -39,11 +40,11 @@ namespace MIDIator.Web
 			app.UseWebApi(config);
 
 			//initialize midi manager
-			var inputDeviceName = "TouchOSC Bridge";
+			var inputDeviceName = "Numark ORBIT";
 			var outputDeviceName = //"TouchOSC Bridge";
-				"Microsoft GS Wavetable Synth";
+				"TouchOSC Bridge";
 
-			MIDIManager.Instantiate(new MIDIDeviceService());
+			MIDIManager.Instantiate(new MIDIDeviceService(), new VirtualMIDIManager());
 
 			MIDIManager.Instance.SetProfile(new Profile()
 			{
@@ -51,12 +52,16 @@ namespace MIDIator.Web
 				Transformations = new List<Transformation>()
 				{
 					new Transformation("TouchOSCXForm",
-						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName),
+						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName, start: true),
 						MIDIManager.Instance.MIDIDeviceService.GetOutputDevice(outputDeviceName),
 						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
 								new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
 								InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()
 						))
+				},
+				VirtualOutputDevices = new List<VirtualOutputDevice>()
+				{
+					(VirtualOutputDevice)MIDIManager.Instance.VirtualMIDIManager.CreateVirtualDevice("TestVirtualDevice", Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Output)
 				}
 			});
 		}

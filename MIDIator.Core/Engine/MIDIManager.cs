@@ -11,9 +11,9 @@ namespace MIDIator.Engine
 	{
 		#region Singleton
 
-		public static void Instantiate(MIDIDeviceService midiDeviceService)
+		public static void Instantiate(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
 		{
-			Instance = new MIDIManager(midiDeviceService);
+			Instance = new MIDIManager(midiDeviceService, virtualMIDIManager);
 		}
 
 		public static MIDIManager Instance { get; private set; }
@@ -24,9 +24,12 @@ namespace MIDIator.Engine
 
 		public MIDIDeviceService MIDIDeviceService { get; set; }
 
-		public MIDIManager(MIDIDeviceService midiDeviceService)
+		public VirtualMIDIManager VirtualMIDIManager { get; set; }
+
+		public MIDIManager(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
 		{
 			MIDIDeviceService = midiDeviceService;
+			VirtualMIDIManager = virtualMIDIManager;
 		}
 
 		#endregion

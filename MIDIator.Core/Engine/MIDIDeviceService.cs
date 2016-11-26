@@ -52,7 +52,7 @@ namespace MIDIator.Engine
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
+		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false, bool start = false)
 		{
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(device => device.DeviceID == deviceID))
 				return InputDevicesInUse.First(device => device.DeviceID == deviceID);
@@ -60,7 +60,7 @@ namespace MIDIator.Engine
 			{
 				if (AvailableInputDevices.Any(d => d.DeviceID == deviceID))
 				{
-					return CreateInputDevice(deviceID, translationMap);
+					return CreateInputDevice(deviceID, translationMap, start);
 				}
 				else
 				{
@@ -73,7 +73,7 @@ namespace MIDIator.Engine
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
+		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false, bool start = false)
 		{
 			Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(nameMatch))
@@ -83,7 +83,7 @@ namespace MIDIator.Engine
 				if (AvailableInputDevices.Any(nameMatch))
 				{
 					var deviceID = AvailableInputDevices.Single(d => d.Name == name).DeviceID;
-					return CreateInputDevice(deviceID, translationMap);
+					return CreateInputDevice(deviceID, translationMap, start);
 				}
 				else
 				{
@@ -95,9 +95,9 @@ namespace MIDIator.Engine
 			}
 		}
 
-		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
+		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null, bool start = false)
 		{
-			var device = new MIDIInputDevice(deviceID, translationMap);
+			var device = new MIDIInputDevice(deviceID, translationMap, start);
 			InputDevicesInUse.Add(device);
 			return device;
 		}

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using MIDIator.Interfaces;
 using Sanford.Multimedia.Midi;
 using TypeLite;
@@ -30,6 +31,7 @@ namespace MIDIator.Engine
 
 	    public void Send(ShortMessage midiMessage)
 	    {
+			Debug.Print($"Sending {((ChannelMessage)midiMessage).Command} to device {this.Name}");
 			OutputDevice.Send((ChannelMessage)midiMessage);
 		}
 

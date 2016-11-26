@@ -14,11 +14,13 @@ namespace MIDIator.Engine
 	{
 		private InputDevice InputDevice { get; }
 
-		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
+		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null, bool start = false)
 		{
 			InputDevice = new InputDevice(deviceID);
 			TranslationMap = translationMap;
 			InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
+			if (start)
+				Start();
 		}
 		
 		public int DeviceID => InputDevice.DeviceID;

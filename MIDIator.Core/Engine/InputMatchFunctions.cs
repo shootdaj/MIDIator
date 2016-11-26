@@ -29,9 +29,10 @@ namespace MIDIator.Engine
 		public static Func<ShortMessage, ShortMessage, bool> Get(InputMatchFunction func)
 		{
 			//TODO: possible place for bug
+			var returnValue = (Func<ShortMessage, ShortMessage, bool>)typeof(InputMatchFunctions).GetProperties(BindingFlags.Public | BindingFlags.Static)
+				.First(p => p.Name == Enum.GetName(typeof(InputMatchFunction), func)).GetValue(null);
 			return
-				(Func<ShortMessage, ShortMessage, bool>)typeof(InputMatchFunctions).GetProperties(BindingFlags.Public | BindingFlags.Static)
-					.First(p => p.Name == Enum.GetName(typeof(InputMatchFunction), func)).GetValue(null);
+				returnValue;
 		}
 
 		/// <summary>
