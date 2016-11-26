@@ -13,7 +13,7 @@ import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.co
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 
 //ng2
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -41,47 +41,20 @@ export class AppComponent implements OnInit, OnDestroy {
 	constructor(private fb: FormBuilder,
 		private midiService: MIDIService,
 		private helperService: HelperService,
-		private profileService: ProfileService) {
+		private profileService: ProfileService,
+		private cdr: ChangeDetectorRef	) {
 	}
 
 	ngOnInit() {
 		this.subscriptions = new Array<Subscription>();
 		this.subscriptions.push(this.profileService.profileChanges
 			.subscribe(data => {
-
 				this.profile = data;
-				//this.helperService.maskCastProfile(data);
-
-				//Object.assign()
-
-				//this.profile = //Object.assign(new Profile(), data);
-					//this.helperService.deepMap(data, (a, b) => { return a; }, Profile);
-					//this.helperService.maskCast(data, Profile);
-					//JSON.parse(data);
-					//this.helperService.createInstanceFromJson(Profile, data);
-					//var t = window["Profile"];
-					//<Profile>this.helperService.maskCopy(data, Profile);
-					//data.map(device => this.helperService.deepMap(device, (val, key) => val, Profile));
-
-				//this.profile.__proto__ = 
-				//var profile = JSON.parse(JSON.stringify(data));
-				//profile.__proto__ = Profile.prototype;
-
-				//this.profile = profile;
-				//var device = JSON.parse(JSON.stringify(this.profile.transformations[0].inputDevice));
-
-				//this.profile = new Profile();
-
-				//$.extend(true, this.profile, data);
-				//MIDIInputDevice.prototype.label = f
-
-				//device.__proto__ = MIDIInputDevice.prototype.constructor;
-				//this.profile.transformations[0].inputDevice.constructor.prototype = MIDIInputDevice.prototype;
-
 				this.form = this.getProfileFormGroup(this.profile);
 				this.subscriptions.push(this.form.valueChanges.debounceTime(400).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
 			}));
 
+		
 		//this.subscriptions.push(this.midiService.availableInputDevicesChanges
 		//	.subscribe(data => {
 		//		this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
@@ -89,6 +62,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		//this.midiService.getAvailableInputDevices();
 		this.profileService.getProfile();
+	}
+
+	detectChanges() {
+		this.cdr.detectChanges();
 	}
 
 	private getProfileFormGroup(profile: Profile): FormGroup {

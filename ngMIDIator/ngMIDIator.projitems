@@ -16,9 +16,8 @@
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\dynamic-form.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\channelMessage\channelMessage.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\inputDevice\inputDevice.component.html" />
-    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\mdl-dropdown.component_OLD.html" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-textinput\mdl-textinput.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\mdl-dropdown.component.html" />
-    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-enum-dropdown\mdl-enum-dropdown.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\profile\profile.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\transformation\transformation.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\translation\translation.component.html" />
@@ -45,10 +44,9 @@
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\dynamic-form.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\channelMessage\channelMessage.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\inputDevice\inputDevice.component.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-textinput\mdl-textinput.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\dropdownOption.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\mdl-dropdown.component.ts" />
-    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-dropdown\mdl-dropdown.component_OLD.ts" />
-    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\mdl-enum-dropdown\mdl-enum-dropdown.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\profile\profile.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\transformation\transformation.component.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\translation\translation.component.ts" />

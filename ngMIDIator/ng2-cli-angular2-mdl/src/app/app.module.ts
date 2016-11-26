@@ -17,6 +17,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TransformationComponent } from './components/transformation/transformation.component';
 import { TranslationComponent } from './components/translation/translation.component';
 import { ChannelMessageComponent } from './components/channelMessage/channelMessage.component';
+import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.component';
+
 
 @NgModule({
     declarations: [
@@ -25,7 +27,8 @@ import { ChannelMessageComponent } from './components/channelMessage/channelMess
 		TransformationComponent,
         DropdownComponent,
 		TranslationComponent,
-		ChannelMessageComponent
+		ChannelMessageComponent,
+		TextInputComponent
 	],
     imports: [
         BrowserModule,

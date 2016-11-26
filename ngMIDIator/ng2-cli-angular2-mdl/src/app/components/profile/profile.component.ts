@@ -13,6 +13,7 @@ import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
 import { TransformationComponent } from '../../components/transformation/transformation.component';
 import { TranslationComponent } from '../../components/translation/translation.component';
+import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput.component';
 
 @Component({
     selector: 'profile',
