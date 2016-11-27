@@ -14,7 +14,7 @@ namespace MIDIator.Tests
 		{
 			var virtualMIDIManager = new VirtualMIDIManager();
 
-			var testDeviceName = "TestMIDIatorDevice";
+			var testDeviceName = "TestMIDIatorDevice_CreateVirtualDevice_CanBeSeenByMIDIManager";
 			var testDevice = virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 
 			Assert.That(virtualMIDIManager.VirtualDevices.Contains(testDevice));
@@ -31,7 +31,7 @@ namespace MIDIator.Tests
 			var virtualMIDIManager = new VirtualMIDIManager();
 			var midiDeviceService = new MIDIDeviceService();
 
-			var testDeviceName = "TestMIDIatorDevice";
+			var testDeviceName = "TestMIDIatorDevice_RemoveVirtualMIDIDevice_CannotBeSeenByMIDIManager";
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 			Assert.That(midiDeviceService.AvailableInputDevices.Select(x => x.Name).Contains(testDeviceName));
 

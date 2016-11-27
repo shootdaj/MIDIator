@@ -17,7 +17,7 @@ namespace MIDIator.Tests
 		[Test]
 		public void MIDIInputDevice_Constructor_And_Dispose_Work()
 		{
-			var testDeviceName = "TestMIDIatorDevice";
+			var testDeviceName = "TestMIDIatorDevice_MIDIInputDevice_Constructor_And_Dispose_Work";
 			var virtualMIDIManager = new VirtualMIDIManager();
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 
@@ -46,7 +46,7 @@ namespace MIDIator.Tests
 			var virtualMIDIManager = new VirtualMIDIManager();
 			var midiDeviceService = new MIDIDeviceService();
 
-			var testDeviceName = "TestMIDIatorDevice";
+			var testDeviceName = "TestMIDIatorDevice_MIDIInputDevice_DirectTranslation_Works";
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 			
 			var midiInputDevice = midiDeviceService.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
@@ -92,7 +92,7 @@ namespace MIDIator.Tests
 			var virtualMIDIManager = new VirtualMIDIManager();
 			var midiDeviceService = new MIDIDeviceService();
 
-			var testDeviceName = "TestMIDIatorDevice";
+			var testDeviceName = "TestMIDIatorDevice_MIDIInputDevice_ChangeNote_Works";
 			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
 
 			var midiInputDevice = midiDeviceService.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
