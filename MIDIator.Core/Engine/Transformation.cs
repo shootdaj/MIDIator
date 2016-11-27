@@ -32,6 +32,7 @@ namespace MIDIator.Engine
 			OutputDevice = outputDevice;
 			InputDevice.TranslationMap = translationMap;
 			InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
+			InputDevice.Start();
 		}
 
 		public Transformation(string name, MIDIInputDevice inputDevice, MIDIOutputDevice outputDevice, ITranslationMap translationMap) 
@@ -50,10 +51,11 @@ namespace MIDIator.Engine
 			InputDevice.Stop();
 			InputDevice.TranslationMap = null;
 			InputDevice.RemoveChannelMessageAction(ForwardActionName);
-			InputDevice = midiDeviceService.GetInputDevice((string)transformation.InputDevice.Name, start: true);
+			InputDevice = midiDeviceService.GetInputDevice((string)transformation.InputDevice.Name);
 			OutputDevice = midiDeviceService.GetOutputDevice((string)transformation.OutputDevice.Name);
 			TranslationMap = ((ExpandoObject) transformation.TranslationMap).ConvertTo<TranslationMap>();
 			InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
+			InputDevice.Start();
 		}
 	}
 }

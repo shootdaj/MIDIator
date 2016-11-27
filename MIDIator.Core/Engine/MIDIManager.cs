@@ -26,7 +26,7 @@ namespace MIDIator.Engine
 
 		public VirtualMIDIManager VirtualMIDIManager { get; set; }
 
-		public MIDIManager(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
+		public MIDIManager(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			MIDIDeviceService = midiDeviceService;
 			VirtualMIDIManager = virtualMIDIManager;

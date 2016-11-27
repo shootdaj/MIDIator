@@ -40,9 +40,9 @@ namespace MIDIator.Web
 			app.UseWebApi(config);
 
 			//initialize midi manager
-			var inputDeviceName = "Numark ORBIT";
+			var inputDeviceName = "TouchOSC Bridge";
 			var outputDeviceName = //"TouchOSC Bridge";
-				"TouchOSC Bridge";
+				"LoopBe Internal MIDI";
 
 			MIDIManager.Instantiate(new MIDIDeviceService(), new VirtualMIDIManager());
 
@@ -52,7 +52,7 @@ namespace MIDIator.Web
 				Transformations = new List<Transformation>()
 				{
 					new Transformation("TouchOSCXForm",
-						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName, start: true),
+						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName),
 						MIDIManager.Instance.MIDIDeviceService.GetOutputDevice(outputDeviceName),
 						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
 								new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
