@@ -27,3 +27,14 @@ body {
 .profile-card-body {
     padding-bottom: 20px;
 }
+
+.mdl-layout__container {
+    height: auto;
+}
+
+.slim-loading-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}

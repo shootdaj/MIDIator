@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 //domain model
 import { IMIDIInputDevice, TranslationMap, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from './models/domainModel';
@@ -35,7 +36,8 @@ import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.com
 		ReactiveFormsModule,
 		FormsModule,
         HttpModule,
-        MdlModule
+        MdlModule,
+        SlimLoadingBarModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]
