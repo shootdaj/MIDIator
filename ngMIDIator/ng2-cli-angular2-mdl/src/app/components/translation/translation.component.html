@@ -1,36 +1,38 @@
-<div class="mdl-grid">
-	<div class="mdl-cell--12-col">
-		<div class="mdl-grid">
-			<div class="mdl-cell--12-col">
-				<mdl-dropdown [options]="inputMatchFunctionsDropdownOptions"
-							  [dropdownLabel]="'Input Match Function'"
-							  [placeholder]="'Select...'"
-							  [control]="form.controls['inputMatchFunction']"
-				              [id]="'inputMatchFunction'">
-				</mdl-dropdown>
-			</div>
-		</div>
-		<div class="mdl-grid">
-			<div class="mdl-cell--12-col">
-				<channel-message [form]="form.controls.inputMessageMatchTarget">
-				</channel-message>
-			</div>
-		</div>
-		<div class="mdl-grid">
-			<div class="mdl-cell--12-col">
-				<mdl-dropdown [options]="translationFunctionsDropdownOptions"
-							  [dropdownLabel]="'Translation Function'"
-							  [placeholder]="'Select...'"
-							  [control]="form.controls['translationFunction']"
-							  [id]="'translationFunction'">
-				</mdl-dropdown>
-			</div>
-		</div>
-		<div class="mdl-grid">
-			<div class="mdl-cell--12-col">
-				<channel-message [form]="form.controls.outputMessageTemplate">
-				</channel-message>
-			</div>
-		</div>
-	</div>
+<div *ngIf="this.form != null">
+    <div class="mdl-grid">
+        <div class="mdl-cell--12-col">
+            <div class="mdl-grid">
+                <div class="mdl-cell--12-col">
+                    <mdl-dropdown [options]="inputMatchFunctions"
+                                  [dropdownLabel]="'Input Match Function'"
+                                  [placeholder]="'Select...'"
+                                  [control]="form.controls['inputMatchFunction']"
+                                  [id]="'inputMatchFunction'">
+                    </mdl-dropdown>
+                </div>
+            </div>
+            <div class="mdl-grid">
+                <div class="mdl-cell--12-col">
+                    <channel-message [form]="form.controls.inputMessageMatchTarget">
+                    </channel-message>
+                </div>
+            </div>
+            <div class="mdl-grid">
+                <div class="mdl-cell--12-col">
+                    <mdl-dropdown [options]="translationFunctions"
+                                  [dropdownLabel]="'Translation Function'"
+                                  [placeholder]="'Select...'"
+                                  [control]="form.controls['translationFunction']"
+                                  [id]="'translationFunction'">
+                    </mdl-dropdown>
+                </div>
+            </div>
+            <div class="mdl-grid">
+                <div class="mdl-cell--12-col">
+                    <channel-message [form]="form.controls.outputMessageTemplate">
+                    </channel-message>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

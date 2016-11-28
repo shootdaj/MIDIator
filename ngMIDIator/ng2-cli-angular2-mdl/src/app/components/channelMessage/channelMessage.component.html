@@ -1,7 +1,7 @@
 <div class="mdl-grid">
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-dropdown [options]="channelCommandDropdownOptions"
+			<mdl-dropdown [options]="channelCommands"
 			              [dropdownLabel]="'Channel Command'"
 			              [placeholder]="'Select...'"
 			              [control]="form.controls['command']"
@@ -11,7 +11,7 @@
 	</div>
 	<div class="mdl-cell--3-col">
 		<div style="width: 90%">
-			<mdl-dropdown [options]="midiChannelDropdownOptions"
+			<mdl-dropdown [options]="midiChannels"
 						  [dropdownLabel]="'MIDI Channel'"
 						  [placeholder]="'Select...'"
 						  [control]="form.controls['midiChannel']"

@@ -12,11 +12,7 @@
 		<mdl-card-supporting-text>
 			<div class="mdl-grid profile-card-body">
 				<div class="mdl-cell--12-col">
-					<!--<mdl-textfield type="text" label="Name" floating-label formControlName="name"></mdl-textfield>-->
-					<mdl-textinput [textInputLabel]="'Name'"
-					               [control]="form.controls.name"
-					               [id]="'name'">
-					</mdl-textinput>
+					<mdl-textfield type="text" label="Name" floating-label formControlName="name"></mdl-textfield>
 					<div formArrayName="transformations">
 						<div *ngFor="let transformation of form.controls.transformations.controls; let i=index">
 							<transformation [form]="transformation"></transformation>

@@ -1,4 +1,4 @@
-<div [formGroup]="form" *ngIf="this.form != null">
+<div *ngIf="this.form != null">
 	<div class="mdl-grid">
 		<div class="mdl-cell--12-col">
 			<mdl-dropdown [options]="inputDevices"
@@ -11,18 +11,18 @@
 			</mdl-dropdown>
 		</div>
 	</div>
-	<div class="mdl-grid">
-		<div class="mdl-cell--12-col">
-			<mdl-dropdown [options]="outputDevices"
-						  [dropdownLabel]="'Output Device'"
-						  [placeholder]="'Select...'"
-						  [control]="form.controls['outputDevice']"
-						  [id]="'outputDevice'"
-						  [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
-						  [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
-			</mdl-dropdown>
-		</div>
-	</div>
+    <div class="mdl-grid">
+        <div class="mdl-cell--12-col">
+            <mdl-dropdown [options]="outputDevices"
+                          [dropdownLabel]="'Output Device'"
+                          [placeholder]="'Select...'"
+                          [control]="form.controls['outputDevice']"
+                          [id]="'outputDevice'"
+                          [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
+                          [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
+            </mdl-dropdown>
+        </div>
+    </div>
 	<div class="mdl-grid">
 		<div class="mdl-cell--12-col">
 			<h4>

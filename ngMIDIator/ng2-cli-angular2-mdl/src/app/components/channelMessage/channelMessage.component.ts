@@ -24,8 +24,8 @@ import { ProfileComponent } from '../../components/profile/profile.component';
 export class ChannelMessageComponent implements OnInit, OnDestroy {
 
 	private subscriptions: Subscription[];
-	private channelCommands: ChannelCommand[];
-	private midiChannels: number[];
+	private channelCommands: IDropdownOption[];
+	private midiChannels: IDropdownOption[];
 
 	@Input() form: FormGroup;
 
@@ -35,10 +35,10 @@ export class ChannelMessageComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.subscriptions = new Array<Subscription>();
 		this.subscriptions.push(this.midiService.availableChannelCommandsSubject
-			.subscribe(data => this.channelCommands = data));
+            .subscribe(data => this.channelCommands = data.map(fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()))));
 
 		this.subscriptions.push(this.midiService.availableMIDIChannelsSubject
-			.subscribe(data => this.midiChannels = data));
+            .subscribe(data => this.midiChannels = data.map(fx => new DropdownOption(fx.toString(), fx.toString()))));
 
 		this.midiService.getAvailableChannelCommands();
 		this.midiService.getAvailableMIDIChannels();
@@ -48,21 +48,21 @@ export class ChannelMessageComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach(s => s.unsubscribe());
 	}
 
-	get channelCommandDropdownOptions(): IDropdownOption[] {
-		if (this.channelCommands != null && this.channelCommands.length > 0) {
-			return this.channelCommands.map(
-				fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()));
-		} else {
-			return null;
-		}
-	}
+	//get channelCommandDropdownOptions(): IDropdownOption[] {
+	//	if (this.channelCommands != null && this.channelCommands.length > 0) {
+	//		return this.channelCommands.map(
+	//			fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()));
+	//	} else {
+	//		return null;
+	//	}
+	//}
 
-	get midiChannelDropdownOptions(): IDropdownOption[] {
-		if (this.midiChannels != null && this.midiChannels.length > 0) {
-			return this.midiChannels.map(
-				fx => new DropdownOption(fx.toString(), fx.toString()));
-		} else {
-			return null;
-		}
-	}
+	//get midiChannelDropdownOptions(): IDropdownOption[] {
+	//	if (this.midiChannels != null && this.midiChannels.length > 0) {
+	//		return this.midiChannels.map(
+	//			fx => new DropdownOption(fx.toString(), fx.toString()));
+	//	} else {
+	//		return null;
+	//	}
+	//}
 }

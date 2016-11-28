@@ -13,7 +13,7 @@ import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.co
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 
 //ng2
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -24,161 +24,149 @@ import '../../rxjs-operators';
 //libs
 import { EnumValues } from 'enum-values';
 
-//declare var $: JQueryStatic;
+declare var componentHandler;
+
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	providers: [MIDIService, HelperService, ProfileService]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    providers: [MIDIService, HelperService, ProfileService]
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-	private profile: Profile;
-	private form: FormGroup;// = this.fb.group({});
-	private inputDevices: MIDIInputDevice[];
-	private subscriptions: Subscription[];
+    private profile: Profile;
+    private form: FormGroup;
+    private inputDevices: MIDIInputDevice[];
+    private subscriptions: Subscription[];
 
-	constructor(private fb: FormBuilder,
-		private midiService: MIDIService,
-		private helperService: HelperService,
-		private profileService: ProfileService,
-		private cdr: ChangeDetectorRef	) {
-	}
+    constructor(private fb: FormBuilder,
+        private midiService: MIDIService,
+        private helperService: HelperService,
+        private profileService: ProfileService,
+        private cdr: ChangeDetectorRef) {
+    }
 
-	ngOnInit() {
-		this.subscriptions = new Array<Subscription>();
-		this.subscriptions.push(this.profileService.profileChanges
-			.subscribe(data => {
-				this.profile = data;
-				this.form = this.getProfileFormGroup(this.profile);
-				this.subscriptions.push(this.form.valueChanges.debounceTime(400).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
-			}));
+    private upgradeAllElements() {
+        componentHandler.upgradeAllRegistered();
+    }
 
-		
-		//this.subscriptions.push(this.midiService.availableInputDevicesChanges
-		//	.subscribe(data => {
-		//		this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
-		//	}));
+    ngOnInit() {
+        this.subscriptions = new Array<Subscription>();
+        this.subscriptions.push(this.profileService.profileChanges
+            .subscribe(data => {
+                this.profile = data;
+                this.form = this.getProfileFormGroup(this.profile);
+                this.subscriptions.push(this.form.valueChanges.debounceTime(400).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
+                //setTimeout(() =>
+                //    componentHandler.upgradeAllRegistered());
+            }));
+        
+        this.profileService.getProfile();
+    }
 
-		//this.midiService.getAvailableInputDevices();
-		this.profileService.getProfile();
-	}
+    private getProfileFormGroup(profile: Profile): FormGroup {
+        return this.fb.group({
+            name: [profile.name, [<any>Validators.required]],
+            transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations))
+        });
+    }
 
-	detectChanges() {
-		this.cdr.detectChanges();
-	}
+    private getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
 
-	private getProfileFormGroup(profile: Profile): FormGroup {
-		return this.fb.group({
-			name: [profile.name, [<any>Validators.required]],
-			transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations))
-		});
-	}
+        var returnValue = Array<FormGroup>();
 
-	private  getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
+        transformations.forEach(transformation =>
+            returnValue.push(this.fb.group({
+                name: [transformation.name, [<any>Validators.required]],
+                inputDevice: this.fb.group({
+                    deviceID: [transformation.inputDevice.deviceID],
+                    driverVersion: [transformation.inputDevice.driverVersion],
+                    mid: [transformation.inputDevice.mid],
+                    name: [transformation.inputDevice.name],
+                    pid: [transformation.inputDevice.pid],
+                    support: [transformation.inputDevice.support],
+                    label: [transformation.inputDevice.label],
+                    value: [transformation.inputDevice.value]
+                }),
+                outputDevice: this.fb.group({
+                    deviceID: [transformation.outputDevice.deviceID],
+                    driverVersion: [transformation.outputDevice.driverVersion],
+                    mid: [transformation.outputDevice.mid],
+                    name: [transformation.outputDevice.name],
+                    pid: [transformation.outputDevice.pid],
+                    support: [transformation.outputDevice.support],
+                    label: [transformation.outputDevice.label],
+                    value: [transformation.outputDevice.value]
+                }),
+                translationMap: this.getTranslationMapFormGroup(transformation.translationMap)
+            }))
+        );
 
-		var returnValue = Array<FormGroup>();
+        return returnValue;
+    }
 
-		transformations.forEach(transformation =>
-			returnValue.push(this.fb.group({
-				name: [transformation.name, [<any>Validators.required]],
-				//inputDevice: [transformation.inputDevice, [<any>Validators.required]],
-				inputDevice: this.fb.group({
-					deviceID: [transformation.inputDevice.deviceID],
-					driverVersion: [transformation.inputDevice.driverVersion],
-					mid: [transformation.inputDevice.mid],
-					name: [transformation.inputDevice.name],
-					pid: [transformation.inputDevice.pid],
-					support: [transformation.inputDevice.support],
-					label: [transformation.inputDevice.label],
-					value: [transformation.inputDevice.value]
-				}),
-				//outputDevice: [this.getOutputDeviceFormGroup(transformation.outputDevice)],
-				outputDevice: this.fb.group({
-					deviceID: [transformation.outputDevice.deviceID],
-					driverVersion: [transformation.outputDevice.driverVersion],
-					mid: [transformation.outputDevice.mid],
-					name: [transformation.outputDevice.name],
-					pid: [transformation.outputDevice.pid],
-					support: [transformation.outputDevice.support],
-					label: [transformation.outputDevice.label],
-					value: [transformation.outputDevice.value]
-				}),
-				translationMap: this.getTranslationMapFormGroup(transformation.translationMap)
-			}))
-		);
+    private getTranslationMapFormGroup(translationMap: TranslationMap): FormGroup {
+        return this.fb.group({
+            translations: this.fb.array(this.getTranslationsFormGroups(translationMap.translations))
+        });
+    }
 
-		return returnValue;
-	}
+    private getTranslationsFormGroups(translations: Translation[]): FormGroup[] {
+        var returnValue = Array<FormGroup>();
 
-	private getTranslationMapFormGroup(translationMap: TranslationMap): FormGroup {
-		return this.fb.group({
-			translations: this.fb.array(this.getTranslationsFormGroups(translationMap.translations))
-		});
-	}
+        translations.forEach(translation =>
+            returnValue.push(this.fb.group({
+                inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
+                inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
+                outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
+                translationFunction: [translation.translationFunction, [<any>Validators.required]]
+            }))
+        );
 
-	private getTranslationsFormGroups(translations: Translation[]): FormGroup[] {
-		var returnValue = Array<FormGroup>();
+        return returnValue;
+    }
 
-		translations.forEach(translation =>
-			returnValue.push(this.fb.group({
-				inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
-				inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
-				outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
-				translationFunction: [translation.translationFunction, [<any>Validators.required]]
-			}))
-		);
-
-		return returnValue;
-	}
-
-	private getChannelMessageFormGroup(channelMessage: ChannelMessage): FormGroup {
-		return this.fb.group({
-			$type: [channelMessage["$type"]],
-			command: [channelMessage.command, [<any>Validators.required]],
-			data1: [channelMessage.data1, [<any>Validators.required]],
-			data2: [channelMessage.data2, [<any>Validators.required]],
-			midiChannel: [channelMessage.midiChannel, [<any>Validators.required]],
-		});
-	}
+    private getChannelMessageFormGroup(channelMessage: ChannelMessage): FormGroup {
+        return this.fb.group({
+            $type: [channelMessage["$type"]],
+            command: [channelMessage.command, [<any>Validators.required]],
+            data1: [channelMessage.data1, [<any>Validators.required]],
+            data2: [channelMessage.data2, [<any>Validators.required]],
+            midiChannel: [channelMessage.midiChannel, [<any>Validators.required]],
+        });
+    }
 
     private getInputDeviceFormGroup(inputDevice: IMIDIInputDevice): FormGroup {
-	    return this.fb.group({
-		    deviceID: [inputDevice.deviceID],
-		    driverVersion: [inputDevice.driverVersion],
-		    mid: [inputDevice.mid],
-		    name: [inputDevice.name],
-		    pid: [inputDevice.pid],
-		    support: [inputDevice.support]
-	    });
+        return this.fb.group({
+            deviceID: [inputDevice.deviceID],
+            driverVersion: [inputDevice.driverVersion],
+            mid: [inputDevice.mid],
+            name: [inputDevice.name],
+            pid: [inputDevice.pid],
+            support: [inputDevice.support]
+        });
     }
 
-	private getOutputDeviceFormGroup(outputDevice: IMIDIOutputDevice): FormGroup {
-		return this.fb.group({
-			deviceID: [outputDevice.deviceID],
-			driverVersion: [outputDevice.driverVersion],
-			mid: [outputDevice.mid],
-			name: [outputDevice.name],
-			pid: [outputDevice.pid],
-			support: [outputDevice.support]
-		});
+    private getOutputDeviceFormGroup(outputDevice: IMIDIOutputDevice): FormGroup {
+        return this.fb.group({
+            deviceID: [outputDevice.deviceID],
+            driverVersion: [outputDevice.driverVersion],
+            mid: [outputDevice.mid],
+            name: [outputDevice.name],
+            pid: [outputDevice.pid],
+            support: [outputDevice.support]
+        });
     }
-	
-	ngOnDestroy() {
-		this.subscriptions.forEach(s => s.unsubscribe());
-	}
 
-	save(model: Profile, isValid: boolean) {
-		console.log(model, isValid);
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
-		if (isValid)
-			this.profileService.postProfile(model);
-		//this.refresh();
-	}
-
-	refresh() {
-		this.midiService.getAvailableInputDevices();
-	}
+    save(model: Profile, isValid: boolean) {
+        console.log(model, isValid);
+        if (isValid)
+            this.profileService.postProfile(model);
+    }
 }
 
 

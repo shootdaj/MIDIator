@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, OnInit, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -20,47 +20,11 @@ import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput
     templateUrl: './profile.component.html'
 })
 
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent {
 
 	@Input() form: FormGroup;
 
 	constructor() {
-	}
+    }
 
-    //private subscriptions: Subscription[];
-    //private currentProfile: Profile;
-
-    //private currentForm: FormGroup;
-    //@Output() currentFormChange: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-
-    //@Input() set form(form: FormGroup) {
-    //    this.currentForm = form;
-    //    this.currentFormChange.emit(form);
-    //}
-    //get form() {
-    //    return this.currentForm;
-    //}
-
-    //@Input() set profile(inProfile: Profile) {
-    //    this.currentProfile = inProfile;
-    //    this.profileChange.emit(inProfile);
-    //}
-    //get profile(): Profile {
-    //    return this.currentProfile;
-    //}
-
-    //@Output() profileChange: EventEmitter<Profile> = new EventEmitter<Profile>();
-
-
-    //private form: FormGroup;
-    //constructor(fb: FormBuilder) {
-    //    this.form = fb.group({
-    //        "name": this.currentProfile.name,
-    //        "transformations": this.currentProfile.transformations
-    //    });
-    //}
-	ngOnInit(): void {
-	}
-
-	ngOnDestroy(): void {}
 }
