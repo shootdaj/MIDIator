@@ -1,4 +1,4 @@
-<div [formGroup]="form" *ngIf="this.form != null" class="mdl-grid profile-card">
+<div [formGroup]="form" *ngIf="this.form != null" class="mdl-grid mdl-grid--no-spacing profile-card">
 	<mdl-card mdl-shadow="4" class="mdl-cell mdl-cell--12-col">
 		<mdl-card-title>
 			<h2 mdl-card-title-text style="display: flex; align-items: center;">
@@ -10,7 +10,7 @@
 			</h2>
 		</mdl-card-title>
 		<mdl-card-supporting-text>
-			<div class="mdl-grid profile-card-body">
+			<div class="mdl-grid profile-card-body mdl-grid--no-spacing">
 				<div class="mdl-cell--12-col">
 					<mdl-textfield type="text" label="Name" floating-label formControlName="name"></mdl-textfield>
 					<div formArrayName="transformations">

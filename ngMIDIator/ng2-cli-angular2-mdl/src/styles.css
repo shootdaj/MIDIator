@@ -28,13 +28,29 @@ body {
     padding-bottom: 20px;
 }
 
-.mdl-layout__container {
-    height: auto;
-}
-
 .slim-loading-bar {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 999;
+}
+
+.cell-content {
+	/*width: 90%;*/
+}
+
+.mdl-card__supporting-text {
+	overflow: visible;
+}
+
+.mdl-card {
+    overflow: visible;
+}
+
+/*.mdl-selectfield__list-option-box {
+	overflow: visible;	
+}*/
+
+.mdl-layout__content {
+	overflow: visible;
 }

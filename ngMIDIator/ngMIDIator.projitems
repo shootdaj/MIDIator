@@ -22,6 +22,7 @@
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\transformation\transformation.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\components\translation\translation.component.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\app.component.css" />
+    <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\favicon.ico" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\index.html" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\styles.css" />
     <Content Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\tsconfig.json" />
