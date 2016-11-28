@@ -139,7 +139,7 @@
   top: $input-text-vertical-spacing + $input-text-padding;
   right: 0;
   display: none;
-  background: $default-dropdown-bg-color;
+  background-color: $default-dropdown-bg-color;
   margin: 0;
   padding: 0;
   border: none;
@@ -157,10 +157,11 @@
     margin: 0;
     padding: 5px 0;
     list-style: none;
+    background-color: $dropdown-bg-ul-li-color;
 
     & > li {
       font-size: 16px;
-      color: rgba(33, 33, 33, 0.87);
+      color: $text-color-primary;
       line-height: 19px;
       min-height: 19px;
       padding: 10px 14px 8px 14px;
@@ -168,15 +169,18 @@
       cursor: pointer;
       outline: none;
       box-sizing: content-box;
+      background-color: $dropdown-bg-ul-li-color;
 
-      &:hover,
+      &:hover{
+          background-color: unquote("rgba(#{$color-primary}, 0.5)");
+      }
       &.is-selected {
-        background-color: #f8f8f8;
+        background-color: unquote("rgb(#{$color-primary})");
       }
 
       &.is-disabled {
         color: $input-text-disabled-text-color;
-        background-color: $default-dropdown-bg-color;
+        background-color: $custom-medium-grey;
         cursor: default;
       }
     }

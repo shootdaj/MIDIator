@@ -11,6 +11,9 @@ $color-accent-contrast: $color-dark-contrast;
 $custom-bright-grey: unquote("rgba(#{$palette-grey-200}, 0.50)");
 $custom-medium-grey: unquote("rgba(#{$palette-grey-600}, 0.5)");
 $custom-almost-black: unquote("rgba(#{$palette-grey-800}, 0.5)");
+$custom-almost-black-full: unquote("rgba(#{$palette-grey-800}, 1.0)");
+$custom-dark-blue: unquote("rgba(79, 78, 124, 0.51)");
+$custom-dark-blue-full: unquote("rgba(79, 78, 124, 1.0)");
 
 /* ==========  Typography  ========== */
 
@@ -25,7 +28,7 @@ $input-text-bottom-border-color: $field-outline-color;
 
 /* ==========  Card  ========== */
 
-$card-background-color: rgba(79, 78, 124, 0.51);
+$card-background-color: $custom-almost-black;
 /*
 	Possible card background colors:
 		rgba(93, 78, 124, 0.73)
@@ -46,9 +49,12 @@ $button-primary-color: $custom-bright-grey;
 $button-secondary-color: unquote("rgb(#{$color-white})");
 
 /* ==========  Custom Classes  ========== */
-.dark-option{
-    color: unquote("rgb(#{$color-black})")
-}
+
+$dropdown-bg-ul-li-color: $custom-almost-black-full;
+
 
 @import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";
 @import "../src/assets/mdl-selectfield/mdl-selectfield-midiator.scss";
+
+
+
