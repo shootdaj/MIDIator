@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import '../../rxjs-operators';
 
+
 //libs
 import { EnumValues } from 'enum-values';
 
@@ -36,8 +37,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private profile: Profile;
     private form: FormGroup;
-    private inputDevices: MIDIInputDevice[];
-    private subscriptions: Subscription[];
+    private subscriptions: { [email: string]: Subscription; };
+
+    public realtime: Boolean = true;
 
     constructor(private fb: FormBuilder,
         private midiService: MIDIService,
@@ -51,24 +53,55 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions = new Array<Subscription>();
-        this.subscriptions.push(this.profileService.profileChanges
+        this.subscriptions = {};
+        this.subscriptions['profileChanges'] = (this.profileService.profileChanges
             .subscribe(data => {
                 this.profile = data;
                 this.form = this.getProfileFormGroup(this.profile);
-                this.subscriptions.push(this.form.valueChanges.debounceTime(1000).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
-                //setTimeout(() =>
-                //    componentHandler.upgradeAllRegistered());
+                if (this.realtime)
+                    this.enableRealtime(); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
             }));
         
         this.profileService.getProfile();
     }
+
+    private disableRealtime() {
+	    console.log('disabling realtime');
+
+        this.realtime = false;
+        this.subscriptions['formValueChanges'].unsubscribe();
+        this.subscriptions['formValueChanges'] = null;
+    }
+
+    private enableRealtime() {
+		console.log('enabling realtime');
+
+        this.realtime = true;
+        this.subscriptions['formValueChanges'] = (this.form.valueChanges.debounceTime(1000)
+            .subscribe(values => this.save(values, true)));
+    }
+	
+	private getRealtimeTooltip() {
+		let returnValue = this.realtime ? "Disable Realtime" : "Enable Realtime";
+		console.log("message = " + returnValue);
+		return returnValue;
+	}
 
     private getProfileFormGroup(profile: Profile): FormGroup {
         return this.fb.group({
             name: [profile.name, [<any>Validators.required]],
             transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations))
         });
+    }
+
+    ngOnDestroy() {
+        (<any>this.subscriptions).children.forEach(s => (<Subscription>s).unsubscribe());
+    }
+
+    save(model: Profile, isValid: boolean) {
+        console.log(model, isValid);
+        if (isValid)
+            this.profileService.postProfile(model);
     }
 
     private getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
@@ -156,16 +189,6 @@ export class AppComponent implements OnInit, OnDestroy {
             pid: [outputDevice.pid],
             support: [outputDevice.support]
         });
-    }
-
-    ngOnDestroy() {
-        this.subscriptions.forEach(s => s.unsubscribe());
-    }
-
-    save(model: Profile, isValid: boolean) {
-        console.log(model, isValid);
-        if (isValid)
-            this.profileService.postProfile(model);
     }
 }
 

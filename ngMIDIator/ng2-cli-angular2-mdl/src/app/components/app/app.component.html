@@ -3,10 +3,27 @@
     <mdl-layout-header>
         <mdl-layout-header-row>
             <mdl-layout-title>MIDIator</mdl-layout-title>
-            <!--<mdl-layout-spacer></mdl-layout-spacer>
+            <mdl-layout-spacer></mdl-layout-spacer>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link">Link</a>
-            </nav>-->
+	            <!--<mdl-icon class="icon material-icons" [mdl-tooltip]="this.realtime ? 'Disable Realtime' : 'Enable Realtime'"
+	                      (click)="this.realTimeUpdates ? this.disableRealTimeUpdates() 
+                        : this.enableRealtime()" [attr.md-inactive]="this.realtime ? null : true">
+					<i class="zmdi zmdi-refresh-sync zmdi-hc-lg"></i>
+				</mdl-icon>-->
+				
+				
+	            <button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple [mdl-tooltip]="getRealtimeTooltip()"
+	                    (click)="realtime ? disableRealtime() : enableRealtime()" 
+	                    [attr.md-inactive]="realtime ? null : true"
+						[style]="realtime ? 'color: #FF5722;' : 'color: white;'">
+		            <span class="zmdi zmdi-refresh-sync zmdi-hc-lg"></span>
+	            </button>
+
+	            <!--<button mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple >
+                    {{this.realtime ? 'Disable' : 'Enable'}} Realtime
+                </button>-->
+                <!--<a class="mdl-navigation__link">Link</a>-->
+            </nav>
         </mdl-layout-header-row>
     </mdl-layout-header>
     <mdl-layout-drawer>
