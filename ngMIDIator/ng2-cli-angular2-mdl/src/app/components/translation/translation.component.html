@@ -3,12 +3,14 @@
         <div class="mdl-cell--12-col">
             <div class="mdl-grid mdl-grid--no-spacing">
                 <div class="mdl-cell--3-col">
-                    <mdl-dropdown [options]="inputMatchFunctions"
-                                  [dropdownLabel]="'Input Match Function'"
-                                  [placeholder]="'Select...'"
-                                  [control]="form.controls['inputMatchFunction']"
-                                  [id]="'inputMatchFunction'">
-                    </mdl-dropdown>
+                    <div class="cell-content">
+                        <mdl-dropdown [options]="inputMatchFunctions"
+                                      [dropdownLabel]="'Input Match Function'"
+                                      [placeholder]="'Select...'"
+                                      [control]="form.controls['inputMatchFunction']"
+                                      [id]="'inputMatchFunction'">
+                        </mdl-dropdown>
+                    </div>
                 </div>
             </div>
             <div class="mdl-grid mdl-grid--no-spacing">
@@ -19,12 +21,14 @@
             </div>
             <div class="mdl-grid mdl-grid--no-spacing">
                 <div class="mdl-cell--3-col">
-                    <mdl-dropdown [options]="translationFunctions"
-                                  [dropdownLabel]="'Translation Function'"
-                                  [placeholder]="'Select...'"
-                                  [control]="form.controls['translationFunction']"
-                                  [id]="'translationFunction'">
-                    </mdl-dropdown>
+                    <div class="cell-content">
+                        <mdl-dropdown [options]="translationFunctions"
+                                      [dropdownLabel]="'Translation Function'"
+                                      [placeholder]="'Select...'"
+                                      [control]="form.controls['translationFunction']"
+                                      [id]="'translationFunction'">
+                        </mdl-dropdown>
+                    </div>
                 </div>
             </div>
             <div class="mdl-grid mdl-grid--no-spacing">
