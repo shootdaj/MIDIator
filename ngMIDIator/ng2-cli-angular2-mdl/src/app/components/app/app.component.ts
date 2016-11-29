@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.profile = data;
                 this.form = this.getProfileFormGroup(this.profile);
-                this.subscriptions.push(this.form.valueChanges.debounceTime(400).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
+                this.subscriptions.push(this.form.valueChanges.debounceTime(1000).subscribe(values => this.save(values, true))); //todo: this might get called multiple times since we're adding a subscription inside the continuation of the async call
                 //setTimeout(() =>
                 //    componentHandler.upgradeAllRegistered());
             }));

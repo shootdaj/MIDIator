@@ -1,14 +1,22 @@
-<ng2-slim-loading-bar height="1px" color="#FF5722"></ng2-slim-loading-bar>
-<mdl-layout class="mdl-layout--no-drawer-button">
-    <!--<mdl-layout-header>
+<ng2-slim-loading-bar height="2px" color="#FF5722"></ng2-slim-loading-bar>
+<mdl-layout mdl-layout-mode="waterfall">
+    <mdl-layout-header>
         <mdl-layout-header-row>
             <mdl-layout-title>MIDIator</mdl-layout-title>
-            <mdl-layout-spacer></mdl-layout-spacer>
+            <!--<mdl-layout-spacer></mdl-layout-spacer>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link">Link</a>
-            </nav>
+            </nav>-->
         </mdl-layout-header-row>
-    </mdl-layout-header>-->
+    </mdl-layout-header>
+    <mdl-layout-drawer>
+        <mdl-layout-title>Title</mdl-layout-title>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link">Link</a>
+            <a class="mdl-navigation__link">Link</a>
+            <a class="mdl-navigation__link">Link</a>
+        </nav>
+    </mdl-layout-drawer>
     <mdl-layout-content class="app-content">
         <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="save(form.value, form.valid)">
             <profile [form]="form"></profile>

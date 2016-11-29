@@ -12,8 +12,10 @@ $custom-bright-grey: unquote("rgba(#{$palette-grey-200}, 0.50)");
 $custom-medium-grey: unquote("rgba(#{$palette-grey-600}, 0.5)");
 $custom-almost-black: unquote("rgba(#{$palette-grey-800}, 0.5)");
 $custom-almost-black-full: unquote("rgba(#{$palette-grey-800}, 1.0)");
+/*$custom-almost-black-almost-full: unquote("rgba(#{$palette-grey-800}, 0.9)");*/
 $custom-dark-blue: unquote("rgba(79, 78, 124, 0.51)");
 $custom-dark-blue-full: unquote("rgba(79, 78, 124, 1.0)");
+$custom-dark-black-translucent: unquote("rgba(35, 35, 35, 0.95)");
 
 /* ==========  Typography  ========== */
 
@@ -28,7 +30,7 @@ $input-text-bottom-border-color: $field-outline-color;
 
 /* ==========  Card  ========== */
 
-$card-background-color: $custom-almost-black;
+$card-background-color: $custom-dark-black-translucent;
 /*
 	Possible card background colors:
 		rgba(93, 78, 124, 0.73)

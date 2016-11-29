@@ -1,12 +1,12 @@
 <div [formGroup]="form" *ngIf="this.form != null" class="mdl-grid mdl-grid--no-spacing profile-card">
-    <mdl-card mdl-shadow="4" class="mdl-cell mdl-cell--12-col">
+    <mdl-card mdl-shadow="8" class="mdl-cell mdl-cell--12-col">
         <mdl-card-title>
             <h2 mdl-card-title-text style="display: flex; align-items: center;">
                 <!--<span class="zmdi zmdi-caret-up-circle zmdi-hc-2x" style="vertical-align: middle;" mdl-colored="accent"></span>-->
                 <!--<button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple>
-                    <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>-->
+                <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>-->
                 <!--</button> &nbsp;-->
-                <span style="vertical-align: middle;">Transformations</span>
+                <span style="vertical-align: middle;" *ngIf="form">{{form.controls.name.value}}</span>
             </h2>
         </mdl-card-title>
         <mdl-card-supporting-text>
@@ -19,6 +19,11 @@
                             </div>
                         </div>
                     </div>
+                    <h4>
+                        <button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple>
+                            <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+                        </button>&nbsp; <span style="vertical-align: middle;">Transformations</span>
+                    </h4>
                     <div formArrayName="transformations">
                         <div *ngFor="let transformation of form.controls.transformations.controls; let i=index">
                             <transformation [form]="transformation"></transformation>
@@ -29,7 +34,7 @@
         </mdl-card-supporting-text>
         <!--<mdl-card-menu>
 
-            </mdl-card-menu>-->
+        </mdl-card-menu>-->
         <mdl-card-actions mdl-card-border>
             <button type="submit" mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple>
                 Save
