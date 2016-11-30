@@ -89,7 +89,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         this.realtime = true;
         this.subscriptions['formValueChanges'] = (this.form.valueChanges.debounceTime(1000)
-            .subscribe(values => this.save(values, true)));
+            .subscribe(values => this.save(values, this.form.valid)));
     }
 	
 	private getRealtimeTooltip() {

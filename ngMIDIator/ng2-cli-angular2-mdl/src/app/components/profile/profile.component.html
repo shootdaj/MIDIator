@@ -33,10 +33,10 @@
 			</div>
 		</mdl-card-supporting-text>
 		<mdl-card-menu>
-			<button type="button" mdl-button mdl-button-type="mini-fab" mdl-colored="primary" [mdl-tooltip]="'Click to disable realtime updates'" (click)="disableRealtime()" *ngIf="switchRealtime">
+			<button type="button" mdl-button mdl-button-type="mini-fab" mdl-colored="primary" [mdl-tooltip]="'Disable Realtime Sync'" (click)="disableRealtime()" *ngIf="switchRealtime">
 				<span class="zmdi zmdi-refresh-sync zmdi-hc-lg"></span>
 			</button>
-			<button type="button" mdl-button mdl-button-type="mini-fab" [mdl-tooltip]="'Click to enable realtime updates'" (click)="enableRealtime()" *ngIf="!switchRealtime">
+			<button type="button" mdl-button mdl-button-type="mini-fab" [mdl-tooltip]="'Enable Realtime Sync'" (click)="enableRealtime()" *ngIf="!switchRealtime">
 				<span class="zmdi zmdi-refresh-sync-off zmdi-hc-lg"></span>
 			</button>
 
