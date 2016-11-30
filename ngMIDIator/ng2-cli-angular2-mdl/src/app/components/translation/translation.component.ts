@@ -29,7 +29,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     @Input() form: FormGroup;
 
-	private readingIMMT: Boolean = false;
+	private readingIMMT: Boolean;
 	private immtClass: string = "";
 
 	constructor(private midiService: MIDIService, private helperService: HelperService) {
