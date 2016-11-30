@@ -25,8 +25,25 @@ export class ProfileComponent {
 	@Input() form: FormGroup;
 
 	@Input() realtime: Boolean;
+	@Output() realtimeChange = new EventEmitter<Boolean>();
+
+	private get switchRealtime(): Boolean {
+		return this.realtime;
+	}
+
+	private set switchRealtime(inValue: Boolean) {
+		this.realtime = inValue;
+		this.realtimeChange.emit(inValue);
+	}
+
+	enableRealtime() {
+		this.switchRealtime = true;
+	}
+
+	disableRealtime() {
+		this.switchRealtime = false;
+	}
 
 	constructor() {
     }
-
 }

@@ -36,7 +36,7 @@
     </mdl-layout-drawer>
     <mdl-layout-content class="app-content">
         <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="save(form.value, form.valid)">
-            <profile [form]="form" [(realtime)]="realtime"></profile>
+            <profile [form]="form" [(realtime)]="profileRealtime"></profile>
         </form>
     </mdl-layout-content>
 </mdl-layout>
