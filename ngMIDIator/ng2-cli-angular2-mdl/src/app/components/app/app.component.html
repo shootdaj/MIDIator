@@ -11,13 +11,13 @@
 					<i class="zmdi zmdi-refresh-sync zmdi-hc-lg"></i>
 				</mdl-icon>-->
 				
-				
-	            <button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple [mdl-tooltip]="getRealtimeTooltip()"
+
+	            <!--<button mdl-button mdl-button-type="mini-fab" mdl-shadow="4" mdl-colored="accent" mdl-ripple [mdl-tooltip]="getRealtimeTooltip()"
 	                    (click)="realtime ? disableRealtime() : enableRealtime()" 
 	                    [attr.md-inactive]="realtime ? null : true"
 						[style]="realtime ? 'color: #FF5722;' : 'color: white;'">
 		            <span class="zmdi zmdi-refresh-sync zmdi-hc-lg"></span>
-	            </button>
+	            </button>-->
 
 	            <!--<button mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple >
                     {{this.realtime ? 'Disable' : 'Enable'}} Realtime
@@ -36,7 +36,7 @@
     </mdl-layout-drawer>
     <mdl-layout-content class="app-content">
         <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="save(form.value, form.valid)">
-            <profile [form]="form"></profile>
+            <profile [form]="form" [(realtime)]="realtime"></profile>
         </form>
     </mdl-layout-content>
 </mdl-layout>

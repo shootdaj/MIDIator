@@ -24,6 +24,8 @@ export class ProfileComponent {
 
 	@Input() form: FormGroup;
 
+	@Input() realtime: Boolean;
+
 	constructor() {
     }
 
