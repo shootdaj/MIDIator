@@ -4,36 +4,36 @@
 
 #loader-container {
 	background: rgb(15, 15, 15); /*-webkit-radial-gradient(black, #222222);*/ /* Safari 5.1 to 6.0 */
-    text-align: center;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
-    height: 100%;
+	text-align: center;
+	display: flex;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+	height: 100%;
 }
 
 body {
-    background-color: #343333;
-    background: url("http://blogrope.com/wp-content/uploads/2013/06/006-wood-melamine-subttle-pattern-background-pat.jpg");
-    height: 100%;
+	background-color: #343333;
+	background: url("http://blogrope.com/wp-content/uploads/2013/06/006-wood-melamine-subttle-pattern-background-pat.jpg");
+	height: 100%;
 }
 
 .app-content {
-    padding: 20px;
+	padding: 20px;
 }
 
 .profile-card {
-    max-width: 80%;
+	max-width: 80%;
 }
 
 .profile-card-body {
-    padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
 .slim-loading-bar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 999;
 }
 
 .cell-content {
@@ -45,7 +45,7 @@ body {
 }
 
 .mdl-card {
-    overflow: visible;
+	overflow: visible;
 }
 
 /*.mdl-selectfield__list-option-box {

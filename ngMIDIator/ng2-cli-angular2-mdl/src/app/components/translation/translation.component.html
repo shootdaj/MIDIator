@@ -2,16 +2,26 @@
     <div class="mdl-grid mdl-grid--no-spacing">
         <div class="mdl-cell--12-col">
             <div class="mdl-grid mdl-grid--no-spacing">
-                <div class="mdl-cell--3-col">
-                    <div class="cell-content">
-                        <mdl-dropdown [options]="inputMatchFunctions"
-                                      [dropdownLabel]="'Input Match Function'"
-                                      [placeholder]="'Select...'"
-                                      [control]="form.controls['inputMatchFunction']"
-                                      [id]="'inputMatchFunction'">
-                        </mdl-dropdown>
-                    </div>
-                </div>
+	            <div class="mdl-cell--3-col">
+		            <div class="cell-content">
+			            <mdl-dropdown [options]="inputMatchFunctions"
+			                          [dropdownLabel]="'Input Match Function'"
+			                          [placeholder]="'Select...'"
+			                          [control]="form.controls['inputMatchFunction']"
+			                          [id]="'inputMatchFunction'">
+			            </mdl-dropdown>
+		            </div>
+	            </div>
+				<div class="mdl-cell--1-col">
+					<div class="cell-content">
+						<button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
+						        mdl-colored="accent" [mdl-tooltip]="'Read from MIDI Input Device'" 
+						        mdl-tooltip-position="top" (click)="toggleReadingIMMT()"
+								[ngClass]="{'readingMIDI': readingIMMT }">
+							<span class="zmdi zmdi-keyboard zmdi-hc-md"></span>
+						</button>
+					</div>
+				</div>
             </div>
             <div class="mdl-grid mdl-grid--no-spacing">
                 <div class="mdl-cell--12-col">
@@ -20,16 +30,25 @@
                 </div>
             </div>
             <div class="mdl-grid mdl-grid--no-spacing">
-                <div class="mdl-cell--3-col">
-                    <div class="cell-content">
-                        <mdl-dropdown [options]="translationFunctions"
-                                      [dropdownLabel]="'Translation Function'"
-                                      [placeholder]="'Select...'"
-                                      [control]="form.controls['translationFunction']"
-                                      [id]="'translationFunction'">
-                        </mdl-dropdown>
-                    </div>
-                </div>
+	            <div class="mdl-cell--3-col">
+		            <div class="cell-content">
+			            <mdl-dropdown [options]="translationFunctions"
+			                          [dropdownLabel]="'Translation Function'"
+			                          [placeholder]="'Select...'"
+			                          [control]="form.controls['translationFunction']"
+			                          [id]="'translationFunction'">
+			            </mdl-dropdown>
+		            </div>
+	            </div>
+				<div class="mdl-cell--1-col">
+					<div class="cell-content">
+						<button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
+								mdl-colored="accent" [mdl-tooltip]="'Read from MIDI Input Device'"
+								mdl-tooltip-position="top">
+							<span class="zmdi zmdi-keyboard zmdi-hc-md"></span>
+						</button>
+					</div>
+				</div>
             </div>
             <div class="mdl-grid mdl-grid--no-spacing">
                 <div class="mdl-cell--12-col">

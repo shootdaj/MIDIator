@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy, trigger, state, style, transition, animate } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -29,6 +29,9 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     @Input() form: FormGroup;
 
+	private readingIMMT: Boolean = false;
+	private immtClass: string = "";
+
 	constructor(private midiService: MIDIService, private helperService: HelperService) {
 	}
 
@@ -44,29 +47,11 @@ export class TranslationComponent implements OnInit, OnDestroy {
 		this.midiService.getAvailableTranslationFunctions();
 	}
 
-	//get inputMatchFunctionsDropdownOptions(): IDropdownOption[] {
-	//	if (this.inputMatchFunctions != null && this.inputMatchFunctions.length > 0) {
-	//		return this.inputMatchFunctions.map(
-	//			fx => {
-	//				let dropdownOption = new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString());
-	//				return dropdownOption;
-	//			});
-	//	} else {
-	//		return null;
-	//	}
-	//}
-
-	//get translationFunctionsDropdownOptions(): IDropdownOption[] {
-	//	if (this.translationFunctions != null && this.translationFunctions.length > 0) {
-	//		return this.translationFunctions.map(
-	//			fx => new DropdownOption(TranslationFunction[fx].toString(), TranslationFunction[fx].toString()));
-	//	} else {
-	//		return null;
-	//	}
-	//}
-
-	
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(s => s.unsubscribe());
+	}
+
+	private toggleReadingIMMT() {
+		this.readingIMMT = !this.readingIMMT;
 	}
 }

@@ -16,6 +16,7 @@ $custom-almost-black-full: unquote("rgba(#{$palette-grey-800}, 1.0)");
 $custom-dark-blue: unquote("rgba(79, 78, 124, 0.51)");
 $custom-dark-blue-full: unquote("rgba(79, 78, 124, 1.0)");
 $custom-dark-black-translucent: unquote("rgba(35, 35, 35, 0.95)");
+$custom-medium-red: unquote("rgba(#{$palette-red-600}, 1.0)");
 
 /* ==========  Typography  ========== */
 
@@ -54,9 +55,31 @@ $button-secondary-color: unquote("rgb(#{$color-white})");
 
 $dropdown-bg-ul-li-color: $custom-almost-black-full;
 
+.readingMIDI {
+	animation-name: readingMIDIKeyframes;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: cubic-bezier(0.250, 0.460, 0.450, 0.940);
+	//transition-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+}
+
+@keyframes readingMIDIKeyframes {
+	0% {
+		transform: scale(1.0);
+	}
+
+	100% {
+		transform: scale(1.5);// rotateY(360deg);
+		transform-origin: center;
+		background-color: $custom-medium-red;
+		
+	}
+	
+	/*100% {
+		transform: scale(1.0);
+	}*/
+}
+
 
 @import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";
 @import "../src/assets/mdl-selectfield/mdl-selectfield-midiator.scss";
-
-
-
