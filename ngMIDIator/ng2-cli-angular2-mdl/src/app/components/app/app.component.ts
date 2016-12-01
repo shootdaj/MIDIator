@@ -1,18 +1,10 @@
-//domain model
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption, TranslationMap } from '../../models/domainModel';
-
 import * as $ from 'jquery';
-
-//services
 import { MIDIService } from '../../services/midiService';
 import { HelperService } from '../../services/helperService';
 import { ProfileService } from '../../services/profileService';
-
-//components
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
-
-//ng2
 import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -20,9 +12,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import '../../rxjs-operators';
-
-
-//libs
 import { EnumValues } from 'enum-values';
 
 declare var componentHandler;
@@ -37,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private profile: Profile;
     private form: FormGroup;
-    private subscriptions: { [email: string]: Subscription; };
+    private subscriptions: { [name: string]: Subscription; };
 	public realtime: Boolean = true;
 
 	public set profileRealtime(inValue: Boolean) {

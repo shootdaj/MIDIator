@@ -55,13 +55,9 @@ $button-secondary-color: unquote("rgb(#{$color-white})");
 
 $dropdown-bg-ul-li-color: $custom-almost-black-full;
 
-.readingMIDI {
-	animation-name: readingMIDIKeyframes;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: cubic-bezier(0.250, 0.460, 0.450, 0.940);
-	//transition-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
-}
+/*.readMIDI > .mdl-button__ripple-container {
+	background-color: $custom-medium-red;
+}*/
 
 @keyframes readingMIDIKeyframes {
 	0% {
@@ -69,12 +65,10 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
 	}
 
 	100% {
-		transform: scale(1.5);// rotateY(360deg);
+		transform: scale(1.5); // rotateY(360deg);
 		transform-origin: center;
 		background-color: $custom-medium-red;
-		
 	}
-	
 	/*100% {
 		transform: scale(1.0);
 	}*/
@@ -83,3 +77,20 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
 
 @import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";
 @import "../src/assets/mdl-selectfield/mdl-selectfield-midiator.scss";
+
+
+.readingMIDI {
+	animation-name: readingMIDIKeyframes;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: cubic-bezier(0.250, 0.460, 0.450, 0.940);
+	//transition-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+}
+
+.readMIDI {
+	background-color: unquote("rgb(#{$color-accent})");
+}
+
+.readMIDI:hover {
+	background-color: $custom-medium-red;
+}

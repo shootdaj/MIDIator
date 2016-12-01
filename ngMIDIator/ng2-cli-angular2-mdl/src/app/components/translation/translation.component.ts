@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy, trigger, state, style, transition, animate, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +14,7 @@ import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { ChannelMessageComponent } from '../../components/channelMessage/channelMessage.component';
+declare var componentHandler;
 
 @Component({
 	selector: 'translation',
@@ -53,5 +54,10 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
 	private toggleReadingIMMT() {
 		this.readingIMMT = !this.readingIMMT;
+	}
+
+	getReadMIDITooltip() {
+		let returnValue = (this.readingIMMT ? 'Reading' : 'Read') + ' from MIDI Input Device';
+		return returnValue;
 	}
 }

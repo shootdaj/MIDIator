@@ -15,9 +15,9 @@
 				<div class="mdl-cell--1-col">
 					<div class="cell-content">
 						<button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
-						        mdl-colored="accent" [mdl-tooltip]="'Read from MIDI Input Device'" 
+						        [mdl-tooltip]="getReadMIDITooltip()" 
 						        mdl-tooltip-position="top" (click)="toggleReadingIMMT()"
-								[ngClass]="{'readingMIDI': readingIMMT }">
+								[ngClass]="{'readingMIDI': readingIMMT, 'readMIDI': true}">
 							<span class="zmdi zmdi-keyboard zmdi-hc-md"></span>
 						</button>
 					</div>
