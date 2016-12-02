@@ -39,6 +39,4 @@ export class ProfileComponent {
 	disableRealtime() {
 		this.realtimeService.disableRealtime();
 	}
-
-	
 }

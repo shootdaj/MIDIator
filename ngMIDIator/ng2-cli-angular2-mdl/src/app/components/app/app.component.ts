@@ -23,7 +23,7 @@ declare var componentHandler;
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent {
 
     constructor(private realtimeService: RealtimeService,
 		private profileService: ProfileService,
@@ -38,13 +38,5 @@ export class AppComponent implements OnInit, OnDestroy{
 
     saveProfile() {
 		this.profileService.saveProfile();
-    }
-
-	ngOnInit() {
-
-    }
-
-
-	ngOnDestroy() {
     }
 }
