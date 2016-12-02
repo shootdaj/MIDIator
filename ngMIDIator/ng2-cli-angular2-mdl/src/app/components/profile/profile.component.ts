@@ -8,6 +8,7 @@ import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { ProfileService } from '../../services/profileService';
+import { RealtimeService } from '../../services/realtimeService';
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
@@ -17,24 +18,28 @@ import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput
 
 @Component({
     selector: 'profile',
-    templateUrl: './profile.component.html'
+    templateUrl: './profile.component.html',
+	providers: [RealtimeService]
 })
 
 export class ProfileComponent {
 
 	@Input() form: FormGroup;
 
-	@Input() realtime: Boolean;
-	@Output() realtimeChange = new EventEmitter<Boolean>();
+	constructor(private realtimeService: RealtimeService) {
+    }
 
-	private get switchRealtime(): Boolean {
-		return this.realtime;
-	}
 
-	private set switchRealtime(inValue: Boolean) {
-		this.realtime = inValue;
-		this.realtimeChange.emit(inValue);
-	}
+
+	
+	//private get Realtime(): Boolean {
+	//	return ;
+	//}
+
+	//private set switchRealtime(inValue: Boolean) {
+	//	this.realtime = inValue;
+	//	this.realtimeChange.emit(inValue);
+	//}
 
 	enableRealtime() {
 		this.switchRealtime = true;
@@ -44,6 +49,4 @@ export class ProfileComponent {
 		this.switchRealtime = false;
 	}
 
-	constructor() {
-    }
 }
