@@ -8,40 +8,17 @@ import '../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { ProfileService } from '../services/profileService';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
+import {FormService} from "./formService";
 
 @Injectable()
 export class RealtimeService {
 
 	private realtime: boolean;
-    private subscriptions: { [name: string]: Subscription; };
+    private subscriptions: { [name: string]: Subscription; } = {};
 	private debounceTimeInMS: number = 1000;
 
-	constructor(private profileService: ProfileService) {
-		
-	}
-
-	public isRealtime() : boolean{
-		return this.realtime;
-	}
-
-	public disableRealtime() {
-		console.log('disabling realtime');
-        this.detachRealtime();
-		this.realtime = false;
-    }
-
-    public enableRealtime(form: FormGroup) {
-		console.log('enabling realtime');
-		this.attachRealtimeToForm(form);
-		this.realtime = true;
-    }
-
-	public attachRealtimeToForm(form: FormGroup) {
-		this.subscriptions['formValueChanges'] = (form.valueChanges.debounceTime(this.debounceTimeInMS)
-            .subscribe(values => {
-				if (form.valid)
-					this.profileService.postProfile(<Profile>values);
-			}));
+	constructor(private profileService: ProfileService, private formService: FormService) {
+		this.formService.formChanges.subscribe(form => this.handleRealtimeForForm(form));
 	}
 
 	public handleRealtimeForForm(form: FormGroup) {
@@ -50,18 +27,31 @@ export class RealtimeService {
 		}
 	}
 
-	public detachRealtime() {
+	public isRealtimeEnabled(): boolean {
+		return this.realtime;
+	}
+
+	public enableRealtime() {
+		console.log('enabling realtime');
+		this.attachRealtimeToForm(this.formService.getForm());
+		this.realtime = true;
+    }
+
+	public disableRealtime() {
+		console.log('disabling realtime');
+        this.detachRealtime();
+		this.realtime = false;
+    }
+
+	private attachRealtimeToForm(form: FormGroup) {
+		this.subscriptions['formValueChanges'] = (form.valueChanges.debounceTime(this.debounceTimeInMS)
+            .subscribe(values => { // values is ignored because saveProfile() is implicitly tied to formService.getForm().value
+				this.profileService.saveProfile();//values, form.valid);
+			}));
+	}
+
+	private detachRealtime() {
 		this.subscriptions['formValueChanges'].unsubscribe();
         this.subscriptions['formValueChanges'] = null;
 	}
-
-	
-
-	//availableInputDevicesChanges: Subject<MIDIInputDevice[]> = new Subject<MIDIInputDevice[]>();
-	//getAvailableInputDevices() {
-	//	this.http.get('http://localhost:9000/midi/AvailableInputDevices')
- //           .map(response => <MIDIInputDevice[]>response.json())
-	//		.subscribe(data => this.availableInputDevicesChanges.next(data),
-	//		err => console.log(err));
-	//}
 }

@@ -29,24 +29,17 @@ export class ProfileComponent {
 	constructor(private realtimeService: RealtimeService) {
     }
 
-
-
-	
-	//private get Realtime(): Boolean {
-	//	return ;
-	//}
-
-	//private set switchRealtime(inValue: Boolean) {
-	//	this.realtime = inValue;
-	//	this.realtimeChange.emit(inValue);
-	//}
+	private isRealtimeEnabled(): boolean {
+		return this.realtimeService.isRealtimeEnabled();
+	}
 
 	enableRealtime() {
-		this.switchRealtime = true;
+		this.realtimeService.enableRealtime();
 	}
 
 	disableRealtime() {
-		this.switchRealtime = false;
+		this.realtimeService.disableRealtime();
 	}
 
+	
 }

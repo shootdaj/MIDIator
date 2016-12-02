@@ -60,6 +60,7 @@
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\models\domainModel.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\rxjs-operators.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\services\helperService.ts" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\services\formService.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\services\realtimeService.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\services\profileService.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\services\midiService.ts" />
