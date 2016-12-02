@@ -22,29 +22,23 @@ declare var componentHandler;
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    providers: [MIDIService, HelperService, ProfileService, FormService]
+    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService]
 })
-export class AppComponent implements OnInit, OnDestroy {
-    
+export class AppComponent {
+
     constructor(private midiService: MIDIService,
         private helperService: HelperService,
         private profileService: ProfileService,
+		private realtimeService: RealtimeService,
         private formService: FormService) {
+		this.profileService.loadProfile();
     }
 
 	private get form(): FormGroup {
 		return this.formService.getForm();
 	}
 
-	ngOnInit() {
-        this.profileService.loadProfile();
-    }
-	
-	
-	ngOnDestroy() {
-    }
-
     saveProfile() {
-	    this.profileService.saveProfile();//this.form.value, this.form.valid);
+		this.profileService.saveProfile();
     }
 }

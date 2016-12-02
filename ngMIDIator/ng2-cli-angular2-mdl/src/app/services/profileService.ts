@@ -14,27 +14,13 @@ import {FormService} from "./formService";
 export class ProfileService {
 
 	private profileURL: string = "http://localhost:9000/midi/profile";
-
-	private innerProfile: Profile;
-	
-	public profileChanges = new Subject<Profile>();
 	private subscriptions: { [name: string]: Subscription; } = {};
 
     constructor(private http: Http,
 		private slimLoadingBarService: SlimLoadingBarService,
 		private formService: FormService) {
-	    this.subscriptions['profileChanges'] = (this.profileChanges
-            .subscribe(data => {
-                this.innerProfile = data;
-				this.formService.setForm(this.innerProfile);
-            }));
     }
-
-	get profile(): Profile {
-		return this.innerProfile;
-	}
-
-
+	
 	public loadProfile() {
 		this.getProfileFromServer();
 	}
@@ -53,7 +39,7 @@ export class ProfileService {
 		this.http.get(this.profileURL)
             .map(response => <Profile>response.json())
             .subscribe(data => {
-				this.profileChanges.next(data);
+				this.formService.setForm(data);
 				this.slimLoadingBarService.complete();
 			},
             err => console.log(err));
@@ -64,7 +50,7 @@ export class ProfileService {
 		this.http.post(this.profileURL, profile)
 			.map(response => <Profile>response.json())
 			.subscribe(data => {
-				this.profileChanges.next(data);
+				this.formService.setForm(data);
 				this.slimLoadingBarService.complete();
 			},
 			err => console.log(err));
