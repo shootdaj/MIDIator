@@ -17,8 +17,7 @@ import { TranslationComponent } from '../../components/translation/translation.c
 
 @Component({
     selector: 'transformation',
-    templateUrl: './transformation.component.html',
-	providers: [MIDIService, HelperService]
+    templateUrl: './transformation.component.html'
 })
 
 export class TransformationComponent implements OnInit, OnDestroy {

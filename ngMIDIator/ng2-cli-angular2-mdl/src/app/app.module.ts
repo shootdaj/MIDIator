@@ -10,6 +10,10 @@ import { IMIDIInputDevice, TranslationMap, ShortMessage, IMIDIOutputDevice, Tran
 
 //services
 import { MIDIService } from './services/midiService';
+import { FormService } from './services/formService';
+import { RealtimeService } from './services/realtimeService';
+import { ProfileService } from './services/profileService';
+import { HelperService } from './services/helperService';
 
 //components
 import { AppComponent } from './components/app/app.component';
@@ -39,7 +43,7 @@ import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.com
         MdlModule,
         SlimLoadingBarModule.forRoot()
     ],
-    providers: [],
+    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

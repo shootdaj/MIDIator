@@ -18,8 +18,7 @@ declare var componentHandler;
 
 @Component({
 	selector: 'translation',
-	templateUrl: './translation.component.html',
-    providers: [MIDIService, HelperService]
+	templateUrl: './translation.component.html'
 })
 
 export class TranslationComponent implements OnInit, OnDestroy {

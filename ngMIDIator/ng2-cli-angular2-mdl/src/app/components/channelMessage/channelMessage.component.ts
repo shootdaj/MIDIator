@@ -17,8 +17,7 @@ import { ProfileComponent } from '../../components/profile/profile.component';
 
 @Component({
 	selector: 'channel-message',
-	templateUrl: './channelMessage.component.html',
-	providers: [MIDIService, HelperService]
+	templateUrl: './channelMessage.component.html'
 })
 
 export class ChannelMessageComponent implements OnInit, OnDestroy {

@@ -21,16 +21,14 @@ declare var componentHandler;
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService]
+    templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy{
 
-    constructor(private midiService: MIDIService,
-        private helperService: HelperService,
-        private profileService: ProfileService,
-		private realtimeService: RealtimeService,
+    constructor(private realtimeService: RealtimeService,
+		private profileService: ProfileService,
         private formService: FormService) {
+	    this.realtimeService.attachFormChanges();
 		this.profileService.loadProfile();
     }
 
@@ -40,5 +38,13 @@ export class AppComponent {
 
     saveProfile() {
 		this.profileService.saveProfile();
+    }
+
+	ngOnInit() {
+
+    }
+
+
+	ngOnDestroy() {
     }
 }

@@ -18,8 +18,7 @@ import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput
 
 @Component({
     selector: 'profile',
-    templateUrl: './profile.component.html',
-	providers: [RealtimeService]
+    templateUrl: './profile.component.html'
 })
 
 export class ProfileComponent {

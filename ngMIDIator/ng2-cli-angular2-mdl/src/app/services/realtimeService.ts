@@ -18,11 +18,15 @@ export class RealtimeService {
 	private debounceTimeInMS: number = 1000;
 
 	constructor(private profileService: ProfileService, private formService: FormService) {
+		//this.attachFormChanges();
+	}
+
+	public attachFormChanges() {
 		this.formService.formChanges.subscribe(form =>
 			this.handleRealtimeForForm(form)
 		);
 	}
-	
+
 	public handleRealtimeForForm(form: FormGroup) {
 		if (this.realtime) {
 			this.attachRealtimeToForm(form);
@@ -46,12 +50,15 @@ export class RealtimeService {
     }
 
 	private attachRealtimeToForm(form: FormGroup) {
-		if (this.subscriptions['formValueChanges'] == null) {
-			this.subscriptions['formValueChanges'] = (form.valueChanges.debounceTime(this.debounceTimeInMS)
-				.subscribe(values => { // values is ignored because saveProfile() is implicitly tied to formService.getForm().value
-					this.profileService.saveProfile();
-				}));
+		if (this.subscriptions['formValueChanges'] != null) {
+			this.detachRealtime();
 		}
+
+		this.subscriptions['formValueChanges'] = (form.valueChanges.debounceTime(this.debounceTimeInMS)
+			.subscribe(values => { // values is ignored because saveProfile() is implicitly tied to formService.getForm().value
+				this.profileService.saveProfile();
+			}));
+
 	}
 
 	private detachRealtime() {
