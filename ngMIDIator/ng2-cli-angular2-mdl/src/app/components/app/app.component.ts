@@ -37,6 +37,6 @@ export class AppComponent {
 	}
 
     saveProfile() {
-		this.profileService.saveProfile();
+		this.profileService.saveProfile(true);
     }
 }

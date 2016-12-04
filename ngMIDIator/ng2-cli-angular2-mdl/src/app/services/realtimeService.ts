@@ -56,7 +56,7 @@ export class RealtimeService {
 
 		this.subscriptions['formValueChanges'] = (form.valueChanges.debounceTime(this.debounceTimeInMS)
 			.subscribe(values => { // values is ignored because saveProfile() is implicitly tied to formService.getForm().value
-				this.profileService.saveProfile();
+				this.profileService.saveProfile(true);
 			}));
 
 	}
