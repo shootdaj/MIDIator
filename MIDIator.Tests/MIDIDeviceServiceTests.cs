@@ -1,4 +1,6 @@
-﻿using MIDIator.Engine;
+﻿using System.Linq;
+using Anshul.Utilities;
+using MIDIator.Engine;
 using NUnit.Framework;
 
 namespace MIDIator.Tests
@@ -16,6 +18,7 @@ namespace MIDIator.Tests
 		[TearDown]
 		public void TearDown()
 		{
+			MIDIDeviceService.Dispose();
 			MIDIDeviceService = null;
 		}
 
@@ -23,6 +26,49 @@ namespace MIDIator.Tests
 		public void Devices_ReturnsSomeDevices()
 		{
 			var devices = MIDIDeviceService.AvailableInputDevices;
+		}
+
+		[Test]
+		[Category("LocalOnly")]
+		public void GetInputDevice_WithVirtualMIDIManager_VerifyExistenceOfCorrespondingVirtualOutputDevice()
+		{
+			var virtualMIDIManager = new VirtualMIDIManager();
+			var inputDevice = MIDIDeviceService.GetInputDevice(0, virtualMIDIManager: virtualMIDIManager);
+			Assert.DoesNotThrow(() => MIDIDeviceService.GetOutputDevice(
+				Extensions.GetVirtualDeviceName(inputDevice.Name)));
+
+			virtualMIDIManager.Dispose();
+
+		}
+
+		[Test, RunInApplicationDomain]
+		[Category("LocalOnly")]
+		public void GetInputDevice_WithoutVirtualMIDIManager_VerifyAbsenceOfCorrespondingVirtualOutputDevice()
+		{
+			var inputDevice = MIDIDeviceService.GetInputDevice(0);
+			var virtualOutputDeviceName = Extensions.GetVirtualDeviceName(inputDevice.Name);
+			Assert.That(() => MIDIDeviceService.AvailableOutputDevices.Select(x => x.Name).Contains(virtualOutputDeviceName).Not());
+		}
+
+		[Test, RunInApplicationDomain]
+		[Category("LocalOnly")]
+		public void RemoveInputDevice_WithVirtualMIDIManager_VerifyAbsenceOfCorrespondingVirtualOutputDevice()
+		{
+			//arrange
+			var virtualMIDIManager = new VirtualMIDIManager();
+			var inputDevice = MIDIDeviceService.GetInputDevice(0, virtualMIDIManager: virtualMIDIManager);
+			var virtualOutputDeviceName = Extensions.GetVirtualDeviceName(inputDevice.Name);
+
+			Assert.DoesNotThrow(() => MIDIDeviceService.GetOutputDevice(virtualOutputDeviceName));
+
+			//act
+			MIDIDeviceService.RemoveInputDevice(inputDevice, virtualMIDIManager);
+
+			//assert
+			Assert.That(() => MIDIDeviceService.AvailableOutputDevices.Select(x => x.Name).Contains(virtualOutputDeviceName).Not());
+
+			//cleanup
+			virtualMIDIManager.Dispose();
 		}
 	}
 }

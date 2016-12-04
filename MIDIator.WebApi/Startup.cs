@@ -8,6 +8,7 @@ using MIDIator.Engine;
 using MIDIator.Json;
 using Newtonsoft.Json;
 using Owin;
+using Refigure;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Web
@@ -40,9 +41,12 @@ namespace MIDIator.Web
 			app.UseWebApi(config);
 
 			//initialize midi manager
-			var inputDeviceName = "TouchOSC Bridge";
+			//var virtualDeviceNamePrefix = Extensions.GetVirtualDeviceNamePrefix();
+
+			var inputDeviceName = "TouchOSC Bridge";// "Launchpad";
 			var outputDeviceName = //"TouchOSC Bridge";
-				"LoopBe Internal MIDI";
+				//"LoopBe Internal MIDI";
+				Extensions.GetVirtualDeviceName(inputDeviceName);
 
 			MIDIManager.Instantiate(new MIDIDeviceService(), new VirtualMIDIManager());
 
@@ -52,17 +56,18 @@ namespace MIDIator.Web
 				Transformations = new List<Transformation>()
 				{
 					new Transformation("TouchOSCXForm",
-						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName),
+						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName, virtualMIDIManager: MIDIManager.Instance.VirtualMIDIManager),
 						MIDIManager.Instance.MIDIDeviceService.GetOutputDevice(outputDeviceName),
 						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
 								new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
 								InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()
 						))
-				},
-				VirtualOutputDevices = new List<VirtualOutputDevice>()
-				{
-					(VirtualOutputDevice)MIDIManager.Instance.VirtualMIDIManager.CreateVirtualDevice("TestVirtualDevice", Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Output)
 				}
+				//,
+				//VirtualOutputDevices = new List<VirtualOutputDevice>()
+				//{
+				//	(VirtualOutputDevice)MIDIManager.Instance.VirtualMIDIManager.CreateVirtualDevice("TestVirtualDevice", Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Output)
+				//}
 			});
 		}
 	}

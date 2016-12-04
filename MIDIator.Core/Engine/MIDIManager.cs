@@ -31,7 +31,7 @@ namespace MIDIator.Engine
 			MIDIDeviceService = midiDeviceService;
 			VirtualMIDIManager = virtualMIDIManager;
 		}
-
+		
 		#endregion
 
 		#region Profile
@@ -45,7 +45,7 @@ namespace MIDIator.Engine
 
 		public void UpdateProfile(ExpandoObject profile)
 		{
-			CurrentProfile.Update(profile, MIDIDeviceService);
+			CurrentProfile.Update(profile, MIDIDeviceService, VirtualMIDIManager);
 		}
 
 		#endregion
@@ -72,8 +72,6 @@ namespace MIDIator.Engine
 		}
 
 		#endregion
-
-		
 
 		#region Translations
 

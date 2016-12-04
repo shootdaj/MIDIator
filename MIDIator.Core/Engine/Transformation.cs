@@ -18,7 +18,7 @@ namespace MIDIator.Engine
 		public IMIDIInputDevice InputDevice { get; set; }
 
 		public IMIDIOutputDevice OutputDevice { get; set; }
-		
+
 		public ITranslationMap TranslationMap
 		{
 			get { return InputDevice.TranslationMap; }
@@ -46,14 +46,16 @@ namespace MIDIator.Engine
 			InputDevice.RemoveChannelMessageAction(ForwardActionName);
 		}
 
-		public void Update(dynamic transformation, MIDIDeviceService midiDeviceService)
+		public void Update(dynamic transformation, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			InputDevice.Stop();
 			InputDevice.TranslationMap = null;
 			InputDevice.RemoveChannelMessageAction(ForwardActionName);
-			InputDevice = midiDeviceService.GetInputDevice((string)transformation.InputDevice.Name);
-			OutputDevice = midiDeviceService.GetOutputDevice((string)transformation.OutputDevice.Name);
-			TranslationMap = ((ExpandoObject) transformation.TranslationMap).ConvertTo<TranslationMap>();
+			InputDevice = midiDeviceService.GetInputDevice((string)transformation.InputDevice.Name, virtualMIDIManager: virtualMIDIManager);
+			OutputDevice = virtualMIDIManager != null// && !virtualMIDIManager.DoesDeviceExist(InputDevice.Name)
+				? midiDeviceService.GetOutputDevice(Extensions.GetVirtualDeviceName(InputDevice.Name))
+				: midiDeviceService.GetOutputDevice((string) transformation.OutputDevice.Name);
+			TranslationMap = ((ExpandoObject) transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>();
 			InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
 			InputDevice.Start();
 		}

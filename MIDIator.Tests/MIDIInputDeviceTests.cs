@@ -17,9 +17,9 @@ namespace MIDIator.Tests
 		[Test]
 		public void MIDIInputDevice_Constructor_And_Dispose_Work()
 		{
-			var testDeviceName = "TestMIDIatorDevice_MIDIInputDevice_Constructor_And_Dispose_Work";
+			var testDeviceName = "TestDevice" + new Random().Next(1, 100);
 			var virtualMIDIManager = new VirtualMIDIManager();
-			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
+			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input);
 
 			var midiInputDevice = new MIDIInputDevice(0, new TranslationMap(new List<ITranslation>()
 			{
@@ -32,12 +32,6 @@ namespace MIDIator.Tests
 			midiInputDevice.Dispose();
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
 			virtualMIDIManager.Dispose();
-
-			//midiInputDevice = null;
-
-			//Thread.Sleep(1000);
-			//GC.Collect();
-			//GC.WaitForPendingFinalizers();
 		}
 
 		[Test, RunInApplicationDomain]
@@ -46,8 +40,8 @@ namespace MIDIator.Tests
 			var virtualMIDIManager = new VirtualMIDIManager();
 			var midiDeviceService = new MIDIDeviceService();
 
-			var testDeviceName = "TestMIDIatorDevice_MIDIInputDevice_DirectTranslation_Works";
-			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
+			var testDeviceName = "TestDevice" + new Random().Next(1, 100);
+			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input);
 			
 			var midiInputDevice = midiDeviceService.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
 			{
@@ -65,21 +59,8 @@ namespace MIDIator.Tests
 
 			//cleanup
 			midiDeviceService.RemoveInputDevice(midiInputDevice);
-			//midiInputDevice = null;
-
-			//Thread.Sleep(1000);
-
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
 			virtualMIDIManager.Dispose();
-
-			//virtualMIDIManager = null;
-
-			//Thread.Sleep(1000);
-
-			//GC.Collect();
-			//GC.WaitForPendingFinalizers();
-
-			//Thread.Sleep(1000);
 		}
 
 
@@ -92,8 +73,8 @@ namespace MIDIator.Tests
 			var virtualMIDIManager = new VirtualMIDIManager();
 			var midiDeviceService = new MIDIDeviceService();
 
-			var testDeviceName = "TestMIDIatorDevice_MIDIInputDevice_ChangeNote_Works";
-			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input, false);
+			var testDeviceName = "TestDevice" + new Random().Next(1, 100);
+			virtualMIDIManager.CreateVirtualDevice(testDeviceName, Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Input);
 
 			var midiInputDevice = midiDeviceService.GetInputDevice(testDeviceName, new TranslationMap(new List<ITranslation>()
 			{
@@ -111,20 +92,8 @@ namespace MIDIator.Tests
 
 			//cleanup
 			midiDeviceService.RemoveInputDevice(midiInputDevice);
-
-			midiInputDevice = null;
-
-			Thread.Sleep(1000);
-
 			virtualMIDIManager.RemoveVirtualDevice(testDeviceName);
 			virtualMIDIManager.Dispose();
-
-			virtualMIDIManager = null;
-
-			Thread.Sleep(1000);
-
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
 		}
 	}
 }

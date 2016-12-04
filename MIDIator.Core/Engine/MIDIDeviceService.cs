@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Threading;
+using Anshul.Utilities;
 using MIDIator.Interfaces;
+using Refigure;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine
 {
-	public class MIDIDeviceService
+	public class MIDIDeviceService : IDisposable
 	{
-		//#region Singleton
-
-		//public static void Instantiate()
-		//{
-		//	Instance = new MIDIDeviceService();
-		//}
-
-		//public static MIDIDeviceService Instance { get; private set; }
-
-		//#endregion
-
 		#region Internals
-
+		
 		public IList<IMIDIInputDevice> InputDevicesInUse { get; } = new List<IMIDIInputDevice>();
 
 		public IList<IMIDIOutputDevice> OutputDevicesInUse { get; } = new List<IMIDIOutputDevice>();
@@ -33,6 +25,7 @@ namespace MIDIator.Engine
 		public int InputDeviceCount => InputDevice.DeviceCount;
 
 		public List<dynamic> AvailableInputDevices => AvailableInputDevicesEnumerable.ToList();
+
 
 		public IEnumerable<dynamic> AvailableInputDevicesEnumerable
 		{
@@ -52,7 +45,7 @@ namespace MIDIator.Engine
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
+		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(device => device.DeviceID == deviceID))
 				return InputDevicesInUse.First(device => device.DeviceID == deviceID);
@@ -60,7 +53,7 @@ namespace MIDIator.Engine
 			{
 				if (AvailableInputDevices.Any(d => d.DeviceID == deviceID))
 				{
-					return CreateInputDevice(deviceID, translationMap);
+					return CreateInputDevice(deviceID, translationMap, virtualMIDIManager);
 				}
 				else
 				{
@@ -73,7 +66,7 @@ namespace MIDIator.Engine
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
+		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(nameMatch))
@@ -83,7 +76,7 @@ namespace MIDIator.Engine
 				if (AvailableInputDevices.Any(nameMatch))
 				{
 					var deviceID = AvailableInputDevices.Single(d => d.Name == name).DeviceID;
-					return CreateInputDevice(deviceID, translationMap);
+					return CreateInputDevice(deviceID, translationMap, virtualMIDIManager);
 				}
 				else
 				{
@@ -95,11 +88,39 @@ namespace MIDIator.Engine
 			}
 		}
 
-		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
+		/// <summary>
+		/// Creates and returns a MIDI Input Device
+		/// </summary>
+		/// <param name="deviceID"></param>
+		/// <param name="translationMap"></param>
+		/// <param name="virtualMIDIManager">If an instance is provided, a corresponding virtual loopback device is created, and vice versa.</param>
+		/// <returns></returns>
+		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			var device = new MIDIInputDevice(deviceID, translationMap);
 			InputDevicesInUse.Add(device);
+
+			// ReSharper disable once InvertIf - resharper, fuck you sometimes. i know you're trying to help but fuck you.
+			if (virtualMIDIManager != null)
+			{
+				//only create new device if device doesn't already exist. it may already exist if the user had selected this device before and came back to it after changing it.
+				if (!virtualMIDIManager.DoesDeviceExist(GetVirtualDeviceName(device.Name)))
+				{
+					virtualMIDIManager.CreateVirtualDevice(GetVirtualDeviceName(device.Name), Guid.NewGuid(), Guid.NewGuid(),
+						VirtualDeviceType.Loopback);
+
+					//if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
+						Thread.Sleep(1000);
+				}
+
+			}
+
 			return device;
+		}
+
+		private string GetVirtualDeviceName(string deviceName)
+		{
+			return Extensions.GetVirtualDeviceName(deviceName);
 		}
 
 		public void RemoveInputDevice(string name)
@@ -107,10 +128,12 @@ namespace MIDIator.Engine
 			RemoveInputDevice(GetInputDevice(name));
 		}
 
-		public void RemoveInputDevice(IMIDIInputDevice inputDevice)
+		public void RemoveInputDevice(IMIDIInputDevice inputDevice, VirtualMIDIManager virtualMIDIManager = null)
 		{
+			var deviceName = inputDevice.Name;
 			InputDevicesInUse.Remove(inputDevice);
 			((IDisposable)inputDevice).Dispose();
+			virtualMIDIManager?.RemoveVirtualDevice(GetVirtualDeviceName(deviceName));
 		}
 
 		public void SetTranslationMap(IMIDIInputDevice inputDevice, ITranslationMap map)
@@ -213,6 +236,10 @@ namespace MIDIator.Engine
 
 		#endregion
 
-
+		public void Dispose()
+		{
+			InputDevicesInUse.ToList().ForEach(device => RemoveInputDevice(device));
+			OutputDevicesInUse.ToList().ForEach(RemoveOutputDevice);
+		}
 	}
 }

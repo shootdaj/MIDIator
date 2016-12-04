@@ -14,7 +14,7 @@ namespace ConsoleApp
 	{
 		//private static MIDIManager MIDIManager { get; set; }
 
-		static void Main(string[] args)
+		static void NoMain(string[] args)
 		{ 
 			GuitarWingMap(new MIDIManager(new MIDIDeviceService()));
 		}

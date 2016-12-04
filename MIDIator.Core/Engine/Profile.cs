@@ -15,12 +15,12 @@ namespace MIDIator.Engine
 	public class Profile : IProfile
 	{
 		public string Name { get; set; }
-		
+
 		public List<Transformation> Transformations { get; set; }
-		
+
 		public List<VirtualOutputDevice> VirtualOutputDevices { get; set; }
 
-		public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService)
+		public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			dynamic profile = inProfile;
 
@@ -30,16 +30,18 @@ namespace MIDIator.Engine
 			{
 				var matchedTransformations = Transformations.Where(t => t.Name == transformation.Name);
 
+				//TODO: check which transformations are different - currently updating all transformations
+
 				var matchedTransformationsList = matchedTransformations.ToList();
 				if (matchedTransformationsList.Any())
 				{
 					var matchedTransformation = matchedTransformationsList.Single();
-					matchedTransformation.Update(transformation, midiDeviceService);
+					matchedTransformation.Update(transformation, midiDeviceService, virtualMIDIManager);
 				}
-				//else create new transformations
+				//TODO: else create new transformations
 			}
 
-			//delete transformations that dont exist in inProfile
+			//TODO: delete transformations that dont exist in inProfile
 		}
 	}
 }
