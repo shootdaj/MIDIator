@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using Anshul.Utilities;
+using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Owin.Cors;
 using MIDIator.Engine;
 using MIDIator.Json;
