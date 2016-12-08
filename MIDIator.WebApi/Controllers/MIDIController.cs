@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Web.Http;
+using Microsoft.AspNet.SignalR;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
 
@@ -9,6 +10,9 @@ namespace MIDIator.Web.Controllers
 	[RoutePrefix("midi")]
 	public class MIDIController : ApiController
 	{
+
+		private IHubContext HubContext { get; set; }
+
 		public IMIDIManager MIDIManager { get; set; }
 
 		public MIDIController(/*IMIDIManager midiManager*/)
@@ -73,6 +77,26 @@ namespace MIDIator.Web.Controllers
 		public void SetTranslationMap(string inputDevice, TranslationMap map)
 		{
 			MIDIManager.MIDIDeviceService.SetTranslationMap(inputDevice, map);
+		}
+
+		[HttpPost]
+		public void StartMIDIReader(string inputDevice)
+		{
+			MIDIManager.MIDIDeviceService.StartMIDIReader(inputDevice, args =>
+			{
+				HubContext.Clients.Group("midireader").OnEvent("midireader", new ChannelEvent
+				{
+					ChannelName = "midireader",
+					Name = "midireaderevent",
+					Data = args.Message
+				});
+			});
+		}
+
+		[HttpPost]
+		public void StopMIDIReader(string inputDevice)
+		{
+			MIDIManager.MIDIDeviceService.StopMIDIReader(inputDevice);
 		}
 
 		#endregion

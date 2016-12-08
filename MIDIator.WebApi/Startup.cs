@@ -27,6 +27,7 @@ namespace MIDIator.Web
 
 			);
 
+			//ignore glimpse route
 			config.Routes.IgnoreRoute("Glimpse", "{resource}.axd/{*pathInfo}");
 
 			//always return json
@@ -37,20 +38,18 @@ namespace MIDIator.Web
 			config.Formatters.JsonFormatter.SerializerSettings = SerializerSettings.DefaultSettings;
 			JsonConvert.DefaultSettings = () => SerializerSettings.DefaultSettings;
 
-			app.MapSignalR();
+			//add api services
 			app.UseCors(CorsOptions.AllowAll);
+			app.MapSignalR();
 			app.UseWebApi(config);
 
-			//initialize midi manager
-			//var virtualDeviceNamePrefix = Extensions.GetVirtualDeviceNamePrefix();
-
 			var inputDeviceName = "TouchOSC Bridge";// "Launchpad";
-			var outputDeviceName = //"TouchOSC Bridge";
-				//"LoopBe Internal MIDI";
-				Extensions.GetVirtualDeviceName(inputDeviceName);
+			var outputDeviceName = Extensions.GetVirtualDeviceName(inputDeviceName);
 
+			//initialize midi manager
 			MIDIManager.Instantiate(new MIDIDeviceService(), new VirtualMIDIManager());
 
+			//set initial profile - this should be loaded from a service or from disk or something
 			MIDIManager.Instance.SetProfile(new Profile()
 			{
 				Name = "DefaultProfile",
@@ -70,6 +69,13 @@ namespace MIDIator.Web
 				//	(VirtualOutputDevice)MIDIManager.Instance.VirtualMIDIManager.CreateVirtualDevice("TestVirtualDevice", Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Output)
 				//}
 			});
+
+			//start signalr hubs
+
+			var hubConnection = new HubConnection(Config.Get("WebApi.BaseAddress"));
+			IHubProxy eventHubProxy = hubConnection.CreateHubProxy("EventHub");
+			eventHubProxy.On<string, ChannelEvent>("OnEvent", (channel, ev) => Log.Information("Event received on {channel} channel - {@ev}", channel, ev));
+			hubConnection.Start().Wait();
 		}
 	}
 }

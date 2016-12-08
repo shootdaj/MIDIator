@@ -119,9 +119,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChannelEvent.cs" />
     <Compile Include="Controllers\MIDIController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Hubs\MIDIHub.cs" />
+    <Compile Include="Hubs\MIDIReaderHub.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="package.json" />

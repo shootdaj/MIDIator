@@ -32,5 +32,8 @@ namespace MIDIator.Interfaces
 		/// </summary>
 		/// <param name="name"></param>
 		void RemoveChannelMessageAction(string name);
+
+		void StartMIDIReader(Action<ChannelMessageEventArgs> messageAction);
+		void StopMIDIReader();
 	}
 }

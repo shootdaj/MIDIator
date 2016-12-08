@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading;
 using Anshul.Utilities;
+using Microsoft.AspNet.SignalR;
 using MIDIator.Interfaces;
 using Refigure;
 using Sanford.Multimedia.Midi;
@@ -60,7 +61,7 @@ namespace MIDIator.Engine
 					if (failSilently)
 						return null;
 					else
-						throw new Exception($"No device with ID {deviceID} found.");
+						throw new Exception($"No input device with ID {deviceID} found.");
 				}
 
 			}
@@ -83,7 +84,7 @@ namespace MIDIator.Engine
 					if (failSilently)
 						return null;
 					else
-						throw new Exception($"No device with name {name} found.");
+						throw new Exception($"No input device with name {name} found.");
 				}
 			}
 		}
@@ -116,7 +117,7 @@ namespace MIDIator.Engine
 			}
 
 			return device;
-		}
+		}		
 
 		private string GetVirtualDeviceName(string deviceName)
 		{
@@ -144,6 +145,16 @@ namespace MIDIator.Engine
 		public void SetTranslationMap(string inputDevice, ITranslationMap map)
 		{
 			GetInputDevice(inputDevice).TranslationMap = map;
+		}
+
+		public void StartMIDIReader(string deviceName, Action<ChannelMessageEventArgs> messageAction)
+		{
+			GetInputDevice(deviceName).StartMIDIReader(messageAction);
+		}
+
+		public void StopMIDIReader(string deviceName)
+		{
+			GetInputDevice(deviceName).StopMIDIReader();
 		}
 
 		#endregion

@@ -43,14 +43,14 @@ namespace MIDIator.Engine
 
 		private bool MIDIReaderMode { get; set; } = true;
 
+		private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
+
 		private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
 		{
-			if (!MIDIReaderMode)
-				ExecuteChannelMessageAction(e);
+			if (MIDIReaderMode)
+				MIDIReaderMessageAction(e);
 			else
-			{
-				
-			}
+				ExecuteChannelMessageAction(e);
 		}
 
 		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
@@ -93,6 +93,18 @@ namespace MIDIator.Engine
 		{
 			InputDevice.StopRecording();
 			IsRecording = false;
+		}
+
+		public void StartMIDIReader(Action<ChannelMessageEventArgs> messageAction)
+		{
+			MIDIReaderMessageAction = messageAction;
+			MIDIReaderMode = true;
+		}
+
+		public void StopMIDIReader()
+		{
+			MIDIReaderMode = false;
+			MIDIReaderMessageAction = null;
 		}
 
 		public void AddChannelMessageAction(ChannelMessageAction channelMessageAction)
