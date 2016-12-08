@@ -9,6 +9,7 @@ import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { HelperService } from '../../services/helperService';
 import { ProfileService } from '../../services/profileService';
+import { SignalRService, ChannelEvent } from '../../services/signalRService';
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
@@ -24,15 +25,19 @@ declare var componentHandler;
 export class TranslationComponent implements OnInit, OnDestroy {
 
 	private subscriptions: Subscription[];
+	private immtReaderSubscription: Subscription;
 	private inputMatchFunctions: IDropdownOption[];
 	private translationFunctions: IDropdownOption[];
 
     @Input() form: FormGroup;
 
 	private readingIMMT: Boolean;
+	private readingOMT: Boolean;
 	private immtClass: string = "";
 
-	constructor(private midiService: MIDIService, private helperService: HelperService) {
+	constructor(private midiService: MIDIService,
+		private helperService: HelperService,
+		private signalRService: SignalRService) {
 	}
 
 	ngOnInit(): void {
@@ -53,10 +58,28 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
 	private toggleReadingIMMT() {
 		this.readingIMMT = !this.readingIMMT;
+
+		if (this.readingIMMT) {
+			this.immtReaderSubscription = this.signalRService.sub("tasks")
+				.subscribe(
+					(x: ChannelEvent) => {
+						switch (x.Name) {
+						case "midiChannelEvent":
+						{
+							this.form.controls['inputMessageMatchTarget'].setValue(<ChannelEvent>x.Data);
+						}
+						}
+					},
+					(error: any) => {
+						console.log("Attempt to join channel failed!", error);
+					}
+				);
+		} else {
+			this.immtReaderSubscription.unsubscribe();
+		}
 	}
 
-	getReadMIDITooltip() {
-		let returnValue = (this.readingIMMT ? 'Reading' : 'Read') + ' from MIDI Input Device';
-		return returnValue;
+	private toggleReadingOMT() {
+		this.readingOMT = !this.readingOMT;
 	}
 }

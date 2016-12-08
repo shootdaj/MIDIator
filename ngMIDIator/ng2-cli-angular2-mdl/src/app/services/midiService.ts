@@ -63,4 +63,14 @@ export class MIDIService {
 			.subscribe(data => this.availableTranslationFunctionsSubject.next(data),
 			err => console.log(err));
 	}
+
+	startMIDIReader(inputDeviceName: string) {
+		this.http.post("http://localhost:9000/midi/StartMIDIReader", inputDeviceName)
+			.map(response => <Profile>response.json())
+			.subscribe(data => {
+				this.formService.setForm(data);
+				this.slimLoadingBarService.complete();
+			},
+			err => console.log(err));
+	}
 }

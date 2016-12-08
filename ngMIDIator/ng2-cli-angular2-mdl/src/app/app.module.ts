@@ -14,6 +14,7 @@ import { FormService } from './services/formService';
 import { RealtimeService } from './services/realtimeService';
 import { ProfileService } from './services/profileService';
 import { HelperService } from './services/helperService';
+import { SignalRService } from './services/signalRService';
 
 //components
 import { AppComponent } from './components/app/app.component';
@@ -43,7 +44,7 @@ import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.com
         MdlModule,
         SlimLoadingBarModule.forRoot()
     ],
-    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService],
+    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService, SignalRService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
