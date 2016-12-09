@@ -460,7 +460,8 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Maximum value allowed for MIDI channels.
         /// </summary> 
-        public const int MidiChannelMaxValue = 15;
+        public const int MidiChannelMaxValue = 16;
+        public const int MidiChannelMinValue = 1;
 
         #endregion
 
@@ -642,8 +643,8 @@ namespace Sanford.Multimedia.Midi
         /// </returns>
         internal static int UnpackMidiChannel(int message)
         {
-            return message & DataMask & CommandMask;
-        }
+            return (message & DataMask & CommandMask) + 1;  //+1 because the actual value is a 0-indexed value
+		}
 
         /// <summary>
         /// Packs the MIDI channel into the specified integer message.
@@ -664,7 +665,7 @@ namespace Sanford.Multimedia.Midi
         {
             #region Preconditons
 
-            if(midiChannel < 0 || midiChannel > MidiChannelMaxValue)
+            if(midiChannel < MidiChannelMinValue || midiChannel > MidiChannelMaxValue)
             {
                 throw new ArgumentOutOfRangeException("midiChannel", midiChannel,
                     "MIDI channel out of range.");
@@ -672,7 +673,7 @@ namespace Sanford.Multimedia.Midi
 
             #endregion
 
-            return (message & MidiChannelMask) | midiChannel;
+            return (message & MidiChannelMask) | (midiChannel - 1);	//-1 because the actual value is a 0-indexed value
         }
 
         /// <summary>
