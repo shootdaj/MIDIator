@@ -41,7 +41,7 @@ namespace MIDIator.Engine
 
 		public int Support => InputDevice.GetDeviceCapabilities(DeviceID).support;
 
-		private bool MIDIReaderMode { get; set; } = true;
+		private bool MIDIReaderMode { get; set; } = false;
 
 		private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
 

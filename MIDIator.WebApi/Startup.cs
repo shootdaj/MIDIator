@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using Anshul.Utilities;
@@ -69,13 +70,6 @@ namespace MIDIator.Web
 				//	(VirtualOutputDevice)MIDIManager.Instance.VirtualMIDIManager.CreateVirtualDevice("TestVirtualDevice", Guid.NewGuid(), Guid.NewGuid(), VirtualDeviceType.Output)
 				//}
 			});
-
-			//start signalr hubs
-
-			var hubConnection = new HubConnection(Config.Get("WebApi.BaseAddress"));
-			IHubProxy eventHubProxy = hubConnection.CreateHubProxy("EventHub");
-			eventHubProxy.On<string, ChannelEvent>("OnEvent", (channel, ev) => Log.Information("Event received on {channel} channel - {@ev}", channel, ev));
-			hubConnection.Start().Wait();
-		}
-	}
+        }
+    }
 }

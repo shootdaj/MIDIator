@@ -49,7 +49,7 @@ namespace Sanford.Multimedia.Midi
 	/// realtime messages, and system common messages.
 	/// </remarks>
 	[TsClass(Module = "")]
-	public abstract class ShortMessage : IMidiMessage
+    public abstract class ShortMessage : IMidiMessage
 	{
         #region ShortMessage Members
 

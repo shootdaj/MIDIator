@@ -444,7 +444,7 @@ namespace Sanford.Multimedia.Midi
 	[ImmutableObject(true)]
 	[DisplayName(nameof(ChannelMessage))]
 	[Ng2Component()]
-	public sealed class ChannelMessage : ShortMessage
+    public sealed class ChannelMessage : ShortMessage
 	{
         #region ChannelEventArgs Members
 

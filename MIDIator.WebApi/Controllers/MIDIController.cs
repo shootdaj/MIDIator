@@ -4,6 +4,7 @@ using System.Web.Http;
 using Microsoft.AspNet.SignalR;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
+using MIDIator.Web.Hubs;
 
 namespace MIDIator.Web.Controllers
 {
@@ -18,7 +19,9 @@ namespace MIDIator.Web.Controllers
 		public MIDIController(/*IMIDIManager midiManager*/)
 		{
 			MIDIManager = Engine.MIDIManager.Instance; //needs to be injected
-		}
+
+            HubContext = GlobalHost.ConnectionManager.GetHubContext<MIDIReaderHub>();
+        }
 
 		#region Profile
 
@@ -80,14 +83,14 @@ namespace MIDIator.Web.Controllers
 		}
 
 		[HttpPost]
-		public void StartMIDIReader(string inputDevice)
+		public void StartMIDIReader(dynamic inputDeviceName)
 		{
-			MIDIManager.MIDIDeviceService.StartMIDIReader(inputDevice, args =>
+			MIDIManager.MIDIDeviceService.StartMIDIReader(inputDeviceName.inputDeviceName.Value as string, args =>
 			{
-				HubContext.Clients.Group("midireader").OnEvent("midireader", new ChannelEvent
+				HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
 				{
-					ChannelName = "midireader",
-					Name = "midireaderevent",
+					ChannelName = Constants.TaskChannel,
+					Name = "midiChannelEvent",
 					Data = args.Message
 				});
 			});
