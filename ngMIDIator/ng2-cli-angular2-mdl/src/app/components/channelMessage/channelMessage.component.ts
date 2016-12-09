@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +17,7 @@ import { ProfileComponent } from '../../components/profile/profile.component';
 
 @Component({
 	selector: 'channel-message',
-	templateUrl: './channelMessage.component.html'
+    templateUrl: './channelMessage.component.html'
 })
 
 export class ChannelMessageComponent implements OnInit, OnDestroy {

@@ -26,14 +26,14 @@ export class ChannelConfig {
 }
 
 export class ChannelEvent {
-    Name: string;
-    ChannelName: string;
-    Timestamp: Date;
-    Data: any;
-    Json: string;
+    name: string;
+    channelName: string;
+    timestamp: Date;
+    data: any;
+    json: string;
 
     constructor() {
-        this.Timestamp = new Date();
+        this.timestamp = new Date();
     }
 }
 
@@ -220,7 +220,7 @@ export class SignalRService {
         //  the starting$ stream since that won't emit a value until the connection
         //  is ready
         //
-        this.starting$.subscribe(() => {
+        //this.starting$.subscribe(() => {
             this.hubProxy.invoke("Subscribe", channel)
                 .done(() => {
                     console.log(`Successfully subscribed to ${channel} channel`);
@@ -228,10 +228,10 @@ export class SignalRService {
                 .fail((error: any) => {
                     channelSub.subject.error(error);
                 });
-        },
-            (error: any) => {
-                channelSub.subject.error(error);
-            });
+        //},
+        //    (error: any) => {
+        //        channelSub.subject.error(error);
+        //    });
 
         return channelSub.subject.asObservable();
     }

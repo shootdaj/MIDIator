@@ -68,6 +68,8 @@
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\app\shared\index.ts" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\.gitkeep" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\.npmignore" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\jquery.js" />
+    <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\jquery.signalR.js" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield-midiator.scss" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\assets\mdl-selectfield\mdl-selectfield.js" />
     <None Include="$(MSBuildThisFileDirectory)ng2-cli-angular2-mdl\src\environments\environment.prod.ts" />

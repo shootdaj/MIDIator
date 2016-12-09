@@ -14,7 +14,7 @@ import { FormService } from './services/formService';
 import { RealtimeService } from './services/realtimeService';
 import { ProfileService } from './services/profileService';
 import { HelperService } from './services/helperService';
-import { SignalRService } from './services/signalRService';
+import { SignalRService, SignalrWindow, ChannelConfig } from './services/signalRService';
 
 //components
 import { AppComponent } from './components/app/app.component';
@@ -24,6 +24,11 @@ import { TransformationComponent } from './components/transformation/transformat
 import { TranslationComponent } from './components/translation/translation.component';
 import { ChannelMessageComponent } from './components/channelMessage/channelMessage.component';
 import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.component';
+
+let channelConfig = new ChannelConfig();
+channelConfig.url = "http://localhost:9000/signalr";
+channelConfig.hubName = "MIDIReaderHub";
+
 
 
 @NgModule({
@@ -44,7 +49,9 @@ import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.com
         MdlModule,
         SlimLoadingBarModule.forRoot()
     ],
-    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService, SignalRService],
+    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService, SignalRService,
+        { provide: SignalrWindow, useValue: window },
+        { provide: 'channel.config', useValue: channelConfig }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

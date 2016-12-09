@@ -36,7 +36,7 @@
                 </button>&nbsp; <span style="vertical-align: middle;">Translations</span>
             </h4>
             <div *ngFor="let translation of form.controls.translationMap.controls.translations.controls; let i=index">
-                <translation [form]="translation"></translation>
+                <translation [form]="translation" [inputDevice]="form.controls['inputDevice'].value"></translation>
             </div>
         </div>
     </div>

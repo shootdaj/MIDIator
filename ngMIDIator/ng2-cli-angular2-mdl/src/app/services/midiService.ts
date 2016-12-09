@@ -1,6 +1,6 @@
 ﻿import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -64,13 +64,15 @@ export class MIDIService {
 			err => console.log(err));
 	}
 
-	startMIDIReader(inputDeviceName: string) {
-		this.http.post("http://localhost:9000/midi/StartMIDIReader", inputDeviceName)
-			.map(response => <Profile>response.json())
-			.subscribe(data => {
-				this.formService.setForm(data);
-				this.slimLoadingBarService.complete();
-			},
-			err => console.log(err));
-	}
+    startMIDIReader(inputDeviceName: string) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        this.http.post("http://localhost:9000/midi/StartMIDIReader",  { inputDeviceName }, options).subscribe(data => {},
+            err => console.log(err));;
+    }
+
+    stopMIDIReader(inputDeviceName: string) {
+        this.http.post("http://localhost:9000/midi/StopMIDIReader", inputDeviceName);
+    }
 }
