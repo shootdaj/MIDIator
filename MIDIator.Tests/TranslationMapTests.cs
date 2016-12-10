@@ -40,8 +40,8 @@ namespace MIDIator.Tests
 			var map = JsonConvert.DeserializeObject<TranslationMap>(serializedMap, SerializerSettings.DefaultSettings);
 
 			Assert.AreEqual(map.Translations.Count, 1);
-			Assert.AreEqual(map.Translations.First().InputMessageMatchTarget.Message, 193);
-			Assert.AreEqual(map.Translations.First().OutputMessageTemplate.Message, 401);
+			Assert.AreEqual(map.Translations.First().InputMessageMatchTarget.Message, 192);
+			Assert.AreEqual(map.Translations.First().OutputMessageTemplate.Message, 400);
 			Assert.AreEqual(map.Translations.First().InputMatchFunction, InputMatchFunction.Data1Match);
 			Assert.AreEqual(map.Translations.First().TranslationFunction, TranslationFunction.PCToNote);
 		}

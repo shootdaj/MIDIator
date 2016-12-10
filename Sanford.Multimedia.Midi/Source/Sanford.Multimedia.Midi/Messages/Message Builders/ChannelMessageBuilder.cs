@@ -69,7 +69,7 @@ namespace Sanford.Multimedia.Midi
         public ChannelMessageBuilder()
         {
             Command = ChannelCommand.Controller;
-            MidiChannel = 0;
+            MidiChannel = 1;
             Data1 = (int)ControllerType.AllSoundOff;
             Data2 = 0;
         }

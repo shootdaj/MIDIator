@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MIDIator.VirtualMIDI;
+using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine
 {
@@ -27,8 +29,38 @@ namespace MIDIator.Engine
 					while (Running) //technically this will wait for one final command before quitting
 									//but it will be shutdown during the final dispose
 					{
-						var command = TeVirtualMIDIDevice.getCommand();
-						TeVirtualMIDIDevice.sendCommand(command);
+						//if (Running)
+						//{
+						//	try
+						//	{
+								var command = TeVirtualMIDIDevice.getCommand();
+								TeVirtualMIDIDevice.sendCommand(command);
+							//}
+							//catch (TeVirtualMIDIException exception)
+							//{
+							//	if (exception.Message == "Port not enabled")
+							//	{
+							//		Console.WriteLine("final loop access to getCommand()");
+							//	}
+							//	else
+							//	{
+							//		throw;
+							//	}
+							//}
+							//catch (NullReferenceException)
+							//{
+							//	Console.WriteLine("final loop access to getCommand()");
+
+							//	//if (exception.Message == "Port not enabled")
+							//	//{
+							//	//	Console.WriteLine("final loop access to getCommand()");
+							//	//}
+							//	//else
+							//	//{
+							//	//	throw;
+							//	//}
+							//}
+						//}
 					}
 				});
 			}
@@ -41,6 +73,12 @@ namespace MIDIator.Engine
 		public void Stop()
 		{
 			Running = false;
+		}
+
+		public override void Dispose()
+		{
+			Stop();
+			base.Dispose();
 		}
 
 		//public void Stop()

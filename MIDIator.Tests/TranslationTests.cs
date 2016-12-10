@@ -36,8 +36,8 @@ namespace MIDIator.Tests
 
 			var translation = JsonConvert.DeserializeObject<Translation>(serializedTranslation, SerializerSettings.DefaultSettings);
 
-			Assert.AreEqual(translation.InputMessageMatchTarget.Message, 401);
-			Assert.AreEqual(translation.OutputMessageTemplate.Message, 705);
+			Assert.AreEqual(translation.InputMessageMatchTarget.Message, 400);
+			Assert.AreEqual(translation.OutputMessageTemplate.Message, 704);
 			Assert.AreEqual(translation.InputMatchFunction, InputMatchFunction.CatchAll);
 			Assert.AreEqual(translation.TranslationFunction, TranslationFunction.DirectTranslation);
 		}

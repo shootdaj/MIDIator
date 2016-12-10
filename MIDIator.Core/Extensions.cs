@@ -31,7 +31,7 @@ namespace MIDIator
 		private static string GetVirtualDeviceNamePrefix()
 		{
 			var configPrefix = Config.Get("Core.VirtualOutputDevicePrefix");
-			return string.IsNullOrEmpty(configPrefix) ? "M." : configPrefix;
+			return string.IsNullOrEmpty(configPrefix) ? "M-" : configPrefix;
 		}
 	}
 }

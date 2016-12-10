@@ -24,8 +24,9 @@ namespace MIDIator.Engine
 		protected TeVirtualMIDI TeVirtualMIDIDevice { get; set; }
 
 		public string Name { get; private set; }
-		public void Dispose()
+		public virtual void Dispose()
 		{
+			Name = null;
 			TeVirtualMIDIDevice.shutdown();
 			TeVirtualMIDIDevice = null;
 		}
