@@ -8,6 +8,7 @@ import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { HelperService } from '../../services/helperService';
+import { RealtimeService } from '../../services/realtimeService';
 import { ProfileService } from '../../services/profileService';
 import { SignalRService, ChannelEvent } from '../../services/signalRService';
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
@@ -40,7 +41,8 @@ export class TranslationComponent implements OnInit, OnDestroy {
     constructor(private midiService: MIDIService,
         private helperService: HelperService,
         private signalRService: SignalRService,
-        private cdr: ChangeDetectorRef) {
+        private cdr: ChangeDetectorRef,
+		private realtimeService: RealtimeService) {	
     }
 
     ngOnInit(): void {
@@ -86,6 +88,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
         let component = this;
         this.readingIMMT = !this.readingIMMT;
         if (this.readingIMMT) {
+			this.realtimeService.disableRealtime();
             this.immtReaderSubscription = this.signalRService.sub("tasks")
                 .subscribe(
                 (x: ChannelEvent) => {
@@ -105,6 +108,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
         } else {
             this.midiService.stopMIDIReader(this.inputDevice.name);
             this.immtReaderSubscription.unsubscribe();
+			this.realtimeService.enableRealtime();
         }
     }
 
