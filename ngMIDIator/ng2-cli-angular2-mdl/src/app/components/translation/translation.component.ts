@@ -37,13 +37,13 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     private readingIMMT: Boolean;
     private readingOMT: Boolean;
-    private immtClass: string = "";
 
     constructor(private midiService: MIDIService,
         private helperService: HelperService,
         private signalRService: SignalRService,
         private cdr: ChangeDetectorRef,
-		private realtimeService: RealtimeService) {
+		private realtimeService: RealtimeService,
+		private profileService: ProfileService) {
     }
 
     ngOnInit(): void {
@@ -85,57 +85,50 @@ export class TranslationComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+	private stopMIDIReader(midiReaderSubscription: Subscription){
+		this.midiService.stopMIDIReader(this.inputDevice.name);
+		midiReaderSubscription.unsubscribe();
+		this.profileService.saveProfile();
+		this.realtimeService.enableRealtime();
+	}
+
+	private startMIDIReader(controlName: string): Subscription {
+		let component = this;
+		this.realtimeService.disableRealtime();
+		let subscription = this.signalRService.sub("tasks")
+			.subscribe(
+			(x: ChannelEvent) => {
+				switch (x.name) {
+					case "midiChannelEvent":
+						{
+							(<FormControl>component.form.controls[controlName]).setValue(<ChannelEvent>x.data);
+							this.cdr.detectChanges();
+						}
+				}
+			},
+			(error: any) => {
+				console.log("Attempt to join channel failed!", error);
+			});
+		this.midiService.startMIDIReader(this.inputDevice.name);
+		return subscription;
+	}
+
     private toggleReadingIMMT() {
-        let component = this;
         this.readingIMMT = !this.readingIMMT;
         if (this.readingIMMT) {
-			this.realtimeService.disableRealtime();
-            this.immtReaderSubscription = this.signalRService.sub("tasks")
-                .subscribe(
-                (x: ChannelEvent) => {
-                    switch (x.name) {
-                        case "midiChannelEvent":
-                            {
-                                (<FormControl>component.form.controls["inputMessageMatchTarget"]).setValue(<ChannelEvent>x.data);
-                                this.cdr.detectChanges();
-                            }
-                    }
-                },
-                (error: any) => {
-                    console.log("Attempt to join channel failed!", error);
-                });
-            this.midiService.startMIDIReader(this.inputDevice.name);
+			this.immtReaderSubscription = this.startMIDIReader("inputMessageMatchTarget");
         } else {
-            this.midiService.stopMIDIReader(this.inputDevice.name);
-            this.immtReaderSubscription.unsubscribe();
-			this.realtimeService.enableRealtime();
+            this.stopMIDIReader(this.immtReaderSubscription);
         }
     }
-
+	
     private toggleReadingOMT() {
-		let component = this;
+		
         this.readingOMT = !this.readingOMT;
 		if (this.readingOMT) {
-			this.realtimeService.disableRealtime();
-            this.omtReaderSubscription = this.signalRService.sub("tasks")
-                .subscribe(
-                (x: ChannelEvent) => {
-                    switch (x.name) {
-                        case "midiChannelEvent":
-                            {
-                                (<FormControl>component.form.controls["outputMessageTemplate"]).setValue(<ChannelEvent>x.data);
-                                this.cdr.detectChanges();
-                            }
-                    }
-                },
-                (error: any) => {
-                    console.log("Attempt to join channel failed!", error);
-                });
-            this.midiService.startMIDIReader(this.inputDevice.name);
+			this.omtReaderSubscription = this.startMIDIReader("outputMessageTemplate");
         } else {
-            this.midiService.stopMIDIReader(this.inputDevice.name);
-            this.omtReaderSubscription.unsubscribe();
-			this.realtimeService.enableRealtime();
+			this.stopMIDIReader(this.omtReaderSubscription);
         }
     }
 }
