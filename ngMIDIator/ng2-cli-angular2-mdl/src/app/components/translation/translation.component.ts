@@ -28,6 +28,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription[];
     private immtReaderSubscription: Subscription;
+    private omtReaderSubscription: Subscription;
     private inputMatchFunctions: IDropdownOption[];
     private translationFunctions: IDropdownOption[];
 
@@ -42,7 +43,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
         private helperService: HelperService,
         private signalRService: SignalRService,
         private cdr: ChangeDetectorRef,
-		private realtimeService: RealtimeService) {	
+		private realtimeService: RealtimeService) {
     }
 
     ngOnInit(): void {
@@ -92,7 +93,6 @@ export class TranslationComponent implements OnInit, OnDestroy {
             this.immtReaderSubscription = this.signalRService.sub("tasks")
                 .subscribe(
                 (x: ChannelEvent) => {
-                    console.log("wtfffffff");
                     switch (x.name) {
                         case "midiChannelEvent":
                             {
@@ -113,6 +113,29 @@ export class TranslationComponent implements OnInit, OnDestroy {
     }
 
     private toggleReadingOMT() {
+		let component = this;
         this.readingOMT = !this.readingOMT;
+		if (this.readingOMT) {
+			this.realtimeService.disableRealtime();
+            this.omtReaderSubscription = this.signalRService.sub("tasks")
+                .subscribe(
+                (x: ChannelEvent) => {
+                    switch (x.name) {
+                        case "midiChannelEvent":
+                            {
+                                (<FormControl>component.form.controls["outputMessageTemplate"]).setValue(<ChannelEvent>x.data);
+                                this.cdr.detectChanges();
+                            }
+                    }
+                },
+                (error: any) => {
+                    console.log("Attempt to join channel failed!", error);
+                });
+            this.midiService.startMIDIReader(this.inputDevice.name);
+        } else {
+            this.midiService.stopMIDIReader(this.inputDevice.name);
+            this.omtReaderSubscription.unsubscribe();
+			this.realtimeService.enableRealtime();
+        }
     }
 }
