@@ -62,7 +62,8 @@ export class FormService {
                     label: [transformation.outputDevice.label],
                     value: [transformation.outputDevice.value]
                 }),
-                translationMap: this.getTranslationMapFormGroup(transformation.translationMap)
+                translationMap: this.getTranslationMapFormGroup(transformation.translationMap),
+				linkedOutputVirtualDevice: [transformation.linkedOutputVirtualDevice, [<any>Validators.required]]
             }))
         );
 

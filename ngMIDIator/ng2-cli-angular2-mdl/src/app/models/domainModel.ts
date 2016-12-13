@@ -138,6 +138,7 @@ export class Transformation {
     name: string;
     outputDevice: MIDIOutputDevice;
     translationMap: TranslationMap;
+	linkedOutputVirtualDevice: boolean;
 }
 export class Translation {
 	constructor() {

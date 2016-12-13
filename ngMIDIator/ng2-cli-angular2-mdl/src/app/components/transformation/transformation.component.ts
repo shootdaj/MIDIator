@@ -49,4 +49,17 @@ export class TransformationComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(s => s.unsubscribe());
     }
+
+	private linkOutputDevice() {
+		this.form.controls['linkedOutputVirtualDevice'].setValue(true);
+	}
+
+	private unlinkOutputDevice() {
+		this.form.controls['linkedOutputVirtualDevice'].setValue(false);
+	}
+
+	private get linkedOutputDevice() {
+		return this.form.controls['linkedOutputVirtualDevice'].value;
+	}
+
 }

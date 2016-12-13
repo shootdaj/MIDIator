@@ -12,18 +12,30 @@
                 </mdl-dropdown>
             </div>
         </div>
-        <div class="mdl-cell--3-col">
-            <div class="cell-content">
-                <mdl-dropdown [options]="outputDevices"
-                              [dropdownLabel]="'Output Device'"
-                              [placeholder]="'Select...'"
-                              [control]="form.controls['outputDevice']"
-                              [id]="'outputDevice'"
-                              [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
-                              [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
-                </mdl-dropdown>
-            </div>
-        </div>
+	    <div class="mdl-cell--3-col">
+		    <div class="cell-content">
+			    <mdl-dropdown [options]="outputDevices"
+			                  [dropdownLabel]="'Output Device'"
+			                  [placeholder]="'Select...'"
+			                  [control]="form.controls['outputDevice']"
+			                  [id]="'outputDevice'"
+			                  [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
+			                  [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
+			    </mdl-dropdown>
+		    </div>
+	    </div>
+		<div class="mdl-cell--3-col">
+			<div class="cell-content cell-content-button">
+				<div class="button-container">
+					<button type="button" mdl-button mdl-ripple mdl-button-type="icon" mdl-colored="accent" [mdl-tooltip]="'Click to unlink Output Device from Input Device'" (click)="unlinkOutputDevice()" *ngIf="linkedOutputDevice">
+						<i class="fa fa-link smaller-icon" aria-hidden="true"></i>
+					</button>
+					<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Click to link Output Device to Input Device'" (click)="linkOutputDevice()" *ngIf="!linkedOutputDevice">
+						<i class="fa fa-chain-broken smaller-icon" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
     </div>
     <!--<div class="mdl-grid">
 
