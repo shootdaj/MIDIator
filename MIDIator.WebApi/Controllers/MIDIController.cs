@@ -97,9 +97,9 @@ namespace MIDIator.Web.Controllers
 		}
 
 		[HttpPost]
-		public void StopMIDIReader(string inputDevice)
+		public void StopMIDIReader(dynamic inputDeviceName)
 		{
-			MIDIManager.MIDIDeviceService.StopMIDIReader(inputDevice);
+			MIDIManager.MIDIDeviceService.StopMIDIReader(inputDeviceName.inputDeviceName.Value as string);
 		}
 
 		#endregion
