@@ -25,6 +25,8 @@ namespace MIDIator.Engine
 			set { InputDevice.TranslationMap = value; }
 		}
 
+		public bool LinkedOutputVirtualDevice { get; set; } = true;
+
 		public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap)
 		{
 			Name = name;
@@ -52,7 +54,8 @@ namespace MIDIator.Engine
 			InputDevice.TranslationMap = null;
 			InputDevice.RemoveChannelMessageAction(ForwardActionName);
 			InputDevice = midiDeviceService.GetInputDevice((string)transformation.InputDevice.Name, virtualMIDIManager: virtualMIDIManager);
-			OutputDevice = virtualMIDIManager != null// && !virtualMIDIManager.DoesDeviceExist(InputDevice.Name)
+			LinkedOutputVirtualDevice = transformation.LinkedOutputVirtualDevice;
+			OutputDevice = virtualMIDIManager != null && LinkedOutputVirtualDevice// && !virtualMIDIManager.DoesDeviceExist(InputDevice.Name) -- this was to restrict virtual devices to only be created on real devices, not other virtual devices.
 				? midiDeviceService.GetOutputDevice(Extensions.GetVirtualDeviceName(InputDevice.Name))
 				: midiDeviceService.GetOutputDevice((string) transformation.OutputDevice.Name);
 			TranslationMap = ((ExpandoObject) transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>();
