@@ -3,6 +3,7 @@
 		
 	}
 
+	$type: string;
     message: number;
     messageType: MessageType;
     status: number;
@@ -34,6 +35,12 @@ export enum TranslationFunction {
     PCToNote = 2
 }
 export class ChannelMessage extends ShortMessage {
+	constructor() {
+		super();
+		this.$type = "ChannelMessage";
+		this.messageType = MessageType.Channel;
+	}
+
     command: ChannelCommand;
     data1: number;
     data2: number;

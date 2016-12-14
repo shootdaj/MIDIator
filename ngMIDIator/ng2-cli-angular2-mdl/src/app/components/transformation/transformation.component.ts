@@ -1,5 +1,5 @@
 import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, AfterViewInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormsModule, FormArray, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -9,6 +9,7 @@ import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { HelperService } from '../../services/helperService';
 import { ProfileService } from '../../services/profileService';
+import { FormService } from '../../services/formService';
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
@@ -28,7 +29,9 @@ export class TransformationComponent implements OnInit, OnDestroy {
 
 	@Input() form: FormGroup;
 
-	constructor(private midiService: MIDIService, private helperService: HelperService) {
+	constructor(private midiService: MIDIService,
+		private helperService: HelperService,
+		private formService: FormService) {
 	}
 
 	ngOnInit(): void {
@@ -62,4 +65,25 @@ export class TransformationComponent implements OnInit, OnDestroy {
 		return this.form.controls['linkedOutputVirtualDevice'].value;
 	}
 
+	private addNewTranslation() {
+		let control = <FormArray>(<FormGroup>this.form.controls['translationMap']).controls['translations'];
+        control.push(this.initTranslation());
+	}
+
+	private initTranslation() {
+		let translation = new Translation();
+		(<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
+
+		var channelMessage = new ChannelMessage();
+		(<any>channelMessage).command = ChannelCommand[ChannelCommand.ChannelPressure];
+		channelMessage.data1 = 0;
+		channelMessage.data2 = 0;
+		channelMessage.midiChannel = 1;
+
+		translation.inputMessageMatchTarget = channelMessage;
+		(<any>translation).translationFunction = TranslationFunction[TranslationFunction.ChangeNote];
+		translation.outputMessageTemplate = channelMessage;
+
+		return this.formService.getTranslationFormGroup(translation);
+	}
 }

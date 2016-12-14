@@ -38,16 +38,20 @@ export class RealtimeService {
 	}
 
 	public enableRealtime() {
-		console.log('enabling realtime');
-		this.attachRealtimeToForm(this.formService.getForm());
-		this.realtime = true;
-    }
+		if (!this.realtime) {
+			console.log('enabling realtime');
+			this.attachRealtimeToForm(this.formService.getForm());
+			this.realtime = true;
+		}
+	}
 
 	public disableRealtime() {
-		console.log('disabling realtime');
-        this.detachRealtime();
-		this.realtime = false;
-    }
+		if (this.realtime) {
+			console.log('disabling realtime');
+			this.detachRealtime();
+			this.realtime = false;
+		}
+	}
 
 	private attachRealtimeToForm(form: FormGroup) {
 		if (this.subscriptions['formValueChanges'] != null) {

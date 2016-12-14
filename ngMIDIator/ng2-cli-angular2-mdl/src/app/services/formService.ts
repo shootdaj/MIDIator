@@ -80,16 +80,20 @@ export class FormService {
         var returnValue = Array<FormGroup>();
 
         translations.forEach(translation =>
-            returnValue.push(this.fb.group({
-                inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
-                inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
-                outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
-                translationFunction: [translation.translationFunction, [<any>Validators.required]]
-            }))
+            returnValue.push(this.getTranslationFormGroup(translation))
         );
 
         return returnValue;
     }
+
+	public getTranslationFormGroup(translation: Translation) {
+		return this.fb.group({
+			inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
+			inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
+			outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
+			translationFunction: [translation.translationFunction, [<any>Validators.required]]
+		});
+	}
 
     private getChannelMessageFormGroup(channelMessage: ChannelMessage): FormGroup {
         return this.fb.group({
