@@ -20,7 +20,7 @@ namespace MIDIator.Engine
 
 		public List<VirtualOutputDevice> VirtualOutputDevices { get; set; }
 
-		public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager = null)
+		public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
 		{
 			dynamic profile = inProfile;
 
@@ -38,10 +38,18 @@ namespace MIDIator.Engine
 					var matchedTransformation = matchedTransformationsList.Single();
 					matchedTransformation.Update(transformation, midiDeviceService, virtualMIDIManager);
 				}
-				//TODO: else create new transformations
+				else
+				{
+					//TODO: Test
+					//else create new transformations	
+					var newTransformation = new Transformation(transformation.Name, transformation, midiDeviceService,
+						virtualMIDIManager);
+					Transformations.Add(newTransformation);
+				}
 			}
 
 			//TODO: delete transformations that dont exist in inProfile
 		}
 	}
 }
+
