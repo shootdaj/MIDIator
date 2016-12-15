@@ -45,10 +45,16 @@ namespace MIDIator.Web
 			app.UseWebApi(config);
 
 			var inputDeviceName = "TouchOSC Bridge";// "Launchpad";
-			var outputDeviceName = Extensions.GetVirtualDeviceName(inputDeviceName);
+			var outputDeviceName = string.Empty;
 
 			//initialize midi manager
 			MIDIManager.Instantiate(new MIDIDeviceService(), new VirtualMIDIManager());
+
+			//create translation map - this should be loaded from a service or from disk or something
+			var translationMap = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
+					new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
+					InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()
+			);
 
 			//set initial profile - this should be loaded from a service or from disk or something
 			MIDIManager.Instance.SetProfile(new Profile()
@@ -56,13 +62,8 @@ namespace MIDIator.Web
 				Name = "DefaultProfile",
 				Transformations = new List<Transformation>()
 				{
-					new Transformation("TouchOSCXForm",
-						MIDIManager.Instance.MIDIDeviceService.GetInputDevice(inputDeviceName, virtualMIDIManager: MIDIManager.Instance.VirtualMIDIManager),
-						MIDIManager.Instance.MIDIDeviceService.GetOutputDevice(outputDeviceName),
-						new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 66),
-								new ChannelMessage(ChannelCommand.ProgramChange, 1, 23),
-								InputMatchFunction.NoteMatch, TranslationFunction.DirectTranslation).Listify()
-						))
+					new Transformation("TouchOSCXForm", inputDeviceName, string.Empty, translationMap, 
+					true, MIDIManager.Instance.MIDIDeviceService, MIDIManager.Instance.VirtualMIDIManager)
 				}
 				//,
 				//VirtualOutputDevices = new List<VirtualOutputDevice>()

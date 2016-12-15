@@ -14,7 +14,7 @@ namespace MIDIator.Engine
 	public class MIDIDeviceService : IDisposable
 	{
 		#region Internals
-		
+
 		public IList<IMIDIInputDevice> InputDevicesInUse { get; } = new List<IMIDIInputDevice>();
 
 		public IList<IMIDIOutputDevice> OutputDevicesInUse { get; } = new List<IMIDIOutputDevice>();
@@ -46,7 +46,7 @@ namespace MIDIator.Engine
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false, VirtualMIDIManager virtualMIDIManager = null)
+		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
 		{
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(device => device.DeviceID == deviceID))
 				return InputDevicesInUse.First(device => device.DeviceID == deviceID);
@@ -54,7 +54,7 @@ namespace MIDIator.Engine
 			{
 				if (AvailableInputDevices.Any(d => d.DeviceID == deviceID))
 				{
-					return CreateInputDevice(deviceID, translationMap, virtualMIDIManager);
+					return CreateInputDevice(deviceID, translationMap);
 				}
 				else
 				{
@@ -67,7 +67,7 @@ namespace MIDIator.Engine
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false, VirtualMIDIManager virtualMIDIManager = null)
+		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
 		{
 			Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(nameMatch))
@@ -77,7 +77,7 @@ namespace MIDIator.Engine
 				if (AvailableInputDevices.Any(nameMatch))
 				{
 					var deviceID = AvailableInputDevices.Single(d => d.Name == name).DeviceID;
-					return CreateInputDevice(deviceID, translationMap, virtualMIDIManager);
+					return CreateInputDevice(deviceID, translationMap);
 				}
 				else
 				{
@@ -94,30 +94,37 @@ namespace MIDIator.Engine
 		/// </summary>
 		/// <param name="deviceID"></param>
 		/// <param name="translationMap"></param>
-		/// <param name="virtualMIDIManager">If an instance is provided, a corresponding virtual loopback device is created, and vice versa.</param>
 		/// <returns></returns>
-		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null, VirtualMIDIManager virtualMIDIManager = null)
+		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
 			var device = new MIDIInputDevice(deviceID, translationMap);
 			InputDevicesInUse.Add(device);
 
-			// ReSharper disable once InvertIf - resharper, fuck you sometimes. i know you're trying to help but fuck you.
-			if (virtualMIDIManager != null)
-			{
-				//only create new device if device doesn't already exist. it may already exist if the user had selected this device before and came back to it after changing it.
-				if (!virtualMIDIManager.DoesDeviceExist(GetVirtualDeviceName(device.Name)))
-				{
-					virtualMIDIManager.CreateVirtualDevice(GetVirtualDeviceName(device.Name), Guid.NewGuid(), Guid.NewGuid(),
-						VirtualDeviceType.Loopback);
-
-					//if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
-						Thread.Sleep(1000);
-				}
-
-			}
+			//// ReSharper disable once InvertIf - resharper, fuck you sometimes. i know you're trying to help but fuck you.
+			//if (virtualMIDIManager != null)
+			//{
+			//	//only create new device if device doesn't already exist. it may already exist if the user had selected this device before and came back to it after changing it.
+			//	if (!virtualMIDIManager.DoesDeviceExist(GetVirtualDeviceName(device.Name)))
+			//	{
+			//		CreateVirtualOutputDevice(virtualMIDIManager, device);
+			//	}
+			//}
 
 			return device;
-		}		
+		}
+
+
+		public void CreateVirtualOutputDeviceForInputDevice(IMIDIInputDevice device, VirtualMIDIManager virtualMIDIManager)
+		{
+			if (!virtualMIDIManager.DoesDeviceExist(GetVirtualDeviceName(device.Name)))
+			{
+				virtualMIDIManager.CreateVirtualDevice(GetVirtualDeviceName(device.Name), Guid.NewGuid(), Guid.NewGuid(),
+					VirtualDeviceType.Loopback);
+
+				//if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
+				Thread.Sleep(1000);
+			}
+		}
 
 		private string GetVirtualDeviceName(string deviceName)
 		{

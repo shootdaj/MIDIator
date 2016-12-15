@@ -43,7 +43,7 @@ namespace MIDIator.Engine
 		}
 
 		/// <summary>
-		/// Creates a transformation
+		/// Creates a transformation from services
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="inputDeviceName"></param>
@@ -92,9 +92,11 @@ namespace MIDIator.Engine
 				throw new WarningException($"{nameof(virtualMIDIManager)} passed in with {nameof(linkedOutputVirtualDevice)} set to false, therefore {nameof(virtualMIDIManager)} will be ignored. Did you mean to send it as true?");
 
 			LinkedOutputVirtualDevice = linkedOutputVirtualDevice;
-			InputDevice = LinkedOutputVirtualDevice
-				? midiDeviceService.GetInputDevice(inputDeviceName, virtualMIDIManager: virtualMIDIManager)
-				: midiDeviceService.GetInputDevice(inputDeviceName);
+			InputDevice = midiDeviceService.GetInputDevice(inputDeviceName);
+			if (LinkedOutputVirtualDevice)
+			{
+				midiDeviceService.CreateVirtualOutputDeviceForInputDevice(InputDevice, virtualMIDIManager);
+			}
 			OutputDevice = virtualMIDIManager != null && LinkedOutputVirtualDevice
 				// && !virtualMIDIManager.DoesDeviceExist(InputDevice.Name) -- this was to restrict virtual devices to only be created on real devices, not other virtual devices.
 				? midiDeviceService.GetOutputDevice(Extensions.GetVirtualDeviceName(InputDevice.Name))
