@@ -56,7 +56,7 @@ namespace MIDIator.Engine
 		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
 		{
 			var incomingMessage = channelMessageEventArgs.Message;
-			var translations = TranslationMap?.Translations.Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
+			var translations = TranslationMap?.Translations.Where(t => t.Enabled).Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
 			if (translations != null && translations.Any())
 			{
 				translations

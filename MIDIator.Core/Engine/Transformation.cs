@@ -21,6 +21,8 @@ namespace MIDIator.Engine
 
 		public IMIDIOutputDevice OutputDevice { get; set; }
 
+		public bool Enabled { get; set; } = true;
+
 		public ITranslationMap TranslationMap
 		{
 			get { return InputDevice.TranslationMap; }

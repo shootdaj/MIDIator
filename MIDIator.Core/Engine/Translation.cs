@@ -50,5 +50,8 @@ namespace MIDIator.Engine
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public InputMatchFunction InputMatchFunction { get; set; }
+
+		[DataMember]
+		public bool Enabled { get; set; } = true;
 	}
 }
