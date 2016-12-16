@@ -15,7 +15,7 @@ namespace MIDIator.Tests
 		public void TranslationMap_Serialize()
 		{
 			var expectedSerialization =
-				"{\r\n  \"translations\": [\r\n    {\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"ProgramChange\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 0,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"NoteOn\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"PCToNote\",\r\n      \"inputMatchFunction\": \"Data1Match\"\r\n    }\r\n  ]\r\n}";
+				"{\r\n  \"translations\": [\r\n    {\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"ProgramChange\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 0,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"NoteOn\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"PCToNote\",\r\n      \"inputMatchFunction\": \"Data1Match\",\r\n      \"enabled\": true\r\n    }\r\n  ]\r\n}";
 
 			var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.ProgramChange, 1, 0),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 1), InputMatchFunction.Data1Match,
