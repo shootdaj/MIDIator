@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl, ControlValueAccessor } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../../models/domainModel';
@@ -50,10 +50,15 @@ export class DropdownComponent implements AfterViewInit  {
         }
     }
     
-    constructor() {
+    constructor(private elementRef: ElementRef) {
     }
 
     ngAfterViewInit(): void {
-        componentHandler.upgradeAllRegistered();
+		setTimeout(() => {
+			//componentHandler.downgradeElements(this.elementRef.nativeElement.firstChild, 'MaterialSelectfield');
+			componentHandler.upgradeElement(this.elementRef.nativeElement.firstChild, 'MaterialSelectfield');
+			//console.log(`upgrading element ${this.elementRef.nativeElement.firstChild.id}`);
+
+		});
     }
 }

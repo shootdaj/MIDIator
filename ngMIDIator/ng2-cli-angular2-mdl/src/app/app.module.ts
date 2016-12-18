@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
-import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { CustomFormsModule } from 'ng2-validation'
 
 //domain model
 import { IMIDIInputDevice, TranslationMap, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from './models/domainModel';
@@ -47,7 +48,8 @@ channelConfig.hubName = "MIDIReaderHub";
 		FormsModule,
         HttpModule,
         MdlModule,
-        SlimLoadingBarModule.forRoot()
+        SlimLoadingBarModule.forRoot(),
+		CustomFormsModule
     ],
     providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService, SignalRService,
         { provide: SignalrWindow, useValue: window },

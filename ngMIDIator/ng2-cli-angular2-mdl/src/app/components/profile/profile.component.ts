@@ -21,11 +21,12 @@ import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput
     templateUrl: './profile.component.html'
 })
 
-export class ProfileComponent {
+export class ProfileComponent implements AfterViewInit {
 
 	@Input() form: FormGroup;
 
-	constructor(private realtimeService: RealtimeService) {
+	constructor(private realtimeService: RealtimeService,
+				private midiService: MIDIService) {
     }
 
 	private isRealtimeEnabled(): boolean {
@@ -38,5 +39,9 @@ export class ProfileComponent {
 
 	disableRealtime() {
 		this.realtimeService.disableRealtime();
+	}
+
+	ngAfterViewInit(): void {
+		
 	}
 }

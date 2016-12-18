@@ -39,29 +39,13 @@ export class ChannelMessageComponent implements OnInit, OnDestroy {
 		this.subscriptions.push(this.midiService.availableMIDIChannelsSubject
             .subscribe(data => this.midiChannels = data.map(fx => new DropdownOption(fx.toString(), fx.toString()))));
 
-		this.midiService.getAvailableChannelCommands();
-		this.midiService.getAvailableMIDIChannels();
+		if (this.midiService.availableChannelCommands != null)
+			this.channelCommands = this.midiService.availableChannelCommands.map(fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()));
+		if (this.midiService.availableMIDIChannels != null)
+			this.midiChannels = this.midiService.availableMIDIChannels.map(fx => new DropdownOption(fx.toString(), fx.toString()))
 	}
 
 	ngOnDestroy() {
 		this.subscriptions.forEach(s => s.unsubscribe());
 	}
-
-	//get channelCommandDropdownOptions(): IDropdownOption[] {
-	//	if (this.channelCommands != null && this.channelCommands.length > 0) {
-	//		return this.channelCommands.map(
-	//			fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()));
-	//	} else {
-	//		return null;
-	//	}
-	//}
-
-	//get midiChannelDropdownOptions(): IDropdownOption[] {
-	//	if (this.midiChannels != null && this.midiChannels.length > 0) {
-	//		return this.midiChannels.map(
-	//			fx => new DropdownOption(fx.toString(), fx.toString()));
-	//	} else {
-	//		return null;
-	//	}
-	//}
 }

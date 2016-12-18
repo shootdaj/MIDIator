@@ -94,3 +94,22 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
 .readMIDI:hover {
 	background-color: $custom-medium-red;
 }
+
+.dotted-container {
+	/*border: unquote("rgba(#{$color-accent}, 0.5)") dashed 1px;*/
+	/*padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 10px;
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;*/
+	padding: 5px;
+}
+
+.translation-separator {
+	border: 0;
+	height: 1px;
+	background-image: linear-gradient(to right, unquote("rgba(#{$color-primary}, 0.0)"), unquote("rgba(#{$color-accent}, 0.5)"), unquote("rgba(#{$color-primary}, 0.0)"));
+}

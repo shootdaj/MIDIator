@@ -1,6 +1,6 @@
 ﻿export class ShortMessage {
 	constructor() {
-		
+
 	}
 
 	$type: string;
@@ -68,12 +68,6 @@ export interface IMIDIOutputDevice {
     pid: number;
     support: number;
 }
-//export interface ITranslation {
-//    inputMatchFunction: InputMatchFunction;
-//    inputMessageMatchTarget: ShortMessage;
-//    outputMessageTemplate: ShortMessage;
-//    translationFunction: TranslationFunction;
-//}
 export class TranslationMap {
 	constructor() {
 		this.translations = <Translation[]>[];
@@ -146,6 +140,7 @@ export class Transformation {
     outputDevice: MIDIOutputDevice;
     translationMap: TranslationMap;
 	linkedOutputVirtualDevice: boolean;
+	enabled = true;
 }
 export class Translation {
 	constructor() {
@@ -157,6 +152,7 @@ export class Translation {
     inputMessageMatchTarget: ShortMessage;
     outputMessageTemplate: ShortMessage;
     translationFunction: TranslationFunction;
+	enabled = true;
 }
 export class VirtualDevice {
     name: string;

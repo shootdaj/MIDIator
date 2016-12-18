@@ -50,16 +50,21 @@ export class TranslationComponent implements OnInit, OnDestroy {
         let component = this;
 
         this.subscriptions = new Array<Subscription>();
-        this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
-            .subscribe(data => this.inputMatchFunctions = data.map(fx => new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString()))));
+		this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
+			.subscribe(data => {
+				this.inputMatchFunctions = data.map(
+					fx => new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString())
+				);
+			}));
 
         this.subscriptions.push(this.midiService.availableTranslationFunctionsSubject
             .subscribe(data => this.translationFunctions = data.map(fx => new DropdownOption(TranslationFunction[fx].toString(), TranslationFunction[fx].toString()))));
 
-        this.midiService.getAvailableInputMatchFunctions();
-        this.midiService.getAvailableTranslationFunctions();
-
-
+		if (this.midiService.availableInputMatchFunctions != null)
+			this.inputMatchFunctions = this.midiService.availableInputMatchFunctions.map(fx => new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString()));
+		if (this.midiService.availableTranslationFunctions != null)
+			this.translationFunctions = this.midiService.availableTranslationFunctions.map(fx => new DropdownOption(TranslationFunction[fx].toString(), TranslationFunction[fx].toString()));
+		
         //this.immtReaderSubscription = this.signalRService.sub("tasks")
         //    .subscribe(
         //    (x: ChannelEvent) => {
@@ -85,7 +90,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
-	private stopMIDIReader(midiReaderSubscription: Subscription){
+	private stopMIDIReader(midiReaderSubscription: Subscription) {
 		this.midiService.stopMIDIReader(this.inputDevice.name);
 		midiReaderSubscription.unsubscribe();
 		this.profileService.saveProfile();
@@ -121,9 +126,9 @@ export class TranslationComponent implements OnInit, OnDestroy {
             this.stopMIDIReader(this.immtReaderSubscription);
         }
     }
-	
+
     private toggleReadingOMT() {
-		
+
         this.readingOMT = !this.readingOMT;
 		if (this.readingOMT) {
 			this.omtReaderSubscription = this.startMIDIReader("outputMessageTemplate");

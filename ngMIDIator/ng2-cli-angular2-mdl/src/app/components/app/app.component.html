@@ -35,8 +35,10 @@
         </nav>
     </mdl-layout-drawer>
     <mdl-layout-content class="app-content">
-        <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="saveProfile()">
-            <profile [form]="form"></profile>
-        </form>
+	    <form novalidate *ngIf="this.form != null" [formGroup]="form" (ngSubmit)="saveProfile()">
+		    <fieldset> <!--[disabled]="savingChanges">-->
+				<profile [form]="form"></profile>
+			</fieldset>
+	    </form>
     </mdl-layout-content>
 </mdl-layout>

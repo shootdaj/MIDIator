@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, TranslationMap, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from '../models/domainModel';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { CustomValidators } from 'ng2-validation'
 
 @Injectable()
 export class FormService {
@@ -63,7 +63,8 @@ export class FormService {
                     value: [transformation.outputDevice.value]
                 }),
                 translationMap: this.getTranslationMapFormGroup(transformation.translationMap),
-				linkedOutputVirtualDevice: [transformation.linkedOutputVirtualDevice, [<any>Validators.required]]
+				linkedOutputVirtualDevice: [transformation.linkedOutputVirtualDevice, [<any>Validators.required]],
+				enabled: [transformation.enabled, [<any>Validators.required]]
             }))
         );
 
@@ -91,7 +92,8 @@ export class FormService {
 			inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
 			inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
 			outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
-			translationFunction: [translation.translationFunction, [<any>Validators.required]]
+			translationFunction: [translation.translationFunction, [<any>Validators.required]],
+			enabled: [translation.enabled, [<any>Validators.required]]
 		});
 	}
 
@@ -99,8 +101,8 @@ export class FormService {
         return this.fb.group({
             $type: [channelMessage["$type"]],
             command: [channelMessage.command, [<any>Validators.required]],
-            data1: [channelMessage.data1, [<any>Validators.required]],
-            data2: [channelMessage.data2, [<any>Validators.required]],
+            data1: [channelMessage.data1, Validators.compose([Validators.required, CustomValidators.number, CustomValidators.min(0), CustomValidators.max(127)])],
+            data2: [channelMessage.data2, Validators.compose([Validators.required, CustomValidators.number, CustomValidators.min(0), CustomValidators.max(127)])],
             midiChannel: [channelMessage.midiChannel, [<any>Validators.required]],
         });
     }

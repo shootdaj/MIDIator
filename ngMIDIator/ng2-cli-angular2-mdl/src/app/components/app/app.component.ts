@@ -16,22 +16,25 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
+declare var componentHandler;
+
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
 
     signalRConnState: Observable<string>;
+	//savingChanges: boolean;
 
     constructor(private realtimeService: RealtimeService,
 		private profileService: ProfileService,
         private formService: FormService,
-        private signalRService: SignalRService) {
+        private signalRService: SignalRService,
+		private midiService: MIDIService) {
 
         // Let's wire up to the signalr observables
-        //
         this.signalRConnState = this.signalRService.connectionState$
             .map((state: ConnectionState) => { return ConnectionState[state]; });
 
@@ -48,15 +51,18 @@ export class AppComponent implements OnInit{
             () => { console.warn("signalr service failed to start!"); }
         );
 
-
 	    this.realtimeService.attachFormChanges();
         this.profileService.loadProfile();
-
+	    //this.profileService.savingChanges.subscribe(data => this.savingChanges = data);
     }
 
     ngOnInit() {
         console.log("Starting the channel service");
         this.signalRService.start();
+    }
+
+	ngAfterViewInit() {
+		
     }
 
 	private get form(): FormGroup {

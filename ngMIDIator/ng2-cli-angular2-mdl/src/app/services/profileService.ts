@@ -1,6 +1,7 @@
 ﻿import { Component, ViewChild, Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { zip } from 'rxjs/Observable/zip';
 import '../rxjs-operators';
 import { Subscription } from 'rxjs/Subscription';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, IDropdownOption } from '../models/domainModel';
@@ -9,6 +10,7 @@ import { Subject } from 'rxjs/Subject';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {FormService} from "./formService";
 import {MIDIService} from "./midiService";
+declare var componentHandler;
 
 
 @Injectable()
@@ -35,14 +37,18 @@ export class ProfileService {
 		if (valid)
             this.postProfile(profile, refreshMIDIOutputDevice);
     }
-	
+
 	private getProfileFromServer() {
         this.slimLoadingBarService.start();
 		this.http.get(this.profileURL)
-            .map(response => <Profile>response.json())
-            .subscribe(data => {
-				this.formService.setForm(data);
-				this.slimLoadingBarService.complete();
+			.map(response => <Profile>response.json())
+			.subscribe(profileData => {
+				let sub = this.midiService.staticDataSubject.subscribe(data => {
+					this.formService.setForm(profileData);
+					this.slimLoadingBarService.complete();
+					sub.unsubscribe();
+				});
+				this.midiService.getStaticData();
 			},
             err => console.log(err));
     }
@@ -51,18 +57,29 @@ export class ProfileService {
         this.slimLoadingBarService.start();
 		this.http.post(this.profileURL, profile)
 			.map(response => <Profile>response.json())
-			.subscribe(data => {
-					if (refreshMIDIOutputDevice) {
-						var loaderSub = this.midiService.availableOutputDevicesChanges.subscribe(devices => {
-							this.formService.setForm(data);
+			.subscribe(profileData => {
+				if (refreshMIDIOutputDevice) {
+					var loaderSub = this.midiService.availableOutputDevicesChanges.subscribe(devices => {
+						let sub = this.midiService.staticDataSubject.subscribe(data => {
+							this.formService.setForm(profileData);
 							this.slimLoadingBarService.complete();
+							sub.unsubscribe();
 							loaderSub.unsubscribe();
+							//setTimeout(() => {
+							//	componentHandler.upgradeAllRegistered();
+							//});
 						});
-						this.midiService.getAvailableOutputDevices();
-					} else {
+						this.midiService.getStaticData();
+					});
+					this.midiService.getAvailableOutputDevices();
+				} else {
+					let sub = this.midiService.staticDataSubject.subscribe(data => {
 						this.formService.setForm(data);
 						this.slimLoadingBarService.complete();
-					}
+						sub.unsubscribe();
+					});
+					this.midiService.getStaticData();
+				}
 			},
 			err => console.log(err));
 	}
