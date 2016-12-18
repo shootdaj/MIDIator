@@ -34,7 +34,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite", "TypeLite\TypeLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite.Net4", "TypeLite\TypeLite.Net4\TypeLite.Net4.csproj", "{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MIDIator.WebClient", "MIDIator.WebClient\ngMIDIator\MIDIator.WebClient.shproj", "{327A7804-F7AC-42B1-8F83-115B55A6BC1D}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MIDIator.WebClient\ngMIDIator\ngMIDIator.projitems*{327a7804-f7ac-42b1-8f83-115b55a6bc1d}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
