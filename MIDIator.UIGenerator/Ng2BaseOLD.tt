@@ -1,0 +1,28 @@
+﻿<#@ template language="C#" #>
+<#@ template debug="false" hostspecific="True" language="C#" #>
+<#@ assembly name="$(TargetDir)TypeLite.dll" #>
+<#@ assembly name="$(TargetDir)TypeLite.Net4.dll" #>
+<#@ assembly name="$(TargetDir)$(TargetFileName)" #>
+<#@ assembly name="$(TargetDir)MIDIator.UIGenerator.Consumables.dll" #>
+
+<#@ import namespace="TypeLite" #> 
+<#@ import namespace="TypeLite.Net4" #> 
+<#@ import namespace="MIDIator.UIGenerator.Consumables" #> 
+<#@output extension=".ts"#>
+
+<#@include file="Manager.ttinclude"#>
+
+<# var manager = Manager.Create(Host, GenerationEnvironment); #>
+
+<# var ts = TypeScript.Definitions()
+		.WithReference("Enums.ts")
+		.ForLoadedAssemblies()
+		.WithMemberFormatter(identifier => identifier.Name.ToCamelCase());
+#>
+
+<#= ts.Generate(TsGeneratorOutput.Properties) #>
+
+<# manager.StartNewFile("Enums.ts"); #>
+<#= ts.Generate(TsGeneratorOutput.Enums) #>
+<# manager.EndBlock(); #>
+<# manager.Process(true); #>

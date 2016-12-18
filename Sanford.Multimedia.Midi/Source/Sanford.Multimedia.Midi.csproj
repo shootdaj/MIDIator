@@ -365,5 +365,22 @@
     <None Include="packages.config" />
     <None Include="Sanford.Multimedia.Midi.nuspec" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MIDIator.UIGenerator.Consumables\MIDIator.UIGenerator.Consumables.csproj">
+      <Project>{6f7c5bf5-d975-475a-8966-1fe4836c8fd4}</Project>
+      <Name>MIDIator.UIGenerator.Consumables</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TypeLite\TypeLite.Net4\TypeLite.Net4.csproj">
+      <Project>{0ad860b2-2aaa-47cc-acba-f2d97be19d66}</Project>
+      <Name>TypeLite.Net4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TypeLite\TypeLite\TypeLite.csproj">
+      <Project>{43dcb624-f929-4572-97a3-6b14ac6ad158}</Project>
+      <Name>TypeLite</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

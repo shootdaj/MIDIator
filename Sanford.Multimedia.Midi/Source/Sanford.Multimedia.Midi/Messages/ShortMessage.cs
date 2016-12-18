@@ -36,17 +36,19 @@ using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using TypeLite;
 
 namespace Sanford.Multimedia.Midi
 {
 	/// <summary>
 	/// Represents the basic class for all MIDI short messages.
 	/// </summary>
-    /// <remarks>
-    /// MIDI short messages represent all MIDI messages except meta messages
-    /// and system exclusive messages. This includes channel messages, system
-    /// realtime messages, and system common messages.
-    /// </remarks>
+	/// <remarks>
+	/// MIDI short messages represent all MIDI messages except meta messages
+	/// and system exclusive messages. This includes channel messages, system
+	/// realtime messages, and system common messages.
+	/// </remarks>
+	[TsClass(Module = "")]
     public abstract class ShortMessage : IMidiMessage
 	{
         #region ShortMessage Members

@@ -36,16 +36,21 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using TypeLite;
+// ReSharper disable CheckNamespace
 
 namespace Sanford.Multimedia.Midi
 {
-    #region Channel Command Types
+	#region Channel Command Types
 
-    /// <summary>
-    /// Defines constants for ChannelMessage types.
-    /// </summary>
-    public enum ChannelCommand 
+	/// <summary>
+	/// Defines constants for ChannelMessage types.
+	/// </summary>
+	[TsEnum(Module = "")]
+	public enum ChannelCommand 
     {
         /// <summary>
         /// Represents the note-off command type.
@@ -429,15 +434,17 @@ namespace Sanford.Multimedia.Midi
         PolyOperation
     }
 
-    #endregion
+	#endregion
 
 	/// <summary>
 	/// Represents MIDI channel messages.
 	/// </summary>
+	[TsClass(Module = "")]
 	[DataContract]
 	[ImmutableObject(true)]
 	[DisplayName(nameof(ChannelMessage))]
-	public sealed class ChannelMessage : ShortMessage
+	[Ng2Component()]
+    public sealed class ChannelMessage : ShortMessage
 	{
         #region ChannelEventArgs Members
 
@@ -453,7 +460,8 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Maximum value allowed for MIDI channels.
         /// </summary> 
-        public const int MidiChannelMaxValue = 15;
+        public const int MidiChannelMaxValue = 16;
+        public const int MidiChannelMinValue = 1;
 
         #endregion
 
@@ -635,8 +643,8 @@ namespace Sanford.Multimedia.Midi
         /// </returns>
         internal static int UnpackMidiChannel(int message)
         {
-            return message & DataMask & CommandMask;
-        }
+            return (message & DataMask & CommandMask) + 1;  //+1 because the actual value is a 0-indexed value
+		}
 
         /// <summary>
         /// Packs the MIDI channel into the specified integer message.
@@ -657,7 +665,7 @@ namespace Sanford.Multimedia.Midi
         {
             #region Preconditons
 
-            if(midiChannel < 0 || midiChannel > MidiChannelMaxValue)
+            if(midiChannel < MidiChannelMinValue || midiChannel > MidiChannelMaxValue)
             {
                 throw new ArgumentOutOfRangeException("midiChannel", midiChannel,
                     "MIDI channel out of range.");
@@ -665,7 +673,7 @@ namespace Sanford.Multimedia.Midi
 
             #endregion
 
-            return (message & MidiChannelMask) | midiChannel;
+            return (message & MidiChannelMask) | (midiChannel - 1);	//-1 because the actual value is a 0-indexed value
         }
 
         /// <summary>
@@ -693,7 +701,8 @@ namespace Sanford.Multimedia.Midi
         /// Gets the channel command value.
         /// </summary>
         [DataMember]
-        public ChannelCommand Command
+		[JsonConverter(typeof(StringEnumConverter))]
+		public ChannelCommand Command
         {
             get
             {

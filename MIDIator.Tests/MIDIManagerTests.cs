@@ -1,13 +1,22 @@
-﻿using NUnit.Framework;
+﻿using MIDIator.Engine;
+using NUnit.Framework;
 
 namespace MIDIator.Tests
 {
 	public class MIDIManagerTests
 	{
-		[Test]
-		public void Devices_ReturnsSomeDevices()
+		private MIDIManager MIDIManager { get; set; }
+
+		[SetUp]
+		public void Setup()
 		{
-			var devices = MIDIManager.FreeDevices;
+			MIDIManager = new MIDIManager(new MIDIDeviceService());
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			MIDIManager = null;
 		}
 
 		//[Test]

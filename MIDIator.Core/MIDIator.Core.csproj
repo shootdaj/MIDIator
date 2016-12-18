@@ -31,16 +31,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Anshul.Utilities, Version=1.0.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Anshul.Utilities.1.0.19.0\lib\net45\Anshul.Utilities.dll</HintPath>
+    <Reference Include="Anshul.Utilities, Version=1.0.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Anshul.Utilities.1.0.24.0\lib\net45\Anshul.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Refigure, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refigure.1.0.13.0\lib\net45\Refigure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -55,37 +75,127 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChannelMessageAction.cs" />
+    <Compile Include="Engine\ChannelMessageAction.cs" />
+    <Compile Include="Engine\IProfile.cs" />
+    <Compile Include="Engine\MIDIDeviceService.cs" />
+    <Compile Include="Engine\VirtualLoopbackDevice.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IMIDIInputDevice.cs" />
-    <Compile Include="IMIDIOutputDevice.cs" />
-    <Compile Include="InputMatchFunction.cs" />
-    <Compile Include="InputMatchFunctions.cs" />
-    <Compile Include="ITranslationMap.cs" />
+    <Compile Include="Interfaces\IMIDIInputDevice.cs" />
+    <Compile Include="Interfaces\IMIDIManager.cs" />
+    <Compile Include="Interfaces\IMIDIOutputDevice.cs" />
+    <Compile Include="Engine\InputMatchFunction.cs" />
+    <Compile Include="Engine\InputMatchFunctions.cs" />
+    <Compile Include="Interfaces\ITranslationMap.cs" />
+    <Compile Include="Json\ProfileConverter.cs" />
+    <Compile Include="Json\CamelCaseToPascalCaseExpandoObjectConverter.cs" />
     <Compile Include="Json\DisplayNameSerializationBinder.cs" />
     <Compile Include="Json\SerializationSettings.cs" />
-    <Compile Include="TranslationFunction.cs" />
+    <Compile Include="Engine\Transformation.cs" />
+    <Compile Include="Engine\Profile.cs" />
+    <Compile Include="Engine\TranslationFunction.cs" />
+    <Compile Include="Engine\VirtualInputDevice.cs" />
+    <Compile Include="Engine\VirtualDevice.cs" />
+    <Compile Include="Engine\VirtualOutputDevice.cs" />
+    <Compile Include="Engine\VirtualMIDIManager.cs" />
+    <Compile Include="UIGeneration\TranslationComponentCode.cs">
+      <DependentUpon>TranslationComponentCode.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UIGeneration\TransformationComponentCode.cs">
+      <DependentUpon>TransformationComponentCode.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UIGeneration\ProfileComponentCode.cs">
+      <DependentUpon>ProfileComponentCode.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UIGeneration\ProfileView.cs">
+      <DependentUpon>ProfileView.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UIGeneration\UIGenerationSettings.cs" />
     <Compile Include="VirtualMIDI\teVirtualMIDI.cs" />
-    <Compile Include="TranslationFunctions.cs" />
-    <Compile Include="TranslationMap.cs" />
-    <Compile Include="MIDIOutputDevice.cs" />
-    <Compile Include="MIDIInputDevice.cs" />
-    <Compile Include="MIDIManager.cs" />
+    <Compile Include="Engine\TranslationFunctions.cs" />
+    <Compile Include="Engine\TranslationMap.cs" />
+    <Compile Include="Engine\MIDIOutputDevice.cs" />
+    <Compile Include="Engine\MIDIInputDevice.cs" />
+    <Compile Include="Engine\MIDIManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ITranslation.cs" />
-    <Compile Include="Translation.cs" />
+    <Compile Include="Interfaces\ITranslation.cs" />
+    <Compile Include="Engine\Translation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="MIDIator.UI.cd" />
+    <None Include="MIDIator.cd" />
     <None Include="MIDIator.Core.nuspec" />
     <None Include="packages.config" />
+    <None Include="Typelite\Manager.ttinclude" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MIDIator.UIGenerator.Consumables\MIDIator.UIGenerator.Consumables.csproj">
+      <Project>{6f7c5bf5-d975-475a-8966-1fe4836c8fd4}</Project>
+      <Name>MIDIator.UIGenerator.Consumables</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sanford.Multimedia.Midi\Source\Sanford.Multimedia.Midi.csproj">
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>
       <Name>Sanford.Multimedia.Midi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TypeLite\TypeLite.Net4\TypeLite.Net4.csproj">
+      <Project>{0ad860b2-2aaa-47cc-acba-f2d97be19d66}</Project>
+      <Name>TypeLite.Net4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TypeLite\TypeLite\TypeLite.csproj">
+      <Project>{43dcb624-f929-4572-97a3-6b14ac6ad158}</Project>
+      <Name>TypeLite</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Typelite\TypeLite.Net4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TypeLite.Net4.d.ts</LastGenOutput>
+    </Content>
+    <Content Include="tevirtualMIDI.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="teVirtualMIDI32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UIGeneration\TranslationComponentCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TranslationComponentCode.cs</LastGenOutput>
+    </Content>
+    <Content Include="UIGeneration\TransformationComponentCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TransformationComponentCode.cs</LastGenOutput>
+    </Content>
+    <Content Include="UIGeneration\ProfileComponentCode.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ProfileComponentCode.cs</LastGenOutput>
+    </Content>
+    <Content Include="UIGeneration\ProfileView.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ProfileView.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Typelite\Enums.ts">
+      <DependentUpon>TypeLite.Net4.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Typelite\TypeLite.Net4.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypeLite.Net4.tt</DependentUpon>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

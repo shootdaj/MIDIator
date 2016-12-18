@@ -12,7 +12,7 @@
 
 using System;
 using System.Threading;
-using TobiasErichsen.teVirtualMIDI;
+using MIDIator.VirtualMIDI;
 
 namespace ConsoleApp
 {
@@ -35,7 +35,6 @@ namespace ConsoleApp
 					port.sendCommand(command);
 
 					Console.WriteLine("command: " + byteArrayToString(command));
-
 				}
 			}
 			catch (Exception ex)
@@ -56,7 +55,7 @@ namespace ConsoleApp
 
 		}
 
-		static void YOYO(string[] args)
+		static void Main(string[] args)
 		{
 
 

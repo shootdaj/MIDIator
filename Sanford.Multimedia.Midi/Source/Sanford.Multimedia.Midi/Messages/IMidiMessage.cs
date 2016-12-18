@@ -33,13 +33,15 @@
 #endregion
 
 using System;
+using TypeLite;
 
 namespace Sanford.Multimedia.Midi
 {
-    /// <summary>
-    /// Defines constants representing MIDI message types.
-    /// </summary>
-    public enum MessageType
+	/// <summary>
+	/// Defines constants representing MIDI message types.
+	/// </summary>
+	[TsEnum(Module = "")]
+	public enum MessageType
     {
         Channel,
 

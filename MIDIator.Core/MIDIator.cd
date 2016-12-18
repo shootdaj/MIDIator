@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Implementations &amp; Enums&#xD;&#xA;&#xD;&#xA;">
+    <Position X="18.402" Y="0.5" Height="0.5" Width="1.847" />
+  </Comment>
+  <Comment CommentText="Type Hierarchy">
+    <Position X="2" Y="0.5" Height="0.446" Width="1.363" />
+  </Comment>
+  <Class Name="MIDIator.Engine.InputMatchFunctions" Collapsed="true">
+    <Position X="19.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAgAAAAABAAEBEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\InputMatchFunctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIDIator.Engine.MIDIInputDevice" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACQAAAAUCAAAAABKAQEBCQAABAABAggIAAgEACAABA=</HashCode>
+      <FileName>Engine\MIDIInputDevice.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MIDIator.Engine.MIDIOutputDevice" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAEAEAAQAAAQAAAgAAAAAEACAABA=</HashCode>
+      <FileName>Engine\MIDIOutputDevice.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MIDIator.Engine.Profile">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAAAAAQ=</HashCode>
+      <FileName>Engine\Profile.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Transformations" />
+      <Property Name="VirtualOutputDevices" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIDIator.Engine.Transformation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAAAAAAAAAAACSAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Transformation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InputDevice" />
+      <Property Name="OutputDevice" />
+      <Property Name="TranslationMap" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MIDIator.Engine.Translation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAIAAAQAAAAAA=</HashCode>
+      <FileName>Engine\Translation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MIDIator.Engine.TranslationFunctions" Collapsed="true">
+    <Position X="17" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAAAAAAAABAAABAAAAAAAAAAAAQAAAAAAAAEAA=</HashCode>
+      <FileName>Engine\TranslationFunctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIDIator.Engine.TranslationMap" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\TranslationMap.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MIDIator.Engine.VirtualDevice" Collapsed="true">
+    <Position X="11" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\VirtualDevice.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MIDIator.Engine.VirtualInputDevice" Collapsed="true">
+    <Position X="13" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\VirtualInputDevice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MIDIator.Engine.VirtualOutputDevice" Collapsed="true">
+    <Position X="8.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\VirtualOutputDevice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sanford.Multimedia.Midi.ShortMessage" Collapsed="true">
+    <Position X="9.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sanford.Multimedia.Midi.ChannelMessage" Collapsed="true">
+    <Position X="11.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Command" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="MIDIator.Engine.IDropdownOption" Collapsed="true">
+    <Position X="22" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Engine\IDropdownOption.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIDIator.Interfaces.IMIDIInputDevice" Collapsed="true">
+    <Position X="3.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACQAAAAQCAAAAAAKAQEAAQAABAABAgAIAAAEACAABA=</HashCode>
+      <FileName>Interfaces\IMIDIInputDevice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TranslationMap" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MIDIator.Interfaces.IMIDIOutputDevice" Collapsed="true">
+    <Position X="1.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAEAAQAAAAAAAgAAAAAEACAABA=</HashCode>
+      <FileName>Interfaces\IMIDIOutputDevice.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MIDIator.Interfaces.ITranslation" Collapsed="true">
+    <Position X="6" Y="5.75" Width="2.5" />
+    <AssociationLine Name="InputMessageMatchTarget" Type="Sanford.Multimedia.Midi.ShortMessage" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.188" Y="6.312" />
+        <Point X="8.188" Y="7.562" />
+        <Point X="9.25" Y="7.562" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.038" Y="0.107" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="OutputMessageTemplate" Type="Sanford.Multimedia.Midi.ShortMessage" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.688" Y="6.312" />
+        <Point X="7.688" Y="7.937" />
+        <Point X="9.25" Y="7.937" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="InputMatchFunction" Type="MIDIator.Engine.InputMatchFunction" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.125" Y="6.312" />
+        <Point X="7.125" Y="8.789" />
+        <Point X="5.25" Y="8.789" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAIAAAQAAAAAA=</HashCode>
+      <FileName>Interfaces\ITranslation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="InputMessageMatchTarget" />
+      <Property Name="OutputMessageTemplate" />
+      <Property Name="TranslationFunction" />
+      <Property Name="InputMatchFunction" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="MIDIator.Interfaces.ITranslationMap" Collapsed="true">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITranslationMap.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Translations" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Enum Name="MIDIator.Engine.InputMatchFunction" Collapsed="true">
+    <Position X="3.25" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\InputMatchFunction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MIDIator.Engine.TranslationFunction" Collapsed="true">
+    <Position X="3.25" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAA=</HashCode>
+      <FileName>Engine\TranslationFunction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sanford.Multimedia.Midi.ChannelCommand" Collapsed="true">
+    <Position X="11.5" Y="9" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

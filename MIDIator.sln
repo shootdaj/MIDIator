@@ -20,6 +20,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator.WebApi", "MIDIator.WebApi\MIDIator.WebApi.csproj", "{148244F4-8E03-4248-8827-C3474469F442}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator.UIGenerator", "MIDIator.UIGenerator\MIDIator.UIGenerator.csproj", "{649B3CEC-2C8E-4A94-8C89-32B4A1C00A14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator.UIGenerator.Consumables", "MIDIator.UIGenerator.Consumables\MIDIator.UIGenerator.Consumables.csproj", "{6F7C5BF5-D975-475A-8966-1FE4836C8FD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0D69F0AA-644A-496D-B5B2-AE22AF35CDB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIDIator.UIGenerator.Consumables.Tests", "MIDIator.UIGenerator.Consumables.Tests\MIDIator.UIGenerator.Consumables.Tests.csproj", "{19A05FC8-6081-4512-8065-DC12A52BB3BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite", "TypeLite\TypeLite\TypeLite.csproj", "{43DCB624-F929-4572-97A3-6B14AC6AD158}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeLite.Net4", "TypeLite\TypeLite.Net4\TypeLite.Net4.csproj", "{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,11 +60,39 @@ Global
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148244F4-8E03-4248-8827-C3474469F442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148244F4-8E03-4248-8827-C3474469F442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148244F4-8E03-4248-8827-C3474469F442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148244F4-8E03-4248-8827-C3474469F442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{649B3CEC-2C8E-4A94-8C89-32B4A1C00A14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{649B3CEC-2C8E-4A94-8C89-32B4A1C00A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{649B3CEC-2C8E-4A94-8C89-32B4A1C00A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{649B3CEC-2C8E-4A94-8C89-32B4A1C00A14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F7C5BF5-D975-475A-8966-1FE4836C8FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F7C5BF5-D975-475A-8966-1FE4836C8FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F7C5BF5-D975-475A-8966-1FE4836C8FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F7C5BF5-D975-475A-8966-1FE4836C8FD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A05FC8-6081-4512-8065-DC12A52BB3BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A05FC8-6081-4512-8065-DC12A52BB3BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A05FC8-6081-4512-8065-DC12A52BB3BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A05FC8-6081-4512-8065-DC12A52BB3BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43DCB624-F929-4572-97A3-6B14AC6AD158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43DCB624-F929-4572-97A3-6B14AC6AD158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43DCB624-F929-4572-97A3-6B14AC6AD158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43DCB624-F929-4572-97A3-6B14AC6AD158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{B62030ED-5B69-41D6-99EA-FE26B3C5B530} = {0D69F0AA-644A-496D-B5B2-AE22AF35CDB0}
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1} = {1110D915-D1FD-4528-9931-4AB7770601B8}
+		{19A05FC8-6081-4512-8065-DC12A52BB3BF} = {0D69F0AA-644A-496D-B5B2-AE22AF35CDB0}
+		{43DCB624-F929-4572-97A3-6B14AC6AD158} = {1110D915-D1FD-4528-9931-4AB7770601B8}
+		{0AD860B2-2AAA-47CC-ACBA-F2D97BE19D66} = {1110D915-D1FD-4528-9931-4AB7770601B8}
 	EndGlobalSection
 EndGlobal

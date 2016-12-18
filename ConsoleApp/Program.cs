@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using MIDIator;
+using MIDIator.Engine;
+using MIDIator.Interfaces;
+using MIDIator.VirtualMIDI;
 using Sanford.Multimedia.Midi;
-using TobiasErichsen.teVirtualMIDI;
 
 namespace ConsoleApp
 {
 	class Program
 	{
-		static void Main(string[] args)
+		//private static MIDIManager MIDIManager { get; set; }
+
+		static void NoMain(string[] args)
 		{ 
-			GuitarWingMap();
+			GuitarWingMap(new MIDIManager(new MIDIDeviceService()));
 		}
 
 		static void CreateTranslationAndSaveIt()
@@ -21,11 +25,11 @@ namespace ConsoleApp
 		}
 
 
-		static void GuitarWingMap()
+		static void GuitarWingMap(MIDIManager midiManager)
 		{
 			var channel = 1;
 
-			var guitarWing = MIDIManager.GetInputDevice("Livid Guitar Wing", new TranslationMap(new List<ITranslation>()
+			var guitarWing = midiManager.MIDIDeviceService.GetInputDevice("Livid Guitar Wing", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.ProgramChange, channel, 0),
 					new ChannelMessage(ChannelCommand.NoteOn, channel, 1), InputMatchFunction.Data1Match,
@@ -34,8 +38,8 @@ namespace ConsoleApp
 
 			TeVirtualMIDI.logging(TeVirtualMIDI.TE_VM_LOGGING_MISC | TeVirtualMIDI.TE_VM_LOGGING_RX | TeVirtualMIDI.TE_VM_LOGGING_TX);
 
-			var manufacturer = new Guid("aa4e075f-3504-4aab-9b06-9a4104a91cf0");
-			var product = new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
+			var manufacturer = Guid.NewGuid();// new Guid("aa4e075f-3504-4aab-9b06-9a4104a91cf0");
+			var product = Guid.NewGuid();//new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
 
 			var guitarWingReader = new TeVirtualMIDI("MIDIator - GuitarWingReader", 65535, TeVirtualMIDI.TE_VM_FLAGS_PARSE_RX, ref manufacturer, ref product);
 
@@ -50,12 +54,12 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			MIDIManager.RemoveDevice(guitarWing);
+			midiManager.MIDIDeviceService.RemoveInputDevice(guitarWing);
 		}
 
-		static void OrbitMap()
+		static void OrbitMap(MIDIManager midiManager)
 		{
-			var orbit = MIDIManager.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
+			var orbit = midiManager.MIDIDeviceService.GetInputDevice("Numark ORBIT", new TranslationMap(new List<ITranslation>()
 			{
 				new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 49, 1),
 					new ChannelMessage(ChannelCommand.NoteOn, 1, 2, 1), InputMatchFunction.NoteMatch,
@@ -68,7 +72,7 @@ namespace ConsoleApp
 			var product = new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
 
 			var orbitReader = new TeVirtualMIDI("MIDIator - OrbitReader", 65535, TeVirtualMIDI.TE_VM_FLAGS_PARSE_RX, ref manufacturer, ref product);
-
+			
 			orbit.AddChannelMessageAction(new ChannelMessageAction(message => true,
 				message =>
 				{
@@ -80,7 +84,7 @@ namespace ConsoleApp
 
 			Thread.Sleep(300000);
 
-			MIDIManager.RemoveDevice(orbit);
+			midiManager.MIDIDeviceService.RemoveInputDevice(orbit);
 		}
 	}
 }

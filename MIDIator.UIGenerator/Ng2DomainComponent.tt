@@ -1,0 +1,46 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="Consumables" #> 
+<#@ import namespace="MIDIator.UIGeneration" #> 
+<#@ import namespace="System.Linq" #> 
+<#@ import namespace="System.Reflection" #> 
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ parameter type="TypeLite.TsModels.TsClass" name="BaseType" #>
+<#@ parameter type="System.Collections.Generic.List<ImportDirective>" name="ImportDirectives" #>
+<#@ parameter type="System.Type" name="ComponentCodeTemplate" #>
+<# ImportDirectives.ForEach(directive =>{#>import<#if (directive.Classes.Any()){#> { <#=string.Join(", ", directive.Classes)#> } from<#}#> '<#=directive.Module#>';
+<#}); #>
+
+@Component({
+	selector: '<#=BaseType.Name.ToCamelCase()#>',
+	templateUrl: './<#=BaseType.Name.ToCamelCase()#>.component.html'
+})
+
+export class <#=BaseType.Name#>Component {
+	private subscriptions: Subscription[];
+	private current<#=BaseType.Name#>: <#=BaseType.Name#>;
+	
+	@Input() set <#=BaseType.Name.ToCamelCase()#>(in<#=BaseType.Name#>: <#=BaseType.Name#>){
+		this.current<#=BaseType.Name#> = in<#=BaseType.Name#>;
+		this.<#=BaseType.Name.ToCamelCase()#>Change.emit(in<#=BaseType.Name#>); 
+	}
+	get <#=BaseType.Name.ToCamelCase()#>() : <#=BaseType.Name#> {
+		return this.current<#=BaseType.Name.ToPascalCase()#>; 
+	}
+	
+	@Output() <#=BaseType.Name.ToCamelCase()#>Change: EventEmitter<<#=BaseType.Name#>> = new EventEmitter<<#=BaseType.Name#>>();	
+
+	<#
+
+	if (ComponentCodeTemplate != null)
+    {
+		var componentCodeTemplate = Activator.CreateInstance(ComponentCodeTemplate);
+        componentCodeTemplate.GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .First(x => x.Name == "Session")
+            .SetValue(componentCodeTemplate, new Dictionary<string, object>());
+        var componentCode = componentCodeTemplate.GetType()
+            .GetMethod("TransformText")
+            .Invoke(componentCodeTemplate, null);
+        #>
+	<#= componentCode #>
+<# } #>}
