@@ -1,0 +1,51 @@
+{
+	"project": {
+		"version": "1.0.0",
+		"name": "MIDIator"
+	},
+	"apps": [
+		{
+			"root": "src",
+			"outDir": "dist",
+			"assets": "assets",
+			"index": "index.html",
+			"main": "main.ts",
+			"test": "test.ts",
+			"tsconfig": "tsconfig.json",
+			"prefix": "app",
+			"mobile": false,
+			"styles": [
+				"scss.scss",
+				"styles.css"
+			],
+			"scripts": [ ],
+			"environments": {
+				"source": "environments/environment.ts",
+				"dev": "environments/environment.ts",
+				"prod": "environments/environment.prod.ts"
+			}
+		}
+	],
+	"addons": [ ],
+	"packages": [ ],
+	"e2e": {
+		"protractor": {
+			"config": "./protractor.conf.js"
+		}
+	},
+	"test": {
+		"karma": {
+			"config": "./karma.conf.js"
+		}
+	},
+	"defaults": {
+		"styleExt": "css",
+		"prefixInterfaces": false
+	},
+
+	"sassCompiler": {
+		"includePaths": [
+			"node_modules/angular2-mdl/src/scss-mdl"
+		]
+	}
+}

@@ -1,0 +1,32 @@
+<div class="mdl-grid mdl-grid--no-spacing">
+	<div class="mdl-cell--3-col">
+		<div style="width: 90%">
+			<mdl-dropdown [options]="channelCommands"
+			              [dropdownLabel]="'Channel Command'"
+			              [placeholder]="'Select...'"
+			              [control]="form.controls['command']"
+			              [id]="'command'">
+			</mdl-dropdown>
+		</div>
+	</div>
+	<div class="mdl-cell--3-col">
+		<div style="width: 90%">
+			<mdl-dropdown [options]="midiChannels"
+						  [dropdownLabel]="'MIDI Channel'"
+						  [placeholder]="'Select...'"
+						  [control]="form.controls['midiChannel']"
+						  [id]="'midiChannel'">
+			</mdl-dropdown>
+		</div>
+	</div>
+	<div class="mdl-cell--3-col">
+		<div style="width: 90%">
+			<mdl-textfield type="text" label="Data1" floating-label [formControl]="form.controls['data1']"></mdl-textfield>
+		</div>
+	</div>
+	<div class="mdl-cell--3-col">
+		<div style="width: 90%">
+			<mdl-textfield type="text" label="Data2" floating-label [formControl]="form.controls['data2']"></mdl-textfield>
+		</div>
+	</div>
+</div>
