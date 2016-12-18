@@ -137,7 +137,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="package.json" />
     <Compile Include="Startup.cs" />
-    <None Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -146,10 +145,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Scripts\app\packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Scripts\angular.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MIDIator.Core\MIDIator.Core.csproj">
@@ -162,18 +157,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\app\midimanagercontroller.js" />
-    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.1.js" />
-    <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.1.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.1.min.js" />
-    <Content Include="Scripts\nugetexample.js" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
