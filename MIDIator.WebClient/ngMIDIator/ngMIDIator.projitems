@@ -10,6 +10,17 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory).editorconfig" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\assets\.npmignore" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\assets\jquery.js" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\assets\jquery.signalR.js" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\assets\mdl-selectfield\mdl-selectfield-midiator.scss" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\assets\mdl-selectfield\mdl-selectfield.js" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\inline.js" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\inline.map" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\main.bundle.js" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\main.map" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\styles.bundle.js" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\styles.map" />
     <None Include="$(MSBuildThisFileDirectory)e2e\app.e2e-spec.ts" />
     <None Include="$(MSBuildThisFileDirectory)e2e\app.po.ts" />
     <None Include="$(MSBuildThisFileDirectory)karma.conf.js" />
@@ -57,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)angular-cli.json" />
+    <Content Include="$(MSBuildThisFileDirectory)dist\index.html" />
     <Content Include="$(MSBuildThisFileDirectory)e2e\tsconfig.json" />
     <Content Include="$(MSBuildThisFileDirectory)package.json" />
     <Content Include="$(MSBuildThisFileDirectory)src\app\app.component.css" />
