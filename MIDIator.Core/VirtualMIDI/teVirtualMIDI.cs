@@ -127,7 +127,7 @@ namespace MIDIator.VirtualMIDI {
 
 
 
-	public class TeVirtualMIDI {
+	public class TeVirtualMIDI : IDisposable {
 
 		/* default size of sysex-buffer */
 		private const UInt32 TE_VM_DEFAULT_SYSEX_SIZE = 65535;
@@ -202,7 +202,7 @@ namespace MIDIator.VirtualMIDI {
 		}
 
 
-		~TeVirtualMIDI() {
+		public void Dispose() {
 
 			if (fInstance != IntPtr.Zero) {
 

@@ -7,7 +7,7 @@ using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine
 {
-	public class MIDIManager : IMIDIManager
+	public class MIDIManager : IMIDIManager, IDisposable
 	{
 		#region Singleton
 
@@ -31,7 +31,12 @@ namespace MIDIator.Engine
 			MIDIDeviceService = midiDeviceService;
 			VirtualMIDIManager = virtualMIDIManager;
 		}
-		
+
+		public void Dispose()
+		{
+			MIDIDeviceService.Dispose();
+		}
+
 		#endregion
 
 		#region Profile

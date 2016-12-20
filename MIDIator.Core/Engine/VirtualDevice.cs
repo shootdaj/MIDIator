@@ -28,6 +28,7 @@ namespace MIDIator.Engine
 		{
 			Name = null;
 			TeVirtualMIDIDevice.shutdown();
+			TeVirtualMIDIDevice.Dispose();
 			TeVirtualMIDIDevice = null;
 		}
 	}
