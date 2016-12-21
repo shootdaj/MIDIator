@@ -29,8 +29,9 @@ namespace MIDIator.Web
 
 			);
 
-			var signalRConfig = new HubConfiguration { Resolver = new DefaultDependencyResolver() };
-
+			var resolver = new DefaultDependencyResolver();
+			var signalRConfig = new HubConfiguration { Resolver = resolver };
+			
 			//ignore glimpse route
 			config.Routes.IgnoreRoute("Glimpse", "{resource}.axd/{*pathInfo}");
 
@@ -45,6 +46,7 @@ namespace MIDIator.Web
 			//add api services
 			app.UseCors(CorsOptions.AllowAll);
 			app.MapSignalR(signalRConfig);
+			GlobalHost.DependencyResolver = resolver;
 			app.UseWebApi(config);
         }
     }

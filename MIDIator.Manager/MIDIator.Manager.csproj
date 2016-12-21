@@ -148,6 +148,10 @@
       <Project>{148244f4-8e03-4248-8827-c3474469f442}</Project>
       <Name>MIDIator.WebApi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MIDIator.WebClient\MIDIator.WebClient.csproj">
+      <Project>{331C8D5C-A27E-46F1-9293-88F32FD85B06}</Project>
+      <Name>MIDIator.WebClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

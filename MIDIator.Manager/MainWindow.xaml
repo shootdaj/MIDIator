@@ -5,12 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MIDIator.Manager"
         mc:Ignorable="d"
-        Title="MIDIator Manager" Height="279.166" Width="307.291" ResizeMode="NoResize" Icon="pack://siteoforigin:,,,/Resources/favicon.png">
-	<Grid>
-		<Border BorderBrush="Black" BorderThickness="1" Margin="0,10,20,10">
-			<Label x:Name="label" Content="Status:" Margin="9,9,0,0" FontSize="36" HorizontalAlignment="Left" Width="116" Height="59" VerticalAlignment="Top"/>
-		</Border>
-		<Label x:Name="lblStatus" Content="Stopped" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="126,20,0,0" FontSize="36"/>
-		<Button x:Name="btnStartStop" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Margin="10,83,0,0" Height="147" FontSize="36" Click="btnStartStop_Click"/>
+        Title="MIDIator Manager" ResizeMode="NoResize" Icon="pack://siteoforigin:,,,/Resources/favicon.png" SizeToContent="WidthAndHeight">
+	<Grid Margin="0,0,4,0">
+		<Label x:Name="lblStatus" Content="Stopped" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,10,0,0" FontSize="36"/>
+		<Button x:Name="btnStartStop" Content="Start" VerticalAlignment="Top" Margin="10,93,0,0" Height="147" FontSize="36" Click="btnStartStop_Click" HorizontalAlignment="Left" Width="277"/>
+		<Grid HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="297"/>
 	</Grid>
 </Window>

@@ -18,7 +18,7 @@ namespace MIDIator.Web
 
 		public static void Main(string[] args)
 		{
-			string baseAddress = Config.Get("WebApi.BaseAddress");
+			string baseAddress = Config.Get("WebAPI.BaseAddress");
 			
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.ColoredConsole()

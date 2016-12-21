@@ -67,7 +67,7 @@ namespace MIDIator.Web
 
 		private void StartSignalRHubs()
 		{
-			HubConnection = new HubConnection(Config.Get("WebApi.BaseAddress"));
+			HubConnection = new HubConnection(Config.Get("WebAPI.BaseAddress"));
 			IHubProxy eventHubProxy = HubConnection.CreateHubProxy("MIDIReaderHub");
 			eventHubProxy.On<string, ChannelEvent>("OnEvent",
 				(channel, ev) => Log.Information("Event received on {channel} channel - {@ev}", channel, ev));

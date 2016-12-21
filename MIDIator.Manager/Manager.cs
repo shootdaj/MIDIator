@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Owin.Hosting;
 using MIDIator.Engine;
 using MIDIator.Web;
+using MIDIator.WebClient;
 using Refigure;
 
 namespace MIDIator.Manager
 {
 	public class Manager : IDisposable
 	{
-		public WebAPIManager WebAPIManager = new WebAPIManager();
+		private WebAPIManager WebAPIManager = new WebAPIManager();
 		
-		private Process WebClientProcess { get; set; } = new Process();
+		private WebClientManager WebClientManager = new WebClientManager();
 
 		private VirtualMIDIManager VirtualMIDIManager { get; set; } = new VirtualMIDIManager();
 
@@ -39,7 +35,7 @@ namespace MIDIator.Manager
 
 		private void StartWebAPI()
 		{
-			string baseAddress = Config.Get("WebApi.BaseAddress");
+			string baseAddress = Config.Get("WebAPI.BaseAddress");
 			WebAPIProcess = WebApp.Start<Startup>(baseAddress);
 			WebAPIManager.InitializeWebAPI(VirtualMIDIManager);
 		}
@@ -52,14 +48,14 @@ namespace MIDIator.Manager
 
 		private void StartWebClient()
 		{
-
+			string baseAddress = Config.Get("WebClient.BaseAddress");
+			WebClientManager.InitializeWebClient(baseAddress);
 		}
 
 		private void StopWebClient()
 		{
-
+			WebClientManager.DisposeWebClient();
 		}
-
 
 		public void Dispose()
 		{

@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{331C8D5C-A27E-46F1-9293-88F32FD85B06}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MIDIator.WebClient</RootNamespace>
+    <AssemblyName>MIDIator.WebClient</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Diagnostics, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Diagnostics.3.0.1\lib\net45\Microsoft.Owin.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.FileSystems, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.1\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.0.1\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.StaticFiles, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.1\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Refigure, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refigure.1.0.15.0\lib\net45\Refigure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebClientManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="app\.editorconfig" />
+    <None Include="app\angular-cli.json" />
+    <None Include="app\dist\assets\.npmignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\assets\mdl-selectfield\mdl-selectfield-midiator.scss">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\inline.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\main.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\styles.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\e2e\tsconfig.json" />
+    <None Include="app\MIDIator.WebClient.shproj" />
+    <None Include="app\ngMIDIator.projitems" />
+    <None Include="app\package.json" />
+    <None Include="app\README.md" />
+    <None Include="app\src\assets\.gitkeep" />
+    <None Include="app\src\assets\.npmignore" />
+    <None Include="app\src\assets\mdl-selectfield\mdl-selectfield-midiator.scss" />
+    <None Include="app\src\scss.scss" />
+    <None Include="app\src\tsconfig.json" />
+    <None Include="app\tslint.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="app\dist\assets\jquery.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\assets\jquery.signalR.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\assets\mdl-selectfield\mdl-selectfield.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\inline.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\main.bundle.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\styles.bundle.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\karma.conf.js" />
+    <Content Include="app\protractor.conf.js" />
+    <Content Include="app\src\app\app.component.css" />
+    <Content Include="app\src\app\components\app\app.component.html" />
+    <Content Include="app\src\app\components\channelMessage\channelMessage.component.html" />
+    <Content Include="app\src\app\components\dynamic-form.component.html" />
+    <Content Include="app\src\app\components\inputDevice\inputDevice.component.html" />
+    <Content Include="app\src\app\components\mdl-dropdown\mdl-dropdown.component.html" />
+    <Content Include="app\src\app\components\mdl-textinput\mdl-textinput.component.html" />
+    <Content Include="app\src\app\components\profile\profile.component.html" />
+    <Content Include="app\src\app\components\transformation\transformation.component.html" />
+    <Content Include="app\src\app\components\translation\translation.component.html" />
+    <Content Include="app\src\assets\jquery.js" />
+    <Content Include="app\src\assets\jquery.signalR.js" />
+    <Content Include="app\src\assets\mdl-selectfield\mdl-selectfield.js" />
+    <Content Include="app\src\favicon.ico" />
+    <Content Include="app\src\index.html" />
+    <Content Include="app\src\styles.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app\e2e\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="app\e2e\app.po.ts" />
+    <TypeScriptCompile Include="app\src\app\app.module.ts" />
+    <TypeScriptCompile Include="app\src\app\components\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="app\src\app\components\app\app.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\channelMessage\channelMessage.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\dynamic-form.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\inputDevice\inputDevice.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\DropdownOption.ts" />
+    <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\mdl-dropdown.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\mdl-textinput\mdl-textinput.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\profile\profile.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\transformation\transformation.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\translation\translation.component.ts" />
+    <TypeScriptCompile Include="app\src\app\index.ts" />
+    <TypeScriptCompile Include="app\src\app\midiator-global-imports.ts" />
+    <TypeScriptCompile Include="app\src\app\models\domainModel.ts" />
+    <TypeScriptCompile Include="app\src\app\models\dropdown-control.ts" />
+    <TypeScriptCompile Include="app\src\app\models\textbox-control.ts" />
+    <TypeScriptCompile Include="app\src\app\models\ui-control-base.ts" />
+    <TypeScriptCompile Include="app\src\app\rxjs-operators.ts" />
+    <TypeScriptCompile Include="app\src\app\services\formService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\helperService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\midiService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\profileService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\realtimeService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\signalRService.ts" />
+    <TypeScriptCompile Include="app\src\app\shared\index.ts" />
+    <TypeScriptCompile Include="app\src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="app\src\environments\environment.ts" />
+    <TypeScriptCompile Include="app\src\main.ts" />
+    <TypeScriptCompile Include="app\src\polyfills.ts" />
+    <TypeScriptCompile Include="app\src\test.ts" />
+    <TypeScriptCompile Include="app\src\typings.d.ts" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
