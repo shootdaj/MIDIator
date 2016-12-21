@@ -74,7 +74,7 @@ export class ProfileService {
 					this.midiService.getAvailableOutputDevices();
 				} else {
 					let sub = this.midiService.staticDataSubject.subscribe(data => {
-						this.formService.setForm(data);
+						this.formService.setForm(profileData);
 						this.slimLoadingBarService.complete();
 						sub.unsubscribe();
 					});
