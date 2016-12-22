@@ -83,6 +83,18 @@
     <None Include="App.config" />
     <None Include="app\.editorconfig" />
     <None Include="app\angular-cli.json" />
+    <None Include="app\dist\assets\.npmignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\assets\mdl-selectfield\mdl-selectfield-midiator.scss">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\main.0092e8c40cb1f4e6c077.bundle.js.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app\dist\styles.608580380131835272c6.bundle.js.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app\e2e\tsconfig.json" />
     <None Include="app\package.json" />
     <None Include="app\README.md" />
@@ -96,6 +108,27 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="app\dist\assets\jquery.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\assets\jquery.signalR.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\assets\mdl-selectfield\mdl-selectfield.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\inline.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\main.0092e8c40cb1f4e6c077.bundle.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\dist\styles.608580380131835272c6.bundle.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="app\karma.conf.js" />
     <Content Include="app\protractor.conf.js" />
     <Content Include="app\src\app\app.component.css" />
@@ -158,23 +191,23 @@
     <Error Condition="Exists('..\packages\OctoPack.3.4.6\tools\OctoPack.targets') And ('$(RunOctoPack)' != '' And $(RunOctoPack))" Text="OctoPack cannot be run because NuGet packages were restored prior to the build running, and the targets file was unavailable when the build started. Please build the project again to include these packages in the build. You may also need to make sure that your build server does not delete packages prior to each build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>cd $(ProjectDir)app
-"node_modules\.bin\ng.cmd" build --prod</PreBuildEvent>
+    <PreBuildEvent>rem cd $(ProjectDir)app
+rem "node_modules\.bin\ng.cmd" build --prod</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>robocopy "$(ProjectDir)app\dist" "$(TargetDir)app\dist" *.* /e
+    <PostBuildEvent>rem robocopy "$(ProjectDir)app\dist" "$(TargetDir)app\dist" *.* /e
 rem each robocopy statement and then underneath have the error check.
-if %25ERRORLEVEL%25 GEQ 8 goto failed
+rem if %25ERRORLEVEL%25 GEQ 8 goto failed
 
 rem end of batch file
-GOTO success
+rem GOTO success
 
-:failed
+rem :failed
 rem do not pause as it will pause msbuild.
-exit
+rem exit
 
-:success
-exit 0</PostBuildEvent>
+rem :success
+rem exit 0</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
