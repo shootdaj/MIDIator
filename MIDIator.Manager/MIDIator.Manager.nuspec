@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MIDIator.Manager</id>
+    <version>1.0.$(Rev:r).0</version>
+    <authors>shootdaj</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MIDIator Manager</description>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+  <files>
+    <file src="app\**\*.*" target="" />
+  </files>
+</package>
