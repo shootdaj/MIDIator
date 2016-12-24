@@ -64,7 +64,8 @@
     <ManifestCertificateThumbprint>1A4660000711F8EAA1D28A7FC21D71A7688722AE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>MIDIator.Manager_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
