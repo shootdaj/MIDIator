@@ -115,42 +115,6 @@
     <Content Include="app\src\index.html" />
     <Content Include="app\src\styles.css" />
   </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="app\e2e\app.e2e-spec.ts" />
-    <TypeScriptCompile Include="app\e2e\app.po.ts" />
-    <TypeScriptCompile Include="app\src\app\app.module.ts" />
-    <TypeScriptCompile Include="app\src\app\components\app\app.component.spec.ts" />
-    <TypeScriptCompile Include="app\src\app\components\app\app.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\channelMessage\channelMessage.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\dynamic-form.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\inputDevice\inputDevice.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\DropdownOption.ts" />
-    <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\mdl-dropdown.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\mdl-textinput\mdl-textinput.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\profile\profile.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\transformation\transformation.component.ts" />
-    <TypeScriptCompile Include="app\src\app\components\translation\translation.component.ts" />
-    <TypeScriptCompile Include="app\src\app\index.ts" />
-    <TypeScriptCompile Include="app\src\app\midiator-global-imports.ts" />
-    <TypeScriptCompile Include="app\src\app\models\domainModel.ts" />
-    <TypeScriptCompile Include="app\src\app\models\dropdown-control.ts" />
-    <TypeScriptCompile Include="app\src\app\models\textbox-control.ts" />
-    <TypeScriptCompile Include="app\src\app\models\ui-control-base.ts" />
-    <TypeScriptCompile Include="app\src\app\rxjs-operators.ts" />
-    <TypeScriptCompile Include="app\src\app\services\formService.ts" />
-    <TypeScriptCompile Include="app\src\app\services\helperService.ts" />
-    <TypeScriptCompile Include="app\src\app\services\midiService.ts" />
-    <TypeScriptCompile Include="app\src\app\services\profileService.ts" />
-    <TypeScriptCompile Include="app\src\app\services\realtimeService.ts" />
-    <TypeScriptCompile Include="app\src\app\services\signalRService.ts" />
-    <TypeScriptCompile Include="app\src\app\shared\index.ts" />
-    <TypeScriptCompile Include="app\src\environments\environment.prod.ts" />
-    <TypeScriptCompile Include="app\src\environments\environment.ts" />
-    <TypeScriptCompile Include="app\src\main.ts" />
-    <TypeScriptCompile Include="app\src\polyfills.ts" />
-    <TypeScriptCompile Include="app\src\test.ts" />
-    <TypeScriptCompile Include="app\src\typings.d.ts" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OctoPack.3.4.6\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.4.6\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
