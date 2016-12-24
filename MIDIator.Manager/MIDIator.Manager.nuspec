@@ -5,7 +5,7 @@
     <version>$version$</version>
     <authors>shootdaj</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MIDIator Manager</description>
+    <description>$description$</description>
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
