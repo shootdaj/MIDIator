@@ -12,30 +12,30 @@ import { CustomValidators } from 'ng2-validation'
 @Injectable()
 export class FormService {
 
-	private form: FormGroup;
-	public formChanges = new Subject<FormGroup>();
+    private form: FormGroup;
+    public formChanges = new Subject<FormGroup>();
 
-	public getForm(): FormGroup {
-		return this.form;
-	}
+    public getForm(): FormGroup {
+        return this.form;
+    }
 
     constructor(private fb: FormBuilder) {
 
     }
 
-	public setForm(profile: Profile) {
-		this.form = this.getProfileFormGroup(profile);
-		this.formChanges.next(this.form);
-	}
-	
-	private getProfileFormGroup(profile: Profile): FormGroup {
+    public setForm(profile: Profile) {
+        this.form = this.getProfileFormGroup(profile);
+        this.formChanges.next(this.form);
+    }
+
+    private getProfileFormGroup(profile: Profile): FormGroup {
         return this.fb.group({
             name: [profile.name, [<any>Validators.required]],
             transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations))
         });
     }
 
-    private getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
+    public getTransformationsFormGroups(transformations: Transformation[]): FormGroup[] {
 
         var returnValue = Array<FormGroup>();
 
@@ -43,28 +43,28 @@ export class FormService {
             returnValue.push(this.fb.group({
                 name: [transformation.name, [<any>Validators.required]],
                 inputDevice: this.fb.group({
-                    deviceID: [transformation.inputDevice.deviceID],
-                    driverVersion: [transformation.inputDevice.driverVersion],
-                    mid: [transformation.inputDevice.mid],
-                    name: [transformation.inputDevice.name],
-                    pid: [transformation.inputDevice.pid],
-                    support: [transformation.inputDevice.support],
-                    label: [transformation.inputDevice.label],
-                    value: [transformation.inputDevice.value]
+                    deviceID: [transformation.inputDevice != null ? transformation.inputDevice.deviceID : null],
+                    driverVersion: [transformation.inputDevice != null ? transformation.inputDevice.driverVersion : null],
+                    mid: [transformation.inputDevice != null ? transformation.inputDevice.mid : null],
+                    name: [transformation.inputDevice != null ? transformation.inputDevice.name : null, [<any>Validators.required]],
+                    pid: [transformation.inputDevice != null ? transformation.inputDevice.pid : null],
+                    support: [transformation.inputDevice != null ? transformation.inputDevice.support : null],
+                    label: [transformation.inputDevice != null ? transformation.inputDevice.label : null],
+                    value: [transformation.inputDevice != null ? transformation.inputDevice.value : null]
                 }),
                 outputDevice: this.fb.group({
-                    deviceID: [transformation.outputDevice.deviceID],
-                    driverVersion: [transformation.outputDevice.driverVersion],
-                    mid: [transformation.outputDevice.mid],
-                    name: [transformation.outputDevice.name],
-                    pid: [transformation.outputDevice.pid],
-                    support: [transformation.outputDevice.support],
-                    label: [transformation.outputDevice.label],
-                    value: [transformation.outputDevice.value]
+                    deviceID: [transformation.outputDevice != null ? transformation.outputDevice.deviceID : null],
+                    driverVersion: [transformation.outputDevice != null ? transformation.outputDevice.driverVersion : null],
+                    mid: [transformation.outputDevice != null ? transformation.outputDevice.mid : null],
+                    name: [transformation.outputDevice != null ? transformation.outputDevice.name : null, [<any>Validators.required]],
+                    pid: [transformation.outputDevice != null ? transformation.outputDevice.pid : null],
+                    support: [transformation.outputDevice != null ? transformation.outputDevice.support : null],
+                    label: [transformation.outputDevice != null ? transformation.outputDevice.label : null],
+                    value: [transformation.outputDevice != null ? transformation.outputDevice.value : null]
                 }),
                 translationMap: this.getTranslationMapFormGroup(transformation.translationMap),
-				linkedOutputVirtualDevice: [transformation.linkedOutputVirtualDevice, [<any>Validators.required]],
-				enabled: [transformation.enabled, [<any>Validators.required]]
+                linkedOutputVirtualDevice: [transformation.linkedOutputVirtualDevice, [<any>Validators.required]],
+                enabled: [transformation.enabled, [<any>Validators.required]]
             }))
         );
 
@@ -87,15 +87,15 @@ export class FormService {
         return returnValue;
     }
 
-	public getTranslationFormGroup(translation: Translation) {
-		return this.fb.group({
-			inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
-			inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
-			outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
-			translationFunction: [translation.translationFunction, [<any>Validators.required]],
-			enabled: [translation.enabled, [<any>Validators.required]]
-		});
-	}
+    public getTranslationFormGroup(translation: Translation) {
+        return this.fb.group({
+            inputMatchFunction: [translation.inputMatchFunction, [<any>Validators.required]],
+            inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
+            outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
+            translationFunction: [translation.translationFunction, [<any>Validators.required]],
+            enabled: [translation.enabled, [<any>Validators.required]]
+        });
+    }
 
     private getChannelMessageFormGroup(channelMessage: ChannelMessage): FormGroup {
         return this.fb.group({

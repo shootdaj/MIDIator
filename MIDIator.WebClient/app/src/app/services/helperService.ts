@@ -7,13 +7,14 @@ import { Subject } from 'rxjs/Subject';
 import '../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { ProfileService } from '../services/profileService';
-import { IDropdownOption, IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../models/domainModel';
+import { IDropdownOption, IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand, TranslationMap } from '../models/domainModel';
 import { DropdownOption } from '../components/mdl-dropdown/dropdownOption';
+import {FormService} from "./formService";
 import * as $ from 'jquery';
 
 @Injectable()
 export class HelperService {
-	constructor(private http: Http) {
+	constructor(private http: Http, private formService: FormService) {
 
 	}
 
@@ -65,5 +66,40 @@ export class HelperService {
 
 	dropdownOptionValueGetFunction(control: FormGroup): any {
 		return control.value.value;
-	}
+    }
+
+    ifNotNull(expressionToTest, valueToSet): any {
+        return expressionToTest != null ? valueToSet : null;
+    }
+
+    public initTranslation() {
+        let translation = new Translation();
+        //(<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
+
+        var channelMessage = new ChannelMessage();
+        //(<any>channelMessage).command = ChannelCommand[ChannelCommand.ChannelPressure];
+        //channelMessage.data1 = 0;
+        //channelMessage.data2 = 0;
+        //channelMessage.midiChannel = 1;
+
+        translation.inputMessageMatchTarget = channelMessage;
+        //(<any>translation).translationFunction = TranslationFunction[TranslationFunction.ChangeNote];
+        translation.outputMessageTemplate = channelMessage;
+
+        return translation;
+    }
+
+    public initTransformation(name: string) {
+        let transformation = new Transformation();
+        transformation.name = name;
+        transformation.inputDevice = null;
+        transformation.outputDevice = null;
+        let translationMap = new TranslationMap();
+        //translationMap.translations.push(this.initTranslation());
+        transformation.translationMap = translationMap;
+        transformation.linkedOutputVirtualDevice = false;
+        transformation.enabled = true;
+
+        return transformation;
+    }
 }

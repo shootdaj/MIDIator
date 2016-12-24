@@ -67,23 +67,10 @@ export class TransformationComponent implements OnInit, OnDestroy {
 
 	private addNewTranslation() {
 		let control = <FormArray>(<FormGroup>this.form.controls['translationMap']).controls['translations'];
-        control.push(this.initTranslation());
+        control.push(this.initTranslationFormGroup());
 	}
 
-	private initTranslation() {
-		let translation = new Translation();
-		(<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
-
-		var channelMessage = new ChannelMessage();
-		(<any>channelMessage).command = ChannelCommand[ChannelCommand.ChannelPressure];
-		channelMessage.data1 = 0;
-		channelMessage.data2 = 0;
-		channelMessage.midiChannel = 1;
-
-		translation.inputMessageMatchTarget = channelMessage;
-		(<any>translation).translationFunction = TranslationFunction[TranslationFunction.ChangeNote];
-		translation.outputMessageTemplate = channelMessage;
-
-		return this.formService.getTranslationFormGroup(translation);
-	}
+    private initTranslationFormGroup() {
+        return this.formService.getTranslationFormGroup(this.helperService.initTranslation());
+    }
 }

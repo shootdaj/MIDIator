@@ -17,6 +17,7 @@ $custom-dark-blue: unquote("rgba(79, 78, 124, 0.51)");
 $custom-dark-blue-full: unquote("rgba(79, 78, 124, 1.0)");
 $custom-dark-black-translucent: unquote("rgba(35, 35, 35, 0.95)");
 $custom-medium-red: unquote("rgba(#{$palette-red-600}, 1.0)");
+$custom-bright-green: unquote("rgba(#{118, 255, 3}, 0.5)");
 
 /* ==========  Typography  ========== */
 
@@ -112,4 +113,10 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
 	border: 0;
 	height: 1px;
 	background-image: linear-gradient(to right, unquote("rgba(#{$color-primary}, 0.0)"), unquote("rgba(#{$color-accent}, 0.5)"), unquote("rgba(#{$color-primary}, 0.0)"));
+}
+
+.transformation-separator {
+	border: 0;
+	height: 1px;
+	background-image: linear-gradient(to right, unquote("rgba(#{$color-primary}, 0.0)"), $custom-bright-green, unquote("rgba(#{$color-primary}, 0.0)"));
 }

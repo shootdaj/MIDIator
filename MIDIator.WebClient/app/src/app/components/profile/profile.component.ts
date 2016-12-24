@@ -1,5 +1,5 @@
 import { Component, ViewChild, Injectable, Input, Output, EventEmitter, OnInit, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormArray, FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -8,6 +8,8 @@ import '../../rxjs-operators';
 import { EnumValues } from 'enum-values';
 import { MIDIService } from '../../services/midiService';
 import { ProfileService } from '../../services/profileService';
+import { FormService } from '../../services/formService';
+import { HelperService } from '../../services/helperService';
 import { RealtimeService } from '../../services/realtimeService';
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
@@ -21,27 +23,36 @@ import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput
     templateUrl: './profile.component.html'
 })
 
-export class ProfileComponent implements AfterViewInit {
+export class ProfileComponent {
 
-	@Input() form: FormGroup;
+    @Input() form: FormGroup;
 
-	constructor(private realtimeService: RealtimeService,
-				private midiService: MIDIService) {
+    constructor(private realtimeService: RealtimeService,
+        private midiService: MIDIService,
+        private formService: FormService,
+        private helperService: HelperService) {
     }
 
-	private isRealtimeEnabled(): boolean {
-		return this.realtimeService.isRealtimeEnabled();
-	}
+    private isRealtimeEnabled(): boolean {
+        return this.realtimeService.isRealtimeEnabled();
+    }
 
-	enableRealtime() {
-		this.realtimeService.enableRealtime();
-	}
+    enableRealtime() {
+        this.realtimeService.enableRealtime();
+    }
 
-	disableRealtime() {
-		this.realtimeService.disableRealtime();
-	}
+    disableRealtime() {
+        this.realtimeService.disableRealtime();
+    }
 
-	ngAfterViewInit(): void {
-		
-	}
+    addNewTransformation() {
+        let control = <FormArray>this.form.controls['transformations'];
+        control.push(this.initTransformation("Transformation" +
+            ((<FormArray>this.form.controls['transformations']).controls.length + 1)));
+    }
+
+    private initTransformation(name: string) {
+        let transformation = this.helperService.initTransformation(name);
+        return this.formService.getTransformationsFormGroups(<Transformation[]>[transformation])[0];
+    }
 }

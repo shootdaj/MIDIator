@@ -19,17 +19,30 @@
 							</div>
 						</div>
 					</div>
-					<h4>
-						<button type="button" mdl-button mdl-ripple mdl-button-type="icon">
-							<span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
-						</button>
-						Transformations
-					</h4>
-					<div formArrayName="transformations">
-						<div *ngFor="let transformation of form.controls.transformations.controls; let i=index">
-							<transformation [form]="transformation"></transformation>
-						</div>
-					</div>
+				    <h4>
+				        <button type="button" mdl-button mdl-ripple mdl-button-type="icon">
+				            <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+				        </button>
+				        Transformations
+				    </h4>
+                    <hr class="transformation-separator" />
+				    <div formArrayName="transformations">
+				        <div *ngFor="let transformation of form.controls.transformations.controls; let i=index">
+				            <transformation [form]="transformation"></transformation>
+                            <hr class="transformation-separator" />
+				        </div>
+				    </div>
+                    <div class="dotted-container">
+                        <div class="mdl-grid mdl-grid--no-spacing">
+                            <div class="mdl-cell--12-col">
+                                <div class="mdl-grid mdl-grid--no-spacing">
+                                    <button type="button" mdl-button mdl-button-type="fab" mdl-shadow="4" mdl-ripple mdl-colored="accent" (click)="addNewTransformation()" [mdl-tooltip]="'New Transformation'">
+                                        <span class="zmdi zmdi-plus zmdi-hc-2x"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</mdl-card-supporting-text>
