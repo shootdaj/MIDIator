@@ -9,6 +9,6 @@
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
-    <file src="bin\Release\app\*.*" target="bin\Release\app" />
+    <file src="bin\Release\app\**\*.*" target="bin\Release\app" />
   </files>
 </package>
