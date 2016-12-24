@@ -3,10 +3,13 @@
   <metadata>
     <id>MIDIator.Manager</id>
     <version>$version$</version>
-    <authors>shootdaj</authors>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2016</copyright>
+    <tags>midi</tags>
   </metadata>
   <files>
     <file src="bin\Release\**\*.*" target="." />
