@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MIDIator.Manager"
         mc:Ignorable="d"
-        Title="MIDIator Manager" ResizeMode="NoResize" Icon="pack://siteoforigin:,,,/Resources/favicon.png" SizeToContent="WidthAndHeight">
+        Title="MIDIator Manager" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
 	<Grid Margin="0,0,4,0">
 		<Label x:Name="lblStatus" Content="Stopped" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,10,0,0" FontSize="36"/>
 		<Button x:Name="btnStartStop" Content="Start" VerticalAlignment="Top" Margin="10,93,0,0" Height="147" FontSize="36" Click="btnStartStop_Click" HorizontalAlignment="Left" Width="277"/>

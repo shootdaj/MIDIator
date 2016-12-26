@@ -28,7 +28,6 @@
     <InstallUrl>https://midiatorclickonce.blob.core.windows.net/install/</InstallUrl>
     <ProductName>MIDIator</ProductName>
     <PublisherName>Anshul Vishwakarma</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
@@ -72,6 +71,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
@@ -172,6 +174,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(TargetDir)app\dist\*.*">
+      <Link>app\dist\%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(TargetDir)app\dist\assets\*.*">
+      <Link>app\dist\assets\%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(TargetDir)app\dist\assets\mdl-selectfield\*.*">
+      <Link>app\dist\assets\mdl-selectfield\%(FileName)%(Extension)</Link>
+      <Visible>false</Visible>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\favicon.png">
