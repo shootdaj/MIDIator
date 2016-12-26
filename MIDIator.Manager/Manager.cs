@@ -19,11 +19,18 @@ namespace MIDIator.Manager
 
 		public bool Running { get; private set; } = false;
 
-		public void Start()
+		public void Start(Action<Exception> errorAction)
 		{
-			StartWebAPI();
-			StartWebClient();
-			Running = true;
+		    try
+		    {
+		        StartWebAPI();
+		        StartWebClient();
+		        Running = true;
+		    }
+		    catch (Exception ex)
+		    {
+		        errorAction(ex);
+		    }
 		}
 
 		public void Stop()

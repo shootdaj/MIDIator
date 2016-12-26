@@ -40,7 +40,7 @@ namespace MIDIator.Manager
 		{
 			if (!Manager.Running)
 			{
-				Manager.Start();
+			    Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine);
 				btnStartStop.Content = "Stop";
 				lblStatus.Content = "Running";
 			}

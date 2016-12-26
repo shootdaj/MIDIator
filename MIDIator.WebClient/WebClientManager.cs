@@ -19,7 +19,7 @@ namespace MIDIator.WebClient
 
 		private static IDisposable StartStaticFileServer(string baseAddress)
 		{
-			var root = "app/dist";
+			var root = Config.Get("Manager.WebClientRoot");
 			var fileSystem = new PhysicalFileSystem(root);
 
 			var options = new FileServerOptions

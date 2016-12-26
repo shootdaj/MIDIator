@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>https://midiatorclickonce.blob.core.windows.net/install/</PublishUrl>
+    <PublishUrl>publish/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -29,7 +29,7 @@
     <ProductName>MIDIator</ProductName>
     <PublisherName>Anshul Vishwakarma</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>21</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -110,12 +110,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -181,20 +183,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(TargetDir)app\dist\*.*">
-      <Link>app\dist\%(FileName)%(Extension)</Link>
+    <Content Include="$(TargetDir)MIDIator.WebClient\*.*">
+      <Link>MIDIator.WebClient\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(TargetDir)app\dist\assets\*.*">
-      <Link>app\dist\assets\%(FileName)%(Extension)</Link>
+    <Content Include="$(TargetDir)MIDIator.WebClient\assets\*.*">
+      <Link>MIDIator.WebClient\assets\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(TargetDir)app\dist\assets\mdl-selectfield\*.*">
-      <Link>app\dist\assets\mdl-selectfield\%(FileName)%(Extension)</Link>
+    <Content Include="$(TargetDir)MIDIator.WebClient\assets\mdl-selectfield\*.*">
+      <Link>MIDIator.WebClient\assets\mdl-selectfield\%(FileName)%(Extension)</Link>
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
@@ -231,7 +233,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy "$(SolutionDir)MIDIator.WebClient\app\dist" "$(TargetDir)app\dist" *.* /e
+    <PostBuildEvent>robocopy "$(SolutionDir)MIDIator.WebClient\app\dist" "$(TargetDir)MIDIator.WebClient" *.* /e
 rem each robocopy statement and then underneath have the error check.
 if %25ERRORLEVEL%25 GEQ 8 goto failed
 

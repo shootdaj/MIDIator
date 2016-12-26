@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MIDIator.Manager"
         mc:Ignorable="d"
-        Title="MIDIator Manager" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
-	<Grid Margin="0,0,4,0">
-		<Label x:Name="lblStatus" Content="Stopped" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,10,0,0" FontSize="36"/>
-		<Button x:Name="btnStartStop" Content="Start" VerticalAlignment="Top" Margin="10,93,0,0" Height="147" FontSize="36" Click="btnStartStop_Click" HorizontalAlignment="Left" Width="277"/>
-		<Grid HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="297"/>
-	</Grid>
+        Title="MIDIator Manager" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" d:DesignHeight="282.07" d:DesignWidth="780.525" >
+    <Grid Margin="0,0,4,0">
+        <Label x:Name="lblStatus" Content="Stopped" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,10,0,0" FontSize="36"/>
+        <Button x:Name="btnStartStop" Content="Start" VerticalAlignment="Top" Margin="10,93,0,0" Height="147" FontSize="36" Click="btnStartStop_Click" HorizontalAlignment="Left" Width="277"/>
+        <Grid HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="297"/>
+        <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Height="230" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" Margin="302,10,0,0"/>
+    </Grid>
 </Window>
