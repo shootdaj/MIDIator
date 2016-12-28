@@ -97,7 +97,29 @@
     <None Include="app\tslint.json" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="app\src\app\app.module.ts" />
+    <TypeScriptCompile Include="app\src\app\index.ts" />
+    <TypeScriptCompile Include="app\src\app\midiator-global-imports.ts" />
+    <TypeScriptCompile Include="app\src\app\models\domainModel.ts" />
+    <TypeScriptCompile Include="app\src\app\models\dropdown-control.ts" />
+    <TypeScriptCompile Include="app\src\app\models\textbox-control.ts" />
+    <TypeScriptCompile Include="app\src\app\models\ui-control-base.ts" />
+    <TypeScriptCompile Include="app\src\app\rxjs-operators.ts" />
+    <TypeScriptCompile Include="app\src\app\services\formService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\helperService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\midiService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\profileService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\realtimeService.ts" />
+    <TypeScriptCompile Include="app\src\app\services\signalRService.ts" />
+    <TypeScriptCompile Include="app\src\app\shared\index.ts" />
+    <TypeScriptCompile Include="app\src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="app\src\environments\environment.ts" />
+    <TypeScriptCompile Include="app\src\main.ts" />
+    <TypeScriptCompile Include="app\src\polyfills.ts" />
+    <TypeScriptCompile Include="app\src\test.ts" />
+    <TypeScriptCompile Include="app\src\typings.d.ts" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="app\karma.conf.js" />
     <Content Include="app\protractor.conf.js" />
