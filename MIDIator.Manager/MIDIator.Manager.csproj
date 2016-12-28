@@ -145,7 +145,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <None Include="CreateGithubRelease.ps1" />
+    <None Include="GithubRelease\CreateGithubRelease.ps1" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -171,6 +171,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="MIDIator.Manager.nuspec" />
+    <Content Include="GithubRelease\PublishGitHubRelease.dll" />
+    <Content Include="GithubRelease\System.Management.Automation.dll" />
     <Content Include="InnoSetup\MIDIatorSetup.iss" />
     <Content Include="MIDIator.Manager_ClickOnceKey.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
