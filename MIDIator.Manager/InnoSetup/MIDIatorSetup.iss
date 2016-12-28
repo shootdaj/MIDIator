@@ -21,7 +21,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir=C:\Anshul\Code\MIDIator\MIDIator.Manager\bin\Release\innosetup
+OutputDir=..\bin\Release\InnoSetup
 OutputBaseFilename=MIDIatorSetup
 Compression=lzma
 SolidCompression=yes
@@ -33,8 +33,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Anshul\Code\MIDIator\MIDIator.Manager\bin\Release\MIDIator.Manager.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Anshul\Code\MIDIator\MIDIator.Manager\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

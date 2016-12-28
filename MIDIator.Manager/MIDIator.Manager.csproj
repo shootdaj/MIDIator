@@ -170,6 +170,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="MIDIator.Manager.nuspec" />
+    <Content Include="InnoSetup\MIDIatorSetup.iss" />
     <Content Include="MIDIator.Manager_ClickOnceKey.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
