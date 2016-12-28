@@ -1,6 +1,6 @@
 <div *ngIf="this.form != null" class="dotted-container">
     <mdl-card-title>
-        <h2 mdl-card-title-text style="display: flex; align-items: center;">
+        <h2 mdl-card-title-text>
             <span style="vertical-align: middle;" *ngIf="form">{{form.controls.name.value}}</span>
         </h2>
     </mdl-card-title>
@@ -52,12 +52,24 @@
     </div>-->
     <div class="mdl-grid mdl-grid--no-spacing">
         <div class="mdl-cell--12-col">
-            <h4>
-                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'">
-                    <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
-                </button>
-                Translations
-            </h4>
+            
+            
+            <div class="mdl-grid">
+                <div class="mdl-cell--11-col">
+                    <h4>
+                        Translations
+                    </h4>
+                </div>
+                <div class="mdl-cell--1-col">
+                    <div class="cell-content cell-content-button">
+                        <div class="button-container">
+                            <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'">
+                                <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <hr class="translation-separator"/>
             <div *ngFor="let translation of form.controls.translationMap.controls.translations.controls; let i=index">
                 <translation [form]="translation" [inputDevice]="form.controls['inputDevice'].value"></translation>

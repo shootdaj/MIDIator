@@ -215,3 +215,4 @@ ModelManifest.xml
 MIDIator.WebClient/app/dist/*
 !MIDIator.Manager/MIDIator.Manager_ClickOnceKey.pfx
 MIDIator.Manager/COTest/*
+MIDIator.Manager/InnoSetup/*.exe
