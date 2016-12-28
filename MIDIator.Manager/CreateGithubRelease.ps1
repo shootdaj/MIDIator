@@ -23,8 +23,8 @@ Write-Verbose -Verbose "draft = $draft"
 Write-Verbose -Verbose "branch = $branch"
 Write-Verbose -Verbose "assetsPattern = $assetsPattern"
 
-[bool]$prereleaseBool = false
-If ($branch -eq "develop") {$prereleaseBool = true}
+[bool]$prereleaseBool = $false
+If ($branch -eq "develop") {$prereleaseBool = $true}
 
 # Convert checkbox params to booleans
 [bool]$draftBool = [System.Convert]::ToBoolean($draftBool)
