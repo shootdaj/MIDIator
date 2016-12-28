@@ -171,6 +171,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="MIDIator.Manager.nuspec" />
+    <Content Include="GithubRelease\Octokit.dll" />
     <Content Include="GithubRelease\PublishGitHubRelease.dll" />
     <Content Include="GithubRelease\System.Management.Automation.dll" />
     <Content Include="InnoSetup\MIDIatorSetup.iss" />
