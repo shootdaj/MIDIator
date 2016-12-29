@@ -25,6 +25,7 @@ OutputDir=..\bin\Release\InnoSetup
 OutputBaseFilename=MIDIatorSetup
 Compression=lzma
 SolidCompression=yes
+CloseApplications=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
