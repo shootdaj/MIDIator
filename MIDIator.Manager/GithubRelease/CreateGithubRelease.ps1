@@ -32,11 +32,11 @@ If ($branch -eq "develop") {$prereleaseBool = $true}
 Write-Output "draftBool = $draftBool"
 Write-Output "prereleaseBool = $prereleaseBool"
 
-$env:PSModulePath=$env:PSModulePath + ";" + "F:\Program Files (x86)\Microsoft SQL Server\110\Tools\PowerShell\Modules"
+#$env:PSModulePath=$env:PSModulePath + ";" + "F:\Program Files (x86)\Microsoft SQL Server\110\Tools\PowerShell\Modules"
 
 # Import the Task.Common and Task.Internal dll that has all the cmdlets we need for Build
-import-module "Microsoft.TeamFoundation.DistributedTask.Task.Internal"
-import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
+import-module "$($env:AGENT_HOMEDIRECTORY)\externals\vstshost\Microsoft.TeamFoundation.DistributedTask.Task.Internal"
+import-module "$($env:AGENT_HOMEDIRECTORY)\externals\vstshost\Microsoft.TeamFoundation.DistributedTask.Task.Common"
 
 # Import PublishGitHubRelease assembly
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
