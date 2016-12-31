@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Refigure;
 
 namespace MIDIator.Manager
 {
@@ -43,7 +45,8 @@ namespace MIDIator.Manager
 			    Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine);
 				btnStartStop.Content = "Stop";
 				lblStatus.Content = "Running";
-			}
+                Process.Start(Config.Get("WebClient.BaseAddress"));
+            }
 			else
 			{
 				Manager.Stop();
