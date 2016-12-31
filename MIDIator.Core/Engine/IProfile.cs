@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Anshul.Utilities;
 
 namespace MIDIator.Engine
 {
@@ -6,6 +7,6 @@ namespace MIDIator.Engine
 	{
 		string Name { get; set; }
 		List<Transformation> Transformations { get; set; }
-		List<VirtualOutputDevice> VirtualOutputDevices { get; set; }
+		BetterList<VirtualLoopbackDevice> VirtualLoopbackDevices { get; set; }
 	}
 }

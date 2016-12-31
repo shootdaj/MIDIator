@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,13 +40,35 @@ namespace MIDIator.Web
 		private void InitMIDIManager()
 		{
 			MIDIManager.Instantiate(new MIDIDeviceService(), VirtualMIDIManager);
-            
-			//set initial profile - this should be loaded from a service or from disk or something
-			MIDIManager.Instance.SetProfile(new Profile()
-			{
-				Name = "DefaultProfile",
-				Transformations = new List<Transformation>()
-			});
+
+		    if (string.IsNullOrEmpty(Config.Get("WebAPI.ProfileFile")))
+		    {
+                //set initial profile if none is found
+                MIDIManager.Instance.SetProfile(new Profile()
+                {
+                    Name = "DefaultProfile",
+                    Transformations = new List<Transformation>(),
+                    VirtualLoopbackDevices = new BetterList<VirtualLoopbackDevice>()
+                });
+            }
+		    else
+		    {
+		        var virtualLoopbackDevices = new BetterList<VirtualLoopbackDevice>();
+
+                var subscription = MIDIManager.Instance.VirtualMIDIManager.VirtualDeviceAdd.Subscribe(
+                   device =>
+                   {
+                       if (device is VirtualLoopbackDevice)
+                           virtualLoopbackDevices.Add((VirtualLoopbackDevice)device);
+                   });
+
+                var profile = JsonConvert.DeserializeObject<Profile>(File.ReadAllText(Config.Get("WebAPI.ProfileFile")));
+                subscription.Dispose();
+		        profile.VirtualLoopbackDevices = virtualLoopbackDevices;
+
+                MIDIManager.Instance.SetProfile(profile);
+                
+            }
 		}
 
 		private void StartSignalRHubs()

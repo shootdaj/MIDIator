@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MIDIator.Engine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -12,7 +13,7 @@ namespace MIDIator.Json
 			Binder = new DisplayNameSerializationBinder(),
 			Formatting = Formatting.Indented,
 			ContractResolver = new CamelCasePropertyNamesContractResolver(),
-			Converters = new List<JsonConverter> { new CamelCaseToPascalCaseExpandoObjectConverter() }
+			Converters = new List<JsonConverter> { new CamelCaseToPascalCaseExpandoObjectConverter(), new TransformationConverter() }
 		};
 	}
 }

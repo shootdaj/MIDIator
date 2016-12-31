@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using Anshul.Utilities;
 using MIDIator.VirtualMIDI;
 using Refigure;
@@ -13,7 +14,10 @@ namespace MIDIator.Engine
 
 		public bool? TeVirtualMidiLogging = Config.GetAsBoolSilent("Core.TeVirtualMidiLogging");
 
-		public BetterList<VirtualDevice> VirtualDevices { get; private set; } = new BetterList<VirtualDevice>();
+        public BetterList<VirtualDevice> VirtualDevices { get; private set; } = new BetterList<VirtualDevice>();
+
+        public Subject<VirtualDevice> VirtualDeviceAdd { get; private set; } = new Subject<VirtualDevice>();
+        public Subject<string> VirtualDeviceRemove { get; private set; } = new Subject<string>();
 
 		public VirtualDevice CreateVirtualDevice(string name, Guid manufacturerID, Guid productID, VirtualDeviceType virtualDeviceType)
 		{
@@ -39,6 +43,7 @@ namespace MIDIator.Engine
 			}
 
 			VirtualDevices.Add(virtualDevice);
+            VirtualDeviceAdd.OnNext(virtualDevice);
 			return virtualDevice;
 		}
 
@@ -51,7 +56,8 @@ namespace MIDIator.Engine
 
 				virtualDevice.Dispose();
 				VirtualDevices.Remove(virtualDevice);
-			}
+                VirtualDeviceRemove.OnNext(name);
+            }
 			else
 				throw new Exception($"No device with name {name}.");
 		}

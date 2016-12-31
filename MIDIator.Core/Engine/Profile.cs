@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Anshul.Utilities;
 using MIDIator.UIGeneration;
 using MIDIator.UIGenerator.Consumables;
+using Newtonsoft.Json;
 using TypeLite;
 
 namespace MIDIator.Engine
@@ -18,9 +20,13 @@ namespace MIDIator.Engine
 
 		public List<Transformation> Transformations { get; set; }
 
-		public List<VirtualOutputDevice> VirtualOutputDevices { get; set; }
+        [JsonIgnore]
+        public BetterList<VirtualLoopbackDevice> VirtualLoopbackDevices { get; set; }
 
-		public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
+        [JsonProperty(nameof(VirtualLoopbackDevices))]
+        private BetterList<VirtualLoopbackDevice> VirtualLoopbackDevicesJson => VirtualLoopbackDevices;
+
+	    public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
 		{
 			dynamic profile = inProfile;
 
@@ -47,6 +53,8 @@ namespace MIDIator.Engine
 					Transformations.Add(newTransformation);
 				}
 			}
+
+
 
 			//TODO: delete transformations that dont exist in inProfile
 		}

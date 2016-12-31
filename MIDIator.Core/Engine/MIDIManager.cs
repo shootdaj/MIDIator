@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using MIDIator.Interfaces;
+using Newtonsoft.Json;
+using Refigure;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine
@@ -30,6 +34,18 @@ namespace MIDIator.Engine
 		{
 			MIDIDeviceService = midiDeviceService;
 			VirtualMIDIManager = virtualMIDIManager;
+		    VirtualMIDIManager?.VirtualDeviceAdd.Subscribe(
+		        device =>
+		        {
+		            if (device is VirtualLoopbackDevice)
+		                CurrentProfile?.VirtualLoopbackDevices.Add((VirtualLoopbackDevice) device);
+		        });
+		    VirtualMIDIManager?.VirtualDeviceRemove.Subscribe(
+		        deviceName =>
+		        {
+		            var deviceToRemove = CurrentProfile.VirtualLoopbackDevices[deviceName];
+		            CurrentProfile?.VirtualLoopbackDevices.Remove(deviceToRemove);
+		        });
 		}
 
 		public void Dispose()
@@ -51,7 +67,14 @@ namespace MIDIator.Engine
 		public void UpdateProfile(ExpandoObject profile)
 		{
 			CurrentProfile.Update(profile, MIDIDeviceService, VirtualMIDIManager);
+		    Task.Run(() => SaveProfile());
 		}
+
+	    public void SaveProfile()
+	    {
+	        var serProfile = JsonConvert.SerializeObject(CurrentProfile);
+            File.WriteAllText(Config.Get("WebAPI.ProfileFile"), serProfile);
+	    }
 
 		#endregion
 

@@ -54,6 +54,7 @@ namespace MIDIator.Engine
 		/// <param name="translationMap"></param>
 		/// <param name="linkedVirtualOutputDevice">If true, outputDeviceName is ignored and a new virtual output device is created from the given input device</param>
 		/// <param name="virtualMIDIManager"></param>
+		[JsonConstructor]
 		public Transformation(string name, string inputDeviceName, string outputDeviceName, ITranslationMap translationMap, bool linkedVirtualOutputDevice, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
 		{
 			InitFromServices(name, inputDeviceName, outputDeviceName, translationMap, midiDeviceService, linkedVirtualOutputDevice, virtualMIDIManager);
