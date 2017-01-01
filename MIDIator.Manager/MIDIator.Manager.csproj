@@ -57,8 +57,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>1A4660000711F8EAA1D28A7FC21D71A7688722AE</ManifestCertificateThumbprint>
@@ -207,6 +206,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\favicon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
