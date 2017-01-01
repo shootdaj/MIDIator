@@ -19,11 +19,11 @@ namespace MIDIator.Manager
 
 		public bool Running { get; private set; } = false;
 
-		public void Start(Action<Exception> errorAction)
+		public void Start(Action<Exception> errorAction, Action onShutdown)
 		{
 		    try
 		    {
-		        StartWebAPI();
+		        StartWebAPI(onShutdown);
 		        StartWebClient();
 		        Running = true;
 		    }
@@ -40,11 +40,11 @@ namespace MIDIator.Manager
 			Running = false;
 		}
 
-		private void StartWebAPI()
+		private void StartWebAPI(Action onShutdown)
 		{
 			string baseAddress = Config.Get("WebAPI.BaseAddress");
 			WebAPIProcess = WebApp.Start<Startup>(baseAddress);
-			WebAPIManager.InitializeWebAPI(VirtualMIDIManager);
+			WebAPIManager.InitializeWebAPI(VirtualMIDIManager, onShutdown);
 		}
 
 		private void StopWebAPI()
@@ -52,6 +52,8 @@ namespace MIDIator.Manager
 			WebAPIManager.DisposeWebAPI();
 			WebAPIProcess.Dispose();
 		}
+
+
 
 		private void StartWebClient()
 		{
@@ -64,6 +66,10 @@ namespace MIDIator.Manager
 			WebClientManager.DisposeWebClient();
 		}
 
+	    private void StartExitListener()
+	    {
+	        
+	    }
 		public void Dispose()
 		{
 			VirtualMIDIManager.Dispose();

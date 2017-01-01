@@ -25,7 +25,7 @@ namespace MIDIator.Web
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
 				routeTemplate: "{controller}/{action}",
-				defaults: new { controller = "MIDIManager", action = "Index" }
+				defaults: new { controller = "MIDIController", action = "Index" }
 
 			);
 

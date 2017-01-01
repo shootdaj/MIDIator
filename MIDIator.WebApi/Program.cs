@@ -26,7 +26,7 @@ namespace MIDIator.Web
 
             using (WebApp.Start<Startup>(baseAddress))
             {
-                WebAPIManager.InitializeWebAPI(VirtualMIDIManager);
+                WebAPIManager.InitializeWebAPI(VirtualMIDIManager, null);
 	            Console.WriteLine($"Server running at {baseAddress}. Hit any key to exit.");
 				Console.ReadLine();
 			}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -17,47 +18,71 @@ using Refigure;
 
 namespace MIDIator.Manager
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
-		private Manager Manager { get; set; }
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        private Manager Manager { get; set; }
 
-		public MainWindow()
-		{
-			InitializeComponent();
-			Manager = new Manager();
-		}
+        public MainWindow()
+        {
+            InitializeComponent();
+            Manager = new Manager();
+        }
 
-		protected override void OnStateChanged(EventArgs e)
-		{
-			if (WindowState == System.Windows.WindowState.Minimized)
-				this.Hide();
+        public void ExitApplication()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Stop();
+                Close();
+            });
+        }
 
-			base.OnStateChanged(e);
-		}
+        protected override void OnStateChanged(EventArgs e)
+        {
+            if (WindowState == System.Windows.WindowState.Minimized)
+                this.Hide();
 
-		private void btnStartStop_Click(object sender, RoutedEventArgs e)
-		{
-			if (!Manager.Running)
-			{
-			    Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine);
-				btnStartStop.Content = "Stop";
-				lblStatus.Content = "Running";
-                Process.Start(Config.Get("WebClient.BaseAddress"));
+            base.OnStateChanged(e);
+        }
+
+        private void btnStartStop_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Manager.Running)
+            {
+                Start();
             }
-			else
-			{
-				Manager.Stop();
-				btnStartStop.Content = "Start";
-				lblStatus.Content = "Stopped";
-			}
-		}
+            else
+            {
+                Stop();
+            }
+        }
 
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			Manager.Dispose();
-		}
-	}
+        private void Start()
+        {
+            Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine, this.ExitApplication);
+            btnStartStop.Content = "Stop";
+            lblStatus.Content = "Running";
+
+            //launch browser with client running
+            Process.Start(Config.Get("WebClient.BaseAddress"));
+        }
+
+        private void Stop()
+        {
+            Manager.Stop();
+            btnStartStop.Content = "Start";
+            lblStatus.Content = "Stopped";
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (Manager.Running)
+                Stop();
+            Manager.Dispose();
+            base.OnClosing(e);
+        }
+    }
 }

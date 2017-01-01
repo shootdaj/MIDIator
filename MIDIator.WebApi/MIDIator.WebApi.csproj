@@ -154,7 +154,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminManager.cs" />
     <Compile Include="ChannelEvent.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="SignalRContractResolver.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\MIDIController.cs" />

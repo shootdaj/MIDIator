@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using Anshul.Utilities;
@@ -19,9 +21,12 @@ namespace MIDIator.Web
 	public class WebAPIManager
 	{
 		private HubConnection HubConnection { get; set; }
-		private VirtualMIDIManager VirtualMIDIManager { get; set; }
 
-		public void InitializeWebAPI(VirtualMIDIManager virtualMIDIManager)
+        private VirtualMIDIManager VirtualMIDIManager { get; set; }
+        
+        private IDisposable ShutdownSub { get; set; }
+
+        public void InitializeWebAPI(VirtualMIDIManager virtualMIDIManager, Action onShutdown)
 		{
 			var settings = SerializerSettings.DefaultSettings;
 			settings.ContractResolver = new SignalRContractResolver(settings.ContractResolver);
@@ -29,13 +34,15 @@ namespace MIDIator.Web
 			var serializer = JsonSerializer.Create(settings);
 			GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
 			VirtualMIDIManager = virtualMIDIManager;
-
+            
 			//start signalr hubs
 			StartSignalRHubs();
-
-			//initialize midi manager
+            //initialize managers
 			InitMIDIManager();
-		}
+            AdminManager.Instantiate();
+
+            ShutdownSub = AdminManager.Instance.OnShutdown.Subscribe(s => onShutdown());
+        }
 
 		private void InitMIDIManager()
 		{
@@ -85,6 +92,8 @@ namespace MIDIator.Web
 
 		public void DisposeWebAPI()
 		{
+            ShutdownSub.Dispose();
+            AdminManager.Instance.Dispose();
 			MIDIManager.Instance.Dispose();
 			HubConnection.Stop();
 			HubConnection.Dispose();
