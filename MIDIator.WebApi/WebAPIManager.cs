@@ -48,7 +48,7 @@ namespace MIDIator.Web
 		{
 			MIDIManager.Instantiate(new MIDIDeviceService(), VirtualMIDIManager);
 
-		    if (string.IsNullOrEmpty(Config.Get("WebAPI.ProfileFile")))
+		    if (string.IsNullOrEmpty(Config.Get("WebAPI.ProfileFile")) || !File.Exists(Config.Get("WebAPI.ProfileFile")))
 		    {
                 //set initial profile if none is found
                 MIDIManager.Instance.SetProfile(new Profile()
