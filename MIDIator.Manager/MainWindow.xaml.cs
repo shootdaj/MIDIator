@@ -29,6 +29,10 @@ namespace MIDIator.Manager
         {
             InitializeComponent();
             Manager = new Manager();
+            Loaded += (sender, args) =>
+            {
+                Start();
+            };
         }
 
         public void ExitApplication()
