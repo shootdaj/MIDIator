@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Refigure;
@@ -22,7 +23,9 @@ namespace MIDIator.Manager
     {
         private Manager Manager { get; set; }
 
-        private bool LaunchWebUI { get; set; }
+        public bool Running => Manager.Running;
+
+        private bool LaunchWebUIOnStart { get; set; }
         private bool AutostartOnAppStart { get; set; }
 
         public MainWindow()
@@ -93,17 +96,22 @@ namespace MIDIator.Manager
             {
                 Dispatcher.Invoke(() =>
                 {
-                    btnStartStopTooltip.Content = "Click to Stop";
+                    btnStartStopTooltip.Content = "Click to Stop. Right-click to launch Web UI.";
                     btnStartStop.Style = this.Resources["RoundButtonTemplateGreen"] as Style;
                     AnimationBehavior.SetSourceUri(image, new Uri("stop-circle.png", UriKind.Relative));
                     
                     //launch browser with client running
-                    if (LaunchWebUI)
-                        Process.Start(Config.Get("WebClient.BaseAddress"));
+                    if (LaunchWebUIOnStart)
+                        LaunchWebUI();
 
                     Log("Started successfully.");
                 });
             });
+        }
+
+        public static void LaunchWebUI()
+        {
+            Process.Start(Config.Get("WebClient.BaseAddress"));
         }
 
         private void Stop()
@@ -137,7 +145,7 @@ namespace MIDIator.Manager
         private void chkLaunchWebUI_Checked(object sender, RoutedEventArgs e)
         {
             // ReSharper disable once PossibleInvalidOperationException
-            LaunchWebUI = chkLaunchWebUI.IsChecked.Value;
+            LaunchWebUIOnStart = chkLaunchWebUI.IsChecked.Value;
             Config.Set("Manager.LaunchWebUI", chkLaunchWebUI.IsChecked.Value ? "true" : "false");
         }
 
@@ -146,6 +154,12 @@ namespace MIDIator.Manager
             // ReSharper disable once PossibleInvalidOperationException
             AutostartOnAppStart = chkAutostartOnAppStart.IsChecked.Value;
             Config.Set("Manager.AutostartOnAppStart", chkAutostartOnAppStart.IsChecked.Value ? "true" : "false");
+        }
+
+        private void BtnStartStop_OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Manager.Running)
+                LaunchWebUI();
         }
     }
 }

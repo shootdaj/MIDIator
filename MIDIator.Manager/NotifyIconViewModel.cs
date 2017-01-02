@@ -31,6 +31,24 @@ namespace MIDIator.Manager
         }
 
         /// <summary>
+        /// Opens the web UI if running.
+        /// </summary>
+        public ICommand LaunchWebUI
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CanExecuteFunc = () => ((MainWindow)Application.Current.MainWindow).Running,
+                    CommandAction = () =>
+                    {
+                        MainWindow.LaunchWebUI();
+                    }
+                };
+            }
+        }
+
+        /// <summary>
         /// Hides the main window. This command is only enabled if a window is open.
         /// </summary>
         public ICommand HideWindowCommand

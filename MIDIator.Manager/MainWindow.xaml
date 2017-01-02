@@ -51,7 +51,7 @@
         </Style>
     </Window.Resources>
     <Grid Margin="0,0,4,0">
-        <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White" Style="{StaticResource RoundButtonTemplateOrange}">
+        <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" MouseRightButtonUp="BtnStartStop_OnMouseRightButtonUp" Foreground="White" Style="{StaticResource RoundButtonTemplateOrange}">
             <StackPanel>
                 <Image gif:AnimationBehavior.SourceUri="play-circle.png" x:Name="imgStartStopButtonImage" />
             </StackPanel>
