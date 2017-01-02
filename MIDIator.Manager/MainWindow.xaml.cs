@@ -2,12 +2,14 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Refigure;
+using XamlAnimatedGif;
 using Color = System.Windows.Media.Color;
 using Image = System.Windows.Controls.Image;
 
@@ -27,7 +29,6 @@ namespace MIDIator.Manager
         {
             InitializeComponent();
             Manager = new Manager();
-            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 255, 87, 34));
             chkLaunchWebUI.IsChecked = Config.GetAsBoolSilent("Manager.LaunchWebUI") != null
                 ? Config.GetAsBoolSilent("Manager.LaunchWebUI")
                 : false;
@@ -80,7 +81,10 @@ namespace MIDIator.Manager
 
         private void Start()
         {
+            var image = ((Image) ((StackPanel) btnStartStop.Content).Children[0]);
+            AnimationBehavior.SetSourceUri(image, new Uri("loading.gif", UriKind.Relative));
             Log("Starting...");
+
             Task.Run(() =>
             {
                 Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine,
@@ -89,10 +93,10 @@ namespace MIDIator.Manager
             {
                 Dispatcher.Invoke(() =>
                 {
-                    btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
-                    ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
-                        new BitmapImage(new Uri("stop-circle.png", UriKind.Relative));
-
+                    btnStartStopTooltip.Content = "Click to Stop";
+                    btnStartStop.Style = this.Resources["RoundButtonTemplateGreen"] as Style;
+                    AnimationBehavior.SetSourceUri(image, new Uri("stop-circle.png", UriKind.Relative));
+                    
                     //launch browser with client running
                     if (LaunchWebUI)
                         Process.Start(Config.Get("WebClient.BaseAddress"));
@@ -104,6 +108,8 @@ namespace MIDIator.Manager
 
         private void Stop()
         {
+            var image = ((Image)((StackPanel)btnStartStop.Content).Children[0]);
+            AnimationBehavior.SetSourceUri(image, new Uri("loading.gif", UriKind.Relative));
             Log("Stopping...");
 
             Task.Run(() => {
@@ -112,10 +118,9 @@ namespace MIDIator.Manager
             {
                 Dispatcher.Invoke(() =>
                 {
-                    btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 255, 87, 34));
-                    ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
-                        new BitmapImage(new Uri("play-circle.png", UriKind.Relative));
-
+                    btnStartStopTooltip.Content = "Click to Start";
+                    btnStartStop.Style = this.Resources["RoundButtonTemplateOrange"] as Style;
+                    AnimationBehavior.SetSourceUri(image, new Uri("play-circle.png", UriKind.Relative));
                     Log("Stopped successfully.");
                 });
             });

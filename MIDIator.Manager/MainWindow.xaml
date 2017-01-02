@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MIDIator.Manager"
-        xmlns:tb="http://www.hardcodet.net/taskbar" 
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         mc:Ignorable="d"
         Title="MIDIator Manager" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" Height="457.34" Width="333.089" >
     <Window.Resources>
-        <Style x:Key="RoundButtonTemplate" TargetType="Button">
-            <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="White" />
+        <Style x:Key="RoundButtonTemplateOrange" TargetType="Button">
+            <Setter Property="Background" Value="#FF5722"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -23,18 +23,41 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <!--<Style.Triggers>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#76ff03"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RoundButtonTemplateGreen" TargetType="Button">
+            <Setter Property="Background" Value="#76ff03"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FF5722"/>
                 </Trigger>
-            </Style.Triggers>-->
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid Margin="0,0,4,0">
-        <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White" Style="{StaticResource RoundButtonTemplate}">
+        <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White" Style="{StaticResource RoundButtonTemplateOrange}">
             <StackPanel>
-                <Image Source="play-circle.png" />
+                <Image gif:AnimationBehavior.SourceUri="play-circle.png" x:Name="imgStartStopButtonImage" />
             </StackPanel>
+            <Button.ToolTip>
+                <ToolTip x:Name="btnStartStopTooltip" Content="Click to Start" />
+            </Button.ToolTip>
         </Button>
         <Expander x:Name="expander" Header="Log" HorizontalAlignment="Left" Margin="10,255,0,10">
             <TextBox x:Name="txtOutput" Height="200" TextWrapping="Wrap" VerticalAlignment="Top" BorderThickness="3" Background="#FF232323" Margin="0,0,0,0" Width="200" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
