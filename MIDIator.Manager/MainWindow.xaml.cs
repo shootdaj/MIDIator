@@ -19,11 +19,17 @@ namespace MIDIator.Manager
     {
         private Manager Manager { get; set; }
 
+        private bool LaunchWebUI { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
             Manager = new Manager();
             btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
+            chkLaunchWebUI.IsChecked = Config.GetAsBoolSilent("Manager.LaunchWebUI") != null
+                ? Config.GetAsBoolSilent("Manager.LaunchWebUI")
+                : false;
+
             Loaded += (sender, args) =>
             {
                 Start();
@@ -74,7 +80,8 @@ namespace MIDIator.Manager
                 new BitmapImage(new Uri("stop-circle-outline.png", UriKind.Relative));
 
             //launch browser with client running
-            Process.Start(Config.Get("WebClient.BaseAddress"));
+            if (LaunchWebUI)
+                Process.Start(Config.Get("WebClient.BaseAddress"));
 
             Log("Started successfully.");
         }
@@ -97,6 +104,13 @@ namespace MIDIator.Manager
                 Stop();
             Manager.Dispose();
             base.OnClosing(e);
+        }
+
+        private void chkLaunchWebUI_Checked(object sender, RoutedEventArgs e)
+        {
+            // ReSharper disable once PossibleInvalidOperationException
+            LaunchWebUI = chkLaunchWebUI.IsChecked.Value;
+            Config.Set("Manager.LaunchWebUI", chkLaunchWebUI.IsChecked.Value ? "true" : "false");
         }
     }
 }
