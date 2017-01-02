@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -80,28 +81,44 @@ namespace MIDIator.Manager
         private void Start()
         {
             Log("Starting...");
-            Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine, this.ExitApplication);
-            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
-            ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
-                new BitmapImage(new Uri("stop-circle-outline.png", UriKind.Relative));
+            Task.Run(() =>
+            {
+                Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine,
+                    this.ExitApplication);
+            }).ContinueWith((prevTask) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
+                    ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
+                        new BitmapImage(new Uri("stop-circle-outline.png", UriKind.Relative));
 
-            //launch browser with client running
-            if (LaunchWebUI)
-                Process.Start(Config.Get("WebClient.BaseAddress"));
+                    //launch browser with client running
+                    if (LaunchWebUI)
+                        Process.Start(Config.Get("WebClient.BaseAddress"));
 
-            Log("Started successfully.");
+                    Log("Started successfully.");
+                });
+            });
         }
 
         private void Stop()
         {
             Log("Stopping...");
 
-            Manager.Stop();
-            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 255, 87, 34));
-            ((Image)((StackPanel)btnStartStop.Content).Children[0]).Source =
-                new BitmapImage(new Uri("play-circle.png", UriKind.Relative));
+            Task.Run(() => {
+                Manager.Stop();
+            }).ContinueWith((prevTask) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 255, 87, 34));
+                    ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
+                        new BitmapImage(new Uri("play-circle.png", UriKind.Relative));
 
-            Log("Stopped successfully.");
+                    Log("Stopped successfully.");
+                });
+            });
         }
 
         protected override void OnClosing(CancelEventArgs e)
