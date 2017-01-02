@@ -7,8 +7,31 @@
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
         Title="MIDIator Manager" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" Height="457.34" Width="333.089" >
+    <Window.Resources>
+        <Style x:Key="RoundButtonTemplate" TargetType="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5722"/>
+                </Trigger>
+            </Style.Triggers>-->
+        </Style>
+    </Window.Resources>
     <Grid Margin="0,0,4,0">
-        <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White">
+        <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White" Style="{StaticResource RoundButtonTemplate}">
             <StackPanel>
                 <Image Source="play-circle.png" />
             </StackPanel>

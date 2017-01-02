@@ -91,7 +91,7 @@ namespace MIDIator.Manager
                 {
                     btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
                     ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
-                        new BitmapImage(new Uri("stop-circle-outline.png", UriKind.Relative));
+                        new BitmapImage(new Uri("stop-circle.png", UriKind.Relative));
 
                     //launch browser with client running
                     if (LaunchWebUI)
