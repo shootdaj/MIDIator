@@ -20,19 +20,25 @@ namespace MIDIator.Manager
         private Manager Manager { get; set; }
 
         private bool LaunchWebUI { get; set; }
+        private bool AutostartOnAppStart { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             Manager = new Manager();
-            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
+            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 255, 87, 34));
             chkLaunchWebUI.IsChecked = Config.GetAsBoolSilent("Manager.LaunchWebUI") != null
                 ? Config.GetAsBoolSilent("Manager.LaunchWebUI")
                 : false;
 
+            chkAutostartOnAppStart.IsChecked = Config.GetAsBoolSilent("Manager.AutostartOnAppStart") != null
+                ? Config.GetAsBoolSilent("Manager.AutostartOnAppStart")
+                : false;
+
             Loaded += (sender, args) =>
             {
-                Start();
+                if (AutostartOnAppStart)
+                    Start();
             };
         }
 
@@ -111,6 +117,13 @@ namespace MIDIator.Manager
             // ReSharper disable once PossibleInvalidOperationException
             LaunchWebUI = chkLaunchWebUI.IsChecked.Value;
             Config.Set("Manager.LaunchWebUI", chkLaunchWebUI.IsChecked.Value ? "true" : "false");
+        }
+
+        private void chkAutostartOnAppStart_Checked(object sender, RoutedEventArgs e)
+        {
+            // ReSharper disable once PossibleInvalidOperationException
+            AutostartOnAppStart = chkAutostartOnAppStart.IsChecked.Value;
+            Config.Set("Manager.AutostartOnAppStart", chkAutostartOnAppStart.IsChecked.Value ? "true" : "false");
         }
     }
 }

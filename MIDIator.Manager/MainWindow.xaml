@@ -6,16 +6,17 @@
         xmlns:local="clr-namespace:MIDIator.Manager"
         xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="MIDIator Manager" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" Height="367.336" Width="333.089" >
+        Title="MIDIator Manager" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" Height="457.34" Width="333.089" >
     <Grid Margin="0,0,4,0">
         <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White">
             <StackPanel>
                 <Image Source="play-circle.png" />
             </StackPanel>
         </Button>
-        <Expander x:Name="expander" Header="Log" HorizontalAlignment="Left" Margin="10,235,0,10" Grid.RowSpan="2">
+        <Expander x:Name="expander" Header="Log" HorizontalAlignment="Left" Margin="10,255,0,10">
             <TextBox x:Name="txtOutput" Height="200" TextWrapping="Wrap" VerticalAlignment="Top" BorderThickness="3" Background="#FF232323" Margin="0,0,0,0" Width="200" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
         </Expander>
-        <CheckBox x:Name="chkLaunchWebUI" Content="Launch Web UI on Start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,215,0,0" Checked="chkLaunchWebUI_Checked" Unchecked="chkLaunchWebUI_Checked"/>
+        <CheckBox x:Name="chkLaunchWebUI" Content="Launch Web UI on Start" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,235,0,0" Checked="chkLaunchWebUI_Checked" Unchecked="chkLaunchWebUI_Checked"/>
+        <CheckBox x:Name="chkAutostartOnAppStart" Content="Auto-start on App Launch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,215,0,0" Checked="chkAutostartOnAppStart_Checked" Unchecked="chkAutostartOnAppStart_Checked"/>
     </Grid>
 </Window>
