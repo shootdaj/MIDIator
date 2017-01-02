@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Refigure;
+using Color = System.Windows.Media.Color;
+using Image = System.Windows.Controls.Image;
 
 namespace MIDIator.Manager
 {
@@ -29,6 +23,7 @@ namespace MIDIator.Manager
         {
             InitializeComponent();
             Manager = new Manager();
+            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
             Loaded += (sender, args) =>
             {
                 Start();
@@ -64,21 +59,35 @@ namespace MIDIator.Manager
             }
         }
 
+        public void Log(string text)
+        {
+            txtOutput.Text += text + Environment.NewLine;
+        }
+
         private void Start()
         {
+            Log("Starting...");
             Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine, this.ExitApplication);
-            btnStartStop.Content = "Stop";
-            lblStatus.Content = "Running";
+            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 118, 255, 3));
+            ((Image) ((StackPanel) btnStartStop.Content).Children[0]).Source =
+                new BitmapImage(new Uri("stop-circle-outline.png", UriKind.Relative));
 
             //launch browser with client running
             Process.Start(Config.Get("WebClient.BaseAddress"));
+
+            Log("Started successfully.");
         }
 
         private void Stop()
         {
+            Log("Stopping...");
+
             Manager.Stop();
-            btnStartStop.Content = "Start";
-            lblStatus.Content = "Stopped";
+            btnStartStop.Background = new SolidColorBrush(Color.FromArgb(255, 255, 87, 34));
+            ((Image)((StackPanel)btnStartStop.Content).Children[0]).Source =
+                new BitmapImage(new Uri("play-circle.png", UriKind.Relative));
+
+            Log("Stopped successfully.");
         }
 
         protected override void OnClosing(CancelEventArgs e)

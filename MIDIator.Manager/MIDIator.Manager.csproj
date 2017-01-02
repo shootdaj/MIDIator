@@ -173,6 +173,12 @@
     <Content Include="GithubRelease\Octokit.dll" />
     <Content Include="GithubRelease\PublishGitHubRelease.dll" />
     <Content Include="GithubRelease\System.Management.Automation.dll" />
+    <Resource Include="play-circle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="stop-circle-outline.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="InnoSetup\MIDIatorSetup.iss" />
     <Content Include="MIDIator.Manager_ClickOnceKey.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -238,6 +244,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
