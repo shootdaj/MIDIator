@@ -62,6 +62,7 @@ namespace MIDIator.Manager
         public void Log(string text)
         {
             txtOutput.Text += text + Environment.NewLine;
+            txtOutput.ScrollToEnd();
         }
 
         private void Start()

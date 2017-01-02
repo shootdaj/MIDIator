@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MIDIator.Manager"
+        xmlns:tb="http://www.hardcodet.net/taskbar" 
         mc:Ignorable="d"
-        Title="MIDIator Manager" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" Height="285.945" Width="333.089" >
+        Title="MIDIator Manager" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Icon="Resources/favicon.png" Height="285.945" Width="333.089" >
     <Grid Margin="0,0,4,0">
         <Button x:Name="btnStartStop" VerticalAlignment="Top" Margin="10,10,5.444,0" Height="200" Width ="200" FontSize="36" Click="btnStartStop_Click" Foreground="White">
             <StackPanel>
@@ -13,7 +14,7 @@
             </StackPanel>
         </Button>
         <Expander x:Name="expander" Header="Log" HorizontalAlignment="Left" Margin="10,215,0,10" Grid.RowSpan="2">
-            <TextBox x:Name="txtOutput" Height="200" TextWrapping="Wrap" VerticalAlignment="Top" BorderThickness="3" Background="#FF232323" Margin="0,0,0,0" Width="200" Foreground="White"/>
+            <TextBox x:Name="txtOutput" Height="200" TextWrapping="Wrap" VerticalAlignment="Top" BorderThickness="3" Background="#FF232323" Margin="0,0,0,0" Width="200" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
         </Expander>
     </Grid>
 </Window>
