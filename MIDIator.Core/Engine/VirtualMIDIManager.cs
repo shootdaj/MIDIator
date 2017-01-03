@@ -19,8 +19,11 @@ namespace MIDIator.Engine
         public Subject<VirtualDevice> VirtualDeviceAdd { get; private set; } = new Subject<VirtualDevice>();
         public Subject<string> VirtualDeviceRemove { get; private set; } = new Subject<string>();
 
-		public VirtualDevice CreateVirtualDevice(string name, Guid manufacturerID, Guid productID, VirtualDeviceType virtualDeviceType)
+		public VirtualDevice CreateVirtualDevice(string name, Guid manufacturerID, Guid productID, VirtualDeviceType virtualDeviceType, bool truncateName = true)
 		{
+			if (truncateName)
+				name = name.Substring(0, DeviceNameMaxLength);
+
 			if (name.Length > DeviceNameMaxLength)
 				throw new ArgumentException($"Device name cannot be longer than {DeviceNameMaxLength} characters.");
 
