@@ -55,4 +55,15 @@ export class ProfileComponent {
         let transformation = this.helperService.initTransformation(name);
         return this.formService.getTransformationsFormGroups(<Transformation[]>[transformation])[0];
     }
+
+
+    private deleteTransformation(name) {
+        let control = <FormArray>this.form.controls['transformations'];
+        
+        for (var i = 0; i < control.length; i++) {
+            if (control.controls[i].value.name === name) {
+                control.removeAt(i);
+            }
+        }
+    }
 }

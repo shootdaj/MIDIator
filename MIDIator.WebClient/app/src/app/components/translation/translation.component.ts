@@ -34,7 +34,9 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     @Input() form: FormGroup;
     @Input() inputDevice: MIDIInputDevice;
-
+    @Input() index: number;
+    @Output() deleteTranslationChange = new EventEmitter();
+    
     private readingIMMT: Boolean;
     private readingOMT: Boolean;
 
@@ -135,5 +137,9 @@ export class TranslationComponent implements OnInit, OnDestroy {
         } else {
 			this.stopMIDIReader(this.omtReaderSubscription);
         }
+    }
+
+    private deleteTranslation() {
+        this.deleteTranslationChange.next(this.index);
     }
 }

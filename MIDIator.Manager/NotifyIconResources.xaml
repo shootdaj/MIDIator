@@ -20,7 +20,7 @@
     <!-- the application's NotifyIcon - started from App.xaml.cs. Declares its own view model. -->
     <tb:TaskbarIcon x:Key="NotifyIcon" 
                     IconSource="Resources/favicon.ico" 
-                    ToolTipText="MIDIator" 
+                    ToolTipText="MIDIator | Click -> Web UI | Double-click -> Manager"
                     LeftClickCommand="{Binding LaunchWebUI}"
                     DoubleClickCommand="{Binding ShowWindowCommand}" 
                     ContextMenu="{StaticResource SysTrayMenu}">

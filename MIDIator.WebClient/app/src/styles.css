@@ -3,77 +3,83 @@
 
 
 #loader-container {
-	background: rgb(15, 15, 15); /*-webkit-radial-gradient(black, #222222);*/ /* Safari 5.1 to 6.0 */
-	text-align: center;
-	display: flex;
-	justify-content: center; /* align horizontal */
-	align-items: center; /* align vertical */
-	height: 100%;
+    background: rgb(15, 15, 15); /*-webkit-radial-gradient(black, #222222);*/ /* Safari 5.1 to 6.0 */
+    text-align: center;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    height: 100%;
 }
 
 body {
-	background-color: #343333;
-	background: url("http://blogrope.com/wp-content/uploads/2013/06/006-wood-melamine-subttle-pattern-background-pat.jpg");
-	height: 100%;
+    background-color: #343333;
+    background: url("http://blogrope.com/wp-content/uploads/2013/06/006-wood-melamine-subttle-pattern-background-pat.jpg");
+    height: 100%;
 }
 
 .app-content {
-	padding: 20px;
+    padding: 20px;
 }
 
 .profile-card {
-	max-width: 80%;
+    max-width: 80%;
 }
 
 .profile-card-body {
-	padding-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .slim-loading-bar {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 999;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
 }
 
 .cell-content {
-	width: 90%;
+    width: 90%;
 }
 
-	.cell-content .button-container {
-		height: 75%;
-		display: flex;
-		flex-direction: row;
-	}
+.button-container {
+    height: 75%;
+    display: flex;
+    flex-direction: row;
+}
 
-		.cell-content .button-container > * {
-			align-self: center;
-			margin-left: 10px;
-			margin-right: 10px;
-		}
+    .button-container > * {
+        align-self: center;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 
-		.cell-content .button-container > button {
-			align-self: flex-end;
-		}
+    .button-container > button {
+        align-self: flex-end;
+    }
+
+    .button-container > mdl-switch {
+        margin-left: 15px;
+        margin-right: 15px;
+        height: 32px;
+    }
 
 
 
 .cell-content-button {
-	height: 100%;
+    height: 100%;
 }
 
 .mdl-card__supporting-text {
-	overflow: visible;
+    overflow: visible;
 }
 
 .mdl-card {
-	overflow: visible;
+    overflow: visible;
 }
 
 .mdl-layout__content {
-	overflow: visible;
+    overflow: visible;
 }
 
 .smaller-icon {
-	font-size: smaller;
+    font-size: smaller;
 }

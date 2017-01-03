@@ -99,6 +99,17 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\src\app\app.module.ts" />
+    <TypeScriptCompile Include="app\src\app\components\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="app\src\app\components\app\app.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\channelMessage\channelMessage.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\dynamic-form.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\inputDevice\inputDevice.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\DropdownOption.ts" />
+    <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\mdl-dropdown.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\mdl-textinput\mdl-textinput.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\profile\profile.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\transformation\transformation.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\translation\translation.component.ts" />
     <TypeScriptCompile Include="app\src\app\index.ts" />
     <TypeScriptCompile Include="app\src\app\midiator-global-imports.ts" />
     <TypeScriptCompile Include="app\src\app\models\domainModel.ts" />

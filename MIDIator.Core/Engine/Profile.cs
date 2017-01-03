@@ -32,31 +32,33 @@ namespace MIDIator.Engine
 
 			Name = profile.Name;
 
-			foreach (var transformation in profile.Transformations)
+            var transformationNames = new List<string>();
+
+			foreach (var inTransformation in profile.Transformations)
 			{
-				var matchedTransformations = Transformations.Where(t => t.Name == transformation.Name);
+                transformationNames.Add(inTransformation.Name);
+
+				var matchedTransformations = Transformations.Where(t => t.Name == inTransformation.Name);
 
 				//TODO: check which transformations are different - currently updating all transformations
-
-				var matchedTransformationsList = matchedTransformations.ToList();
+                var matchedTransformationsList = matchedTransformations.ToList();
 				if (matchedTransformationsList.Any())
 				{
 					var matchedTransformation = matchedTransformationsList.Single();
-					matchedTransformation.Update(transformation, midiDeviceService, virtualMIDIManager);
+					matchedTransformation.Update(inTransformation, midiDeviceService, virtualMIDIManager);
 				}
 				else
 				{
 					//TODO: Test
 					//else create new transformations	
-					var newTransformation = new Transformation(transformation.Name, transformation, midiDeviceService,
+					var newTransformation = new Transformation(inTransformation.Name, inTransformation, midiDeviceService,
 						virtualMIDIManager);
 					Transformations.Add(newTransformation);
 				}
 			}
 
-
-
-			//TODO: delete transformations that dont exist in inProfile
+            //delete xforms that don't exist in inProfile
+		    Transformations.RemoveAll(t => !transformationNames.Contains(t.Name));
 		}
 	}
 }

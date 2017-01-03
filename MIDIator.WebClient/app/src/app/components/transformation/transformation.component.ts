@@ -23,54 +23,64 @@ import { TranslationComponent } from '../../components/translation/translation.c
 
 export class TransformationComponent implements OnInit, OnDestroy {
 
-	private subscriptions: Subscription[];
-	private inputDevices: MIDIInputDevice[];
-	private outputDevices: MIDIOutputDevice[];
+    private subscriptions: Subscription[];
+    private inputDevices: MIDIInputDevice[];
+    private outputDevices: MIDIOutputDevice[];
 
-	@Input() form: FormGroup;
+    @Input() form: FormGroup;
+    @Output() deleteTransformationChange = new EventEmitter();
 
-	constructor(private midiService: MIDIService,
-		private helperService: HelperService,
-		private formService: FormService) {
-	}
-
-	ngOnInit(): void {
-		this.subscriptions = new Array<Subscription>();
-		this.subscriptions.push(this.midiService.availableInputDevicesChanges
-			.subscribe(data => {
-				this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
-			}));
-		this.subscriptions.push(this.midiService.availableOutputDevicesChanges
-			.subscribe(data => {
-				this.outputDevices = data.map(device => this.helperService.maskCast(device, MIDIOutputDevice));
-			}));
-
-		this.midiService.getAvailableInputDevices();
-		this.midiService.getAvailableOutputDevices();
-	}
-
-	ngOnDestroy(): void {
-		this.subscriptions.forEach(s => s.unsubscribe());
+    constructor(private midiService: MIDIService,
+        private helperService: HelperService,
+        private formService: FormService) {
     }
 
-	private linkOutputDevice() {
-		this.form.controls['linkedOutputVirtualDevice'].setValue(true);
-	}
+    ngOnInit(): void {
+        this.subscriptions = new Array<Subscription>();
+        this.subscriptions.push(this.midiService.availableInputDevicesChanges
+            .subscribe(data => {
+                this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
+            }));
+        this.subscriptions.push(this.midiService.availableOutputDevicesChanges
+            .subscribe(data => {
+                this.outputDevices = data.map(device => this.helperService.maskCast(device, MIDIOutputDevice));
+            }));
 
-	private unlinkOutputDevice() {
-		this.form.controls['linkedOutputVirtualDevice'].setValue(false);
-	}
+        this.midiService.getAvailableInputDevices();
+        this.midiService.getAvailableOutputDevices();
+    }
 
-	private get linkedOutputDevice() {
-		return this.form.controls['linkedOutputVirtualDevice'].value;
-	}
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
-	private addNewTranslation() {
-		let control = <FormArray>(<FormGroup>this.form.controls['translationMap']).controls['translations'];
+    private linkOutputDevice() {
+        this.form.controls['linkedOutputVirtualDevice'].setValue(true);
+    }
+
+    private unlinkOutputDevice() {
+        this.form.controls['linkedOutputVirtualDevice'].setValue(false);
+    }
+
+    private get linkedOutputDevice() {
+        return this.form.controls['linkedOutputVirtualDevice'].value;
+    }
+
+    private addNewTranslation() {
+        let control = <FormArray>(<FormGroup>this.form.controls['translationMap']).controls['translations'];
         control.push(this.initTranslationFormGroup());
-	}
+    }
 
     private initTranslationFormGroup() {
         return this.formService.getTranslationFormGroup(this.helperService.initTranslation());
+    }
+
+    private deleteTransformation() {
+        this.deleteTransformationChange.next(this.form.value.name);
+    }
+
+    private deleteTranslation(index) {
+        let control = <FormArray>((<FormArray>this.form.controls['translationMap']).controls['translations']);
+        control.removeAt(index);
     }
 }
