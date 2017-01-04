@@ -21,7 +21,7 @@ namespace MIDIator.Engine
 
 		public VirtualDevice CreateVirtualDevice(string name, Guid manufacturerID, Guid productID, VirtualDeviceType virtualDeviceType, bool truncateName = true)
 		{
-			if (truncateName)
+			if (truncateName && name.Length > DeviceNameMaxLength)
 				name = name.Substring(0, DeviceNameMaxLength);
 
 			if (name.Length > DeviceNameMaxLength)
