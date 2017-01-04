@@ -10,7 +10,7 @@ namespace MIDIator.Engine
 {
 	public class VirtualMIDIManager : IDisposable
 	{
-		public int DeviceNameMaxLength { get; } = 31;
+		public static int DeviceNameMaxLength { get; } = 31;
 
 		public bool? TeVirtualMidiLogging = Config.GetAsBoolSilent("Core.TeVirtualMidiLogging");
 
@@ -19,11 +19,8 @@ namespace MIDIator.Engine
         public Subject<VirtualDevice> VirtualDeviceAdd { get; private set; } = new Subject<VirtualDevice>();
         public Subject<string> VirtualDeviceRemove { get; private set; } = new Subject<string>();
 
-		public VirtualDevice CreateVirtualDevice(string name, Guid manufacturerID, Guid productID, VirtualDeviceType virtualDeviceType, bool truncateName = true)
+		public VirtualDevice CreateVirtualDevice(string name, Guid manufacturerID, Guid productID, VirtualDeviceType virtualDeviceType)
 		{
-			if (truncateName && name.Length > DeviceNameMaxLength)
-				name = name.Substring(0, DeviceNameMaxLength);
-
 			if (name.Length > DeviceNameMaxLength)
 				throw new ArgumentException($"Device name cannot be longer than {DeviceNameMaxLength} characters.");
 
