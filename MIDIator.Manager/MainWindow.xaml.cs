@@ -84,29 +84,46 @@ namespace MIDIator.Manager
 
         private void Start()
         {
-            var image = ((Image) ((StackPanel) btnStartStop.Content).Children[0]);
+            var image = ((Image)((StackPanel)btnStartStop.Content).Children[0]);
             AnimationBehavior.SetSourceUri(image, new Uri("loading.gif", UriKind.Relative));
             Log("Starting...");
 
-            Task.Run(() =>
+            var task = new Task(() => Manager.Start(ExitApplication));
+
+            task.ContinueWith(prevTask =>
             {
-                Manager.Start((ex) => txtOutput.Text = txtOutput.Text + ex.Message + Environment.NewLine,
-                    this.ExitApplication);
-            }).ContinueWith((prevTask) =>
-            {
-                Dispatcher.Invoke(() =>
+                if (prevTask.IsFaulted || prevTask.IsCanceled)
                 {
-                    btnStartStopTooltip.Content = "Click to Stop. Right-click to launch Web UI.";
-                    btnStartStop.Style = this.Resources["RoundButtonTemplateGreen"] as Style;
-                    AnimationBehavior.SetSourceUri(image, new Uri("stop-circle.png", UriKind.Relative));
-                    
+                    Log(prevTask.Exception.ToString());
+                    SetStartButton(image);
+                }
+                else
+                {
+                    SetStopButton(image);
+
                     //launch browser with client running
                     if (LaunchWebUIOnStart)
                         LaunchWebUI();
 
                     Log("Started successfully.");
-                });
-            });
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            task.Start();
+        }
+
+        private void SetStopButton(Image image)
+        {
+            btnStartStopTooltip.Content = "Click to Stop. Right-click to launch Web UI.";
+            btnStartStop.Style = this.Resources["RoundButtonTemplateGreen"] as Style;
+            AnimationBehavior.SetSourceUri(image, new Uri("stop-circle.png", UriKind.Relative));
+        }
+
+        private void SetStartButton(Image image)
+        {
+            btnStartStopTooltip.Content = "Click to Start";
+            btnStartStop.Style = this.Resources["RoundButtonTemplateOrange"] as Style;
+            AnimationBehavior.SetSourceUri(image, new Uri("play-circle.png", UriKind.Relative));
         }
 
         public static void LaunchWebUI()
@@ -120,18 +137,23 @@ namespace MIDIator.Manager
             AnimationBehavior.SetSourceUri(image, new Uri("loading.gif", UriKind.Relative));
             Log("Stopping...");
 
-            Task.Run(() => {
-                Manager.Stop();
-            }).ContinueWith((prevTask) =>
+            var task = new Task(() => Manager.Stop());
+
+            task.ContinueWith(prevTask =>
             {
-                Dispatcher.Invoke(() =>
+                if (prevTask.IsFaulted || prevTask.IsCanceled)
                 {
-                    btnStartStopTooltip.Content = "Click to Start";
-                    btnStartStop.Style = this.Resources["RoundButtonTemplateOrange"] as Style;
-                    AnimationBehavior.SetSourceUri(image, new Uri("play-circle.png", UriKind.Relative));
+                    Log(prevTask.Exception.ToString());
+                    SetStopButton(image);
+                }
+                else
+                {
+                    SetStartButton(image);
                     Log("Stopped successfully.");
-                });
-            });
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+            
+            task.Start();
         }
 
         protected override void OnClosing(CancelEventArgs e)
