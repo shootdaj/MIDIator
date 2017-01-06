@@ -1,4 +1,5 @@
 ﻿using MIDIator.Engine;
+using MIDIator.Services;
 using NUnit.Framework;
 
 namespace MIDIator.Tests
@@ -10,7 +11,9 @@ namespace MIDIator.Tests
 		[SetUp]
 		public void Setup()
 		{
-			MIDIManager = new MIDIManager(new MIDIDeviceService());
+		    var midiDeviceService = new MIDIDeviceService();
+		    var virtualMIDIManager = new VirtualMIDIManager();
+		    MIDIManager = new MIDIManager(midiDeviceService, new ProfileService(midiDeviceService, virtualMIDIManager), virtualMIDIManager);
 		}
 
 		[TearDown]

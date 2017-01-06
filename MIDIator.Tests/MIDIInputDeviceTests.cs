@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
+using MIDIator.Services;
 using NUnit.Framework;
 using Sanford.Multimedia.Midi;
 // ReSharper disable UnusedVariable

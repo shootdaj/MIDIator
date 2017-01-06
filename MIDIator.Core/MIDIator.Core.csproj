@@ -99,7 +99,8 @@
   <ItemGroup>
     <Compile Include="Engine\ChannelMessageAction.cs" />
     <Compile Include="Engine\IProfile.cs" />
-    <Compile Include="Engine\MIDIDeviceService.cs" />
+    <Compile Include="Services\MIDIDeviceService.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Engine\VirtualLoopbackDevice.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\IMIDIInputDevice.cs" />
@@ -108,8 +109,6 @@
     <Compile Include="Engine\InputMatchFunction.cs" />
     <Compile Include="Engine\InputMatchFunctions.cs" />
     <Compile Include="Interfaces\ITranslationMap.cs" />
-    <Compile Include="Json\TransformationConverter - Copy.cs" />
-    <Compile Include="Json\TransformationConverter.cs" />
     <Compile Include="Json\ProfileConverter.cs" />
     <Compile Include="Json\CamelCaseToPascalCaseExpandoObjectConverter.cs" />
     <Compile Include="Json\DisplayNameSerializationBinder.cs" />
@@ -120,7 +119,7 @@
     <Compile Include="Engine\VirtualInputDevice.cs" />
     <Compile Include="Engine\VirtualDevice.cs" />
     <Compile Include="Engine\VirtualOutputDevice.cs" />
-    <Compile Include="Engine\VirtualMIDIManager.cs" />
+    <Compile Include="Services\VirtualMIDIManager.cs" />
     <Compile Include="UIGeneration\TranslationComponentCode.cs">
       <DependentUpon>TranslationComponentCode.tt</DependentUpon>
       <AutoGen>True</AutoGen>

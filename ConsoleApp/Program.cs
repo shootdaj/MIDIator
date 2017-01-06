@@ -5,6 +5,7 @@ using System.Threading;
 using MIDIator;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
+using MIDIator.Services;
 using MIDIator.VirtualMIDI;
 using Sanford.Multimedia.Midi;
 
@@ -15,8 +16,10 @@ namespace ConsoleApp
 		//private static MIDIManager MIDIManager { get; set; }
 
 		static void NoMain(string[] args)
-		{ 
-			GuitarWingMap(new MIDIManager(new MIDIDeviceService()));
+		{
+		    var midiDeviceService = new MIDIDeviceService();
+		    var virtualMIDIManager = new VirtualMIDIManager();
+		    GuitarWingMap(new MIDIManager(midiDeviceService, new ProfileService(midiDeviceService, virtualMIDIManager)));
 		}
 
 		static void CreateTranslationAndSaveIt()

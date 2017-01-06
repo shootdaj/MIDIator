@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MIDIator.Interfaces;
+using MIDIator.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Refigure;
 using Sanford.Multimedia.Midi;
 
@@ -15,9 +17,9 @@ namespace MIDIator.Engine
 	{
 		#region Singleton
 
-		public static void Instantiate(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
+		public static void Instantiate(MIDIDeviceService midiDeviceService, ProfileService profileService, VirtualMIDIManager virtualMIDIManager)
 		{
-			Instance = new MIDIManager(midiDeviceService, virtualMIDIManager);
+			Instance = new MIDIManager(midiDeviceService, profileService, virtualMIDIManager);
 		}
 
 		public static MIDIManager Instance { get; private set; }
@@ -30,22 +32,28 @@ namespace MIDIator.Engine
 
 		public VirtualMIDIManager VirtualMIDIManager { get; set; }
 
-		public MIDIManager(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager = null)
+        public ProfileService ProfileService { get; set; }
+
+        public MIDIManager(MIDIDeviceService midiDeviceService, ProfileService profileService, VirtualMIDIManager virtualMIDIManager = null)
 		{
 			MIDIDeviceService = midiDeviceService;
 			VirtualMIDIManager = virtualMIDIManager;
-		    VirtualMIDIManager?.VirtualDeviceAdd.Subscribe(
-		        device =>
-		        {
-		            if (device is VirtualLoopbackDevice)
-		                CurrentProfile?.VirtualLoopbackDevices.Add((VirtualLoopbackDevice) device);
-		        });
-		    VirtualMIDIManager?.VirtualDeviceRemove.Subscribe(
-		        deviceName =>
-		        {
-		            var deviceToRemove = CurrentProfile.VirtualLoopbackDevices[deviceName];
-		            CurrentProfile?.VirtualLoopbackDevices.Remove(deviceToRemove);
-		        });
+		    ProfileService = profileService;
+
+
+
+		    //VirtualMIDIManager?.VirtualDeviceAdd.Subscribe(
+		    //    device =>
+		    //    {
+		    //        if (device is VirtualLoopbackDevice)
+		    //            CurrentProfile?.VirtualLoopbackDevices.Add((VirtualLoopbackDevice) device);
+		    //    });
+		    //VirtualMIDIManager?.VirtualDeviceRemove.Subscribe(
+		    //    deviceName =>
+		    //    {
+		    //        var deviceToRemove = CurrentProfile.VirtualLoopbackDevices[deviceName];
+		    //        CurrentProfile?.VirtualLoopbackDevices.Remove(deviceToRemove);
+		    //    });
 		}
 
 		public void Dispose()
@@ -64,7 +72,7 @@ namespace MIDIator.Engine
 
 		public Profile CurrentProfile { get; private set; }
 
-		public void UpdateProfile(ExpandoObject profile)
+		public void UpdateProfile(JObject profile)
 		{
 			CurrentProfile.Update(profile, MIDIDeviceService, VirtualMIDIManager);
 		    Task.Run(() => SaveProfile());
@@ -80,24 +88,24 @@ namespace MIDIator.Engine
 
 		#region Transformations
 
-		public Transformation CreateTransformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, TranslationMap translationMap)
-		{
-			var transformation = new Transformation(name, inputDevice, outputDevice, translationMap);
-			((List<Transformation>)CurrentProfile.Transformations).Add(transformation);
-			return transformation;
-		}
+		//public Transformation CreateTransformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, TranslationMap translationMap)
+		//{
+		//	var transformation = new Transformation(name, inputDevice, outputDevice, translationMap);
+		//	((List<Transformation>)CurrentProfile.Transformations).Add(transformation);
+		//	return transformation;
+		//}
 
-		public Transformation CreateTransformation(string name, string inputDeviceName, string outputDeviceName,
-			TranslationMap translationMap)
-		{
-			return CreateTransformation(name, MIDIDeviceService.GetInputDevice(inputDeviceName), MIDIDeviceService.GetOutputDevice(outputDeviceName), translationMap);
-		}
+		//public Transformation CreateTransformation(string name, string inputDeviceName, string outputDeviceName,
+		//	TranslationMap translationMap)
+		//{
+		//	return CreateTransformation(name, MIDIDeviceService.GetInputDevice(inputDeviceName), MIDIDeviceService.GetOutputDevice(outputDeviceName), translationMap);
+		//}
 
-		public void RemoveTransformation(string name)
-		{
-			CurrentProfile.Transformations.Where(t => t.Name == name).ToList().ForEach(t => t.Dispose());
-			((List<Transformation>)CurrentProfile.Transformations).RemoveAll(t => t.Name == name);
-		}
+		//public void RemoveTransformation(string name)
+		//{
+		//	CurrentProfile.Transformations.Where(t => t.Name == name).ToList().ForEach(t => t.Dispose());
+		//	((List<Transformation>)CurrentProfile.Transformations).RemoveAll(t => t.Name == name);
+		//}
 
 		#endregion
 

@@ -2,9 +2,13 @@
 using System.Dynamic;
 using System.Linq;
 using Anshul.Utilities;
+using MIDIator.Interfaces;
+using MIDIator.Json;
+using MIDIator.Services;
 using MIDIator.UIGeneration;
 using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TypeLite;
 
 namespace MIDIator.Engine
@@ -18,47 +22,18 @@ namespace MIDIator.Engine
 	{
 		public string Name { get; set; }
 
-		public List<Transformation> Transformations { get; set; }
+		public List<Transformation> Transformations { get; set; } = new List<Transformation>();
 
-        [JsonIgnore]
-        public BetterList<VirtualLoopbackDevice> VirtualLoopbackDevices { get; set; }
+        public BetterList<VirtualLoopbackDevice> VirtualLoopbackDevices { get; set; } = new BetterList<VirtualLoopbackDevice>();
 
-        [JsonProperty(nameof(VirtualLoopbackDevices))]
-        private BetterList<VirtualLoopbackDevice> VirtualLoopbackDevicesJson => VirtualLoopbackDevices;
+        //[JsonProperty(nameof(VirtualLoopbackDevices))]
+        //private BetterList<VirtualLoopbackDevice> VirtualLoopbackDevicesJson => VirtualLoopbackDevices;
 
-	    public void Update(ExpandoObject inProfile, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
-		{
-			dynamic profile = inProfile;
-
-			Name = profile.Name;
-
-            var transformationNames = new List<string>();
-
-			foreach (var inTransformation in profile.Transformations)
-			{
-                transformationNames.Add(inTransformation.Name);
-
-				var matchedTransformations = Transformations.Where(t => t.Name == inTransformation.Name);
-
-				//TODO: check which transformations are different - currently updating all transformations
-                var matchedTransformationsList = matchedTransformations.ToList();
-				if (matchedTransformationsList.Any())
-				{
-					var matchedTransformation = matchedTransformationsList.Single();
-					matchedTransformation.Update(inTransformation, midiDeviceService, virtualMIDIManager);
-				}
-				else
-				{
-					//TODO: Test
-					//else create new transformations	
-					var newTransformation = new Transformation(inTransformation.Name, inTransformation, midiDeviceService,
-						virtualMIDIManager);
-					Transformations.Add(newTransformation);
-				}
-			}
-
-            //delete xforms that don't exist in inProfile
-		    Transformations.RemoveAll(t => !transformationNames.Contains(t.Name));
+	    public void Update(JObject profileDTO, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
+	    {
+	        Name = profileDTO["name"].ToString();
+            MIDIManager.Instance.ProfileService.LoadVirtualLoopbackDevices(profileDTO, this);
+            MIDIManager.Instance.ProfileService.LoadTransformations(JsonSerializer.Create(SerializerSettings.DefaultSettings), profileDTO, this);
 		}
 	}
 }

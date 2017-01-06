@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Dynamic;
 using MIDIator.Interfaces;
+using MIDIator.Services;
 using MIDIator.UIGeneration;
 using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
@@ -9,112 +10,81 @@ using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "")]
-	[Ng2Component(componentCodeTemplate: typeof(TransformationComponentCode))]
-	public class Transformation
-	{
-		public string Name { get; set; }
+    [TsClass(Module = "")]
+    [Ng2Component(componentCodeTemplate: typeof(TransformationComponentCode))]
+    public class Transformation
+    {
+        public string Name { get; set; }
 
-		private string ForwardActionName { get; } = "Forward";
+        private string ForwardActionName { get; } = "Forward";
 
-		public IMIDIInputDevice InputDevice { get; set; }
+        public IMIDIInputDevice InputDevice { get; set; }
 
-		public IMIDIOutputDevice OutputDevice { get; set; }
+        public IMIDIOutputDevice OutputDevice { get; set; }
 
-		public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = true;
 
-		public ITranslationMap TranslationMap
-		{
-			get { return InputDevice.TranslationMap; }
-			set { InputDevice.TranslationMap = value; }
-		}
+        public ITranslationMap TranslationMap
+        {
+            get { return InputDevice.TranslationMap; }
+            set { InputDevice.TranslationMap = value; }
+        }
 
-		public bool LinkedOutputVirtualDevice { get; set; } = false;
+        public bool LinkedOutputVirtualDevice { get; set; } = false;
 
-		public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap)
-		{
-			InputDevice = inputDevice;
-			OutputDevice = outputDevice;
-			InitCore(name, translationMap);
-		}
+        /// <summary>
+        /// Creates a transformation from services
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="outputDevice"></param>
+        /// <param name="translationMap"></param>
+        /// <param name="linkedVirtualOutputDevice">If true, outputDeviceName is ignored and a new virtual output device is created from the given input device</param>
+        /// <param name="inputDevice"></param>
+        [JsonConstructor]
+        public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice)
+        {
+            InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice);
+        }
 
-		public Transformation(string name, MIDIInputDevice inputDevice, MIDIOutputDevice outputDevice, ITranslationMap translationMap) 
-			: this(name, (IMIDIInputDevice) inputDevice, (IMIDIOutputDevice)outputDevice, translationMap)
-		{
-			
-		}
+        public Transformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+        {
+            InitFromDynamicTransformation(name, transformation, inputDevice, outputDevice);
+        }
 
-		/// <summary>
-		/// Creates a transformation from services
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="inputDeviceName"></param>
-		/// <param name="outputDeviceName"></param>
-		/// <param name="midiDeviceService"></param>
-		/// <param name="translationMap"></param>
-		/// <param name="linkedVirtualOutputDevice">If true, outputDeviceName is ignored and a new virtual output device is created from the given input device</param>
-		/// <param name="virtualMIDIManager"></param>
-		[JsonConstructor]
-		public Transformation(string name, string inputDeviceName, string outputDeviceName, ITranslationMap translationMap, bool linkedVirtualOutputDevice, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
-		{
-			InitFromServices(name, inputDeviceName, outputDeviceName, translationMap, midiDeviceService, linkedVirtualOutputDevice, virtualMIDIManager);
-		}
+        public void Dispose()
+        {
+            InputDevice.RemoveChannelMessageAction(ForwardActionName);
+        }
 
-		public Transformation(string name, dynamic transformation, MIDIDeviceService midiDeviceService,
-			VirtualMIDIManager virtualMIDIManager)
-		{
-			InitFromDynamicTransformation(name, transformation, midiDeviceService, virtualMIDIManager);
-		}
+        public void Update(dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+        {
+            InputDevice.Stop();
+            InputDevice.TranslationMap = null;
+            InputDevice.RemoveChannelMessageAction(ForwardActionName);
+            InitFromDynamicTransformation(Name, transformation, inputDevice, outputDevice);
+        }
 
-		public void Dispose()
-		{
-			InputDevice.RemoveChannelMessageAction(ForwardActionName);
-		}
+        private void InitFromDynamicTransformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+        {
+            InitFromServices(name, inputDevice, outputDevice,
+                ((ExpandoObject)transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>(), transformation.LinkedOutputVirtualDevice);
+        }
 
-		public void Update(dynamic transformation, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
-		{
-			InputDevice.Stop();
-			InputDevice.TranslationMap = null;
-			InputDevice.RemoveChannelMessageAction(ForwardActionName);
-			InitFromDynamicTransformation(Name, transformation, midiDeviceService, virtualMIDIManager);
-		}
+        private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice)
+        {
+            InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice);
+        }
 
-		private void InitFromDynamicTransformation(string name, dynamic transformation, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
-		{
-			InitFromServices(name, (string) transformation.InputDevice.Name, (string) transformation.OutputDevice.Name,
-				((ExpandoObject) transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>(), midiDeviceService,
-				transformation.LinkedOutputVirtualDevice, transformation.LinkedOutputVirtualDevice ? virtualMIDIManager : null);
-		}
-
-		private void InitFromServices(string name, string inputDeviceName, string outputDeviceName, ITranslationMap translationMap, MIDIDeviceService midiDeviceService, bool linkedOutputVirtualDevice, VirtualMIDIManager virtualMIDIManager = null)
-		{
-			if (linkedOutputVirtualDevice && virtualMIDIManager == null)
-				throw new ArgumentException($"If {nameof(linkedOutputVirtualDevice)} is true, {nameof(virtualMIDIManager)} must be provided."); 
-
-			if (!linkedOutputVirtualDevice && virtualMIDIManager != null)
-				throw new WarningException($"{nameof(virtualMIDIManager)} passed in with {nameof(linkedOutputVirtualDevice)} set to false, therefore {nameof(virtualMIDIManager)} will be ignored. Did you mean to send it as true?");
-
-			LinkedOutputVirtualDevice = linkedOutputVirtualDevice;
-			InputDevice = midiDeviceService.GetInputDevice(inputDeviceName);
-			if (LinkedOutputVirtualDevice)
-			{
-				midiDeviceService.CreateVirtualOutputDeviceForInputDevice(InputDevice, virtualMIDIManager);
-			}
-			OutputDevice = virtualMIDIManager != null && LinkedOutputVirtualDevice
-				// && !virtualMIDIManager.DoesDeviceExist(InputDevice.Name) -- this was to restrict virtual devices to only be created on real devices, not other virtual devices.
-				? midiDeviceService.GetOutputDevice(Extensions.GetVirtualDeviceName(InputDevice.Name))
-				: midiDeviceService.GetOutputDevice(outputDeviceName);
-
-			InitCore(name, translationMap);
-		}
-
-		private void InitCore(string name, ITranslationMap translationMap)
-		{
-			Name = name;
-			TranslationMap = translationMap;
-			InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
-			InputDevice.Start();
-		}
-	}
+        private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+        {
+            Name = name;
+            InputDevice = inputDevice;
+            OutputDevice = outputDevice;
+            TranslationMap = translationMap;
+            LinkedOutputVirtualDevice = linkedOutputVirtualDevice;
+            InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
+            InputDevice.Start();
+        }
+    }
 }
 

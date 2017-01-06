@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using MIDIator.Engine;
+using MIDIator.Services;
 using NUnit.Framework;
 
 namespace MIDIator.Tests

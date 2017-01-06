@@ -5,6 +5,7 @@ using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Owin.Hosting;
 using MIDIator.Engine;
 using MIDIator.Json;
+using MIDIator.Services;
 using Newtonsoft.Json;
 using Refigure;
 using Serilog;

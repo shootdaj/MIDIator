@@ -1,22 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
 using MIDIator.Engine;
-using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace MIDIator.Json
 {
-	//public class ProfileConverter : CustomCreationConverter<Profile>
-	//{
-	//	public override Profile Create(Type objectType)
-	//	{
-	//		var profile = new Profile();//figure out how to have a static profile object
-	//									//and then manage it.. during deseriazation, merge 
-	//									//the incoming object into the static profile
-	//	}
-	//}
+    public class ProfileConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(Profile);
+        }
+        
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return MIDIManager.Instance.ProfileService.CreateFromJSON(reader, serializer);
+        }
+        
+	    public override bool CanWrite => false;
 
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

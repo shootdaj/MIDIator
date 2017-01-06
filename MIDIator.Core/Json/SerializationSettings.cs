@@ -13,7 +13,7 @@ namespace MIDIator.Json
 			Binder = new DisplayNameSerializationBinder(),
 			Formatting = Formatting.Indented,
 			ContractResolver = new CamelCasePropertyNamesContractResolver(),
-			Converters = new List<JsonConverter> { new CamelCaseToPascalCaseExpandoObjectConverter(), new TransformationConverter() }
+			Converters = new List<JsonConverter> { new CamelCaseToPascalCaseExpandoObjectConverter(), new ProfileConverter() }
 		};
 	}
 }

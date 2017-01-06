@@ -32,10 +32,10 @@ namespace MIDIator.Engine
         public string Name { get; private set; }
 
         [JsonProperty]
-        private Guid ManufacturerID { get; set; }
+        public Guid ManufacturerID { get; set; }
 
         [JsonProperty]
-        private Guid ProductID { get; set; }
+        public Guid ProductID { get; set; }
 
         [JsonProperty]
         private VirtualDeviceType Type { get; set; }

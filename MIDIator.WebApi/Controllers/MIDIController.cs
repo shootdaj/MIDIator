@@ -5,6 +5,7 @@ using Microsoft.AspNet.SignalR;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
 using MIDIator.Web.Hubs;
+using Newtonsoft.Json.Linq;
 
 namespace MIDIator.Web.Controllers
 {
@@ -32,7 +33,7 @@ namespace MIDIator.Web.Controllers
 		}
 
 		[HttpPost]
-		public dynamic Profile(ExpandoObject inProfile)
+		public dynamic Profile(JObject inProfile)
 		{
 			MIDIManager.UpdateProfile(inProfile);
 			return MIDIManager.CurrentProfile;
@@ -42,17 +43,17 @@ namespace MIDIator.Web.Controllers
 
 		#region Transformations
 
-		[HttpPost]
-		public Transformation CreateTransformation(string name, string inputDeviceName, string outputDeviceName, TranslationMap translationMap, bool startDevices)
-		{
-			return MIDIManager.CreateTransformation(name, inputDeviceName, outputDeviceName, translationMap);
-		}
+		//[HttpPost]
+		//public Transformation CreateTransformation(string name, string inputDeviceName, string outputDeviceName, TranslationMap translationMap, bool startDevices)
+		//{
+		//	return MIDIManager.CreateTransformation(name, inputDeviceName, outputDeviceName, translationMap);
+		//}
 
-		[HttpPost]
-		public void RemoveTransformation(string name)
-		{
-			MIDIManager.RemoveTransformation(name);
-		}
+		//[HttpPost]
+		//public void RemoveTransformation(string name)
+		//{
+		//	MIDIManager.RemoveTransformation(name);
+		//}
 
 		#endregion
 

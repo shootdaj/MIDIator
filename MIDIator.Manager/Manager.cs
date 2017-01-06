@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Owin.Hosting;
 using MIDIator.Engine;
+using MIDIator.Services;
 using MIDIator.Web;
 using MIDIator.WebClient;
 using Refigure;

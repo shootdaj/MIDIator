@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading;
-using Anshul.Utilities;
-using Microsoft.AspNet.SignalR;
+using MIDIator.Engine;
 using MIDIator.Interfaces;
-using Refigure;
 using Sanford.Multimedia.Midi;
 
-namespace MIDIator.Engine
+namespace MIDIator.Services
 {
 	public class MIDIDeviceService : IDisposable
 	{
@@ -114,15 +112,17 @@ namespace MIDIator.Engine
 		}
 
 
-		public void CreateVirtualOutputDeviceForInputDevice(IMIDIInputDevice device, VirtualMIDIManager virtualMIDIManager)
+		public void CreateVirtualOutputDeviceForInputDevice(IMIDIInputDevice device, VirtualMIDIManager virtualMIDIManager, Profile profile)
 		{
 			if (!virtualMIDIManager.DoesDeviceExist(GetVirtualDeviceName(device.Name)))
 			{
-				virtualMIDIManager.CreateVirtualDevice(GetVirtualDeviceName(device.Name), Guid.NewGuid(), Guid.NewGuid(),
+				var virtualDevice = virtualMIDIManager.CreateVirtualDevice(GetVirtualDeviceName(device.Name), Guid.NewGuid(), Guid.NewGuid(),
 					VirtualDeviceType.Loopback);
 
-				//if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
-				Thread.Sleep(1000);
+                profile.VirtualLoopbackDevices.Add((VirtualLoopbackDevice)virtualDevice);
+
+                //if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
+                Thread.Sleep(1000);
 			}
 		}
 

@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Text.RegularExpressions;
 using MIDIator.Engine;
 using MIDIator.Json;
+using MIDIator.Services;
 using Newtonsoft.Json;
 using Refigure;
 using Sanford.Multimedia.Midi;

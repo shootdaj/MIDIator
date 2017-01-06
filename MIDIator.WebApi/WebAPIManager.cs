@@ -11,6 +11,7 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Client;
 using MIDIator.Engine;
 using MIDIator.Json;
+using MIDIator.Services;
 using Newtonsoft.Json;
 using Refigure;
 using Sanford.Multimedia.Midi;
@@ -46,7 +47,10 @@ namespace MIDIator.Web
 
 		private void InitMIDIManager()
 		{
-			MIDIManager.Instantiate(new MIDIDeviceService(), VirtualMIDIManager);
+		    var midiDeviceService = new MIDIDeviceService();
+
+		    MIDIManager.Instantiate(midiDeviceService, new ProfileService(midiDeviceService, VirtualMIDIManager),
+		        VirtualMIDIManager);
 
 		    if (string.IsNullOrEmpty(Config.Get("WebAPI.ProfileFile")) || !File.Exists(Config.Get("WebAPI.ProfileFile")))
 		    {
@@ -60,21 +64,8 @@ namespace MIDIator.Web
             }
 		    else
 		    {
-		        var virtualLoopbackDevices = new BetterList<VirtualLoopbackDevice>();
-
-                var subscription = MIDIManager.Instance.VirtualMIDIManager.VirtualDeviceAdd.Subscribe(
-                   device =>
-                   {
-                       if (device is VirtualLoopbackDevice)
-                           virtualLoopbackDevices.Add((VirtualLoopbackDevice)device);
-                   });
-
                 var profile = JsonConvert.DeserializeObject<Profile>(File.ReadAllText(Config.Get("WebAPI.ProfileFile")));
-                subscription.Dispose();
-		        profile.VirtualLoopbackDevices = virtualLoopbackDevices;
-
                 MIDIManager.Instance.SetProfile(profile);
-                
             }
 		}
 
