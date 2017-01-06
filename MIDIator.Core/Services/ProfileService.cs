@@ -85,7 +85,7 @@ namespace MIDIator.Services
             var inputDeviceName = transformationDTO["inputDevice"]["name"].ToString();
             var outputDeviceName = transformationDTO["outputDevice"]["name"].ToString();
 
-            inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName);
+            inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true);
             linkedOutputVirtualDevice = transformationDTO["linkedOutputVirtualDevice"].ToObject<bool>(serializer);
 
             if (linkedOutputVirtualDevice)
@@ -95,7 +95,7 @@ namespace MIDIator.Services
             }
             else
             {
-                outputDevice = MIDIDeviceService.GetOutputDevice(outputDeviceName);
+                outputDevice = MIDIDeviceService.GetOutputDevice(outputDeviceName, failSilently: true);
             }
 
             translationMap = transformationDTO["translationMap"].ToObject<TranslationMap>(serializer);
