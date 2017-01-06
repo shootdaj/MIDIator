@@ -11,22 +11,16 @@ using Newtonsoft.Json.Linq;
 
 namespace MIDIator.Json
 {
-    public class ProfileConverter : JsonConverter
+    public class TransformationConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(Profile));
+            return (objectType == typeof(Transformation));
         }
         
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var jo = JObject.Load(reader);
-	        var virtualLoopbackDevices = jo["virtualLoopbackDevices"];
-
-			LoadVirtualLoopbackDevices(virtualLoopbackDevices);
-	        
-			//jo.SelectToken("asdf").Mo
-
             var translationMap = jo["translationMap"].ToObject<TranslationMap>(serializer);
             var transformation = new Transformation(jo["name"].ToString(), 
                 jo["inputDevice"]["name"].ToString(), 
@@ -39,17 +33,7 @@ namespace MIDIator.Json
             return transformation;
         }
 
-	    private static void LoadVirtualLoopbackDevices(JToken virtualLoopbackDevices)
-	    {
-		    foreach (var virtualLoopbackDevice in virtualLoopbackDevices)
-		    {
-			    MIDIManager.Instance.VirtualMIDIManager.CreateVirtualDevice(virtualLoopbackDevice["name"].ToString(),
-				    Guid.Parse(virtualLoopbackDevice["manufacturerID"].ToString()),
-				    Guid.Parse(virtualLoopbackDevice["productID"].ToString()), VirtualDeviceType.Loopback);
-		    }
-	    }
-
-	    public override bool CanWrite => false;
+        public override bool CanWrite => false;
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
