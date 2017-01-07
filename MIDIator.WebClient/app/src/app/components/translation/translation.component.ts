@@ -21,7 +21,8 @@ declare var componentHandler;
 
 @Component({
     selector: 'translation',
-    templateUrl: './translation.component.html'
+    templateUrl: './translation.component.html',
+    styles: ['.adjust-right-alignment { margin-right: 20px; }']
 })
 
 export class TranslationComponent implements OnInit, OnDestroy {

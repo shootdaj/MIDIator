@@ -18,7 +18,8 @@ import { TranslationComponent } from '../../components/translation/translation.c
 
 @Component({
     selector: 'transformation',
-    templateUrl: './transformation.component.html'
+    templateUrl: './transformation.component.html',
+    styles: ['.adjust-right-alignment { margin-right: 16px;}']
 })
 
 export class TransformationComponent implements OnInit, OnDestroy {

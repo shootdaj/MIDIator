@@ -8,6 +8,18 @@ namespace MIDIator.Engine
 	public static class TranslationFunctions
 	{
 		/// <summary>
+		/// Forwards only Data2, taking the rest from the output message template.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> KeepData2 => (incomingMessage, outputMessageTemplate) =>
+		{
+			var translatedMessage = new ChannelMessage(outputMessageTemplate.ToChannelMessage().Command,
+				outputMessageTemplate.ToChannelMessage().MidiChannel, outputMessageTemplate.ToChannelMessage().Data1,
+				incomingMessage.ToChannelMessage().Data2);
+
+			return translatedMessage;
+		};
+
+		/// <summary>
 		/// Outputs the output message template without any modifications or data from the incoming message.
 		/// </summary>
 		public static Func<ShortMessage, ShortMessage, ShortMessage> DirectTranslation =>

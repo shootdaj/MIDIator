@@ -7,6 +7,10 @@ namespace MIDIator.Engine
 	{
 		Data1Match,
 		NoteMatch,
-		CatchAll
+		CatchAll,
+		CCData1Match,
+		NoteOffData1Match,
+		NoteOnData1Match,
+		NoteData1Match
 	}
 }

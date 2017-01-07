@@ -82,7 +82,10 @@ namespace MIDIator.Engine
             OutputDevice = outputDevice;
             TranslationMap = translationMap;
             LinkedOutputVirtualDevice = linkedOutputVirtualDevice;
-            InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, OutputDevice.Send, ForwardActionName));
+            InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, message =>
+            {
+	            OutputDevice.Send(message);
+            }, ForwardActionName));
             InputDevice.Start();
         }
     }

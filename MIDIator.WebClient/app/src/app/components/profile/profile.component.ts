@@ -20,7 +20,8 @@ import { TextInputComponent } from '../../components/mdl-textinput/mdl-textinput
 
 @Component({
     selector: 'profile',
-    templateUrl: './profile.component.html'
+    templateUrl: './profile.component.html',
+    styles: ['.adjust-right-alignment {margin-right: 5px;}']
 })
 
 export class ProfileComponent {

@@ -8,5 +8,6 @@ namespace MIDIator.Engine
 		DirectTranslation,
 		ChangeNote,
 		PCToNote,
+		KeepData2
 	}
 }

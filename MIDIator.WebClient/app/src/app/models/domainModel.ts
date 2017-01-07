@@ -18,9 +18,13 @@ export enum ChannelCommand {
     PitchWheel = 224
 }
 export enum InputMatchFunction {
-    Data1Match = 0,
-    NoteMatch = 1,
-    CatchAll = 2
+    Data1Match,
+    NoteMatch,
+    CatchAll,
+    CCData1Match,
+    NoteOffData1Match,
+    NoteOnData1Match,
+    NoteData1Match
 }
 export enum MessageType {
     Channel = 0,
@@ -32,7 +36,8 @@ export enum MessageType {
 export enum TranslationFunction {
     DirectTranslation = 0,
     ChangeNote = 1,
-    PCToNote = 2
+    PCToNote = 2,
+    KeepData2 = 3
 }
 export class ChannelMessage extends ShortMessage {
 	constructor() {

@@ -7,7 +7,8 @@ module MIDIator.Engine {
 	export const enum TranslationFunction {
 		DirectTranslation = 0,
 		ChangeNote = 1,
-		PCToNote = 2
+        PCToNote = 2,
+        KeepData2 = 3
 	}
 }
 module Sanford.Multimedia.Midi {

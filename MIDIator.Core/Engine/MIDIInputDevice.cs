@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using MIDIator.Interfaces;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
@@ -16,7 +17,17 @@ namespace MIDIator.Engine
 
 		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
-			InputDevice = new InputDevice(deviceID);
+			try
+			{
+				InputDevice = new InputDevice(deviceID);
+			}
+			catch (InputDeviceException ex)
+			{
+				if (ex.ErrorCode == DeviceException.MMSYSERR_NOMEM)
+				{
+					throw new ArgumentException($"Device with ID {deviceID} is in use by another application.");
+				}
+			}
 			TranslationMap = translationMap;
 			InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
 		}

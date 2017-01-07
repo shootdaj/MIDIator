@@ -13,9 +13,45 @@ namespace MIDIator.Engine
 
 		public static Func<ShortMessage, ShortMessage, bool> NoteMatch => Data1Match;
 
+		/// <summary>
+		/// Matches if the incomingMessage's Data1 matches inputMessageMatchTarget's Data1 and incomingMessage's channel command is NoteOn.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, bool> NoteOnData1Match =>
+			(incomingMessage, inputMessageMatchTarget) =>
+				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1) &&
+				incomingMessage.ToChannelMessage().Command == ChannelCommand.NoteOn;
+
+		/// <summary>
+		/// Matches if the incomingMessage's Data1 matches inputMessageMatchTarget's Data1 and incomingMessage's channel command is NoteOn or NoteOff.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, bool> NoteData1Match =>
+			(incomingMessage, inputMessageMatchTarget) =>
+				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1) &&
+				(incomingMessage.ToChannelMessage().Command == ChannelCommand.NoteOn ||
+				 incomingMessage.ToChannelMessage().Command == ChannelCommand.NoteOff);
+
+		/// <summary>
+		/// Matches if the incomingMessage's Data1 matches inputMessageMatchTarget's Data1 and incomingMessage's channel command is NoteOff.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, bool> NoteOffData1Match =>
+			(incomingMessage, inputMessageMatchTarget) =>
+				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1) &&
+				incomingMessage.ToChannelMessage().Command == ChannelCommand.NoteOff;
+
+		/// <summary>
+		/// Matches if the incoming value's Data1 matches inputMessageMatchTarget's Data1
+		/// </summary>
 		public static Func<ShortMessage, ShortMessage, bool> Data1Match =>
 			(incomingMessage, inputMessageMatchTarget) =>
 				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1);
+
+		/// <summary>
+		/// Matches if the incoming value is a CC and matches inputMessageMatchTemplate's Data1.
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, bool> CCData1Match =>
+			(incomingMessage, inputMessageMatchTarget) =>
+				incomingMessage.ToChannelMessage().Data1.Equals(inputMessageMatchTarget.ToChannelMessage().Data1) && 
+				incomingMessage.ToChannelMessage().Command == ChannelCommand.Controller;
 
 
 		public static object Parse(string functionName)
