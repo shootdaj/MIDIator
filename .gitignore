@@ -216,3 +216,4 @@ MIDIator.WebClient/app/dist/*
 !MIDIator.Manager/MIDIator.Manager_ClickOnceKey.pfx
 MIDIator.Manager/COTest/*
 MIDIator.Manager/InnoSetup/*.exe
+MIDIator.WebClient/app/node_modules.zip
