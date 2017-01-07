@@ -6,10 +6,11 @@
         <div class="mdl-layout-spacer"></div>
 		<div class="adjust-right-alignment">
 			<div class="button-container">
-				<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Delete'" (click)="deleteTransformation()">
+				<mdl-switch [formControl]="form.controls['enabled']" mdl-ripple [mdl-tooltip]="'Enable/Disable'"></mdl-switch>
+				<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Delete'" (click)="deleteTransformation()" class="green">
 					<span class="zmdi zmdi-delete zmdi-hc-md"></span>
 				</button>
-				<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'">
+				<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'" class="green">
 					<span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
 				</button>
 			</div>
@@ -69,7 +70,7 @@
                         <div class="mdl-layout-spacer"></div>
                         <div>
                             <div class="button-container">
-                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'">
+                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'" class="blue">
                                     <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
                                 </button>
                             </div>

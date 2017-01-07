@@ -47,16 +47,28 @@ namespace MIDIator.Services
                     bool linkedOutputVirtualDevice;
                     IMIDIOutputDevice outputDevice;
                     TranslationMap translationMap;
+	                bool enabled;
                     var matchedTransformation = matchedTransformationsList.Single();
 
-                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, out linkedOutputVirtualDevice, out outputDevice, out translationMap);
+                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, out linkedOutputVirtualDevice, out outputDevice, out translationMap, out enabled);
 
+					matchedTransformation.Enabled = enabled;
                     matchedTransformation.InputDevice = inputDevice;
                     matchedTransformation.OutputDevice = outputDevice;
                     matchedTransformation.TranslationMap = translationMap;
                     matchedTransformation.LinkedOutputVirtualDevice = linkedOutputVirtualDevice;
 
-                }
+	                if (!matchedTransformation.Enabled && matchedTransformation.InputDevice.IsRecording)
+	                {
+		                matchedTransformation.InputDevice.Stop();
+	                }
+
+					if (matchedTransformation.Enabled && !matchedTransformation.InputDevice.IsRecording)
+					{
+						matchedTransformation.InputDevice.Start();
+					}
+
+				}
                 else
                 {
                     //TODO: Test
@@ -65,11 +77,12 @@ namespace MIDIator.Services
                     bool linkedOutputVirtualDevice;
                     IMIDIOutputDevice outputDevice;
                     TranslationMap translationMap;
+	                bool enabled;
 
-                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, out linkedOutputVirtualDevice, out outputDevice, out translationMap);
+                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, out linkedOutputVirtualDevice, out outputDevice, out translationMap, out enabled);
 
                     var transformation = new Transformation(transformationDTO["name"].ToString(),
-                        inputDevice, outputDevice, translationMap, linkedOutputVirtualDevice);
+                        inputDevice, outputDevice, translationMap, linkedOutputVirtualDevice, enabled);
 
                     profile.Transformations.Add(transformation);
                 }
@@ -80,7 +93,7 @@ namespace MIDIator.Services
 
         private void GetTransformationProperties(JsonSerializer serializer,
             JToken transformationDTO, Profile profile, out IMIDIInputDevice inputDevice, out bool linkedOutputVirtualDevice,
-            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap)
+            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled)
         {
             var inputDeviceName = transformationDTO["inputDevice"]["name"].ToString();
             var outputDeviceName = transformationDTO["outputDevice"]["name"].ToString();
@@ -99,6 +112,7 @@ namespace MIDIator.Services
             }
 
             translationMap = transformationDTO["translationMap"].ToObject<TranslationMap>(serializer);
+	        enabled = transformationDTO["enabled"].ToObject<bool>(serializer);
         }
 
         public void LoadVirtualLoopbackDevices(JObject profileDTO, Profile profile)

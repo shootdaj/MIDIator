@@ -41,9 +41,9 @@ namespace MIDIator.Engine
         /// <param name="linkedVirtualOutputDevice">If true, outputDeviceName is ignored and a new virtual output device is created from the given input device</param>
         /// <param name="inputDevice"></param>
         [JsonConstructor]
-        public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice)
+        public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice, bool enabled = true)
         {
-            InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice);
+            InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice, enabled);
         }
 
         public Transformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
@@ -70,14 +70,15 @@ namespace MIDIator.Engine
                 ((ExpandoObject)transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>(), transformation.LinkedOutputVirtualDevice);
         }
 
-        private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice)
+        private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice, bool enabled = true)
         {
-            InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice);
+            InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice, enabled);
         }
 
-        private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+        private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, bool enabled = true)
         {
             Name = name;
+	        Enabled = enabled;
             InputDevice = inputDevice;
             OutputDevice = outputDevice;
             TranslationMap = translationMap;
@@ -86,7 +87,9 @@ namespace MIDIator.Engine
             {
 	            OutputDevice.Send(message);
             }, ForwardActionName));
-            InputDevice.Start();
+			
+			if (Enabled)
+				InputDevice.Start();
         }
     }
 }
