@@ -34,10 +34,12 @@ export class ChannelMessageComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.subscriptions = new Array<Subscription>();
 		this.subscriptions.push(this.midiService.availableChannelCommandsSubject
-            .subscribe(data => this.channelCommands = data.map(fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()))));
+            .subscribe(data => this.channelCommands = data.map(fx =>
+                new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()))));
 
 		this.subscriptions.push(this.midiService.availableMIDIChannelsSubject
-            .subscribe(data => this.midiChannels = data.map(fx => new DropdownOption(fx.toString(), fx.toString()))));
+            .subscribe(data => this.midiChannels = data.map(fx =>
+                new DropdownOption(fx.toString(), fx.toString()))));
 
 		if (this.midiService.availableChannelCommands != null)
 			this.channelCommands = this.midiService.availableChannelCommands.map(fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()));
