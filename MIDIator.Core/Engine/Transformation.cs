@@ -47,7 +47,7 @@ namespace MIDIator.Engine
         [JsonConstructor]
         public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
         {
-            InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice, enabled);
+            InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice, enabled, collapsed, translationsCollapsed);
         }
 
         public Transformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
@@ -74,12 +74,12 @@ namespace MIDIator.Engine
                 ((ExpandoObject)transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>(), transformation.LinkedOutputVirtualDevice);
         }
 
-        private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice, bool enabled = true)
+        private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
         {
-            InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice, enabled);
+            InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice, enabled, collapsed, translationsCollapsed);
         }
 
-        private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, bool enabled = true)
+        private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
         {
             Name = name;
 	        Enabled = enabled;
@@ -87,6 +87,8 @@ namespace MIDIator.Engine
             OutputDevice = outputDevice;
             TranslationMap = translationMap;
             LinkedOutputVirtualDevice = linkedOutputVirtualDevice;
+	        Collapsed = collapsed;
+	        TranslationsCollapsed = translationsCollapsed;
             InputDevice.AddChannelMessageAction(new ChannelMessageAction(message => true, message =>
             {
 	            OutputDevice.Send(message);

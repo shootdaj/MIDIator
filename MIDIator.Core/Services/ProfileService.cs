@@ -106,8 +106,8 @@ namespace MIDIator.Services
 
             inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true);
             linkedOutputVirtualDevice = transformationDTO["linkedOutputVirtualDevice"].ToObject<bool>(serializer);
-            collapsed = transformationDTO["collapsed"].ToObject<bool>(serializer);
-            translationsCollapsed = transformationDTO["translationsCollapsed"].ToObject<bool>(serializer);
+            collapsed = transformationDTO["collapsed"]?.ToObject<bool>(serializer) ?? false;
+            translationsCollapsed = transformationDTO["translationsCollapsed"]?.ToObject<bool>(serializer) ?? false;
 
             if (linkedOutputVirtualDevice)
             {
