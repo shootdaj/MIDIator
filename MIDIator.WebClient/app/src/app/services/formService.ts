@@ -31,7 +31,8 @@ export class FormService {
     private getProfileFormGroup(profile: Profile): FormGroup {
         return this.fb.group({
             name: [profile.name, [<any>Validators.required]],
-            transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations))
+            transformations: this.fb.array(this.getTransformationsFormGroups(profile.transformations)),
+            collapsed: [profile.collapsed, [/*<any>Validators.required*/]]
         });
     }
 
@@ -64,7 +65,9 @@ export class FormService {
                 }),
                 translationMap: this.getTranslationMapFormGroup(transformation.translationMap),
                 linkedOutputVirtualDevice: [transformation.linkedOutputVirtualDevice, [<any>Validators.required]],
-                enabled: [transformation.enabled, [<any>Validators.required]]
+                enabled: [transformation.enabled, [<any>Validators.required]],
+                collapsed: [transformation.collapsed, [/*<any>Validators.required*/]],
+                translationsCollapsed: [transformation.translationsCollapsed, [/*<any>Validators.required*/]]
             }))
         );
 
@@ -93,7 +96,8 @@ export class FormService {
             inputMessageMatchTarget: this.getChannelMessageFormGroup(<ChannelMessage>translation.inputMessageMatchTarget),
             outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
             translationFunction: [translation.translationFunction, [<any>Validators.required]],
-            enabled: [translation.enabled, [<any>Validators.required]]
+            enabled: [translation.enabled, [<any>Validators.required]],
+            collapsed: [translation.collapsed, [/*<any>Validators.required*/]]
         });
     }
 

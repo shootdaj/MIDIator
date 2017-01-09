@@ -25,6 +25,7 @@ import { TransformationComponent } from './components/transformation/transformat
 import { TranslationComponent } from './components/translation/translation.component';
 import { ChannelMessageComponent } from './components/channelMessage/channelMessage.component';
 import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.component';
+import { ExpanderComponent } from './components/expander/expander.component';
 
 let channelConfig = new ChannelConfig();
 channelConfig.url = "http://localhost:9000/signalr";
@@ -40,7 +41,8 @@ channelConfig.hubName = "MIDIReaderHub";
         DropdownComponent,
 		TranslationComponent,
 		ChannelMessageComponent,
-		TextInputComponent
+        TextInputComponent,
+        ExpanderComponent
 	],
     imports: [
         BrowserModule,

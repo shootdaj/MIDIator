@@ -53,5 +53,8 @@ namespace MIDIator.Engine
 
 		[DataMember]
 		public bool Enabled { get; set; } = true;
+
+        [DataMember]
+	    public bool Collapsed { get; set; } = false;
 	}
 }

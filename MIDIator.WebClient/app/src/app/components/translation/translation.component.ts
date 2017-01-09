@@ -16,6 +16,7 @@ import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { ChannelMessageComponent } from '../../components/channelMessage/channelMessage.component';
+import { ExpanderComponent } from '../../components/expander/expander.component';
 
 declare var componentHandler;
 
@@ -71,23 +72,6 @@ export class TranslationComponent implements OnInit, OnDestroy {
 			this.inputMatchFunctions = this.midiService.availableInputMatchFunctions.map(fx => new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString()));
 		if (this.midiService.availableTranslationFunctions != null)
 			this.translationFunctions = this.midiService.availableTranslationFunctions.map(fx => new DropdownOption(TranslationFunction[fx].toString(), TranslationFunction[fx].toString()));
-		
-        //this.immtReaderSubscription = this.signalRService.sub("tasks")
-        //    .subscribe(
-        //    (x: ChannelEvent) => {
-        //        console.log("wtfffffff");
-        //        switch (x.name) {
-        //            case "midiChannelEvent":
-        //                {
-        //                    (<FormControl>component.form.controls["inputMessageMatchTarget"]).setValue(<ChannelEvent>x.data);
-        //                    this.cdr.detectChanges();
-        //                }
-        //        }
-        //    },
-        //    (error: any) => {
-        //        console.log("Attempt to join channel failed!", error);
-        //    });
-        //this.midiService.startMIDIReader(this.inputDevice.name);
     }
 
     ngOnDestroy(): void {

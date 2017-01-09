@@ -130,6 +130,7 @@ export class Profile {
     name: string;
 	transformations: Transformation[];
     virtualOutputDevices: VirtualOutputDevice[];
+    collapsed = false;
 	get label() {
 		return this.name;
 	}
@@ -145,7 +146,9 @@ export class Transformation {
     outputDevice: MIDIOutputDevice;
     translationMap: TranslationMap;
 	linkedOutputVirtualDevice: boolean;
-	enabled = true;
+    enabled = true;
+    collapsed = false;
+    translationsCollapsed = false;
 }
 export class Translation {
 	constructor() {
@@ -157,7 +160,8 @@ export class Translation {
     inputMessageMatchTarget: ShortMessage;
     outputMessageTemplate: ShortMessage;
     translationFunction: TranslationFunction;
-	enabled = true;
+    enabled = true;
+    collapsed = false;
 }
 export class VirtualDevice {
     name: string;

@@ -12,28 +12,31 @@
                         </mdl-dropdown>
                     </div>
                 </div>
-	            <div class="mdl-cell--1-col">
-		            <div class="cell-content cell-content-button">
-			            <div class="button-container">
-				            <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
-				                    [mdl-tooltip]="'Read from MIDI Input Device'" (click)="toggleReadingIMMT()"
-				                    [ngClass]="{'readingMIDI': readingIMMT, 'readMIDI': true}">
-					            <span class="zmdi zmdi-keyboard zmdi-hc-md">
+                <div class="mdl-cell--1-col">
+                    <div class="cell-content cell-content-button">
+                        <div class="button-container">
+                            <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
+                                    [mdl-tooltip]="'Read from MIDI Input Device'" (click)="toggleReadingIMMT()"
+                                    [ngClass]="{'readingMIDI': readingIMMT, 'readMIDI': true}">
+                                <span class="zmdi zmdi-keyboard zmdi-hc-md">
                                 </span>
-				            </button>
-			            </div>
-		            </div>
-	            </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div class="mdl-cell--8-col">
                     <div class="mdl-grid">
                         <div class="mdl-layout-spacer"></div>
                         <div class="adjust-right-alignment">
                             <div class="button-container">
                                 <mdl-switch [formControl]="form.controls['enabled']" mdl-ripple [mdl-tooltip]="'Enable/Disable'"></mdl-switch>
-                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Delete'" (click)="deleteTranslation()" class="accent">
+                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Delete'" (click)="deleteTranslation()">
                                     <span class="zmdi zmdi-delete zmdi-hc-md"></span>
                                 </button>
-                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'" class="accent">
+                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand'" (click)="this.form.controls['collapsed'].setValue(false)" *ngIf="this.form.controls['collapsed'].value">
+                                    <span class="zmdi zmdi-caret-down zmdi-hc-lg"></span>
+                                </button>
+                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Collapse'" (click)="this.form.controls['collapsed'].setValue(true)" *ngIf="!this.form.controls['collapsed'].value">
                                     <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
                                 </button>
                             </div>
@@ -41,41 +44,43 @@
                     </div>
                 </div>
             </div>
-            <div class="mdl-grid mdl-grid--no-spacing">
-                <div class="mdl-cell--12-col">
-                    <channel-message [form]="form.controls['inputMessageMatchTarget']">
-                    </channel-message>
-                </div>
-            </div>
-            <div class="mdl-grid mdl-grid--no-spacing">
-                <div class="mdl-cell--3-col">
-                    <div class="cell-content">
-                        <mdl-dropdown [options]="translationFunctions"
-                                      [dropdownLabel]="'Translation Function'"
-                                      [placeholder]="'Select...'"
-                                      [control]="form.controls['translationFunction']"
-                                      [id]="'translationFunction'">
-                        </mdl-dropdown>
+            <expander [collapsed]="this.form.controls['collapsed'].value">
+                <div class="mdl-grid mdl-grid--no-spacing">
+                    <div class="mdl-cell--12-col">
+                        <channel-message [form]="form.controls['inputMessageMatchTarget']">
+                        </channel-message>
                     </div>
                 </div>
-                <div class="mdl-cell--1-col">
-                    <div class="cell-content cell-content-button">
-                        <div class="button-container">
-                            <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
-                                    [mdl-tooltip]="'Read from MIDI Input Device'" (click)="toggleReadingOMT()"
-                                    [ngClass]="{'readingMIDI': readingOMT, 'readMIDI': true}">
-                                <span class="zmdi zmdi-keyboard zmdi-hc-md"></span>
-                            </button>
+                <div class="mdl-grid mdl-grid--no-spacing">
+                    <div class="mdl-cell--3-col">
+                        <div class="cell-content">
+                            <mdl-dropdown [options]="translationFunctions"
+                                          [dropdownLabel]="'Translation Function'"
+                                          [placeholder]="'Select...'"
+                                          [control]="form.controls['translationFunction']"
+                                          [id]="'translationFunction'">
+                            </mdl-dropdown>
+                        </div>
+                    </div>
+                    <div class="mdl-cell--1-col">
+                        <div class="cell-content cell-content-button">
+                            <div class="button-container">
+                                <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
+                                        [mdl-tooltip]="'Read from MIDI Input Device'" (click)="toggleReadingOMT()"
+                                        [ngClass]="{'readingMIDI': readingOMT, 'readMIDI': true}">
+                                    <span class="zmdi zmdi-keyboard zmdi-hc-md"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mdl-grid mdl-grid--no-spacing">
-                <div class="mdl-cell--12-col">
-                    <channel-message [form]="form.controls.outputMessageTemplate">
-                    </channel-message>
+                <div class="mdl-grid mdl-grid--no-spacing">
+                    <div class="mdl-cell--12-col">
+                        <channel-message [form]="form.controls.outputMessageTemplate">
+                        </channel-message>
+                    </div>
                 </div>
-            </div>
+            </expander>
         </div>
     </div>
 </div>

@@ -23,6 +23,10 @@ namespace MIDIator.Engine
         public IMIDIOutputDevice OutputDevice { get; set; }
 
         public bool Enabled { get; set; } = true;
+        
+        public bool Collapsed { get; set; } = false;
+
+        public bool TranslationsCollapsed { get; set; } = false;
 
         public ITranslationMap TranslationMap
         {
@@ -41,7 +45,7 @@ namespace MIDIator.Engine
         /// <param name="linkedVirtualOutputDevice">If true, outputDeviceName is ignored and a new virtual output device is created from the given input device</param>
         /// <param name="inputDevice"></param>
         [JsonConstructor]
-        public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice, bool enabled = true)
+        public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
         {
             InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice, enabled);
         }

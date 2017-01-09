@@ -20,34 +20,39 @@
                         </div>
                     </div>
                     <div class="mdl-grid">
-	                    <div class="mdl-cell--12-col">
-		                    <div class="mdl-grid">
-								<h4>
-									Transformations
-								</h4>
-			                    <div class="mdl-layout-spacer"></div>
-			                    <div class="adjust-right-alignment">
-				                    <div class="button-container button-container-title">
-					                    <button type="button" mdl-button mdl-ripple mdl-button-type="icon" class="green">
-						                    <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
-					                    </button>
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-                    </div>
-                    <hr class="transformation-separator" />
-                    <div formArrayName="transformations">
-                        <div *ngFor="let transformation of form.controls.transformations.controls; let i=index">
-                            <transformation [form]="transformation" (deleteTransformationChange)="deleteTransformation($event)"></transformation>
-                            <hr class="transformation-separator" />
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-grid">
+                                <h4>
+                                    Transformations
+                                </h4>
+                                <div class="mdl-layout-spacer"></div>
+                                <div class="adjust-right-alignment">
+                                    <div class="button-container button-container-title">
+                                        <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand'" (click)="this.form.controls['collapsed'].setValue(false)" *ngIf="this.form.controls['collapsed'].value">
+                                            <span class="zmdi zmdi-caret-down zmdi-hc-lg"></span>
+                                        </button>
+                                        <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Collapse'" (click)="this.form.controls['collapsed'].setValue(true)" *ngIf="!this.form.controls['collapsed'].value">
+                                            <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <hr class="transformation-separator" />
+                    <expander [collapsed]="this.form.controls['collapsed'].value">
+                        <div formArrayName="transformations">
+                            <div *ngFor="let transformation of form.controls.transformations.controls; let i=index">
+                                <transformation [form]="transformation" (deleteTransformationChange)="deleteTransformation($event)"></transformation>
+                                <hr class="transformation-separator" />
+                            </div>
+                        </div>
+                    </expander>
                     <div class="dotted-container">
                         <div class="mdl-grid mdl-grid--no-spacing">
                             <div class="mdl-cell--12-col">
                                 <div class="mdl-grid mdl-grid--no-spacing">
-                                    <button type="button" mdl-button mdl-button-type="fab" mdl-shadow="4" mdl-ripple mdl-colored="accent" (click)="addNewTransformation()" [mdl-tooltip]="'New Transformation'">
+                                    <button type="button" mdl-button mdl-button-type="fab" mdl-shadow="4" mdl-ripple (click)="addNewTransformation()" [mdl-tooltip]="'New Transformation'" class="profile-hover">
                                         <span class="zmdi zmdi-plus zmdi-hc-2x"></span>
                                     </button>
                                 </div>
@@ -58,10 +63,10 @@
             </div>
         </mdl-card-supporting-text>
         <mdl-card-menu>
-            <button type="button" mdl-button mdl-ripple mdl-button-type="icon" mdl-colored="accent" [mdl-tooltip]="'Click to Disable Realtime Sync'" (click)="disableRealtime()" *ngIf="isRealtimeEnabled()">
+            <button type="button" mdl-button mdl-ripple mdl-button-type="icon" mdl-colored="primary" [mdl-tooltip]="'Click to Disable Realtime Sync'" (click)="disableRealtime()" *ngIf="isRealtimeEnabled()">
                 <span class="zmdi zmdi-refresh-sync zmdi-hc-lg"></span>
             </button>
-            <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Click to Enable Realtime Sync'" (click)="enableRealtime()" *ngIf="!isRealtimeEnabled()">
+            <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Click to Enable Realtime Sync'" (click)="enableRealtime()" *ngIf="!isRealtimeEnabled()" class="off">
                 <span class="zmdi zmdi-refresh-sync-off zmdi-hc-lg"></span>
             </button>
 

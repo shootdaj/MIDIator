@@ -26,14 +26,19 @@ namespace MIDIator.Engine
 
         public BetterList<VirtualLoopbackDevice> VirtualLoopbackDevices { get; set; } = new BetterList<VirtualLoopbackDevice>();
 
+        public bool Collapsed { get; set; } = false;
+
         //[JsonProperty(nameof(VirtualLoopbackDevices))]
         //private BetterList<VirtualLoopbackDevice> VirtualLoopbackDevicesJson => VirtualLoopbackDevices;
 
-	    public void Update(JObject profileDTO, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
-	    {
-	        Name = profileDTO["name"].ToString();
+        public void Update(JObject profileDTO, MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
+        {
+            var serializer = JsonSerializer.Create(SerializerSettings.DefaultSettings);
+
+            Name = profileDTO["name"].ToString();
+	        Collapsed = profileDTO["collapsed"].ToObject<bool>(serializer);
             MIDIManager.Instance.ProfileService.LoadVirtualLoopbackDevices(profileDTO, this);
-            MIDIManager.Instance.ProfileService.LoadTransformations(JsonSerializer.Create(SerializerSettings.DefaultSettings), profileDTO, this);
+            MIDIManager.Instance.ProfileService.LoadTransformations(serializer, profileDTO, this);
 		}
 	}
 }

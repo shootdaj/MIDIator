@@ -4,96 +4,106 @@
             <span style="vertical-align: middle;" *ngIf="form">{{form.controls.name.value}}</span>
         </h2>
         <div class="mdl-layout-spacer"></div>
-		<div class="adjust-right-alignment">
-			<div class="button-container">
-				<mdl-switch [formControl]="form.controls['enabled']" mdl-ripple [mdl-tooltip]="'Enable/Disable'"></mdl-switch>
-				<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Delete'" (click)="deleteTransformation()" class="green">
-					<span class="zmdi zmdi-delete zmdi-hc-md"></span>
-				</button>
-				<button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'" class="green">
-					<span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
-				</button>
-			</div>
-		</div>
+        <div class="adjust-right-alignment">
+            <div class="button-container">
+                <mdl-switch [formControl]="form.controls['enabled']" mdl-ripple [mdl-tooltip]="'Enable/Disable'"></mdl-switch>
+                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Delete'" (click)="deleteTransformation()">
+                    <span class="zmdi zmdi-delete zmdi-hc-md"></span>
+                </button>
+                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand'" (click)="this.form.controls['collapsed'].setValue(false)" *ngIf="this.form.controls['collapsed'].value">
+                    <span class="zmdi zmdi-caret-down zmdi-hc-lg"></span>
+                </button>
+                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Collapse'" (click)="this.form.controls['collapsed'].setValue(true)" *ngIf="!this.form.controls['collapsed'].value">
+                    <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+                </button>
+            </div>
+        </div>
     </mdl-card-title>
-    <div class="mdl-grid mdl-grid--no-spacing">
-        <div class="mdl-cell--3-col">
-            <div class="cell-content">
-                <mdl-textfield type="text" label="Name" floating-label [formControl]="form.controls['name']"></mdl-textfield>
+    <expander [collapsed]="this.form.controls['collapsed'].value">
+        <div class="mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell--3-col">
+                <div class="cell-content">
+                    <mdl-textfield type="text" label="Name" floating-label [formControl]="form.controls['name']"></mdl-textfield>
+                </div>
             </div>
-        </div>
-        <div class="mdl-cell--3-col">
-            <div class="cell-content">
-                <mdl-dropdown [options]="inputDevices"
-                              [dropdownLabel]="'Input Device'"
-                              [placeholder]="'Select...'"
-                              [control]="form.controls['inputDevice']"
-                              [id]="'inputDevice'"
-                              [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
-                              [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
-                </mdl-dropdown>
+            <div class="mdl-cell--3-col">
+                <div class="cell-content">
+                    <mdl-dropdown [options]="inputDevices"
+                                  [dropdownLabel]="'Input Device'"
+                                  [placeholder]="'Select...'"
+                                  [control]="form.controls['inputDevice']"
+                                  [id]="'inputDevice'"
+                                  [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
+                                  [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
+                    </mdl-dropdown>
+                </div>
             </div>
-        </div>
-        <div class="mdl-cell--3-col">
-            <div class="cell-content">
-                <mdl-dropdown [options]="outputDevices"
-                              [dropdownLabel]="'Output Device'"
-                              [placeholder]="'Select...'"
-                              [control]="form.controls['outputDevice']"
-                              [id]="'outputDevice'"
-                              [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
-                              [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
-                </mdl-dropdown>
+            <div class="mdl-cell--3-col">
+                <div class="cell-content">
+                    <mdl-dropdown [options]="outputDevices"
+                                  [dropdownLabel]="'Output Device'"
+                                  [placeholder]="'Select...'"
+                                  [control]="form.controls['outputDevice']"
+                                  [id]="'outputDevice'"
+                                  [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
+                                  [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
+                    </mdl-dropdown>
+                </div>
             </div>
-        </div>
-        <div class="mdl-cell--1-col">
-            <div class="cell-content cell-content-button">
-                <div class="button-container button-container-title">
-                    <button type="button" mdl-button mdl-ripple mdl-button-type="icon" mdl-colored="accent" [mdl-tooltip]="'Click to unlink Output Device from Input Device'" (click)="unlinkOutputDevice()" *ngIf="linkedOutputDevice">
-                        <i class="fa fa-link smaller-icon" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Click to link Output Device to Input Device'" (click)="linkOutputDevice()" *ngIf="!linkedOutputDevice">
-                        <i class="fa fa-chain-broken smaller-icon" aria-hidden="true"></i>
-                    </button>
+            <div class="mdl-cell--1-col">
+                <div class="cell-content cell-content-button">
+                    <div class="button-container button-container-title">
+                        <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Click to unlink Output Device from Input Device'" (click)="unlinkOutputDevice()" *ngIf="linkedOutputDevice">
+                            <i class="fa fa-link smaller-icon" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Click to link Output Device to Input Device'" (click)="linkOutputDevice()" *ngIf="!linkedOutputDevice" class="off">
+                            <i class="fa fa-chain-broken smaller-icon" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="mdl-grid mdl-grid--no-spacing">
-        <div class="mdl-cell--12-col">
-            <div class="mdl-grid">
-                <div class="mdl-cell--12-col">
-                    <div class="mdl-grid">
-                        <h4>
-                            Translations
-                        </h4>
-                        <div class="mdl-layout-spacer"></div>
-                        <div>
-                            <div class="button-container button-container-title">
-                                <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand/Collapse'" class="accent">
-                                    <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+        <div class="mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell--12-col">
+                <div class="mdl-grid">
+                    <div class="mdl-cell--12-col">
+                        <div class="mdl-grid section-header">
+                            <h4>
+                                Translations
+                            </h4>
+                            <div class="mdl-layout-spacer"></div>
+                            <div>
+                                <div class="button-container button-container-title">
+                                    <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Expand'" (click)="this.form.controls['translationsCollapsed'].setValue(false)" *ngIf="this.form.controls['translationsCollapsed'].value">
+                                        <span class="zmdi zmdi-caret-down zmdi-hc-lg"></span>
+                                    </button>
+                                    <button type="button" mdl-button mdl-ripple mdl-button-type="icon" [mdl-tooltip]="'Collapse'" (click)="this.form.controls['translationsCollapsed'].setValue(true)" *ngIf="!this.form.controls['translationsCollapsed'].value">
+                                        <span class="zmdi zmdi-caret-up zmdi-hc-lg"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="translation-separator" />
+                <expander [collapsed]="this.form.controls['translationsCollapsed'].value">
+                    <div *ngFor="let translation of form.controls.translationMap.controls.translations.controls; let i=index">
+                        <translation [form]="translation" [inputDevice]="form.controls['inputDevice'].value" [index]="i" (deleteTranslationChange)="deleteTranslation($event)"></translation>
+                        <hr class="translation-separator" />
+                    </div>
+                </expander>
+                <div class="dotted-container">
+                    <div class="mdl-grid mdl-grid--no-spacing">
+                        <div class="mdl-cell--12-col">
+                            <div class="mdl-grid mdl-grid--no-spacing">
+                                <button type="button" mdl-button mdl-button-type="fab" mdl-shadow="4" mdl-ripple (click)="addNewTranslation()" [mdl-tooltip]="'New Translation'" class="transformation-hover">
+                                    <span class="zmdi zmdi-plus zmdi-hc-2x"></span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr class="translation-separator" />
-            <div *ngFor="let translation of form.controls.translationMap.controls.translations.controls; let i=index">
-                <translation [form]="translation" [inputDevice]="form.controls['inputDevice'].value" [index]="i" (deleteTranslationChange)="deleteTranslation($event)"></translation>
-                <hr class="translation-separator" />
-            </div>
-            <div class="dotted-container">
-                <div class="mdl-grid mdl-grid--no-spacing">
-                    <div class="mdl-cell--12-col">
-                        <div class="mdl-grid mdl-grid--no-spacing">
-                            <button type="button" mdl-button mdl-button-type="fab" mdl-shadow="4" mdl-ripple mdl-colored="accent" (click)="addNewTranslation()" [mdl-tooltip]="'New Translation'">
-                                <span class="zmdi zmdi-plus zmdi-hc-2x"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
+    </expander>
 </div>
