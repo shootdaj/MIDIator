@@ -20,7 +20,8 @@ namespace MIDIator.Engine
 			try
 			{
 				InputDevice = new InputDevice(deviceID);
-			}
+                InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
+            }
 			catch (InputDeviceException ex)
 			{
 				if (ex.ErrorCode == DeviceException.MMSYSERR_NOMEM)
@@ -29,7 +30,6 @@ namespace MIDIator.Engine
 				}
 			}
 			TranslationMap = translationMap;
-			InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
 		}
 		
 		public int DeviceID => InputDevice.DeviceID;
