@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using MIDIator.Engine;
 using MIDIator.Interfaces;
+using Refigure;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Services
@@ -122,7 +123,7 @@ namespace MIDIator.Services
                 profile.VirtualLoopbackDevices.Add((VirtualLoopbackDevice)virtualDevice);
 
                 //if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
-                Thread.Sleep(1000);
+                Thread.Sleep(Config.GetAsInt("Core.VirtualDeviceDelay"));
 			}
 		}
 
