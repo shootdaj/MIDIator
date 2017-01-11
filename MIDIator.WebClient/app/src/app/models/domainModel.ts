@@ -37,7 +37,9 @@ export enum TranslationFunction {
     DirectTranslation = 0,
     ChangeNote = 1,
     PCToNote = 2,
-    KeepData2 = 3
+    KeepData2 = 3,
+    ToggleData2 = 4,
+    InvertData2 = 5
 }
 export class ChannelMessage extends ShortMessage {
 	constructor() {

@@ -120,6 +120,11 @@
     <Compile Include="Engine\VirtualDevice.cs" />
     <Compile Include="Engine\VirtualOutputDevice.cs" />
     <Compile Include="Services\VirtualMIDIManager.cs" />
+    <Compile Include="Typelite\TypeLite.Net4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypeLite.Net4.tt</DependentUpon>
+    </Compile>
     <Compile Include="UIGeneration\TranslationComponentCode.cs">
       <DependentUpon>TranslationComponentCode.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -178,15 +183,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Typelite\TypeLite.Net4.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TypeLite.Net4.d.ts</LastGenOutput>
-    </Content>
     <Content Include="tevirtualMIDI.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="teVirtualMIDI32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Typelite\TypeLite.Net4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TypeLite.Net4.cs</LastGenOutput>
     </Content>
     <Content Include="UIGeneration\TranslationComponentCode.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
@@ -212,13 +217,7 @@
     <TypeScriptCompile Include="Typelite\Enums.ts">
       <DependentUpon>TypeLite.Net4.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Typelite\TypeLite.Net4.d.ts">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TypeLite.Net4.tt</DependentUpon>
-    </TypeScriptCompile>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

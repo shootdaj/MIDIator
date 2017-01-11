@@ -25,6 +25,42 @@ namespace MIDIator.Engine
 		public static Func<ShortMessage, ShortMessage, ShortMessage> DirectTranslation =>
 			(incomingMessage, outputMessageTemplate) => outputMessageTemplate;
 
+
+		private static int ToggleData2State = 0;
+
+		/// <summary> 
+		/// Toggles Data2 from 0 to 127 on subsequent calls assuming that the incoming signal is a momentary button
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> ToggleData2 => (incomingMessage, outputMessageTemplate) =>
+		{
+			if (ToggleData2State > 3)
+				ToggleData2State = 0;
+			ToggleData2State++;
+
+			if (ToggleData2State == 2)
+			{
+				return new ChannelMessage(outputMessageTemplate.ToChannelMessage().Command,
+					outputMessageTemplate.ToChannelMessage().MidiChannel, outputMessageTemplate.ToChannelMessage().Data1, 127);
+			}
+			else if (ToggleData2State == 4)
+			{
+				return new ChannelMessage(outputMessageTemplate.ToChannelMessage().Command,
+					outputMessageTemplate.ToChannelMessage().MidiChannel, outputMessageTemplate.ToChannelMessage().Data1, 0);
+			}
+			else
+			{
+				return null;
+			}
+		};
+
+		/// <summary> 
+		/// Inverts the range of Data2
+		/// </summary>
+		public static Func<ShortMessage, ShortMessage, ShortMessage> InvertData2
+			=> (incomingMessage, outputMessageTemplate) => new ChannelMessage(incomingMessage.ToChannelMessage().Command,
+				incomingMessage.ToChannelMessage().MidiChannel, incomingMessage.ToChannelMessage().Data1,
+				127 - incomingMessage.ToChannelMessage().Data2);
+
 		/// <summary>
 		/// Takes the incoming message, changes the note to the one contained in the output message template, and outputs it.
 		/// </summary>

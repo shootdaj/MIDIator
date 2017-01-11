@@ -8,7 +8,9 @@ module MIDIator.Engine {
 		DirectTranslation = 0,
 		ChangeNote = 1,
         PCToNote = 2,
-        KeepData2 = 3
+        KeepData2 = 3,
+        ToggleData2 = 4,
+        InvertData2 = 5
 	}
 }
 module Sanford.Multimedia.Midi {

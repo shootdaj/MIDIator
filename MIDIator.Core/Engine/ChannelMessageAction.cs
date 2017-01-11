@@ -1,4 +1,5 @@
 ﻿using System;
+using MIDIator.Interfaces;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine
@@ -17,5 +18,14 @@ namespace MIDIator.Engine
 		public Func<ChannelMessage, bool> MatchFunction { get; private set; }
 
 		public Action<ChannelMessage> Action { get; private set; }
+
+		public static ChannelMessageAction SendToOutput(IMIDIOutputDevice outputDevice)
+		{
+			return new ChannelMessageAction(message => true, message =>
+			{
+				if (message != null)
+					outputDevice.Send(message);
+			}, "SendToOutput");
+		}
 	}
 }
