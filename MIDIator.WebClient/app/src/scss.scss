@@ -16,7 +16,7 @@ $custom-dark-blue: unquote("rgba(79, 78, 124, 0.51)");
 $custom-dark-blue-full: unquote("rgba(79, 78, 124, 1.0)");
 $custom-dark-black-translucent: unquote("rgba(35, 35, 35, 0.95)");
 $custom-medium-red: unquote("rgba(#{$palette-red-600}, 1.0)");
-$custom-bright-green: 95,206,1; //darkened version of $palette-light-green-A400
+$custom-bright-green: 0,229,65; //from kuler complement of deep-orange (primary)
 
 /* ==========  Typography  ========== */
 
