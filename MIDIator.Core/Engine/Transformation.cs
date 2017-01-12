@@ -14,6 +14,8 @@ namespace MIDIator.Engine
 	[Ng2Component(componentCodeTemplate: typeof(TransformationComponentCode))]
 	public class Transformation
 	{
+		public Guid ID { get; set; }
+
 		public string Name { get; set; }
 
 		public IMIDIInputDevice InputDevice { get; set; }
@@ -43,14 +45,14 @@ namespace MIDIator.Engine
 		/// <param name="linkedVirtualOutputDevice">If true, outputDeviceName is ignored and a new virtual output device is created from the given input device</param>
 		/// <param name="inputDevice"></param>
 		[JsonConstructor]
-		public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
+		public Transformation(string name, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, ITranslationMap translationMap, bool linkedVirtualOutputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false, Guid? id = null)
 		{
-			InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice, enabled, collapsed, translationsCollapsed);
+			InitFromServices(name, inputDevice, outputDevice, translationMap, linkedVirtualOutputDevice, enabled, collapsed, translationsCollapsed, id);
 		}
 
-		public Transformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+		public Transformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, Guid? id = null)
 		{
-			InitFromDynamicTransformation(name, transformation, inputDevice, outputDevice);
+			InitFromDynamicTransformation(name, transformation, inputDevice, outputDevice, id);
 		}
 
 		public void Dispose()
@@ -58,27 +60,31 @@ namespace MIDIator.Engine
 			InputDevice.RemoveChannelMessageAction("SendToOutput");
 		}
 
-		public void Update(dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+		public void Update(dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, Guid? id = null)
 		{
 			InputDevice.Stop();
 			InputDevice.TranslationMap = null;
 			InputDevice.RemoveChannelMessageAction("SendToOutput");
-			InitFromDynamicTransformation(Name, transformation, inputDevice, outputDevice);
+			InitFromDynamicTransformation(Name, transformation, inputDevice, outputDevice, id);
 		}
 
-		private void InitFromDynamicTransformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice)
+		private void InitFromDynamicTransformation(string name, dynamic transformation, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, Guid? id = null)
 		{
 			InitFromServices(name, inputDevice, outputDevice,
-				((ExpandoObject)transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>(), transformation.LinkedOutputVirtualDevice);
+				((ExpandoObject)transformation.TranslationMap).ConvertAsJsonTo<TranslationMap>(), transformation.LinkedOutputVirtualDevice, id: id);
 		}
 
-		private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
+		private void InitFromServices(string name, IMIDIInputDevice midiInputDevice, IMIDIOutputDevice midiOutputDevice, ITranslationMap translationMap, bool linkedOutputVirtualDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false, Guid? id = null)
 		{
-			InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice, enabled, collapsed, translationsCollapsed);
+			InitCore(name, translationMap, linkedOutputVirtualDevice, midiInputDevice, midiOutputDevice, enabled, collapsed, translationsCollapsed, id);
 		}
 
-		private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false)
+		private void InitCore(string name, ITranslationMap translationMap, bool linkedOutputVirtualDevice, IMIDIInputDevice inputDevice, IMIDIOutputDevice outputDevice, bool enabled = true, bool collapsed = false, bool translationsCollapsed = false, Guid? id = null)
 		{
+			if (id != Guid.Empty && id != null)
+				ID = (Guid)id;
+			else
+				ID = Guid.NewGuid();
 			Name = name;
 			Enabled = enabled;
 			InputDevice = inputDevice;

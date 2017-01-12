@@ -142,7 +142,8 @@ export class Transformation {
 		this.inputDevice = new MIDIInputDevice();
 		this.outputDevice = new MIDIOutputDevice();
 		this.translationMap = new TranslationMap();
-	}
+    }
+    id: string;
     inputDevice: MIDIInputDevice;
     name: string;
     outputDevice: MIDIOutputDevice;

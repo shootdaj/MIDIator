@@ -145,7 +145,6 @@ namespace MIDIator.Manager
                 try
                 {
                     Manager.Stop();
-					throw new Exception("Fuck off");
                     success = true;
                     
                 }

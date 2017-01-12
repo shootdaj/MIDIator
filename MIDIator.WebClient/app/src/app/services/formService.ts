@@ -42,6 +42,7 @@ export class FormService {
 
         transformations.forEach(transformation =>
             returnValue.push(this.fb.group({
+                id: [transformation.id, [<any>Validators.required]],
                 name: [transformation.name, [<any>Validators.required]],
                 inputDevice: this.fb.group({
                     deviceID: [transformation.inputDevice != null ? transformation.inputDevice.deviceID : null],

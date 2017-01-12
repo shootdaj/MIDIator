@@ -32,18 +32,20 @@ namespace MIDIator.Services
 
         public void LoadTransformations(JsonSerializer serializer, JObject profileDTO, Profile profile)
         {
-            var transformationNames = new List<string>();
+            var transformationIDs = new List<Guid>();
             foreach (var transformationDTO in profileDTO["transformations"])
             {
-                transformationNames.Add(transformationDTO["name"].ToString());
+	            var id = Guid.Parse(transformationDTO["id"].ToString());
+	            transformationIDs.Add(id);
 
-                var matchedTransformations = profile.Transformations.Where(t => t.Name == transformationDTO["name"].ToString());
+	            var matchedTransformations =
+		            profile.Transformations.Where(t => t.ID.Equals(id));
 
                 //TODO: check which transformations are different - currently updating all transformations
                 var matchedTransformationsList = matchedTransformations.ToList();
                 if (matchedTransformationsList.Any())
                 {
-                    IMIDIInputDevice inputDevice;
+					IMIDIInputDevice inputDevice;
                     bool linkedOutputVirtualDevice;
                     IMIDIOutputDevice outputDevice;
                     TranslationMap translationMap;
@@ -51,9 +53,13 @@ namespace MIDIator.Services
 	                bool collapsed;
 	                bool translationsCollapsed;
                     var matchedTransformation = matchedTransformationsList.Single();
+	                string name;
 
-                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, out linkedOutputVirtualDevice, out outputDevice, out translationMap, out enabled, out collapsed, out translationsCollapsed);
+                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, 
+						out linkedOutputVirtualDevice, out outputDevice, out translationMap, out enabled, 
+						out collapsed, out translationsCollapsed, out name);
 
+					matchedTransformation.Name = name;
 					matchedTransformation.Enabled = enabled;
                     matchedTransformation.InputDevice = inputDevice;
                     matchedTransformation.OutputDevice = outputDevice;
@@ -84,27 +90,33 @@ namespace MIDIator.Services
                     bool collapsed;
                     bool translationsCollapsed;
                     bool enabled;
+	                string name;
 
-                    GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, out linkedOutputVirtualDevice, out outputDevice, out translationMap, out enabled, out collapsed, out translationsCollapsed);
+                    GetTransformationProperties(serializer, transformationDTO, profile, 
+						out inputDevice, out linkedOutputVirtualDevice, out outputDevice, 
+						out translationMap, out enabled, out collapsed, out translationsCollapsed, 
+						out name);
 
-                    var transformation = new Transformation(transformationDTO["name"].ToString(),
-                        inputDevice, outputDevice, translationMap, linkedOutputVirtualDevice, enabled, collapsed, translationsCollapsed);
+                    var transformation = new Transformation(name,inputDevice, outputDevice, 
+						translationMap, linkedOutputVirtualDevice, 
+						enabled, collapsed, translationsCollapsed, id);
 
                     profile.Transformations.Add(transformation);
                 }
             }
 
-            profile.Transformations.RemoveAll(t => !transformationNames.Contains(t.Name));
+            profile.Transformations.RemoveAll(t => !transformationIDs.Contains(t.ID));
         }
 
         private void GetTransformationProperties(JsonSerializer serializer,
             JToken transformationDTO, Profile profile, out IMIDIInputDevice inputDevice, out bool linkedOutputVirtualDevice,
-            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled, out bool collapsed, out bool translationsCollapsed)
+            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled, out bool collapsed, out bool translationsCollapsed, out string name)
         {
             var inputDeviceName = transformationDTO["inputDevice"]["name"].ToString();
             var outputDeviceName = transformationDTO["outputDevice"]["name"].ToString();
 
-            inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true);
+			name = transformationDTO["name"]?.ToObject<string>(serializer);
+			inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true);
             linkedOutputVirtualDevice = transformationDTO["linkedOutputVirtualDevice"].ToObject<bool>(serializer);
             collapsed = transformationDTO["collapsed"]?.ToObject<bool>(serializer) ?? false;
             translationsCollapsed = transformationDTO["translationsCollapsed"]?.ToObject<bool>(serializer) ?? false;
