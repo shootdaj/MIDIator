@@ -131,38 +131,50 @@ namespace MIDIator.Manager
             Process.Start(Config.Get("WebClient.BaseAddress"));
         }
 
-        private void Stop()
+        private async Task Stop()
         {
             var image = ((Image)((StackPanel)btnStartStop.Content).Children[0]);
             AnimationBehavior.SetSourceUri(image, new Uri("loading.gif", UriKind.Relative));
             Log("Stopping...");
 
-            var task = new Task(() => Manager.Stop());
+            bool success = false;
+            string errorMessage = string.Empty;
 
-            task.ContinueWith(prevTask =>
+            await Task.Factory.StartNew(() =>
             {
-                if (prevTask.IsFaulted || prevTask.IsCanceled)
+                try
                 {
-                    Log(prevTask.Exception.ToString());
-                    SetStopButton(image);
+                    Manager.Stop();
+					throw new Exception("Fuck off");
+                    success = true;
+                    
                 }
-                else
+                catch (Exception ex)
                 {
-                    SetStartButton(image);
-                    Log("Stopped successfully.");
-                }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-            
-            task.Start();
+                    errorMessage = ex.ToString();
+                    success = false;
+                }                
+            });
+
+            if (success)
+            {
+                SetStartButton(image);
+                Log("Stopped successfully.");
+            }
+            else
+            {
+                SetStopButton(image);
+				Log(errorMessage);
+			}
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             if (Manager.Running)
-                Stop();
-            Manager.Dispose();
-            base.OnClosing(e);
-        }
+				Stop().Wait();
+			Manager.Dispose();
+			base.OnClosing(e);
+		}
 
         private void chkLaunchWebUI_Checked(object sender, RoutedEventArgs e)
         {
