@@ -55,18 +55,32 @@ namespace MIDIator.Web
 		    if (string.IsNullOrEmpty(Config.Get("WebAPI.ProfileFile")) || !File.Exists(Config.Get("WebAPI.ProfileFile")))
 		    {
                 //set initial profile if none is found
-                MIDIManager.Instance.SetProfile(new Profile()
-                {
-                    Name = "DefaultProfile",
-                    Transformations = new List<Transformation>(),
-                    VirtualLoopbackDevices = new BetterList<VirtualLoopbackDevice>()
-                });
+                SetInitialProfile();
             }
 		    else
 		    {
-                var profile = JsonConvert.DeserializeObject<Profile>(File.ReadAllText(Config.Get("WebAPI.ProfileFile")));
-                MIDIManager.Instance.SetProfile(profile);
+			    var text = File.ReadAllText(Config.Get("WebAPI.ProfileFile"));
+
+				if (text.Trim() == string.Empty)// TODO: || text.IsValidFormat?
+					SetInitialProfile();
+				else
+				{
+					var profile = JsonConvert.DeserializeObject<Profile>(text);
+					MIDIManager.Instance.SetProfile(profile);
+				}
             }
+		}
+
+		private void SetInitialProfile()
+		{
+			var profile = new Profile()
+			{
+				Name = "DefaultProfile",
+				Transformations = new List<Transformation>(),
+				VirtualLoopbackDevices = new BetterList<VirtualLoopbackDevice>()
+			};
+
+			MIDIManager.Instance.SetProfile(profile);
 		}
 
 		private void StartSignalRHubs()
