@@ -50,7 +50,7 @@
                                 <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
                                         [mdl-tooltip]="'Read from MIDI Input Device'" (click)="toggleReadingIMMT()"
                                         [ngClass]="{'readingMIDI': readingIMMT, 'readMIDI': true}">
-                                    <i class="fa fa-arrow-circle-down smaller-icon" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -79,11 +79,11 @@
                                     <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
                                             [mdl-tooltip]="'Read from MIDI Input Device'" (click)="toggleReadingOMT()"
                                             [ngClass]="{'readingMIDI': readingOMT, 'readMIDI': true}">
-                                        <i class="fa fa-arrow-circle-down smaller-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" mdl-button mdl-button-type="mini-fab" mdl-ripple
                                             [mdl-tooltip]="'Send selected message to MIDI Output Device'" (click)="sendMessageToOutputDevice(this.form.controls['outputMessageTemplate'].value)" class="readMIDI">
-                                        <i class="fa fa-arrow-circle-up smaller-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </div>
