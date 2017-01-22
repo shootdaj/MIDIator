@@ -68,16 +68,18 @@ namespace MIDIator.Services
                     matchedTransformation.Collapsed = collapsed;
                     matchedTransformation.TranslationsCollapsed = translationsCollapsed;
 
-	                if (!matchedTransformation.Enabled && matchedTransformation.InputDevice.IsRecording)
+                    matchedTransformation.InputDevice.RemoveChannelMessageAction("SendToOutput");
+                    matchedTransformation.InputDevice.AddChannelMessageAction(ChannelMessageAction.SendToOutput(matchedTransformation.OutputDevice));
+
+                    if (!matchedTransformation.Enabled && matchedTransformation.InputDevice.IsRecording)
 	                {
 		                matchedTransformation.InputDevice.Stop();
 	                }
 
 					if (matchedTransformation.Enabled && !matchedTransformation.InputDevice.IsRecording)
 					{
-						matchedTransformation.InputDevice.Start();
+                        matchedTransformation.InputDevice.Start();
 					}
-
 				}
                 else
                 {
@@ -97,7 +99,7 @@ namespace MIDIator.Services
 						out translationMap, out enabled, out collapsed, out translationsCollapsed, 
 						out name);
 
-                    var transformation = new Transformation(name,inputDevice, outputDevice, 
+                    var transformation = new Transformation(name, inputDevice, outputDevice, 
 						translationMap, linkedOutputVirtualDevice, 
 						enabled, collapsed, translationsCollapsed, id);
 
@@ -116,7 +118,9 @@ namespace MIDIator.Services
             var outputDeviceName = transformationDTO["outputDevice"]["name"].ToString();
 
 			name = transformationDTO["name"]?.ToObject<string>(serializer);
-			inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true);
+			inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true) ??
+			              MIDIDeviceService.GetInputDevice(0, failSilently: true);
+
             linkedOutputVirtualDevice = transformationDTO["linkedOutputVirtualDevice"].ToObject<bool>(serializer);
             collapsed = transformationDTO["collapsed"]?.ToObject<bool>(serializer) ?? false;
             translationsCollapsed = transformationDTO["translationsCollapsed"]?.ToObject<bool>(serializer) ?? false;
