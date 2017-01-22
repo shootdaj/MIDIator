@@ -6,6 +6,7 @@ using MIDIator.Engine;
 using MIDIator.Interfaces;
 using MIDIator.Web.Hubs;
 using Newtonsoft.Json.Linq;
+using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Web.Controllers
 {
@@ -103,11 +104,18 @@ namespace MIDIator.Web.Controllers
 			MIDIManager.MIDIDeviceService.StopMIDIReader(inputDeviceName.inputDeviceName.Value as string);
 		}
 
-		#endregion
+        [HttpPost]
+        public void SendMessageToOutputDevice(dynamic payload)
+        {
+            MIDIManager.MIDIDeviceService.GetOutputDevice(payload.outputDeviceName.Value as string)
+                .Send(payload.message.ToObject<ChannelMessage>());
+        }
 
-		#region Output Devices
+        #endregion
 
-		[HttpGet]
+        #region Output Devices
+
+        [HttpGet]
 		public IEnumerable<dynamic> AvailableOutputDevices()
 		{
 			return MIDIManager.MIDIDeviceService.AvailableOutputDevices;

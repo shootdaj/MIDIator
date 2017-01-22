@@ -40,6 +40,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     @Input() form: FormGroup;
     @Input() inputDevice: MIDIInputDevice;
+    @Input() outputDevice: MIDIOutputDevice;
     @Input() index: number;
     @Output() deleteTranslationChange = new EventEmitter();
     
@@ -107,7 +108,11 @@ export class TranslationComponent implements OnInit, OnDestroy {
 			});
 		this.midiService.startMIDIReader(this.inputDevice.name);
 		return subscription;
-	}
+    }
+
+    private sendMessageToOutputDevice(message: ChannelMessage) {
+        this.midiService.sendMessageToOutputDevice(message, this.outputDevice.name);
+    }
 
     private toggleReadingIMMT() {
         this.readingIMMT = !this.readingIMMT;

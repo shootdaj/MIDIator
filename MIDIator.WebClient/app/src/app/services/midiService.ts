@@ -106,18 +106,23 @@ export class MIDIService {
 	}
 
     startMIDIReader(inputDeviceName: string) {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        this.http.post("http://localhost:9000/midi/StartMIDIReader", { inputDeviceName }, options).subscribe(data => { },
-            err => console.log(err));
+        this.sendSignalRMessage("http://localhost:9000/midi/StartMIDIReader", { inputDeviceName });
     }
 
     stopMIDIReader(inputDeviceName: string) {
+        this.sendSignalRMessage("http://localhost:9000/midi/StopMIDIReader", { inputDeviceName });
+    }
+
+    sendMessageToOutputDevice(message: ChannelMessage, outputDeviceName: string) {
+        this.sendSignalRMessage("http://localhost:9000/midi/SendMessageToOutputDevice", { message, outputDeviceName });
+    }
+
+    sendSignalRMessage(endpoint: string, content: any) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        this.http.post("http://localhost:9000/midi/StopMIDIReader", { inputDeviceName }, options).subscribe(data => { },
+        this.http.post(endpoint, content, options).subscribe(data => { },
             err => console.log(err));
     }
+
 }

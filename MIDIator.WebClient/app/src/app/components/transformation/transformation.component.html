@@ -88,7 +88,7 @@
                 <hr class="translation-separator" />
                 <expander [collapsed]="this.form.controls['translationsCollapsed'].value">
                     <div *ngFor="let translation of form.controls.translationMap.controls.translations.controls; let i=index">
-                        <translation [form]="translation" [inputDevice]="form.controls['inputDevice'].value" [index]="i" (deleteTranslationChange)="deleteTranslation($event)"></translation>
+                        <translation [form]="translation" [inputDevice]="form.controls['inputDevice'].value" [outputDevice]="form.controls['outputDevice'].value" [index]="i" (deleteTranslationChange)="deleteTranslation($event)"></translation>
                         <hr class="translation-separator" />
                     </div>
                 </expander>
