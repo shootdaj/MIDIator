@@ -19,12 +19,14 @@ namespace MIDIator.Engine
 	    {
 	    }
 
-	    public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction)
+        public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction, string name = "", string description = "")
 		{
 			InputMessageMatchTarget = inputMessageMatchTarget;
 			OutputMessageTemplate = outputMessageTemplate;
 			InputMatchFunction = inputMatchFunction;
 			TranslationFunction = translationFunction;
+		    Name = name;
+		    Description = description;
 		}
 
         public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate)
@@ -34,6 +36,12 @@ namespace MIDIator.Engine
             InputMatchFunction = InputMatchFunction.Data1Match; //TODO: Replace this with InputMatchFunctions.GetReasonableFunction();
             TranslationFunction = TranslationFunction.DirectTranslation; //TODO: Replace this with TranslationFunctions.GetReasonableFunction();
         }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
 
         [DataMember]
 		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]

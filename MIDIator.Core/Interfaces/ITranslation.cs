@@ -34,6 +34,10 @@ namespace MIDIator.Interfaces
 
 		bool Enabled { get; set; }
 
+		string Name { get; set; }
+
+		string Description { get; set; }
+
 		///// <summary>
 		///// This contains the data needed by InputMatchFunction to determine if the incoming signal is a match to any of
 		///// the translations.

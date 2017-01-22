@@ -165,6 +165,8 @@ export class Translation {
     translationFunction: TranslationFunction;
     enabled = true;
     collapsed = false;
+    name: string;
+    description: string;
 }
 export class VirtualDevice {
     name: string;

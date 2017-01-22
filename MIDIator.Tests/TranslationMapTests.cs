@@ -15,11 +15,11 @@ namespace MIDIator.Tests
 		public void TranslationMap_Serialize()
 		{
 			var expectedSerialization =
-                "{\r\n  \"translations\": [\r\n    {\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"ProgramChange\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 0,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"NoteOn\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"PCToNote\",\r\n      \"inputMatchFunction\": \"Data1Match\",\r\n      \"enabled\": true,\r\n      \"collapsed\": false\r\n    }\r\n  ]\r\n}";
+                "{\r\n  \"translations\": [\r\n    {\r\n      \"name\": \"TestName\",\r\n      \"description\": \"This is a test translation\",\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"NoteOn\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"ProgramChange\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 2,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"DirectTranslation\",\r\n      \"inputMatchFunction\": \"CatchAll\",\r\n      \"enabled\": true,\r\n      \"collapsed\": false\r\n    }\r\n  ]\r\n}";
 
-			var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.ProgramChange, 1, 0),
-					new ChannelMessage(ChannelCommand.NoteOn, 1, 1), InputMatchFunction.Data1Match,
-					TranslationFunction.PCToNote).Listify<ITranslation>());
+			var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 1),
+                new ChannelMessage(ChannelCommand.ProgramChange, 1, 2),
+                InputMatchFunction.CatchAll, TranslationFunction.DirectTranslation, "TestName", "This is a test translation").Listify<ITranslation>());
 
 			var serializedMap = JsonConvert.SerializeObject(map, SerializerSettings.DefaultSettings);
 
@@ -30,20 +30,22 @@ namespace MIDIator.Tests
 		public void TranslationMap_Deserialize()
 		{
 			var serializedMap =
-                "{\r\n  \"translations\": [\r\n    {\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"ProgramChange\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 0,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"NoteOn\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"PCToNote\",\r\n      \"inputMatchFunction\": \"Data1Match\",\r\n      \"enabled\": true,\r\n      \"collapsed\": false\r\n    }\r\n  ]\r\n}";
+                "{\r\n  \"translations\": [\r\n    {\r\n      \"name\": \"TestName\",\r\n      \"description\": \"This is a test translation\",\r\n      \"inputMessageMatchTarget\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"NoteOn\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 1,\r\n        \"data2\": 0\r\n      },\r\n      \"outputMessageTemplate\": {\r\n        \"$type\": \"ChannelMessage\",\r\n        \"command\": \"ProgramChange\",\r\n        \"midiChannel\": 1,\r\n        \"data1\": 2,\r\n        \"data2\": 0\r\n      },\r\n      \"translationFunction\": \"DirectTranslation\",\r\n      \"inputMatchFunction\": \"CatchAll\",\r\n      \"enabled\": true,\r\n      \"collapsed\": false\r\n    }\r\n  ]\r\n}";
 
-			//left here for reference - this is the object used to create serializedTranslation by serializing map
-			//var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.ProgramChange, 1, 0),
-			//		new ChannelMessage(ChannelCommand.NoteOn, 1, 1), InputMatchFunction.Data1Match,
-			//		TranslationFunction.PCToNote).Listify<ITranslation>());
+            //left here for reference - this is the object used to create serializedTranslation by serializing map
+            //var map = new TranslationMap(new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 1),
+            //    new ChannelMessage(ChannelCommand.ProgramChange, 1, 2),
+            //    InputMatchFunction.CatchAll, TranslationFunction.DirectTranslation, "TestName", "This is a test translation").Listify<ITranslation>());
 
-			var map = JsonConvert.DeserializeObject<TranslationMap>(serializedMap, SerializerSettings.DefaultSettings);
+            var map = JsonConvert.DeserializeObject<TranslationMap>(serializedMap, SerializerSettings.DefaultSettings);
 
 			Assert.AreEqual(map.Translations.Count, 1);
-			Assert.AreEqual(map.Translations.First().InputMessageMatchTarget.Message, 192);
-			Assert.AreEqual(map.Translations.First().OutputMessageTemplate.Message, 400);
-			Assert.AreEqual(map.Translations.First().InputMatchFunction, InputMatchFunction.Data1Match);
-			Assert.AreEqual(map.Translations.First().TranslationFunction, TranslationFunction.PCToNote);
+			Assert.AreEqual(map.Translations.First().InputMessageMatchTarget.Message, 400);
+			Assert.AreEqual(map.Translations.First().OutputMessageTemplate.Message, 704);
+			Assert.AreEqual(map.Translations.First().InputMatchFunction, InputMatchFunction.CatchAll);
+			Assert.AreEqual(map.Translations.First().TranslationFunction, TranslationFunction.DirectTranslation);
+			Assert.AreEqual(map.Translations.First().Name, "TestName");
+			Assert.AreEqual(map.Translations.First().Description, "This is a test translation");
 		}
 	}
 }

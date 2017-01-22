@@ -1,18 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Refigure;
 using XamlAnimatedGif;
-using Color = System.Windows.Media.Color;
 using Image = System.Windows.Controls.Image;
 
 namespace MIDIator.Manager
@@ -22,7 +17,7 @@ namespace MIDIator.Manager
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private Manager Manager { get; set; }
+		private Manager Manager { get; }
 
 		public bool Running => Manager.Running;
 
@@ -59,8 +54,8 @@ namespace MIDIator.Manager
 
 		protected override void OnStateChanged(EventArgs e)
 		{
-			if (WindowState == System.Windows.WindowState.Minimized)
-				this.Hide();
+			if (WindowState == WindowState.Minimized)
+				Hide();
 
 			base.OnStateChanged(e);
 		}
@@ -79,8 +74,11 @@ namespace MIDIator.Manager
 
 		public void Log(string text)
 		{
-			txtOutput.Text += text + Environment.NewLine;
-			txtOutput.ScrollToEnd();
+		    if (!string.IsNullOrEmpty(text))
+		    {
+		        txtOutput.Text += text + Environment.NewLine;
+		        txtOutput.ScrollToEnd();
+		    }
 		}
 
 		private void Start()
@@ -95,7 +93,7 @@ namespace MIDIator.Manager
 			{
 				if (prevTask.IsFaulted || prevTask.IsCanceled)
 				{
-					Log(prevTask.Exception.ToString());
+				    Log(prevTask.Exception?.ToString());
 					SetStartButton(image);
 				}
 				else
@@ -116,14 +114,14 @@ namespace MIDIator.Manager
 		private void SetStopButton(Image image)
 		{
 			btnStartStopTooltip.Content = "Click to Stop. Right-click to launch Web UI.";
-			btnStartStop.Style = this.Resources["RoundButtonTemplateGreen"] as Style;
+			btnStartStop.Style = Resources["RoundButtonTemplateGreen"] as Style;
 			AnimationBehavior.SetSourceUri(image, new Uri("stop-circle.png", UriKind.Relative));
 		}
 
 		private void SetStartButton(Image image)
 		{
 			btnStartStopTooltip.Content = "Click to Start";
-			btnStartStop.Style = this.Resources["RoundButtonTemplateOrange"] as Style;
+			btnStartStop.Style = Resources["RoundButtonTemplateOrange"] as Style;
 			AnimationBehavior.SetSourceUri(image, new Uri("play-circle.png", UriKind.Relative));
 		}
 
@@ -157,11 +155,6 @@ namespace MIDIator.Manager
 			});
 			thread.Start();
 			thread.Join();
-
-			//Task.Factory.StartNew(() =>
-			//{
-
-			//}).Wait();
 
 			if (success)
 			{

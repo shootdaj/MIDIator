@@ -74,16 +74,16 @@ export class HelperService {
 
     public initTranslation() {
         let translation = new Translation();
-        //(<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
+        (<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
 
         var channelMessage = new ChannelMessage();
-        //(<any>channelMessage).command = ChannelCommand[ChannelCommand.ChannelPressure];
-        //channelMessage.data1 = 0;
-        //channelMessage.data2 = 0;
-        //channelMessage.midiChannel = 1;
+        (<any>channelMessage).command = ChannelCommand[ChannelCommand.ChannelPressure];
+        channelMessage.data1 = 0;
+        channelMessage.data2 = 0;
+        channelMessage.midiChannel = 1;
 
         translation.inputMessageMatchTarget = channelMessage;
-        //(<any>translation).translationFunction = TranslationFunction[TranslationFunction.ChangeNote];
+        (<any>translation).translationFunction = TranslationFunction[TranslationFunction.ChangeNote];
         translation.outputMessageTemplate = channelMessage;
 
         return translation;
@@ -109,7 +109,7 @@ export class HelperService {
         transformation.inputDevice = null;
         transformation.outputDevice = null;
         let translationMap = new TranslationMap();
-        //translationMap.translations.push(this.initTranslation());
+        translationMap.translations.push(this.initTranslation());
         transformation.translationMap = translationMap;
         transformation.linkedOutputVirtualDevice = false;
         transformation.enabled = true;

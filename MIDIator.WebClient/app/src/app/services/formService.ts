@@ -98,7 +98,9 @@ export class FormService {
             outputMessageTemplate: this.getChannelMessageFormGroup(<ChannelMessage>translation.outputMessageTemplate),
             translationFunction: [translation.translationFunction, [<any>Validators.required]],
             enabled: [translation.enabled, [<any>Validators.required]],
-            collapsed: [translation.collapsed, [/*<any>Validators.required*/]]
+            collapsed: [translation.collapsed, [/*<any>Validators.required*/]],
+            name: [translation.name],
+            description: [translation.description]
         });
     }
 
