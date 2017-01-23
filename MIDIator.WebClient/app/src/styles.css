@@ -40,6 +40,9 @@ body {
     width: 90%;
 }
 
+.cell-content-6-col {
+    width: 95%;
+}
 
 .button-container {
     height: 24px;
