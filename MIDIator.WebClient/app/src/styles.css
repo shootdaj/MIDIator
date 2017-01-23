@@ -88,3 +88,7 @@ body {
 .smaller-icon {
     font-size: smaller;
 }
+
+.full-width {
+    width: 100%;
+}
