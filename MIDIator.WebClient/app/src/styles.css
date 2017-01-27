@@ -13,7 +13,9 @@
 
 body {
     background-color: #343333;
-    background: url("http://blogrope.com/wp-content/uploads/2013/06/006-wood-melamine-subttle-pattern-background-pat.jpg");
+    background: url("http://i.imgur.com/CiSOith.jpg");
+    background-position: center top;
+    background-size: 100% auto;
     height: 100%;
 }
 
@@ -51,20 +53,20 @@ body {
 }
 
 .button-container-title {
-	height: 75%;
+    height: 75%;
 }
 
-    .button-container > * , .button-container-title > *{
+    .button-container > *, .button-container-title > * {
         align-self: center;
         margin-left: 10px;
         margin-right: 10px;
     }
 
-    .button-container > button , .button-container-title > button {
+    .button-container > button, .button-container-title > button {
         align-self: flex-end;
     }
 
-    .button-container > mdl-switch , .button-container-title > mdl-switch {
+    .button-container > mdl-switch, .button-container-title > mdl-switch {
         margin-left: 15px;
         margin-right: 25px;
         height: 32px;
