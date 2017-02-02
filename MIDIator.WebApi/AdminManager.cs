@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MIDIator.Web
 {
+    /// <summary>
+    /// This class enables remote shutdown. More functionality can be added via subjects.
+    /// </summary>
     public class AdminManager : IDisposable
     {
         #region Singleton

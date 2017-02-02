@@ -31,7 +31,7 @@ namespace MIDIator.Services
 		{
 			get
 			{
-				for (int i = 0; i < InputDevice.DeviceCount; i++)
+				for (var i = 0; i < InputDevice.DeviceCount; i++)
 				{
 					dynamic returnValue = new ExpandoObject();
 					returnValue.Name = InputDevice.GetDeviceCapabilities(i).name;
@@ -99,7 +99,6 @@ namespace MIDIator.Services
 			var device = new MIDIInputDevice(deviceID, translationMap);
 			InputDevicesInUse.Add(device);
 
-			//// ReSharper disable once InvertIf - resharper, fuck you sometimes. i know you're trying to help but fuck you.
 			//if (virtualMIDIManager != null)
 			//{
 			//	//only create new device if device doesn't already exist. it may already exist if the user had selected this device before and came back to it after changing it.
@@ -122,7 +121,7 @@ namespace MIDIator.Services
 
                 profile.VirtualLoopbackDevices.Add((VirtualLoopbackDevice)virtualDevice);
 
-                //if (virtualMIDIManager.DoesDeviceExist(device.Name)) //if virtual device is being created for another virtual device, wait a bit because that takes longer
+                //virtual device creation takes some time
                 Thread.Sleep(Config.GetAsInt("Core.VirtualDeviceDelay"));
 			}
 		}
@@ -175,7 +174,7 @@ namespace MIDIator.Services
 		{
 			get
 			{
-				for (int i = 0; i < OutputDeviceBase.DeviceCount; i++)
+				for (var i = 0; i < OutputDeviceBase.DeviceCount; i++)
 				{
 					dynamic returnValue = new ExpandoObject();
 					returnValue.Name = OutputDeviceBase.GetDeviceCapabilities(i).name;

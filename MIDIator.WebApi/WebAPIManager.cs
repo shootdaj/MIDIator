@@ -29,12 +29,14 @@ namespace MIDIator.Web
 
         public void InitializeWebAPI(VirtualMIDIManager virtualMIDIManager, Action onShutdown)
 		{
+            //serialization
 			var settings = SerializerSettings.DefaultSettings;
 			settings.ContractResolver = new SignalRContractResolver(settings.ContractResolver);
 			settings.TypeNameHandling = TypeNameHandling.Auto;
 			var serializer = JsonSerializer.Create(settings);
 			GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => serializer);
-			VirtualMIDIManager = virtualMIDIManager;
+
+            VirtualMIDIManager = virtualMIDIManager;
             
 			//start signalr hubs
 			StartSignalRHubs();
