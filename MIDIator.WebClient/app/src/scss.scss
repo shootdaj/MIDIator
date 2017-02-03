@@ -1,4 +1,4 @@
-@import "../node_modules/angular2-mdl/src/scss-mdl/color-definitions";
+@import "../node_modules/angular2-mdl/scss/_color-definitions.scss";
 
 $color-primary: $palette-deep-orange-500;
 $color-primary-dark: $palette-light-blue-A400;
@@ -75,7 +75,7 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
 }
 
 
-@import "../node_modules/angular2-mdl/src/scss-mdl/material-design-lite";
+@import "../node_modules/angular2-mdl/scss/material-design-lite";
 @import "../src/assets/mdl-selectfield/mdl-selectfield-midiator.scss";
 
 

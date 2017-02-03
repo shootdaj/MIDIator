@@ -87,11 +87,17 @@ export class SignalRService {
 
     constructor(
         @Inject(SignalrWindow) private window: SignalrWindow,
-        @Inject("channel.config") private channelConfig: ChannelConfig
+        //@Inject("channel.config") private channelConfig: ChannelConfig
     ) {
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
+
+        let channelConfig = new ChannelConfig();
+        channelConfig.url = "http://localhost:9000/signalr";
+        channelConfig.hubName = "MIDIReaderHub";
+
+
 
         // Set up our observables
         //

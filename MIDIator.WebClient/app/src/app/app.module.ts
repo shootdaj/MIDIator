@@ -27,9 +27,12 @@ import { ChannelMessageComponent } from './components/channelMessage/channelMess
 import { TextInputComponent } from './components/mdl-textinput/mdl-textinput.component';
 import { ExpanderComponent } from './components/expander/expander.component';
 
-let channelConfig = new ChannelConfig();
-channelConfig.url = "http://localhost:9000/signalr";
-channelConfig.hubName = "MIDIReaderHub";
+export function channelConfigFactory() {
+    let channelConfig = new ChannelConfig();
+    channelConfig.url = "http://localhost:9000/signalr";
+    channelConfig.hubName = "MIDIReaderHub";
+    return channelConfig;
+}
 
 
 
@@ -55,7 +58,7 @@ channelConfig.hubName = "MIDIReaderHub";
     ],
     providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService, SignalRService,
         { provide: SignalrWindow, useValue: window },
-        { provide: 'channel.config', useValue: channelConfig }],
+        { provide: 'channel.config', useValue: channelConfigFactory }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
