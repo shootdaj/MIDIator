@@ -217,3 +217,4 @@ MIDIator.WebClient/app/dist/*
 MIDIator.Manager/COTest/*
 MIDIator.Manager/InnoSetup/*.exe
 MIDIator.WebClient/app/node_modules.zip
+MIDIator.WebClient/app/npm-debug.log.*

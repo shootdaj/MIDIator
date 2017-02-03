@@ -103,6 +103,7 @@
     <TypeScriptCompile Include="app\src\app\components\app\app.component.ts" />
     <TypeScriptCompile Include="app\src\app\components\channelMessage\channelMessage.component.ts" />
     <TypeScriptCompile Include="app\src\app\components\dynamic-form.component.ts" />
+    <TypeScriptCompile Include="app\src\app\components\expander\expander.component.ts" />
     <TypeScriptCompile Include="app\src\app\components\inputDevice\inputDevice.component.ts" />
     <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\DropdownOption.ts" />
     <TypeScriptCompile Include="app\src\app\components\mdl-dropdown\mdl-dropdown.component.ts" />
