@@ -26,7 +26,7 @@ import { TranslationComponent } from '../../components/translation/translation.c
 export class TransformationComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription[];
-    private inputDevices: MIDIInputDevice[];
+    private inputDevices: MIDIInputDevice[];//string[] = <string[]>[];
     private outputDevices: MIDIOutputDevice[];
 
     values = ['one', 'two', 'three', 'four'];
@@ -49,7 +49,8 @@ export class TransformationComponent implements OnInit, OnDestroy {
         this.subscriptions = new Array<Subscription>();
         this.subscriptions.push(this.midiService.availableInputDevicesChanges
             .subscribe(data => {
-                this.inputDevices = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
+                this.inputDevices// = data.map(device => device.name);
+                = data.map(device => this.helperService.maskCast(device, MIDIInputDevice));
             }));
         this.subscriptions.push(this.midiService.availableOutputDevicesChanges
             .subscribe(data => {

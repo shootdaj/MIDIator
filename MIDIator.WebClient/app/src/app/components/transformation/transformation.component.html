@@ -29,11 +29,11 @@
             <div class="mdl-cell--3-col">
                 <div class="cell-content">
                     
-                    <form [formGroup]="testform">
-                        <mdl-select formControlName="select">
-                            <mdl-option *ngFor="let value of values" [value]="value">{{ value}} </mdl-option>
-                        </mdl-select>
-                    </form>
+                    <!--<form [formGroup]="form.controls['inputDevice']">-->
+                    <mdl-select [formControl]="form.controls['inputDevice'].controls['name']" > <!--*ngIf="inputDevice == null"-->
+                        <mdl-option *ngFor="let inputDevice of inputDevices" [value]="inputDevice">{{inputDevice}}</mdl-option>
+                    </mdl-select>
+                    <!--</form>-->
 
 
                     <!--<mdl-select [formControl]="form.controls['inputDevice']">
