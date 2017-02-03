@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
+import { MdlSelectModule } from '@angular2-mdl-ext/select';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { CustomFormsModule } from 'ng2-validation'
 
@@ -53,10 +54,17 @@ export function channelConfigFactory() {
 		FormsModule,
         HttpModule,
         MdlModule,
+        MdlSelectModule,
         SlimLoadingBarModule.forRoot(),
 		CustomFormsModule
     ],
-    providers: [MIDIService, HelperService, ProfileService, FormService, RealtimeService, SignalRService,
+    providers: [
+        MIDIService,
+        HelperService,
+        ProfileService,
+        FormService,
+        RealtimeService,
+        SignalRService,
         { provide: SignalrWindow, useValue: window },
         { provide: 'channel.config', useValue: channelConfigFactory }],
     bootstrap: [AppComponent]

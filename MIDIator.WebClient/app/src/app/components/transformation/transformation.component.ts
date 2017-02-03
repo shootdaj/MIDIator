@@ -1,6 +1,7 @@
 import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, AfterViewInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
 import { FormsModule, FormArray, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
+import { MdlSelectModule } from '@angular2-mdl-ext/select';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -28,12 +29,20 @@ export class TransformationComponent implements OnInit, OnDestroy {
     private inputDevices: MIDIInputDevice[];
     private outputDevices: MIDIOutputDevice[];
 
+    values = ['one', 'two', 'three', 'four'];
+    testform: FormGroup;
+
     @Input() form: FormGroup;
     @Output() deleteTransformationChange = new EventEmitter();
 
     constructor(private midiService: MIDIService,
         private helperService: HelperService,
-        private formService: FormService) {
+        private formService: FormService,
+        fb: FormBuilder) {
+
+        this.testform = fb.group({
+            select: 'one'
+        });
     }
 
     ngOnInit(): void {

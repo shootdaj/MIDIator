@@ -28,14 +28,26 @@
             </div>
             <div class="mdl-cell--3-col">
                 <div class="cell-content">
-                    <mdl-dropdown [options]="inputDevices"
-                                  [dropdownLabel]="'Input Device'"
-                                  [placeholder]="'Select...'"
-                                  [control]="form.controls['inputDevice']"
-                                  [id]="'inputDevice'"
-                                  [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
-                                  [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
-                    </mdl-dropdown>
+                    
+                    <form [formGroup]="testform">
+                        <mdl-select formControlName="select">
+                            <mdl-option *ngFor="let value of values" [value]="value">{{ value}} </mdl-option>
+                        </mdl-select>
+                    </form>
+
+
+                    <!--<mdl-select [formControl]="form.controls['inputDevice']">
+                        <mdl-option *ngFor="let inputDevice of inputDevices" [value]="p.name">{{p.name}}</mdl-option>
+                    </mdl-select>-->
+
+                    <!--<mdl-dropdown [options]="inputDevices"
+                                      [dropdownLabel]="'Input Device'"
+                                      [placeholder]="'Select...'"
+                                      [control]="form.controls['inputDevice']"
+                                      [id]="'inputDevice'"
+                                      [valueSetFunction]="helperService.dropdownOptionValueSetFunction"
+                                      [valueGetFunction]="helperService.dropdownOptionValueGetFunction">
+                    </mdl-dropdown>-->
                 </div>
             </div>
             <div class="mdl-cell--3-col">
