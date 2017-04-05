@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -44,7 +44,8 @@ export class ChannelMessageComponent implements OnInit, OnDestroy {
 		if (this.midiService.availableChannelCommands != null)
 			this.channelCommands = this.midiService.availableChannelCommands.map(fx => new DropdownOption(ChannelCommand[fx].toString(), ChannelCommand[fx].toString()));
 		if (this.midiService.availableMIDIChannels != null)
-			this.midiChannels = this.midiService.availableMIDIChannels.map(fx => new DropdownOption(fx.toString(), fx.toString()))
+			this.midiChannels = this.midiService.availableMIDIChannels
+				.map(fx => new DropdownOption(fx.toString(), fx.toString()));
 	}
 
 	ngOnDestroy() {
