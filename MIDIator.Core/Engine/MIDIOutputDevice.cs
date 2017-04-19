@@ -36,7 +36,7 @@ namespace MIDIator.Engine
         {
             var channelMessage = (ChannelMessage)midiMessage;
             Log.Info(
-                $"{Name}: Receving {{{channelMessage.Command},{channelMessage.MidiChannel},{channelMessage.Data1},{channelMessage.Data2}}}");
+                $"{Name}: Receiving {{{channelMessage.Command},{channelMessage.MidiChannel},{channelMessage.Data1},{channelMessage.Data2}}}");
             OutputDevice.Send(channelMessage);
         }
 

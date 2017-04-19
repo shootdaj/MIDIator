@@ -138,7 +138,7 @@ namespace MIDIator.Services
 
 		public void RemoveInputDevice(IMIDIInputDevice inputDevice, VirtualMIDIManager virtualMIDIManager = null)
 		{
-			var deviceName = inputDevice.Name;
+            var deviceName = inputDevice.Name;
 			InputDevicesInUse.Remove(inputDevice);
 			((IDisposable)inputDevice).Dispose();
 			virtualMIDIManager?.RemoveVirtualDevice(GetVirtualDeviceName(deviceName));
@@ -164,16 +164,35 @@ namespace MIDIator.Services
 			GetInputDevice(deviceName).StopMIDIReader();
 		}
 
-	    public void SetupLiveBroadcasting(string deviceName, Action<ITranslation> broadcastAction)
+	    public void SetupLiveBroadcasting(string deviceName, Action<BroadcastPayload> broadcastAction)
 	    {
 	        GetInputDevice(deviceName).SetBroadcastAction(broadcastAction);
 	    }
 
-		#endregion
+	    public void StopLiveBroadcasting(string deviceName)
+	    {
+	        GetInputDevice(deviceName).RemoveBroadcastAction();
+	    }
 
-		#region Output Devices
+	    public static BroadcastPayload GetBroadcastPayload(ChannelMessage incomingMessage, ChannelMessage outgoingMessage,
+	        ITranslation translation, IMIDIInputDevice inputDevice = null,
+	        IMIDIOutputDevice outputDevice = null)
+	    {
+	        return new BroadcastPayload
+	        {
+                IncomingMessage = incomingMessage,
+                OutgoingMessage = outgoingMessage,
+                Translation = translation,
+                InputDevice = inputDevice,
+                OutputDevice = outputDevice,
+	        };
+	    }
 
-		public List<dynamic> AvailableOutputDevices => AvailableOutputDevicesEnumerable.ToList();
+	    #endregion
+
+        #region Output Devices
+
+        public List<dynamic> AvailableOutputDevices => AvailableOutputDevicesEnumerable.ToList();
 
 		public IEnumerable<dynamic> AvailableOutputDevicesEnumerable
 		{

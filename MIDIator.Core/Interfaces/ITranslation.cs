@@ -1,4 +1,5 @@
-﻿using MIDIator.Engine;
+﻿using System;
+using MIDIator.Engine;
 using Sanford.Multimedia.Midi;
 using TypeLite;
 
@@ -10,6 +11,11 @@ namespace MIDIator.Interfaces
 	[TsInterface(Module = "")]
 	public interface ITranslation
 	{
+        /// <summary>
+        /// Unique Identifier
+        /// </summary>
+        Guid ID { get; set; }
+
 		/// <summary>
 		/// InputMessageMatchTarget's properties are used to match an incoming message based on InputMatchFunction.
 		/// </summary>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using MIDIator.Interfaces;
 using MIDIator.UIGenerator.Consumables;
@@ -15,11 +16,7 @@ namespace MIDIator.Engine
 	[Ng2Component()]
 	public class Translation : ITranslation
 	{
-	    public Translation()
-	    {
-	    }
-
-        public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction, string name = "", string description = "")
+	    public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction, string name = "", string description = "", Guid? id = null)
 		{
 			InputMessageMatchTarget = inputMessageMatchTarget;
 			OutputMessageTemplate = outputMessageTemplate;
@@ -27,6 +24,7 @@ namespace MIDIator.Engine
 			TranslationFunction = translationFunction;
 		    Name = name;
 		    Description = description;
+		    ID = id ?? Guid.NewGuid();
 		}
 
         public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate)
@@ -35,6 +33,7 @@ namespace MIDIator.Engine
             OutputMessageTemplate = outputMessageTemplate;
             InputMatchFunction = InputMatchFunction.Data1Match; //TODO: Replace this with InputMatchFunctions.GetReasonableFunction();
             TranslationFunction = TranslationFunction.DirectTranslation; //TODO: Replace this with TranslationFunctions.GetReasonableFunction();
+            ID = Guid.NewGuid();
         }
 
         [DataMember]
@@ -43,7 +42,9 @@ namespace MIDIator.Engine
         [DataMember]
         public string Description { get; set; }
 
-        [DataMember]
+	    public Guid ID { get; set; }
+
+	    [DataMember]
 		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]
 		public ShortMessage InputMessageMatchTarget { get; set; }
 

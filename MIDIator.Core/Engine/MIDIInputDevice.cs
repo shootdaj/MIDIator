@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using MIDIator.Interfaces;
+using MIDIator.Services;
 using NLog;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
@@ -10,225 +11,231 @@ using TypeLite;
 
 namespace MIDIator.Engine
 {
-	[TsClass(Module = "")]
-	[UIDropdownOption("DeviceID")]
-	public class MIDIInputDevice : IDisposable, IMIDIInputDevice, IDropdownOption
-	{
-	    private Logger Log = LogManager.GetCurrentClassLogger();
-	    private InputDevice InputDevice { get; }
+    [TsClass(Module = "")]
+    [UIDropdownOption("DeviceID")]
+    public class MIDIInputDevice : IDisposable, IMIDIInputDevice, IDropdownOption
+    {
+        private Logger Log = LogManager.GetCurrentClassLogger();
+        private InputDevice InputDevice { get; }
 
-		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
-		{
-			try
-			{
-				InputDevice = new InputDevice(deviceID);
+        public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
+        {
+            try
+            {
+                InputDevice = new InputDevice(deviceID);
                 InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
             }
-			catch (InputDeviceException ex)
-			{
-				if (ex.ErrorCode == DeviceException.MMSYSERR_NOMEM)
-				{
-					throw new ArgumentException($"Device with ID {deviceID} is in use by another application.");
-				}
-			}
-			TranslationMap = translationMap;
-		}
-		
-		public int DeviceID => InputDevice.DeviceID;
-		
-		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
+            catch (InputDeviceException ex)
+            {
+                if (ex.ErrorCode == DeviceException.MMSYSERR_NOMEM)
+                {
+                    throw new ArgumentException($"Device with ID {deviceID} is in use by another application.");
+                }
+            }
+            TranslationMap = translationMap;
+        }
 
-		public int ChannelMessageActionCount => ChannelMessageActions.Count;
+        public int DeviceID => InputDevice.DeviceID;
 
-		public ITranslationMap TranslationMap { get; set; }
+        private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
 
-		public bool IsRecording { get; protected set; }
+        public int ChannelMessageActionCount => ChannelMessageActions.Count;
 
-		public string Name => InputDevice.GetDeviceCapabilities(DeviceID).name;
+        public ITranslationMap TranslationMap { get; set; }
 
-		public int DriverVersion => InputDevice.GetDeviceCapabilities(DeviceID).driverVersion;
+        public bool IsRecording { get; protected set; }
 
-		public short MID => InputDevice.GetDeviceCapabilities(DeviceID).mid;
+        public string Name => InputDevice.GetDeviceCapabilities(DeviceID).name;
 
-		public short PID => InputDevice.GetDeviceCapabilities(DeviceID).pid;
+        public int DriverVersion => InputDevice.GetDeviceCapabilities(DeviceID).driverVersion;
 
-		public int Support => InputDevice.GetDeviceCapabilities(DeviceID).support;
+        public short MID => InputDevice.GetDeviceCapabilities(DeviceID).mid;
 
-		private bool MIDIReaderMode { get; set; } = false;
+        public short PID => InputDevice.GetDeviceCapabilities(DeviceID).pid;
 
-		private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
+        public int Support => InputDevice.GetDeviceCapabilities(DeviceID).support;
 
-        private Action<ITranslation> BroadcastAction { get; set; }
+        private bool MIDIReaderMode { get; set; } = false;
+
+        private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
+
+        private Action<BroadcastPayload> BroadcastAction { get; set; }
 
         private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
-		{
-		    try
-		    {
-		        if (MIDIReaderMode)
-		            MIDIReaderMessageAction(e);
-		        else
-		            ExecuteChannelMessageAction(e);
-		    }
-		    catch (Exception ex)
-		    {
-		        Log.Error(ex);
-		    }
-		}
+        {
+            try
+            {
+                if (MIDIReaderMode)
+                    MIDIReaderMessageAction(e);
+                else
+                    ExecuteChannelMessageAction(e);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+        }
 
-		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
-		{
-			var incomingMessage = channelMessageEventArgs.Message;
-			var applicableTranslations = TranslationMap?.Translations.Where(t => t.Enabled).Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
-			if (applicableTranslations != null && applicableTranslations.Any())
-			{
-				applicableTranslations
-					.ToList()
-					.ForEach(translation =>
-					{
-						var translatedMessage = TranslationFunctions.Get(translation.TranslationFunction)(incomingMessage, translation.OutputMessageTemplate);
-						ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(translatedMessage.ToChannelMessage()))
-							.ToList()
-							.ForEach(c =>
-							{
-								var channelMessage = translatedMessage.ToChannelMessage();
-							    Log
-							        .Info(
-							            $"{Name}: Translating {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}} -> " +
-							            $"{{{channelMessage.Command},{channelMessage.MidiChannel},{channelMessage.Data1},{channelMessage.Data2}}} using Translation {translation.Name}" +
-							            (!string.IsNullOrEmpty(translation.Description) ? $"({translation.Description})" : string.Empty) +
-							            $" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
-								c.Action(channelMessage);
-                                BroadcastAction(translation);
-							});
-					});
-			}
-			else
-			{
-				ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(incomingMessage))
-					.ToList()
-					.ForEach(c =>
-					{
-						var channelMessage = incomingMessage.ToChannelMessage();
-						Log.Info($"{Name}: Forwarding {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}}");
-						c.Action(channelMessage);
-					});
-			}
+        private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
+        {
+            var incomingMessage = channelMessageEventArgs.Message;
+            var applicableTranslations = TranslationMap?.Translations.Where(t => t.Enabled).Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
+            if (applicableTranslations != null && applicableTranslations.Any())
+            {
+                applicableTranslations
+                    .ToList()
+                    .ForEach(translation =>
+                    {
+                        var translatedMessage = TranslationFunctions.Get(translation.TranslationFunction)(incomingMessage, translation.OutputMessageTemplate);
+                        ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(translatedMessage.ToChannelMessage()))
+                            .ToList()
+                            .ForEach(c =>
+                            {
+                                var translatedChannelMessage = translatedMessage.ToChannelMessage();
+                                Log.Info(
+                                    $"{Name}: Translating {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}} -> " +
+                                    $"{{{translatedChannelMessage?.Command},{translatedChannelMessage?.MidiChannel},{translatedChannelMessage?.Data1},{translatedChannelMessage?.Data2}}} using Translation {translation.Name}" +
+                                    (!string.IsNullOrEmpty(translation.Description)
+                                        ? $"({translation.Description})"
+                                        : string.Empty) +
+                                    $" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
+                                c.Action(translatedChannelMessage);
+                                BroadcastAction(MIDIDeviceService.GetBroadcastPayload(incomingMessage, translatedChannelMessage, translation));
+                            });
+                    });
+            }
+            else
+            {
+                ChannelMessageActions.Where(channelMessageAction => channelMessageAction.MatchFunction(incomingMessage))
+                    .ToList()
+                    .ForEach(c =>
+                    {
+                        var channelMessage = incomingMessage.ToChannelMessage();
+                        Log.Info($"{Name}: Forwarding {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}}");
+                        c.Action(channelMessage);
+                    });
+            }
 
-		    
-		}
 
-	    //private void AlertSignalRClients(ITranslation translation)
-	    //{
-     //       HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
-     //       {
-     //           ChannelName = Constants.TaskChannel,
-     //           Name = "midiChannelEvent",
-     //           Data = args.Message
-     //       });
-     //   }
+        }
 
-	    public void Start()
-		{
-			Log.Info("Starting MIDI Input Device: " + Name);
-			InputDevice.StartRecording();
-			IsRecording = true;
-			Log.Info("Started MIDI Input Device: " + Name);
-		}
+        //private void AlertSignalRClients(ITranslation translation)
+        //{
+        //       HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
+        //       {
+        //           ChannelName = Constants.TaskChannel,
+        //           Name = "midiChannelEvent",
+        //           Data = args.Message
+        //       });
+        //   }
 
-		public void Stop()
-		{
-			Log.Info("Stopping MIDI Input Device: " + Name);
-			InputDevice.StopRecording();
-			IsRecording = false;
-			Log.Info("Stopped MIDI Input Device: " + Name);
-		}
+        public void Start()
+        {
+            Log.Info("Starting MIDI Input Device: " + Name);
+            InputDevice.StartRecording();
+            IsRecording = true;
+            Log.Info("Started MIDI Input Device: " + Name);
+        }
 
-		public void StartMIDIReader(Action<ChannelMessageEventArgs> messageAction)
-		{
-			MIDIReaderMessageAction = messageAction;
-			MIDIReaderMode = true;
-		}
+        public void Stop()
+        {
+            Log.Info("Stopping MIDI Input Device: " + Name);
+            InputDevice.StopRecording();
+            IsRecording = false;
+            Log.Info("Stopped MIDI Input Device: " + Name);
+        }
 
-		public void StopMIDIReader()
-		{
-			MIDIReaderMode = false;
-			MIDIReaderMessageAction = null;
-		}
+        public void StartMIDIReader(Action<ChannelMessageEventArgs> messageAction)
+        {
+            MIDIReaderMessageAction = messageAction;
+            MIDIReaderMode = true;
+        }
 
-	    public void SetBroadcastAction(Action<ITranslation> broadcastAction)
-	    {
-	        BroadcastAction = broadcastAction;
-	    }
+        public void StopMIDIReader()
+        {
+            MIDIReaderMode = false;
+            MIDIReaderMessageAction = null;
+        }
 
-		public void AddChannelMessageAction(ChannelMessageAction channelMessageAction)
-		{
-			ChannelMessageActions.Add(channelMessageAction);
-		}
+        public void SetBroadcastAction(Action<BroadcastPayload> broadcastAction)
+        {
+            BroadcastAction = broadcastAction;
+        }
 
-		/// <summary>
-		/// Removes all channel message actions that have the given name.
-		/// </summary>
-		/// <param name="name"></param>
-		public void RemoveChannelMessageAction(string name)
-		{
-			ChannelMessageActions.RemoveAll(action => action.Name == name);
-		}
+        public void RemoveBroadcastAction()
+        {
+            BroadcastAction = null;
+        }
 
-		public void AddSysCommonMessageAction(EventHandler<SysCommonMessageEventArgs> action)
-		{
-			var wasRecording = IsRecording;
-			if (IsRecording)
-				Stop();
-			InputDevice.SysCommonMessageReceived += action;
+        public void AddChannelMessageAction(ChannelMessageAction channelMessageAction)
+        {
+            ChannelMessageActions.Add(channelMessageAction);
+        }
 
-			if (wasRecording)
-				Start();
-		}
+        /// <summary>
+        /// Removes all channel message actions that have the given name.
+        /// </summary>
+        /// <param name="name"></param>
+        public void RemoveChannelMessageAction(string name)
+        {
+            ChannelMessageActions.RemoveAll(action => action.Name == name);
+        }
 
-		public void AddSysExMessageAction(EventHandler<SysExMessageEventArgs> action)
-		{
-			var wasRecording = IsRecording;
-			if (IsRecording)
-				Stop();
-			InputDevice.SysExMessageReceived += action;
+        public void AddSysCommonMessageAction(EventHandler<SysCommonMessageEventArgs> action)
+        {
+            var wasRecording = IsRecording;
+            if (IsRecording)
+                Stop();
+            InputDevice.SysCommonMessageReceived += action;
 
-			if (wasRecording)
-				Start();
-		}
+            if (wasRecording)
+                Start();
+        }
 
-		public void AddSysRealtimeMessageAction(EventHandler<SysRealtimeMessageEventArgs> action)
-		{
-			var wasRecording = IsRecording;
-			if (IsRecording)
-				Stop();
-			InputDevice.SysRealtimeMessageReceived += action;
+        public void AddSysExMessageAction(EventHandler<SysExMessageEventArgs> action)
+        {
+            var wasRecording = IsRecording;
+            if (IsRecording)
+                Stop();
+            InputDevice.SysExMessageReceived += action;
 
-			if (wasRecording)
-				Start();
-		}
+            if (wasRecording)
+                Start();
+        }
 
-		public void AddErrorAction(EventHandler<ErrorEventArgs> action)
-		{
-			var wasRecording = IsRecording;
-			if (IsRecording)
-				Stop();
-			InputDevice.Error += action;
+        public void AddSysRealtimeMessageAction(EventHandler<SysRealtimeMessageEventArgs> action)
+        {
+            var wasRecording = IsRecording;
+            if (IsRecording)
+                Stop();
+            InputDevice.SysRealtimeMessageReceived += action;
 
-			if (wasRecording)
-				Start();
-		}
-		
-		public void Dispose()
-		{
-			InputDevice.Dispose();
-		}
+            if (wasRecording)
+                Start();
+        }
 
-		[TsIgnore]
-		//[DataMember]
-		public string Value => Name;
+        public void AddErrorAction(EventHandler<ErrorEventArgs> action)
+        {
+            var wasRecording = IsRecording;
+            if (IsRecording)
+                Stop();
+            InputDevice.Error += action;
 
-		[TsIgnore]
-		//[DataMember]
-		public string Label => Name;
-	}
+            if (wasRecording)
+                Start();
+        }
+
+        public void Dispose()
+        {
+            InputDevice.Dispose();
+        }
+
+        [TsIgnore]
+        //[DataMember]
+        public string Value => Name;
+
+        [TsIgnore]
+        //[DataMember]
+        public string Label => Name;
+    }
 }

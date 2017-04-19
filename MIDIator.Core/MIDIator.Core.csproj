@@ -101,6 +101,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\BroadcastPayload.cs" />
     <Compile Include="Engine\ChannelMessageAction.cs" />
     <Compile Include="Engine\IProfile.cs" />
     <Compile Include="Services\MIDIDeviceService.cs" />
