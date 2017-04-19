@@ -14,16 +14,16 @@ namespace MIDIator.Engine
 	[UIDropdownOption("DeviceID")]
 	public class MIDIInputDevice : IDisposable, IMIDIInputDevice, IDropdownOption
 	{
-	    private Logger Log = LogManager.GetCurrentClassLogger();
-	    private InputDevice InputDevice { get; }
+		private Logger Log = LogManager.GetCurrentClassLogger();
+		private InputDevice InputDevice { get; }
 
 		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
 			try
 			{
 				InputDevice = new InputDevice(deviceID);
-                InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
-            }
+				InputDevice.ChannelMessageReceived += MIDIInputDevice_ChannelMessageReceived;
+			}
 			catch (InputDeviceException ex)
 			{
 				if (ex.ErrorCode == DeviceException.MMSYSERR_NOMEM)
@@ -33,9 +33,9 @@ namespace MIDIator.Engine
 			}
 			TranslationMap = translationMap;
 		}
-		
+
 		public int DeviceID => InputDevice.DeviceID;
-		
+
 		private List<ChannelMessageAction> ChannelMessageActions { get; } = new List<ChannelMessageAction>();
 
 		public int ChannelMessageActionCount => ChannelMessageActions.Count;
@@ -58,21 +58,21 @@ namespace MIDIator.Engine
 
 		private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
 
-        private Action<ITranslation> BroadcastAction { get; set; }
+		private Action<ITranslation> BroadcastAction { get; set; }
 
-        private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
+		private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
 		{
-		    try
-		    {
-		        if (MIDIReaderMode)
-		            MIDIReaderMessageAction(e);
-		        else
-		            ExecuteChannelMessageAction(e);
-		    }
-		    catch (Exception ex)
-		    {
-		        Log.Error(ex);
-		    }
+			try
+			{
+				if (MIDIReaderMode)
+					MIDIReaderMessageAction(e);
+				else
+					ExecuteChannelMessageAction(e);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(ex);
+			}
 		}
 
 		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
@@ -91,14 +91,15 @@ namespace MIDIator.Engine
 							.ForEach(c =>
 							{
 								var channelMessage = translatedMessage.ToChannelMessage();
-							    Log
-							        .Info(
-							            $"{Name}: Translating {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}} -> " +
-							            $"{{{channelMessage.Command},{channelMessage.MidiChannel},{channelMessage.Data1},{channelMessage.Data2}}} using Translation {translation.Name}" +
-							            (!string.IsNullOrEmpty(translation.Description) ? $"({translation.Description})" : string.Empty) +
-							            $" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
+								Log
+									.Info(
+										$"{Name}: Translating {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}} -> " + (channelMessage != null ?
+										$"{{{channelMessage.Command},{channelMessage.MidiChannel},{channelMessage.Data1},{channelMessage.Data2}}} using Translation {translation.Name}" :
+										$"{{NULL}}") +
+										(!string.IsNullOrEmpty(translation.Description) ? $"({translation.Description})" : string.Empty) +
+										$" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
 								c.Action(channelMessage);
-                                BroadcastAction(translation);
+								BroadcastAction?.Invoke(translation);
 							});
 					});
 			}
@@ -114,20 +115,20 @@ namespace MIDIator.Engine
 					});
 			}
 
-		    
+
 		}
 
-	    //private void AlertSignalRClients(ITranslation translation)
-	    //{
-     //       HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
-     //       {
-     //           ChannelName = Constants.TaskChannel,
-     //           Name = "midiChannelEvent",
-     //           Data = args.Message
-     //       });
-     //   }
+		//private void AlertSignalRClients(ITranslation translation)
+		//{
+		//       HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
+		//       {
+		//           ChannelName = Constants.TaskChannel,
+		//           Name = "midiChannelEvent",
+		//           Data = args.Message
+		//       });
+		//   }
 
-	    public void Start()
+		public void Start()
 		{
 			Log.Info("Starting MIDI Input Device: " + Name);
 			InputDevice.StartRecording();
@@ -155,10 +156,10 @@ namespace MIDIator.Engine
 			MIDIReaderMessageAction = null;
 		}
 
-	    public void SetBroadcastAction(Action<ITranslation> broadcastAction)
-	    {
-	        BroadcastAction = broadcastAction;
-	    }
+		public void SetBroadcastAction(Action<ITranslation> broadcastAction)
+		{
+			BroadcastAction = broadcastAction;
+		}
 
 		public void AddChannelMessageAction(ChannelMessageAction channelMessageAction)
 		{
@@ -217,7 +218,7 @@ namespace MIDIator.Engine
 			if (wasRecording)
 				Start();
 		}
-		
+
 		public void Dispose()
 		{
 			InputDevice.Dispose();
