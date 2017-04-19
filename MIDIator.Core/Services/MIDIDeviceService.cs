@@ -164,6 +164,11 @@ namespace MIDIator.Services
 			GetInputDevice(deviceName).StopMIDIReader();
 		}
 
+	    public void SetupLiveBroadcasting(string deviceName, Action<ITranslation> broadcastAction)
+	    {
+	        GetInputDevice(deviceName).SetBroadcastAction(broadcastAction);
+	    }
+
 		#endregion
 
 		#region Output Devices

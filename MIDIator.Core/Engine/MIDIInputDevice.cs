@@ -58,21 +58,30 @@ namespace MIDIator.Engine
 
 		private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
 
-		private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
+        private Action<ITranslation> BroadcastAction { get; set; }
+
+        private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
 		{
-			if (MIDIReaderMode)
-				MIDIReaderMessageAction(e);
-			else
-				ExecuteChannelMessageAction(e);
+		    try
+		    {
+		        if (MIDIReaderMode)
+		            MIDIReaderMessageAction(e);
+		        else
+		            ExecuteChannelMessageAction(e);
+		    }
+		    catch (Exception ex)
+		    {
+		        Log.Error(ex);
+		    }
 		}
 
 		private void ExecuteChannelMessageAction(ChannelMessageEventArgs channelMessageEventArgs)
 		{
 			var incomingMessage = channelMessageEventArgs.Message;
-			var translations = TranslationMap?.Translations.Where(t => t.Enabled).Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
-			if (translations != null && translations.Any())
+			var applicableTranslations = TranslationMap?.Translations.Where(t => t.Enabled).Where(t => InputMatchFunctions.Get(t.InputMatchFunction)(incomingMessage, t.InputMessageMatchTarget)).ToList();
+			if (applicableTranslations != null && applicableTranslations.Any())
 			{
-				translations
+				applicableTranslations
 					.ToList()
 					.ForEach(translation =>
 					{
@@ -89,6 +98,7 @@ namespace MIDIator.Engine
 							            (!string.IsNullOrEmpty(translation.Description) ? $"({translation.Description})" : string.Empty) +
 							            $" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
 								c.Action(channelMessage);
+                                BroadcastAction(translation);
 							});
 					});
 			}
@@ -99,15 +109,25 @@ namespace MIDIator.Engine
 					.ForEach(c =>
 					{
 						var channelMessage = incomingMessage.ToChannelMessage();
-						Log
-									.Info(
-										$"{Name}: Forwarding {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}}");
+						Log.Info($"{Name}: Forwarding {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}}");
 						c.Action(channelMessage);
 					});
 			}
+
+		    
 		}
 
-		public void Start()
+	    //private void AlertSignalRClients(ITranslation translation)
+	    //{
+     //       HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
+     //       {
+     //           ChannelName = Constants.TaskChannel,
+     //           Name = "midiChannelEvent",
+     //           Data = args.Message
+     //       });
+     //   }
+
+	    public void Start()
 		{
 			Log.Info("Starting MIDI Input Device: " + Name);
 			InputDevice.StartRecording();
@@ -134,6 +154,11 @@ namespace MIDIator.Engine
 			MIDIReaderMode = false;
 			MIDIReaderMessageAction = null;
 		}
+
+	    public void SetBroadcastAction(Action<ITranslation> broadcastAction)
+	    {
+	        BroadcastAction = broadcastAction;
+	    }
 
 		public void AddChannelMessageAction(ChannelMessageAction channelMessageAction)
 		{
