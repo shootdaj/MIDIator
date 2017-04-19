@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using MIDIator.Interfaces;
+using NLog;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
 using TypeLite;
@@ -13,7 +14,8 @@ namespace MIDIator.Engine
 	[UIDropdownOption("DeviceID")]
 	public class MIDIInputDevice : IDisposable, IMIDIInputDevice, IDropdownOption
 	{
-		private InputDevice InputDevice { get; }
+	    private Logger Log = LogManager.GetCurrentClassLogger();
+	    private InputDevice InputDevice { get; }
 
 		public MIDIInputDevice(int deviceID, ITranslationMap translationMap = null)
 		{
@@ -79,7 +81,14 @@ namespace MIDIator.Engine
 							.ToList()
 							.ForEach(c =>
 							{
-								c.Action(translatedMessage.ToChannelMessage());
+								var channelMessage = translatedMessage.ToChannelMessage();
+							    Log
+							        .Info(
+							            $"{Name}: Translating {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}} -> " +
+							            $"{{{channelMessage.Command},{channelMessage.MidiChannel},{channelMessage.Data1},{channelMessage.Data2}}} using Translation {translation.Name}" +
+							            (!string.IsNullOrEmpty(translation.Description) ? $"({translation.Description})" : string.Empty) +
+							            $" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
+								c.Action(channelMessage);
 							});
 					});
 			}
@@ -89,21 +98,29 @@ namespace MIDIator.Engine
 					.ToList()
 					.ForEach(c =>
 					{
-						c.Action(incomingMessage.ToChannelMessage());
+						var channelMessage = incomingMessage.ToChannelMessage();
+						Log
+									.Info(
+										$"{Name}: Forwarding {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}}");
+						c.Action(channelMessage);
 					});
 			}
 		}
 
 		public void Start()
 		{
+			Log.Info("Starting MIDI Input Device: " + Name);
 			InputDevice.StartRecording();
 			IsRecording = true;
+			Log.Info("Started MIDI Input Device: " + Name);
 		}
 
 		public void Stop()
 		{
+			Log.Info("Stopping MIDI Input Device: " + Name);
 			InputDevice.StopRecording();
 			IsRecording = false;
+			Log.Info("Stopped MIDI Input Device: " + Name);
 		}
 
 		public void StartMIDIReader(Action<ChannelMessageEventArgs> messageAction)
