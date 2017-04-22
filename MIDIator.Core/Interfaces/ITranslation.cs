@@ -14,7 +14,7 @@ namespace MIDIator.Interfaces
         /// <summary>
         /// Unique Identifier
         /// </summary>
-        Guid ID { get; set; }
+        Guid? ID { get; set; }
 
 		/// <summary>
 		/// InputMessageMatchTarget's properties are used to match an incoming message based on InputMatchFunction.

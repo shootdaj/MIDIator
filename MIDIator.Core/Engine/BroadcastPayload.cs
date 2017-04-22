@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MIDIator.Interfaces;
+﻿using MIDIator.Interfaces;
 using Sanford.Multimedia.Midi;
 
 namespace MIDIator.Engine
 {
-    public class BroadcastPayload
+    public class BroadcastPayload : IBroadcastPayload
     {
         public ChannelMessage IncomingMessage { get; set; }
         public ChannelMessage OutgoingMessage { get; set; }
@@ -20,5 +15,19 @@ namespace MIDIator.Engine
         {
             
         }
+        public static BroadcastPayload GetBroadcastPayload(ChannelMessage incomingMessage, ChannelMessage outgoingMessage,
+            ITranslation translation, IMIDIInputDevice inputDevice = null,
+            IMIDIOutputDevice outputDevice = null)
+        {
+            return new BroadcastPayload
+            {
+                IncomingMessage = incomingMessage,
+                OutgoingMessage = outgoingMessage,
+                Translation = translation,
+                InputDevice = inputDevice,
+                OutputDevice = outputDevice,
+            };
+        }
+
     }
 }

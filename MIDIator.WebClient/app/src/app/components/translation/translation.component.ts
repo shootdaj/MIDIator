@@ -17,7 +17,7 @@ import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Prof
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { ChannelMessageComponent } from '../../components/channelMessage/channelMessage.component';
 import { ExpanderComponent } from '../../components/expander/expander.component';
-
+import { ConnectionState } from "../../services/signalRService";
 declare var componentHandler;
 
 @Component({
@@ -27,7 +27,7 @@ declare var componentHandler;
                 .adjust-right-alignment {
                     margin-right: 20px;
                 }`
-            ]
+	]
 })
 
 export class TranslationComponent implements OnInit, OnDestroy {
@@ -37,13 +37,14 @@ export class TranslationComponent implements OnInit, OnDestroy {
     private omtReaderSubscription: Subscription;
     private inputMatchFunctions: IDropdownOption[];
     private translationFunctions: IDropdownOption[];
+	private blinkTranslation: Boolean = false;
 
     @Input() form: FormGroup;
     @Input() inputDevice: MIDIInputDevice;
     @Input() outputDevice: MIDIOutputDevice;
     @Input() index: number;
     @Output() deleteTranslationChange = new EventEmitter();
-    
+
     private readingIMMT: Boolean;
     private readingOMT: Boolean;
 
@@ -57,6 +58,8 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         let component = this;
+
+		console.log("initializeing translation");
 
         this.subscriptions = new Array<Subscription>();
 		this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
@@ -73,6 +76,8 @@ export class TranslationComponent implements OnInit, OnDestroy {
 			this.inputMatchFunctions = this.midiService.availableInputMatchFunctions.map(fx => new DropdownOption(InputMatchFunction[fx].toString(), InputMatchFunction[fx].toString()));
 		if (this.midiService.availableTranslationFunctions != null)
 			this.translationFunctions = this.midiService.availableTranslationFunctions.map(fx => new DropdownOption(TranslationFunction[fx].toString(), TranslationFunction[fx].toString()));
+
+		this.startBroadcastListener();
     }
 
     ngOnDestroy(): void {
@@ -109,6 +114,52 @@ export class TranslationComponent implements OnInit, OnDestroy {
 		this.midiService.startMIDIReader(this.inputDevice.name);
 		return subscription;
     }
+
+	private startBroadcastListener() {
+		if (this.signalRService.currentState === ConnectionState.Connected) {
+			console.log("signalR already connected - subscribing immediately");
+			this.subscribeToBroadcast();
+		} else {
+			console.log("signalR NOT connected - setting subscription to subscribe (HA!)");
+			let sub = this.signalRService.connectionState$.subscribe(state => {
+				if (state === ConnectionState.Connected) {
+					this.subscribeToBroadcast();
+					console.log("unsubscribing to the subscription subscribe");
+					sub.unsubscribe();
+				}
+			});
+		}
+	}
+
+	private subscribeToBroadcast() {
+		let component = this;
+
+		this.subscriptions.push(this.signalRService.sub("tasks")
+			.subscribe(
+			(x: ChannelEvent) => {
+				switch (x.name) {
+					case "broadcastEvent":
+						{
+							let broadcastPayload = x.data;
+							console.log(broadcastPayload);
+
+							if (broadcastPayload.translation.id === component.form.controls['id'].value) {
+								component.blinkTranslation = true;
+								this.cdr.detectChanges();
+								setTimeout(() => {
+										component.blinkTranslation = false;
+										this.cdr.detectChanges();
+									},
+									150);
+
+							}
+						}
+				}
+			},
+			(error: any) => {
+				console.log("Attempt to join channel failed!", error);
+			}));
+	}
 
     private sendMessageToOutputDevice(message: ChannelMessage) {
         this.midiService.sendMessageToOutputDevice(message, this.outputDevice.name);

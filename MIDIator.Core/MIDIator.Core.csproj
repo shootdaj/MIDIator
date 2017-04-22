@@ -35,6 +35,10 @@
       <HintPath>..\packages\Anshul.Utilities.1.0.24.0\lib\net45\Anshul.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Engine\BroadcastPayload.cs" />
     <Compile Include="Engine\ChannelMessageAction.cs" />
+    <Compile Include="Engine\IBroadcastPayload.cs" />
     <Compile Include="Engine\IProfile.cs" />
     <Compile Include="Services\MIDIDeviceService.cs" />
     <Compile Include="Services\ProfileService.cs" />

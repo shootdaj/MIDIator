@@ -35,7 +35,7 @@ namespace MIDIator.Interfaces
 
 		void StartMIDIReader(Action<ChannelMessageEventArgs> messageAction);
 		void StopMIDIReader();
-	    void SetBroadcastAction(Action<BroadcastPayload> broadcastAction);
+	    void SetBroadcastAction(Action<IBroadcastPayload> broadcastAction, bool onlyIfNull = false);
 	    void RemoveBroadcastAction();
 	}
 }

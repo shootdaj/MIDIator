@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using MIDIator.Interfaces;
 using MIDIator.UIGenerator.Consumables;
 using Newtonsoft.Json;
@@ -16,7 +17,13 @@ namespace MIDIator.Engine
 	[Ng2Component()]
 	public class Translation : ITranslation
 	{
-	    public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction, string name = "", string description = "", Guid? id = null)
+        [UsedImplicitly]
+	    public Translation()
+	    {
+	        ID = Guid.NewGuid();
+        }
+
+        public Translation(ShortMessage inputMessageMatchTarget, ShortMessage outputMessageTemplate, InputMatchFunction inputMatchFunction, TranslationFunction translationFunction, string name = "", string description = "", Guid? id = null)
 		{
 			InputMessageMatchTarget = inputMessageMatchTarget;
 			OutputMessageTemplate = outputMessageTemplate;
@@ -42,7 +49,8 @@ namespace MIDIator.Engine
         [DataMember]
         public string Description { get; set; }
 
-	    public Guid ID { get; set; }
+        [DataMember]
+        public Guid? ID { get; set; }
 
 	    [DataMember]
 		[JsonProperty(TypeNameHandling = TypeNameHandling.All)]

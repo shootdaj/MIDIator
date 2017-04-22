@@ -13,16 +13,16 @@ namespace MIDIator.Web.Controllers
 	[RoutePrefix("midi")]
 	public class MIDIController : ApiController
 	{
-
-		private IHubContext HubContext { get; set; }
-
+        public SignalRService SignalRService { get; set; }
+		
 		public IMIDIManager MIDIManager { get; set; }
+
+		private IHubContext HubContext => SignalRService.HubContext;
 
 		public MIDIController(/*IMIDIManager midiManager*/)
 		{
 			MIDIManager = Engine.MIDIManager.Instance; //needs to be injected
-
-            HubContext = GlobalHost.ConnectionManager.GetHubContext<MIDIReaderHub>();
+            SignalRService = new SignalRService();
         }
 
 		#region Profile
@@ -69,7 +69,16 @@ namespace MIDIator.Web.Controllers
 		[HttpPost]
 		public IMIDIInputDevice GetInputDevice(string name)
 		{
-			return MIDIManager.MIDIDeviceService.GetInputDevice(name);
+			return MIDIManager.MIDIDeviceService.GetInputDevice(name, broadcastAction: payload =>
+			{
+                HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
+			    {
+			        ChannelName = Constants.TaskChannel,
+			        Name = "broadcastMidiEvent",
+			        Data = payload
+			    });
+
+            });
 		}
 
 		[HttpPost]

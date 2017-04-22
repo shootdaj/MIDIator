@@ -100,7 +100,8 @@ export class FormService {
             enabled: [translation.enabled, [<any>Validators.required]],
             collapsed: [translation.collapsed, [/*<any>Validators.required*/]],
             name: [translation.name],
-            description: [translation.description]
+            description: [translation.description],
+            id: [translation.id]
         });
     }
 
