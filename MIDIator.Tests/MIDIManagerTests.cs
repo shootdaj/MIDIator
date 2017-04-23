@@ -16,7 +16,7 @@ namespace MIDIator.Tests
 			
 			// don't do anything with the broadcastPayload. add it in if needed for testing.
 		    MIDIManager = new MIDIManager(midiDeviceService, new ProfileService(midiDeviceService, virtualMIDIManager,
-			    payload => { }), virtualMIDIManager);
+			    (payload, eventName) => { }), virtualMIDIManager);
 		}
 
 		[TearDown]

@@ -21,7 +21,7 @@ namespace ConsoleApp
 		    var virtualMIDIManager = new VirtualMIDIManager();
 			
 		    GuitarWingMap(new MIDIManager(midiDeviceService, new ProfileService(midiDeviceService, virtualMIDIManager,
-			    payload => { })));
+			    (payload, eventName) => { })));
 		}
 
 		static void CreateTranslationAndSaveIt()
