@@ -12,7 +12,7 @@ import { ProfileService } from '../../services/profileService';
 import { FormService } from '../../services/formService';
 import { DropdownOption } from '../../components/mdl-dropdown/dropdownOption';
 import { DropdownComponent } from '../../components/mdl-dropdown/mdl-dropdown.component';
-import { IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
+import { TranslationMap, IMIDIInputDevice, ShortMessage, IMIDIOutputDevice, Transformation, Profile, VirtualOutputDevice, VirtualDevice, MIDIOutputDevice, IDropdownOption, MIDIInputDevice, Translation, ChannelMessage, MessageType, TranslationFunction, InputMatchFunction, ChannelCommand } from '../../models/domainModel';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { TranslationComponent } from '../../components/translation/translation.component';
 import { ConnectionState, SignalRService, ChannelEvent } from '../../services/signalRService';
@@ -79,23 +79,42 @@ export class TransformationComponent implements OnInit, OnDestroy {
 			.subscribe(
 			(x: ChannelEvent) => {
 				switch (x.name) {
-					case "transformationBroadcastEvent":
-						{
-							let broadcastPayload = x.data;
-							console.log(broadcastPayload);
+                    case "transformationBroadcastEvent":
+                        {
+                            let broadcastPayload = x.data;
+                            console.log(broadcastPayload);
 
-							// if the id of the incoming broadcast matches the id of the translation this component represents, then blink it
-							if (broadcastPayload.inputDevice.deviceID === (<MIDIInputDevice>component.form.controls['inputDevice'].value).deviceID) {
-								component.blinkTransformation = true;
-								this.cdr.detectChanges();
-								setTimeout(() => {
-									component.blinkTransformation = false;
-									this.cdr.detectChanges();
-								},
-									300);
+                            // if the id of the incoming broadcast matches the id of the translation this component represents, then blink it
+                            if (broadcastPayload.inputDevice.deviceID === (<MIDIInputDevice>component.form.controls['inputDevice'].value).deviceID) {
+                                component.blinkTransformation = true;
+                                this.cdr.detectChanges();
+                                setTimeout(() => {
+                                    component.blinkTransformation = false;
+                                    this.cdr.detectChanges();
+                                },
+                                    300);
 
-							}
-						}
+                            }
+                        }
+                        break;
+                    case "translationBroadcastEvent":
+                        {
+                            let broadcastPayload = x.data;
+                            console.log(broadcastPayload);
+
+                            // if the id of the incoming broadcast matches the id of the translation this component represents, then blink it
+                            if ((<TranslationMap>component.form.controls['translationMap'].value).translations.map(x => x.id).indexOf(broadcastPayload.translation.id) > -1) {
+                                component.blinkTransformation = true;
+                                this.cdr.detectChanges();
+                                setTimeout(() => {
+                                    component.blinkTransformation = false;
+                                    this.cdr.detectChanges();
+                                },
+                                    300);
+
+                            }
+                        }
+                        break;
 				}
 			},
 			(error: any) => {
