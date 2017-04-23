@@ -29,6 +29,7 @@ export class TransformationComponent implements OnInit, OnDestroy {
     private inputDevices: MIDIInputDevice[];
     private outputDevices: MIDIOutputDevice[];
 	private blinkTransformation = false;
+    private blinkTransformationForward = false;
 
     @Input() form: FormGroup;
     @Output() deleteTransformationChange = new EventEmitter();
@@ -86,10 +87,10 @@ export class TransformationComponent implements OnInit, OnDestroy {
 
                             // if the id of the incoming broadcast matches the id of the translation this component represents, then blink it
                             if (broadcastPayload.inputDevice.deviceID === (<MIDIInputDevice>component.form.controls['inputDevice'].value).deviceID) {
-                                component.blinkTransformation = true;
+                                component.blinkTransformationForward = true;
                                 this.cdr.detectChanges();
                                 setTimeout(() => {
-                                    component.blinkTransformation = false;
+                                    component.blinkTransformationForward = false;
                                     this.cdr.detectChanges();
                                 },
                                     300);
@@ -102,7 +103,7 @@ export class TransformationComponent implements OnInit, OnDestroy {
                             let broadcastPayload = x.data;
                             console.log(broadcastPayload);
 
-                            // if the id of the incoming broadcast matches the id of the translation this component represents, then blink it
+                            // if the broadcast event's translation is part of this transformation, then blink it
                             if ((<TranslationMap>component.form.controls['translationMap'].value).translations.map(x => x.id).indexOf(broadcastPayload.translation.id) > -1) {
                                 component.blinkTransformation = true;
                                 this.cdr.detectChanges();

@@ -1,5 +1,5 @@
 ﻿<div *ngIf="this.form != null" class="dotted-container" >
-    <mdl-card-title class="padded-row"  [ngClass] ="{'blinkTransformation': blinkTransformation}">
+    <mdl-card-title class="padded-row"  [ngClass] ="{'blinkTransformation': blinkTransformation, 'blinkTransformationForward': blinkTransformationForward}">
         <h2 mdl-card-title-text>
             <span style="vertical-align: middle;" *ngIf="form">{{form.controls.name.value}}</span>
         </h2>
@@ -20,7 +20,7 @@
         </div>
     </mdl-card-title>
     <expander [collapsed]="this.form.controls['collapsed'].value">
-        <div class="mdl-grid mdl-grid--no-spacing padded-row" [ngClass] ="{'blinkTransformationBottom': blinkTransformation}">
+        <div class="mdl-grid mdl-grid--no-spacing padded-row" [ngClass] ="{'blinkTransformationBottom': blinkTransformation, 'blinkTransformationBottomForward': blinkTransformationForward}">
             <div class="mdl-cell--3-col">
                 <div class="cell-content">
                     <mdl-textfield type="text" label="Name" floating-label [formControl]="form.controls['name']"></mdl-textfield>
