@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy, trigger, state, style, transition, animate, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+﻿import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, OnDestroy, ChangeDetectionStrategy, trigger, state, style, transition, animate, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -135,7 +135,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
 			.subscribe(
 			(x: ChannelEvent) => {
 				switch (x.name) {
-					case "translationBroadcastEvent":
+                    case "translationBroadcastEvent":
 						{
 							let broadcastPayload = x.data;
 							console.log(broadcastPayload);
@@ -148,7 +148,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
 										component.blinkTranslation = false;
 										this.cdr.detectChanges();
 									},
-									150);
+									300);
 
 							}
 						}

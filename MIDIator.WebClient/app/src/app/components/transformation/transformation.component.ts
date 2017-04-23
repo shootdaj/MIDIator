@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, AfterViewInit, OnDestroy, trigger, state, style, transition, animate, ChangeDetectorRef } from '@angular/core';
+﻿import { Component, ViewChild, Injectable, Input, Output, EventEmitter, DoCheck, OnInit, AfterViewInit, OnDestroy, trigger, state, style, transition, animate, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, FormArray, ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -92,7 +92,7 @@ export class TransformationComponent implements OnInit, OnDestroy {
 									component.blinkTransformation = false;
 									this.cdr.detectChanges();
 								},
-									150);
+									300);
 
 							}
 						}
