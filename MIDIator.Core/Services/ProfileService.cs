@@ -12,9 +12,9 @@ namespace MIDIator.Services
     {
         public MIDIDeviceService MIDIDeviceService { get; set; }
         public VirtualMIDIManager VirtualMIDIManager { get; set; }
-		private Action<IBroadcastPayload> BroadcastAction { get; set; }
+		private Action<IBroadcastPayload, string> BroadcastAction { get; set; }
 
-        public ProfileService(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager, Action<IBroadcastPayload> broadcastAction)
+        public ProfileService(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager, Action<IBroadcastPayload, string> broadcastAction)
         {
             MIDIDeviceService = midiDeviceService;
             VirtualMIDIManager = virtualMIDIManager;
@@ -114,7 +114,7 @@ namespace MIDIator.Services
 
         private void GetTransformationProperties(JsonSerializer serializer,
             JToken transformationDTO, Profile profile, out IMIDIInputDevice inputDevice, out bool linkedOutputVirtualDevice,
-            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled, out bool collapsed, out bool translationsCollapsed, out string name, Action<IBroadcastPayload> broadcastAction = null)
+            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled, out bool collapsed, out bool translationsCollapsed, out string name, Action<IBroadcastPayload, string> broadcastAction = null)
         {
             var inputDeviceName = transformationDTO["inputDevice"]["name"].ToString();
             var outputDeviceName = transformationDTO["outputDevice"]["name"].ToString();

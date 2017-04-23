@@ -15,8 +15,10 @@ namespace MIDIator.Engine
         {
             
         }
-        public static BroadcastPayload GetBroadcastPayload(ChannelMessage incomingMessage, ChannelMessage outgoingMessage,
-            ITranslation translation, IMIDIInputDevice inputDevice = null,
+
+        public static BroadcastPayload GetBroadcastPayload(ChannelMessage incomingMessage,
+            ChannelMessage outgoingMessage = null,
+            ITranslation translation = null, IMIDIInputDevice inputDevice = null,
             IMIDIOutputDevice outputDevice = null)
         {
             return new BroadcastPayload
@@ -28,6 +30,5 @@ namespace MIDIator.Engine
                 OutputDevice = outputDevice,
             };
         }
-
     }
 }

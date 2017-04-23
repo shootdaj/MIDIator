@@ -69,16 +69,7 @@ namespace MIDIator.Web.Controllers
 		[HttpPost]
 		public IMIDIInputDevice GetInputDevice(string name)
 		{
-			return MIDIManager.MIDIDeviceService.GetInputDevice(name, broadcastAction: payload =>
-			{
-                HubContext.Clients.Group(Constants.TaskChannel).OnEvent(Constants.TaskChannel, new ChannelEvent
-			    {
-			        ChannelName = Constants.TaskChannel,
-			        Name = "broadcastMidiEvent",
-			        Data = payload
-			    });
-
-            });
+			return MIDIManager.MIDIDeviceService.GetInputDevice(name);
 		}
 
 		[HttpPost]

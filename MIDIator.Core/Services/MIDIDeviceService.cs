@@ -45,7 +45,7 @@ namespace MIDIator.Services
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false, Action<IBroadcastPayload> broadcastAction = null)
+		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false, Action<IBroadcastPayload, string> broadcastAction = null)
 		{
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(device => device.DeviceID == deviceID))
 				return InputDevicesInUse.First(device => device.DeviceID == deviceID);
@@ -66,7 +66,7 @@ namespace MIDIator.Services
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false, Action<IBroadcastPayload> broadcastAction = null)
+		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false, Action<IBroadcastPayload, string> broadcastAction = null)
 		{
 			Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(nameMatch))
@@ -94,7 +94,7 @@ namespace MIDIator.Services
 		/// <param name="deviceID"></param>
 		/// <param name="translationMap"></param>
 		/// <returns></returns>
-		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null, Action<IBroadcastPayload> broadcastAction = null)
+		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null, Action<IBroadcastPayload, string> broadcastAction = null)
 		{
 			var device = new MIDIInputDevice(deviceID, translationMap);
 		    if (broadcastAction != null)
@@ -168,7 +168,7 @@ namespace MIDIator.Services
 			GetInputDevice(deviceName).StopMIDIReader();
 		}
 
-	    public void SetBroadcastAction(string deviceName, Action<IBroadcastPayload> broadcastAction)
+	    public void SetBroadcastAction(string deviceName, Action<IBroadcastPayload, string> broadcastAction)
 	    {
 	        GetInputDevice(deviceName).SetBroadcastAction(broadcastAction);
 	    }

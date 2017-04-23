@@ -25,13 +25,13 @@ namespace MIDIator.Web
             HubContext = GlobalHost.ConnectionManager.GetHubContext<MIDIReaderHub>();
         }
 
-        public Action<IBroadcastPayload> SetBroadcastAction => payload =>
+        public Action<IBroadcastPayload, string> SetBroadcastAction => (payload, eventName) =>
         {
             HubContext.Clients.Group(Constants.TaskChannel)
                 .OnEvent(Constants.TaskChannel, new ChannelEvent
                 {
                     ChannelName = Constants.TaskChannel,
-                    Name = "broadcastEvent",
+                    Name = eventName,
                     Data = payload
                 });
         };

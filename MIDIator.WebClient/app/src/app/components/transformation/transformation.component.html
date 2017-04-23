@@ -1,5 +1,5 @@
-<div *ngIf="this.form != null" class="dotted-container">
-    <mdl-card-title>
+<div *ngIf="this.form != null" class="dotted-container" >
+    <mdl-card-title class="padded-row"  [ngClass] ="{'blinkTransformation': blinkTransformation}">
         <h2 mdl-card-title-text>
             <span style="vertical-align: middle;" *ngIf="form">{{form.controls.name.value}}</span>
         </h2>

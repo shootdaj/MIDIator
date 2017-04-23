@@ -59,7 +59,7 @@ namespace MIDIator.Engine
 
         private Action<ChannelMessageEventArgs> MIDIReaderMessageAction { get; set; }
 
-        private Action<IBroadcastPayload> BroadcastAction { get; set; }
+        private Action<IBroadcastPayload, string> BroadcastAction { get; set; }
 
         private void MIDIInputDevice_ChannelMessageReceived(object sender, ChannelMessageEventArgs e)
         {
@@ -101,7 +101,7 @@ namespace MIDIator.Engine
                                         : string.Empty) +
                                         $" - IMFx: {translation.InputMatchFunction}, TFx: {translation.TranslationFunction}");
                                 c.Action(translatedChannelMessage);
-                                BroadcastAction(BroadcastPayload.GetBroadcastPayload(incomingMessage, translatedChannelMessage, translation));
+                                BroadcastAction(BroadcastPayload.GetBroadcastPayload(incomingMessage, translatedChannelMessage, translation, this), "translationBroadcastEvent");
                             });
                     });
             }
@@ -114,6 +114,7 @@ namespace MIDIator.Engine
                         var channelMessage = incomingMessage.ToChannelMessage();
                         Log.Info($"{Name}: Forwarding {{{incomingMessage.Command},{incomingMessage.MidiChannel},{incomingMessage.Data1},{incomingMessage.Data2}}}");
                         c.Action(channelMessage);
+                        BroadcastAction(BroadcastPayload.GetBroadcastPayload(incomingMessage, inputDevice: this), "transformationBroadcastEvent");
                     });
             }
 
@@ -158,7 +159,7 @@ namespace MIDIator.Engine
             MIDIReaderMessageAction = null;
         }
 
-	    public void SetBroadcastAction(Action<IBroadcastPayload> broadcastAction, bool onlyIfNull = false)
+	    public void SetBroadcastAction(Action<IBroadcastPayload, string> broadcastAction, bool onlyIfNull = false)
 	    {
 		    if (!onlyIfNull || BroadcastAction == null)
 				BroadcastAction = broadcastAction; 

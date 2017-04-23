@@ -68,12 +68,11 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
 
     100% {
         /*background-color: rgba(#1F04B2, 0.7);*/
-        background-color:rgba(#1432CC, 0.7);
-
+        background-color: rgba(#1432CC, 0.7);
         /*background: -webkit-lineer-gradient(right, #1432CC, transparent);*/ /* For Safari 5.1 to 6.0 */
         /*background: -o-radial-gradient(#1432CC 90%, transparent 10%); /* For Opera 11.1 to 12.0 */
         /*background: -moz-radial-gradient(#1432CC 90%, transparent 10%); /* For Firefox 3.6 to 15 */
-        /*background: linear-gradient(to right, #1432CC, transparent);*/ 
+        /*background: linear-gradient(to right, #1432CC, transparent);*/
     }
 }
 
@@ -89,6 +88,31 @@ $dropdown-bg-ul-li-color: $custom-almost-black-full;
     border-radius: 15px 15px 15px 15px;
     /*border: solid unquote("rgba(#{$color-primary}, 0.8)");*/
 }
+
+@keyframes blinkTransformationKeyframes {
+    0% {
+        background-color: transparent;
+    }
+
+    100% {
+        /*background-color: rgba(#1F04B2, 0.7);*/
+        background-color: rgba(#1432CC, 0.7);
+    }
+}
+
+.blinkTransformation {
+    animation-name: blinkTransformationKeyframes;
+    animation-duration: 0.1s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    //cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    //transition-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+    webkit-border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    border-radius: 15px 15px 15px 15px;
+    /*border: solid unquote("rgba(#{$color-primary}, 0.8)");*/
+}
+
 
 
 @keyframes readingMIDIKeyframes {
@@ -185,4 +209,10 @@ translation .mdl-button--icon,
 .section-header .mdl-button--icon,
 transformation h4, translation h2 span {
     color: unquote("rgb(#{$color-accent})");
+}
+
+.padded-row {
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
 }

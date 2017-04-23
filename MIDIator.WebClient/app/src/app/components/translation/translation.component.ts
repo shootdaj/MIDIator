@@ -59,9 +59,7 @@ export class TranslationComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         let component = this;
 
-		console.log("initializeing translation");
-
-        this.subscriptions = new Array<Subscription>();
+		this.subscriptions = new Array<Subscription>();
 		this.subscriptions.push(this.midiService.availableInputMatchFunctionsSubject
 			.subscribe(data => {
 				this.inputMatchFunctions = data.map(
@@ -133,16 +131,16 @@ export class TranslationComponent implements OnInit, OnDestroy {
 
 	private subscribeToBroadcast() {
 		let component = this;
-
 		this.subscriptions.push(this.signalRService.sub("tasks")
 			.subscribe(
 			(x: ChannelEvent) => {
 				switch (x.name) {
-					case "broadcastEvent":
+					case "translationBroadcastEvent":
 						{
 							let broadcastPayload = x.data;
 							console.log(broadcastPayload);
 
+							// if the id of the incoming broadcast matches the id of the translation this component represents, then blink it
 							if (broadcastPayload.translation.id === component.form.controls['id'].value) {
 								component.blinkTranslation = true;
 								this.cdr.detectChanges();
