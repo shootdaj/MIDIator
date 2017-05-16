@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
 using Anshul.Utilities;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Client;
@@ -14,7 +9,6 @@ using MIDIator.Json;
 using MIDIator.Services;
 using Newtonsoft.Json;
 using Refigure;
-using Sanford.Multimedia.Midi;
 using Serilog;
 
 namespace MIDIator.Web
@@ -23,9 +17,11 @@ namespace MIDIator.Web
 	{
 		private HubConnection HubConnection { get; set; }
 
-        private VirtualMIDIManager VirtualMIDIManager { get; set; }
-        
-        private IDisposable ShutdownSub { get; set; }
+		private VirtualMIDIManager VirtualMIDIManager { get; set; }
+
+		public SignalRService SignalRService => SignalRService.Instance;
+
+		private IDisposable ShutdownSub { get; set; }
 
         public void InitializeWebAPI(VirtualMIDIManager virtualMIDIManager, Action onShutdown)
 		{
@@ -38,8 +34,8 @@ namespace MIDIator.Web
 
             VirtualMIDIManager = virtualMIDIManager;
             
-			//start signalr hubs
-			StartSignalRHubs();
+			//start signalr
+			StartSignalR();
             //initialize managers
 			InitMIDIManager();
             AdminManager.Instantiate();
@@ -50,9 +46,10 @@ namespace MIDIator.Web
 		private void InitMIDIManager()
 		{
 		    var midiDeviceService = new MIDIDeviceService();
-
-		    MIDIManager.Instantiate(midiDeviceService, new ProfileService(midiDeviceService, VirtualMIDIManager),
-		        VirtualMIDIManager);
+			SignalRService.Instantiate();
+			MIDIManager.Instantiate(midiDeviceService,
+				new ProfileService(midiDeviceService, VirtualMIDIManager, SignalRService.SetBroadcastAction),
+				VirtualMIDIManager);
 
 		    if (string.IsNullOrEmpty(Config.Get("WebAPI.ProfileFile")) || !File.Exists(Config.Get("WebAPI.ProfileFile")))
 		    {
@@ -73,7 +70,7 @@ namespace MIDIator.Web
             }
 		}
 
-		private void SetInitialProfile()
+	    private void SetInitialProfile()
 		{
 			var profile = new Profile()
 			{
@@ -85,8 +82,9 @@ namespace MIDIator.Web
 			MIDIManager.Instance.SetProfile(profile);
 		}
 
-		private void StartSignalRHubs()
+		private void StartSignalR()
 		{
+			// start hubs
 			HubConnection = new HubConnection(Config.Get("WebAPI.BaseAddress"));
 			IHubProxy eventHubProxy = HubConnection.CreateHubProxy("MIDIReaderHub");
 			eventHubProxy.On<string, ChannelEvent>("OnEvent",
@@ -95,6 +93,9 @@ namespace MIDIator.Web
 
 			eventHubProxy.Invoke("Subscribe", Constants.AdminChannel);
 			eventHubProxy.Invoke("Subscribe", Constants.TaskChannel);
+
+			// start service
+			SignalRService.Instantiate();
 		}
 
 		public void DisposeWebAPI()

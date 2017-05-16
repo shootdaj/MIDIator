@@ -12,13 +12,15 @@ namespace MIDIator.Services
     {
         public MIDIDeviceService MIDIDeviceService { get; set; }
         public VirtualMIDIManager VirtualMIDIManager { get; set; }
+		private Action<IBroadcastPayload, string> BroadcastAction { get; set; }
 
-        public ProfileService(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager)
+        public ProfileService(MIDIDeviceService midiDeviceService, VirtualMIDIManager virtualMIDIManager, Action<IBroadcastPayload, string> broadcastAction)
         {
             MIDIDeviceService = midiDeviceService;
             VirtualMIDIManager = virtualMIDIManager;
+	        BroadcastAction = broadcastAction;
         }
-
+		
         public Profile CreateFromJSON(JsonReader reader, JsonSerializer serializer)
         {
             var profileDTO = JObject.Load(reader);
@@ -26,8 +28,8 @@ namespace MIDIator.Services
 
             LoadVirtualLoopbackDevices(profileDTO, profile);
             LoadTransformations(serializer, profileDTO, profile);
-
-            return profile;
+            
+			return profile;
         }
 
         public void LoadTransformations(JsonSerializer serializer, JObject profileDTO, Profile profile)
@@ -57,7 +59,7 @@ namespace MIDIator.Services
 
                     GetTransformationProperties(serializer, transformationDTO, profile, out inputDevice, 
 						out linkedOutputVirtualDevice, out outputDevice, out translationMap, out enabled, 
-						out collapsed, out translationsCollapsed, out name);
+						out collapsed, out translationsCollapsed, out name, BroadcastAction);
 
 					matchedTransformation.Name = name;
 					matchedTransformation.Enabled = enabled;
@@ -97,7 +99,7 @@ namespace MIDIator.Services
                     GetTransformationProperties(serializer, transformationDTO, profile, 
 						out inputDevice, out linkedOutputVirtualDevice, out outputDevice, 
 						out translationMap, out enabled, out collapsed, out translationsCollapsed, 
-						out name);
+						out name, BroadcastAction);
 
                     var transformation = new Transformation(name, inputDevice, outputDevice, 
 						translationMap, linkedOutputVirtualDevice, 
@@ -112,14 +114,14 @@ namespace MIDIator.Services
 
         private void GetTransformationProperties(JsonSerializer serializer,
             JToken transformationDTO, Profile profile, out IMIDIInputDevice inputDevice, out bool linkedOutputVirtualDevice,
-            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled, out bool collapsed, out bool translationsCollapsed, out string name)
+            out IMIDIOutputDevice outputDevice, out TranslationMap translationMap, out bool enabled, out bool collapsed, out bool translationsCollapsed, out string name, Action<IBroadcastPayload, string> broadcastAction = null)
         {
             var inputDeviceName = transformationDTO["inputDevice"]["name"].ToString();
             var outputDeviceName = transformationDTO["outputDevice"]["name"].ToString();
 
 			name = transformationDTO["name"]?.ToObject<string>(serializer);
-			inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true) ??
-			              MIDIDeviceService.GetInputDevice(0, failSilently: true);
+			inputDevice = MIDIDeviceService.GetInputDevice(inputDeviceName, failSilently: true, broadcastAction: broadcastAction) ??
+			              MIDIDeviceService.GetInputDevice(0, failSilently: true, broadcastAction: broadcastAction);
 
             linkedOutputVirtualDevice = transformationDTO["linkedOutputVirtualDevice"].ToObject<bool>(serializer);
             collapsed = transformationDTO["collapsed"]?.ToObject<bool>(serializer) ?? false;
@@ -136,7 +138,7 @@ namespace MIDIator.Services
             }
 
             translationMap = transformationDTO["translationMap"].ToObject<TranslationMap>(serializer);
-	        enabled = transformationDTO["enabled"].ToObject<bool>(serializer);
+            enabled = transformationDTO["enabled"].ToObject<bool>(serializer);
         }
 
         public void LoadVirtualLoopbackDevices(JObject profileDTO, Profile profile)

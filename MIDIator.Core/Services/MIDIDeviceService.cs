@@ -45,7 +45,7 @@ namespace MIDIator.Services
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false)
+		public IMIDIInputDevice GetInputDevice(int deviceID, ITranslationMap translationMap = null, bool failSilently = false, Action<IBroadcastPayload, string> broadcastAction = null)
 		{
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(device => device.DeviceID == deviceID))
 				return InputDevicesInUse.First(device => device.DeviceID == deviceID);
@@ -53,7 +53,7 @@ namespace MIDIator.Services
 			{
 				if (AvailableInputDevices.Any(d => d.DeviceID == deviceID))
 				{
-					return CreateInputDevice(deviceID, translationMap);
+					return CreateInputDevice(deviceID, translationMap, broadcastAction);
 				}
 				else
 				{
@@ -66,7 +66,7 @@ namespace MIDIator.Services
 			}
 		}
 
-		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false)
+		public IMIDIInputDevice GetInputDevice(string name, ITranslationMap translationMap = null, bool failSilently = false, Action<IBroadcastPayload, string> broadcastAction = null)
 		{
 			Func<dynamic, bool> nameMatch = d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 			if (InputDevicesInUse != null && InputDevicesInUse.Any(nameMatch))
@@ -76,7 +76,7 @@ namespace MIDIator.Services
 				if (AvailableInputDevices.Any(nameMatch))
 				{
 					var deviceID = AvailableInputDevices.Single(d => d.Name == name).DeviceID;
-					return CreateInputDevice(deviceID, translationMap);
+					return CreateInputDevice(deviceID, translationMap, broadcastAction);
 				}
 				else
 				{
@@ -94,10 +94,14 @@ namespace MIDIator.Services
 		/// <param name="deviceID"></param>
 		/// <param name="translationMap"></param>
 		/// <returns></returns>
-		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null)
+		private MIDIInputDevice CreateInputDevice(int deviceID, ITranslationMap translationMap = null, Action<IBroadcastPayload, string> broadcastAction = null)
 		{
 			var device = new MIDIInputDevice(deviceID, translationMap);
-			InputDevicesInUse.Add(device);
+		    if (broadcastAction != null)
+		    {
+		        device.SetBroadcastAction(broadcastAction);
+		    }
+		    InputDevicesInUse.Add(device);
 
 			//if (virtualMIDIManager != null)
 			//{
@@ -138,7 +142,7 @@ namespace MIDIator.Services
 
 		public void RemoveInputDevice(IMIDIInputDevice inputDevice, VirtualMIDIManager virtualMIDIManager = null)
 		{
-			var deviceName = inputDevice.Name;
+            var deviceName = inputDevice.Name;
 			InputDevicesInUse.Remove(inputDevice);
 			((IDisposable)inputDevice).Dispose();
 			virtualMIDIManager?.RemoveVirtualDevice(GetVirtualDeviceName(deviceName));
@@ -164,16 +168,21 @@ namespace MIDIator.Services
 			GetInputDevice(deviceName).StopMIDIReader();
 		}
 
-	    public void SetupLiveBroadcasting(string deviceName, Action<ITranslation> broadcastAction)
+	    public void SetBroadcastAction(string deviceName, Action<IBroadcastPayload, string> broadcastAction)
 	    {
 	        GetInputDevice(deviceName).SetBroadcastAction(broadcastAction);
 	    }
 
-		#endregion
+	    public void StopLiveBroadcasting(string deviceName)
+	    {
+	        GetInputDevice(deviceName).RemoveBroadcastAction();
+	    }
+	    
+	    #endregion
 
-		#region Output Devices
+        #region Output Devices
 
-		public List<dynamic> AvailableOutputDevices => AvailableOutputDevicesEnumerable.ToList();
+        public List<dynamic> AvailableOutputDevices => AvailableOutputDevicesEnumerable.ToList();
 
 		public IEnumerable<dynamic> AvailableOutputDevicesEnumerable
 		{

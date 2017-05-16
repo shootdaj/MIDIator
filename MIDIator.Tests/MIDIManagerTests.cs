@@ -13,7 +13,10 @@ namespace MIDIator.Tests
 		{
 		    var midiDeviceService = new MIDIDeviceService();
 		    var virtualMIDIManager = new VirtualMIDIManager();
-		    MIDIManager = new MIDIManager(midiDeviceService, new ProfileService(midiDeviceService, virtualMIDIManager), virtualMIDIManager);
+			
+			// don't do anything with the broadcastPayload. add it in if needed for testing.
+		    MIDIManager = new MIDIManager(midiDeviceService, new ProfileService(midiDeviceService, virtualMIDIManager,
+			    (payload, eventName) => { }), virtualMIDIManager);
 		}
 
 		[TearDown]

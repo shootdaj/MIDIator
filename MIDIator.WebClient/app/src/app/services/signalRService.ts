@@ -70,6 +70,8 @@ export class SignalRService {
      */
     error$: Observable<string>;
 
+	public currentState: ConnectionState;
+
     // These are used to feed the public observables 
     //
     private connectionStateSubject = new Subject<ConnectionState>();
@@ -125,6 +127,7 @@ export class SignalRService {
 
             // Push the new state on our subject
             //
+	        this.currentState = newState;
             this.connectionStateSubject.next(newState);
         });
 

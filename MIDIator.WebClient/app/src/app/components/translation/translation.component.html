@@ -1,11 +1,11 @@
-<div *ngIf="this.form != null" class="dotted-container translation-spacer">
-    <div class="mdl-grid mdl-grid--no-spacing">
+<div *ngIf="this.form != null" class="dotted-container translation-spacer padded-row" [ngClass] ="{'blinkTranslation': blinkTranslation}">
+    <div [ngClass]="{'mdl-grid': true, 'mdl-grid--no-spacing': true}">
         <div class="mdl-cell--12-col">
             <div class="mdl-grid mdl-grid--no-spacing">
                 <div class="mdl-cell--3-col">
-                    <div class="cell-content">
-                        <mdl-textfield type="text" label="Name" floating-label [formControl]="form.controls['name']"></mdl-textfield>
-                    </div>
+	                <div class="cell-content">
+		                <mdl-textfield type="text" label="Name" floating-label [formControl]="form.controls['name']"></mdl-textfield>
+	                </div>
                 </div>
                 <div class="mdl-cell--6-col">
                     <div class="cell-content cell-content-6-col">

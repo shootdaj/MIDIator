@@ -73,8 +73,10 @@ export class HelperService {
     }
 
     public initTranslation() {
-        let translation = new Translation();
-        (<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
+		let translation = new Translation();
+
+		translation.id = this.generateUUID();
+		(<any>translation).inputMatchFunction = InputMatchFunction[InputMatchFunction.NoteMatch];
 
         var channelMessage = new ChannelMessage();
         (<any>channelMessage).command = ChannelCommand[ChannelCommand.ChannelPressure];

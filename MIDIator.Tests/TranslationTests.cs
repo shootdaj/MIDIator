@@ -1,4 +1,5 @@
-﻿using MIDIator.Engine;
+﻿using System;
+using MIDIator.Engine;
 using MIDIator.Json;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -12,12 +13,12 @@ namespace MIDIator.Tests
         public void Translation_Serialize()
         {
 	        var expectedSerialization =
-                "{\r\n  \"name\": \"TestName\",\r\n  \"description\": \"This is a test translation\",\r\n  \"inputMessageMatchTarget\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"NoteOn\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 1,\r\n    \"data2\": 0\r\n  },\r\n  \"outputMessageTemplate\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"ProgramChange\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 2,\r\n    \"data2\": 0\r\n  },\r\n  \"translationFunction\": \"DirectTranslation\",\r\n  \"inputMatchFunction\": \"CatchAll\",\r\n  \"enabled\": true,\r\n  \"collapsed\": false\r\n}";
+	            "{\r\n  \"name\": \"TestName\",\r\n  \"description\": \"This is a test translation\",\r\n  \"id\": \"78d3a6a2-50ad-4f86-9af5-f334cba57a5e\",\r\n  \"inputMessageMatchTarget\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"NoteOn\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 1,\r\n    \"data2\": 0\r\n  },\r\n  \"outputMessageTemplate\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"ProgramChange\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 2,\r\n    \"data2\": 0\r\n  },\r\n  \"translationFunction\": \"DirectTranslation\",\r\n  \"inputMatchFunction\": \"CatchAll\",\r\n  \"enabled\": true,\r\n  \"collapsed\": false\r\n}";
 
             var translation = new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 1),
                 new ChannelMessage(ChannelCommand.ProgramChange, 1, 2),
-                InputMatchFunction.CatchAll, TranslationFunction.DirectTranslation, "TestName", "This is a test translation");
-
+                InputMatchFunction.CatchAll, TranslationFunction.DirectTranslation, "TestName", "This is a test translation", Guid.Parse("78d3a6a2-50ad-4f86-9af5-f334cba57a5e"));
+            
             var serializedTranslation = JsonConvert.SerializeObject(translation, SerializerSettings.DefaultSettings);
             
             Assert.AreEqual(expectedSerialization, serializedTranslation);
@@ -27,7 +28,7 @@ namespace MIDIator.Tests
 		public void Translation_Deserialize()
 		{
 			var	serializedTranslation =
-                "{\r\n  \"name\": \"TestName\",\r\n  \"description\": \"This is a test translation\",\r\n  \"inputMessageMatchTarget\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"NoteOn\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 1,\r\n    \"data2\": 0\r\n  },\r\n  \"outputMessageTemplate\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"ProgramChange\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 2,\r\n    \"data2\": 0\r\n  },\r\n  \"translationFunction\": \"DirectTranslation\",\r\n  \"inputMatchFunction\": \"CatchAll\",\r\n  \"enabled\": true,\r\n  \"collapsed\": false\r\n}";
+			    "{\r\n  \"name\": \"TestName\",\r\n  \"description\": \"This is a test translation\",\r\n  \"id\": \"78d3a6a2-50ad-4f86-9af5-f334cba57a5e\",\r\n  \"inputMessageMatchTarget\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"NoteOn\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 1,\r\n    \"data2\": 0\r\n  },\r\n  \"outputMessageTemplate\": {\r\n    \"$type\": \"ChannelMessage\",\r\n    \"command\": \"ProgramChange\",\r\n    \"midiChannel\": 1,\r\n    \"data1\": 2,\r\n    \"data2\": 0\r\n  },\r\n  \"translationFunction\": \"DirectTranslation\",\r\n  \"inputMatchFunction\": \"CatchAll\",\r\n  \"enabled\": true,\r\n  \"collapsed\": false\r\n}";
 
             //left here for reference - this is the object used to create serializedTranslation by serializing it
             //var translation = new Translation(new ChannelMessage(ChannelCommand.NoteOn, 1, 1),
@@ -42,6 +43,7 @@ namespace MIDIator.Tests
 			Assert.AreEqual(translation.TranslationFunction, TranslationFunction.DirectTranslation);
 			Assert.AreEqual(translation.Name, "TestName");
 			Assert.AreEqual(translation.Description, "This is a test translation");
+			Assert.AreEqual(translation.ID, Guid.Parse("78d3a6a2-50ad-4f86-9af5-f334cba57a5e"));
 		}
     }
 }
